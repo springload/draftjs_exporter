@@ -9,4 +9,24 @@ This is a work in progress.
 python ./example.py
 ```
 
+## Development
 
+```sh
+git clone git@github.com:springload/draftjs_exporter.git
+cd draftjs_exporter/
+virtualenv .venv
+source ./.venv/bin/activate
+pip install -r requirements.txt
+```
+
+## R&D notes
+
+### Generating HTML in Python
+
+> https://www.quora.com/What-is-an-easy-to-use-HTML-XML-parser-generator-library-in-Python-similar-to-Hpricot-Nokogiri-in-Ruby
+
+- http://lxml.de/
+- https://www.crummy.com/software/BeautifulSoup/
+- https://github.com/html5lib/html5lib-python
+- http://www.yattag.org/
+- http://markup.sourceforge.net/

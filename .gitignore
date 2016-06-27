@@ -20,7 +20,6 @@ src/*.egg-info
 lib64
 *.log
 *.pot
-kiwibank_public/settings/local.py
 static/CACHE/*
 .vagrant/*
 media/*
@@ -40,11 +39,6 @@ core/static/css/
 core/static/js/
 core/static/images/
 core/jinja2/svg.html
-ricky/ui/scss/_tokens.scss
-
-
-kiwibank.sublime-project
-kiwibank.sublime-workspace
 
 *.sql
 
