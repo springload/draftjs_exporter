@@ -1,21 +1,26 @@
 from lxml.html import builder as E
-from lxml import html
+from lxml import html, etree
 
 
 class WrapperState():
     def __init__(self, block_map):
         self.block_map = block_map
-        self.fragment = E.HTML(E.BODY())
+        self.document = E.DIV()
 
     def element_for(self, block):
         type = block.get('type', 'unstyled')
-        print(type)
-        print(self.block_options(type))
+        # print(type, self.block_options(type))
 
-        self.document.create_element(self.block_options(type))
+        elt = etree.Element(self.block_options(type))
+        elt.text = block.get('text')
+
+        self.document.append(elt)
 
     def to_string(self):
-        return html.tostring(self.fragment, pretty_print=True)
+        return etree.tostring(self.document, pretty_print=True)
+
+    def to_browser(self):
+        return html.open_in_browser(self.document)
 
     def __str__(self):
         return self.to_string()

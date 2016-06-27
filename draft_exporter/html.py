@@ -11,4 +11,9 @@ class DraftJsExporter():
         wrapper_state = WrapperState(self.block_map)
 
         for block in content_state.get('blocks'):
-            element = wrapper_state.element_for(block)
+            wrapper_state.element_for(block)
+
+        # Debugging command
+        # wrapper_state.to_browser()
+
+        return wrapper_state.to_string()
