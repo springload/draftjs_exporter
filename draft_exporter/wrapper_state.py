@@ -1,5 +1,5 @@
+from lxml import etree, html
 from lxml.html import builder as E
-from lxml import html, etree
 
 
 class WrapperState():
@@ -17,6 +17,9 @@ class WrapperState():
         self.document.append(elt)
 
     def to_string(self):
+        return etree.tostring(self.document)
+
+    def to_pretty(self):
         return etree.tostring(self.document, pretty_print=True)
 
     def to_browser(self):

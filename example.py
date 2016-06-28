@@ -1,4 +1,4 @@
-from draft_exporter.html import DraftJsExporter
+from draft_exporter.html import HTML
 from draft_exporter.entities.link import Link
 
 
@@ -20,7 +20,7 @@ config = {
     }
 }
 
-exporter = DraftJsExporter(config)
+exporter = HTML(config)
 
 content_state = {
     'entityMap': {

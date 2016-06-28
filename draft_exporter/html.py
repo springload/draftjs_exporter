@@ -1,7 +1,7 @@
 from .wrapper_state import WrapperState
 
 
-class DraftJsExporter():
+class HTML():
     def __init__(self, config):
         self.block_map = config.get('block_map')
         self.style_map = config.get('style_map')
