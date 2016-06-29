@@ -44,7 +44,7 @@ class WrapperState():
         return ''.join([etree.tostring(elt) for elt in list(self.document)])
 
     def __str__(self):
-        return 'WrapperState: %s' % self.to_string()
+        return '<WrapperState: %s>' % self.to_string()
 
     def set_wrapper(self, element, options=[]):
         self.wrapper = [element, options]

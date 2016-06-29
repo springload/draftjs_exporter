@@ -46,3 +46,8 @@ make test_watch      # Restarts the tests whenever a file changes.
 - https://github.com/html5lib/html5lib-python
 - http://www.yattag.org/
 - http://markup.sourceforge.net/
+
+### Limitations of `lxml`
+
+- Succinct documentation
+- No support for document fragments

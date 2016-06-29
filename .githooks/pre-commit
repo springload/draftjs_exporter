@@ -23,7 +23,6 @@ else
     if [ -n "$PY_FILES" ];
     then
         make test_ci
-        exit 0
     fi
     exit 0
 fi

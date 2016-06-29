@@ -32,7 +32,7 @@ class TestOutput(unittest.TestCase):
         self.exporter = HTML(config)
         self.test_cases = json.loads(codecs.open(fixtures_path, 'r', 'utf-8').read())
 
-    ## TODO Find a way to have one test case per case in the JSON file
+    # TODO Find a way to have one test case per case in the JSON file
     @unittest.skip('TODO')
     def test_cases(self):
         for case in self.test_cases:

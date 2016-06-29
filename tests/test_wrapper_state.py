@@ -50,7 +50,7 @@ class TestWrapperState(unittest.TestCase):
         self.assertEqual(self.wrapper_state.to_string(), '<h1>Header</h1>')
 
     def test_str_empty(self):
-        self.assertEqual(str(self.wrapper_state), 'WrapperState: ')
+        self.assertEqual(str(self.wrapper_state), '<WrapperState: >')
 
     def test_str_elts(self):
         self.wrapper_state.element_for({
@@ -62,7 +62,7 @@ class TestWrapperState(unittest.TestCase):
             'entityRanges': []
         })
 
-        self.assertEqual(str(self.wrapper_state), 'WrapperState: <h1>Header</h1>')
+        self.assertEqual(str(self.wrapper_state), '<WrapperState: <h1>Header</h1>>')
 
     # def test_set_wrapper(self):
     #     # self.assertEqual(self.wrapper_state.set_wrapper(element, options=[]), '')
@@ -95,4 +95,3 @@ class TestWrapperState(unittest.TestCase):
     # def test_create_wrapper(self):
     #     # self.assertEqual(self.wrapper_state.create_wrapper(options), '')
     #     pass
-
