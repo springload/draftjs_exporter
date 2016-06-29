@@ -45,145 +45,27 @@ class TestHTML(unittest.TestCase):
             ]
         }), str)
 
-    def test_call_with_different_blocks_decodes(self):
-        # TODO Was <div><h1>Header</h1><div>some paragraph text</div></div>
-        # Which behaviour do we want here?
-        self.assertEqual(self.exporter.call({
-            'entityMap': {},
-            'blocks': [
-                {
-                    'key': '5s7g9',
-                    'text': 'Header',
-                    'type': 'header-one',
-                    'depth': 0,
-                    'inlineStyleRanges': [],
-                    'entityRanges': []
-                },
-                {
-                    'key': 'dem5p',
-                    'text': 'some paragraph text',
-                    'type': 'unstyled',
-                    'depth': 0,
-                    'inlineStyleRanges': [],
-                    'entityRanges': []
-                }
-            ]
-        }), '<h1>Header</h1><div>some paragraph text</div>')
+    @unittest.skip('TODO')
+    def test_block_contents(self):
+        # self.exporter.block_contents(self, element, block, entity_map)
+        pass
 
     @unittest.skip('TODO')
-    def test_call_with_inline_styles_decodes(self):
-        self.assertEqual(self.exporter.call({
-            'entityMap': {},
-            'blocks': [
-                {
-                    'key': 'dem5p',
-                    'text': 'some paragraph text',
-                    'type': 'unstyled',
-                    'depth': 0,
-                    'inlineStyleRanges': [
-                        {
-                            'offset': 0,
-                            'length': 4,
-                            'style': 'ITALIC'
-                        }
-                    ],
-                    'entityRanges': []
-                }
-            ]
-        }), '<div><span style="font-style: italic;">some</span> paragraph text</div>')
+    def test_add_node(self):
+        # self.exporter.add_node(self, element, text, style_state)
+        pass
 
     @unittest.skip('TODO')
-    def test_call_with_entities_decodes(self):
-        self.assertEqual(self.exporter.call({
-            'entityMap': {
-                '0': {
-                    'type': 'LINK',
-                    'mutability': 'MUTABLE',
-                    'data': {
-                        'url': 'http://example.com'
-                    }
-                }
-            },
-            'blocks': [
-                {
-                    'key': 'dem5p',
-                    'text': 'some paragraph text',
-                    'type': 'unstyled',
-                    'depth': 0,
-                    'inlineStyleRanges': [],
-                    'entityRanges': [
-                        {
-                            'offset': 5,
-                            'length': 9,
-                            'key': 0
-                        }
-                    ]
-                }
-            ]
-        }), '<div>some <a href="http://example.com">paragraph</a> text</div>')
+    def test_build_command_groups(self):
+        # self.exporter.build_command_groups(self, block)
+        pass
 
     @unittest.skip('TODO')
-    def test_call_with_entities_crossing_throws(self):
-        with self.assertRaises(ValueError):
-            self.exporter.call({
-                'entityMap': {
-                    '0': {
-                        'type': 'LINK',
-                        'mutability': 'MUTABLE',
-                        'data': {
-                            'url': 'http://example.com'
-                        }
-                    },
-                    '1': {
-                        'type': 'LINK',
-                        'mutability': 'MUTABLE',
-                        'data': {
-                            'url': 'http://bar.example.com'
-                        }
-                    }
-                },
-                'blocks': [
-                    {
-                        'key': 'dem5p',
-                        'text': 'some paragraph text',
-                        'type': 'unstyled',
-                        'depth': 0,
-                        'inlineStyleRanges': [],
-                        'entityRanges': [
-                            {
-                                'offset': 5,
-                                'length': 9,
-                                'key': 0
-                            },
-                            {
-                                'offset': 2,
-                                'length': 9,
-                                'key': 1
-                            }
-                        ]
-                    }
-                ]
-            })
+    def test_build_commands(self):
+        # self.exporter.build_commands(self, block)
+        pass
 
-    def test_call_with_wrapped_blocks(self):
-        self.assertEqual(self.exporter.call({
-            'entityMap': {},
-            'blocks': [
-                {
-                    'key': 'dem5p',
-                    'text': 'item1',
-                    'type': 'unordered-list-item',
-                    'depth': 0,
-                    'inlineStyleRanges': [],
-                    'entityRanges': [],
-                },
-                {
-                    'key': 'dem5p',
-                    'text': 'item2',
-                    'type': 'unordered-list-item',
-                    'depth': 0,
-                    'inlineStyleRanges': [],
-                    'entityRanges': []
-                }
-            ]
-        }), '<ul class="public-DraftStyleDefault-ul"><li>item1</li><li>item2</li></ul>')
+    @unittest.skip('TODO')
+    def test_build_range_commands(self):
+        # self.exporter.build_range_commands(self, name, data_key, ranges)
+        pass
