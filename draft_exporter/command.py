@@ -1,5 +1,5 @@
 class Command:
-    def __init__(self, name, index, data={}):
+    def __init__(self, name, index, data=''):
         self.name = name
         self.index = index
         self.data = data

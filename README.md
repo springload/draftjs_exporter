@@ -51,3 +51,6 @@ make test_watch      # Restarts the tests whenever a file changes.
 
 - Succinct documentation
 - No support for document fragments
+- No support for text nodes (`.text` and `.tail` instead)
+
+Feels like we would want to use https://github.com/html5lib/html5lib-python but the documentation is even worse.

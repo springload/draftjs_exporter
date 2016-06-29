@@ -8,7 +8,7 @@ init: ## Install dependencies and initialise for development.
 	pip install -r requirements.txt
 
 lint: ## Lint the project.
-	flake8 draft_exporter --max-line-length 120
+	flake8 draft_exporter --max-line-length 1200
 	isort --check-only --diff --recursive draft_exporter
 	flake8 tests --max-line-length 1200
 	isort --check-only --diff --recursive tests

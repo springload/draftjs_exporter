@@ -1,4 +1,5 @@
 from itertools import groupby
+
 from .command import Command
 from .entity_state import EntityState
 from .style_state import StyleState
@@ -27,11 +28,29 @@ class HTML():
         entity_state = EntityState(element, self.entity_decorators, entity_map)
         for (text, commands) in self.build_command_groups(block):
             for command in commands:
-                print text, command
+                print command, text
                 entity_state.apply(command)
                 style_state.apply(command)
 
-            # add_node(entity_state.current_parent, text, style_state)
+            # TODO Use entity_state.
+            self.add_node(element, text, style_state)
+
+    def add_node(self, element, text, style_state):
+        pass
+        # TODO Does not work ATM.
+        # if style_state.is_unstyled():
+        #     child = etree.SubElement(element, 'textnode')
+        #     child.text = text
+        # else:
+        #     child = etree.SubElement(element, 'span', attrib=style_state.element_attributes())
+        #     child.text = text
+        # document = element.getroot()
+        # node = if state.text?
+        # document.create_text_node(text)
+        # else
+        # document.create_element('span', text, state.element_attributes)
+        # end
+        # element.add_child(node)
 
     def build_command_groups(self, block):
         text = block.get('text')
@@ -43,35 +62,37 @@ class HTML():
 
         grouped_sliced = []
         i = 0
+        # TODO sorting is wrong here. Need a debugger.
         for start_index, commands in grouped:
             next_group = listed[i + 1] if i + 1 < len(listed) else False
-            # TODO stop_index should be set depending on the languages' slice implementation.
+            # TODO stop_index should be set depending on the languages' slice. Check this is what we want.
             # stop_index = (next_group && next_group.first || 0) - 1
             # [text.slice(start_index..stop_index), commands]
-            stop_index = next_group[0] if next_group else - 1
+            stop_index = next_group[0] if next_group else 0
 
             grouped_sliced.append((text[start_index:stop_index], list(commands)))
             i += 1
 
+        # TODO Debug sorting
+        # for text, coms in grouped_sliced:
+        #     print text, coms
+
         return grouped_sliced
 
     def build_commands(self, block):
+        style_commands = self.build_range_commands('inline_style', 'style', block.get('inlineStyleRanges'))
+        entity_commands = self.build_range_commands('entity', 'key', block.get('entityRanges'))
         return [
             Command('start_text', 0),
             Command('stop_text', len(block.get('text'))),
-        ]
-        # TODO Add additional commands
-        # build_range_commands(:inline_style, :style, block.fetch(:inlineStyleRanges)) +
-        # build_range_commands(:entity, :key, block.fetch(:entityRanges))
+        ] + style_commands + entity_commands
 
     def build_range_commands(self, name, data_key, ranges):
-        pass
-        # ranges.flat_map { |range|
-        #     data = range.get(data_key)
-        #     start = range.get('offset')
-        #     stop = start + range.get('length')
-        #     [
-        #         Command.new('start_#{name}'.to_sym, start, data),
-        #         Command.new('stop_#{name}'.to_sym, stop, data)
-        #     ]
-        # }
+        commands = []
+        for r in ranges:
+            data = r.get(data_key)
+            start = r.get('offset')
+            stop = start + r.get('length')
+            commands.append(Command('start_%s' % name, start, data))
+            commands.append(Command('stop_%s' % name, stop, data))
+        return commands
