@@ -11,12 +11,27 @@ python ./example.py
 
 ## Development
 
+### Installation
+
+> Requirements: `virtualenv`, (`nodemon`)
+
 ```sh
 git clone git@github.com:springload/draftjs_exporter.git
 cd draftjs_exporter/
 virtualenv .venv
 source ./.venv/bin/activate
-pip install -r requirements.txt
+make init
+```
+
+### Commands
+
+```sh
+make dev             # Restarts the example whenever a file changes.
+make help            # See what commands are available.
+make init            # Install dependencies and initialise for development.
+make lint            # Lint the project.
+make test            # Test the project.
+make test_watch      # Restarts the tests whenever a file changes.
 ```
 
 ## R&D notes
