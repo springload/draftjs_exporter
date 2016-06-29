@@ -23,6 +23,8 @@ class WrapperState():
         # print(type, self.block_options(type))
 
         elt = etree.Element(self.block_options(type))
+
+        # TODO To remove
         elt.text = block.get('text')
 
         parent = self.parent_for(type)
@@ -33,15 +35,18 @@ class WrapperState():
         return elt
 
     def to_string(self):
-        # Semi-dirty trick to get rid of fragment tags.
-        for fragment in self.document.iterfind('.//fragment'):
-            for child in fragment.getchildren():
-                fragment.getparent().append(child)
-            fragment.getparent().remove(fragment)
+        # Even dirtier but easier to understand.
+        return etree.tostring(self.document).replace('<root/>', '').replace('<root>', '').replace('</root>', '').replace('<fragment>', '').replace('</fragment>', '').replace('<textnode>', '').replace('</textnode>', '')
 
-        # return etree.tostring(self.document)
-        # Dirty trick to get rid of the top-level "root" element
-        return ''.join([etree.tostring(elt) for elt in list(self.document)])
+    # def to_string(self):
+    #     # Semi-dirty trick to get rid of fragment tags.
+    #     for fragment in self.document.iterfind('.//fragment'):
+    #         for child in fragment.getchildren():
+    #             fragment.getparent().append(child)
+    #         fragment.getparent().remove(fragment)
+
+    #     # Dirty trick to get rid of the top-level "root" element
+    #     return ''.join([etree.tostring(elt) for elt in list(self.document)])
 
     def __str__(self):
         return '<WrapperState: %s>' % self.to_string()
