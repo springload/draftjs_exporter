@@ -21,6 +21,7 @@ cd draftjs_exporter/
 virtualenv .venv
 source ./.venv/bin/activate
 make init
+./.githooks/deploy
 ```
 
 ### Commands
