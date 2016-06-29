@@ -1,0 +1,365 @@
+[
+    {
+        "label": "Plain text",
+        "output": "<p>a</p>",
+        "content_state": {
+            "entityMap": {},
+            "blocks": [
+                {
+                    "key": "33nh8",
+                    "text": "a",
+                    "type": "unstyled",
+                    "depth": 0,
+                    "inlineStyleRanges": [],
+                    "entityRanges": []
+                }
+            ]
+        }
+    },
+
+    {
+        "label": "Single inline style",
+        "output": "<p>asd<strong>f</strong></p>",
+        "content_state": {
+            "entityMap": {},
+            "blocks": [
+                {
+                    "key": "99n0j",
+                    "text": "asdf",
+                    "type": "unstyled",
+                    "depth": 0,
+                    "inlineStyleRanges": [
+                        {
+                            "offset": 3,
+                            "length": 1,
+                            "style": "BOLD"
+                        }
+                    ],
+                    "entityRanges": []
+                }
+            ]
+        }
+    },
+
+    {
+        "label": "Nested inline styles",
+        "output": "<p><em><strong>BoldItalic</strong></em></p>",
+        "content_state": {
+            "entityMap": {},
+            "blocks": [
+                {
+                    "key": "9nc73",
+                    "text": "BoldItalic",
+                    "type": "unstyled",
+                    "depth": 0,
+                    "inlineStyleRanges": [
+                        {
+                            "offset": 0,
+                            "length": 10,
+                            "style": "BOLD"
+                        },
+                        {
+                            "offset": 0,
+                            "length": 10,
+                            "style": "ITALIC"
+                        }
+                    ],
+                    "entityRanges": []
+                }
+            ]
+        }
+    },
+
+    {
+        "label": "Adjacent inline styles",
+        "output": "<p><em>Bold</em><strong>Italic</strong></p>",
+        "content_state": {
+            "entityMap": {},
+            "blocks": [
+                {
+                    "key": "9nc73",
+                    "text": "BoldItalic",
+                    "type": "unstyled",
+                    "depth": 0,
+                    "inlineStyleRanges": [
+                        {
+                            "offset": 4,
+                            "length": 6,
+                            "style": "BOLD"
+                        },
+                        {
+                            "offset": 0,
+                            "length": 4,
+                            "style": "ITALIC"
+                        }
+                    ],
+                    "entityRanges": []
+                }
+            ]
+        }
+    },
+
+    {
+        "label": "Entity",
+        "output": "<p><a href=\"/\" title=\"hi\"><em>a</em></a></p>",
+        "content_state": {
+            "entityMap": {
+                "0": {
+                    "type": "LINK",
+                    "mutability": "MUTABLE",
+                    "data": {
+                        "url": "/",
+                        "rel": null,
+                        "title": "hi",
+                        "extra": "foo"
+                    }
+                }
+            },
+            "blocks": [
+                {
+                    "key": "8r91j",
+                    "text": "a",
+                    "type": "unstyled",
+                    "depth": 0,
+                    "inlineStyleRanges": [
+                        {
+                            "offset": 0,
+                            "length": 1,
+                            "style": "ITALIC"
+                        }
+                    ],
+                    "entityRanges": [
+                        {
+                            "offset": 0,
+                            "length": 1,
+                            "key": 0
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+
+    {
+        "label": "Entity with data-*",
+        "output": "<p><a href=\"/\" title=\"hi\" data-id=\"42\" data-mutability=\"mutable\"><em>a</em></a></p>",
+        "content_state": {
+            "entityMap": {
+                "0": {
+                    "type": "LINK",
+                    "mutability": "MUTABLE",
+                    "data": {
+                        "url": "/",
+                        "rel": null,
+                        "title": "hi",
+                        "extra": "foo",
+                        "data-id": 42,
+                        "data-mutability": "mutable",
+                        "data-False": "bad",
+                        "data-": "no"
+                    }
+                }
+            },
+            "blocks": [
+                {
+                    "key": "8r91j",
+                    "text": "a",
+                    "type": "unstyled",
+                    "depth": 0,
+                    "inlineStyleRanges": [
+                        {
+                            "offset": 0,
+                            "length": 1,
+                            "style": "ITALIC"
+                        }
+                    ],
+                    "entityRanges": [
+                        {
+                            "offset": 0,
+                            "length": 1,
+                            "key": 0
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "label": "Entity with inline style",
+        "output": "<p><a href=\"/\"><em>a</em></a></p>",
+        "content_state": {
+            "entityMap": {
+                "0": {
+                    "type": "LINK",
+                    "mutability": "MUTABLE",
+                    "data": {
+                        "url": "/"
+                    }
+                }
+            },
+            "blocks": [
+                {
+                    "key": "8r91j",
+                    "text": "a",
+                    "type": "unstyled",
+                    "depth": 0,
+                    "inlineStyleRanges": [
+                        {
+                            "offset": 0,
+                            "length": 1,
+                            "style": "ITALIC"
+                        }
+                    ],
+                    "entityRanges": [
+                        {
+                            "offset": 0,
+                            "length": 1,
+                            "key": 0
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+
+    {
+        "label": "Ordered list",
+        "output": "<p>An ordered list:</p><ol><li>One</li><li>Two</li></ol>",
+        "content_state": {
+            "entityMap": {},
+            "blocks": [
+                {
+                    "key": "33nh8",
+                    "text": "An ordered list:",
+                    "type": "unstyled",
+                    "depth": 0,
+                    "inlineStyleRanges": [],
+                    "entityRanges": []
+                },
+                {
+                    "key": "8kinl",
+                    "text": "One",
+                    "type": "ordered-list-item",
+                    "depth": 0,
+                    "inlineStyleRanges": [],
+                    "entityRanges": []
+                },
+                {
+                    "key": "ekll4",
+                    "text": "Two",
+                    "type": "ordered-list-item",
+                    "depth": 0,
+                    "inlineStyleRanges": [],
+                    "entityRanges": []
+                }
+            ]
+        }
+    },
+
+    {
+        "label": "From https://github.com/icelab/draft-js-ast-exporter/blob/651c807bea12d97dad6f4965ab40481c8f2130dd/test/fixtures/content.js",
+        "output": "",
+        "content_state": {
+            "entityMap": {
+                "0": {
+                    "type": "image",
+                    "mutability": "IMMUTABLE",
+                    "data": {
+                        "src": "http://placekitten.com/500/300",
+                        "caption": "Image caption",
+                        "rightsHolder": "Copyright Place Kitten",
+                        "featured": "big"
+                    }
+                },
+                "1": {
+                    "type": "LINK",
+                    "mutability": "MUTABLE",
+                    "data": {
+                        "url": "https://github.com/icelab/draft-js-ast-exporter"
+                    }
+                }
+            },
+            "blocks": [
+                {
+                    "key": "ag6qs",
+                    "text": "DraftJS AST Exporter",
+                    "type": "header-two",
+                    "depth": 0,
+                    "inlineStyleRanges": [],
+                    "entityRanges": []
+                },
+                {
+                    "key": "59kd9",
+                    "text": "In your draft-js, exporting your content:",
+                    "type": "unstyled",
+                    "depth": 0,
+                    "inlineStyleRanges": [
+                        {
+                            "offset": 18,
+                            "length": 9,
+                            "style": "BOLD"
+                        },
+                        {
+                            "offset": 33,
+                            "length": 7,
+                            "style": "ITALIC"
+                        }
+                    ],
+                    "entityRanges": []
+                },
+                {
+                    "key": "bqjdr",
+                    "text": "From draft-js internals",
+                    "type": "ordered-list-item",
+                    "depth": 0,
+                    "inlineStyleRanges": [],
+                    "entityRanges": []
+                },
+                {
+                    "key": "1pdm1",
+                    "text": "To an abstract syntax tree",
+                    "type": "ordered-list-item",
+                    "depth": 0,
+                    "inlineStyleRanges": [],
+                    "entityRanges": []
+                },
+                {
+                    "key": "1sd0p",
+                    "text": "Extensibility.",
+                    "type": "ordered-list-item",
+                    "depth": 0,
+                    "inlineStyleRanges": [],
+                    "entityRanges": []
+                },
+                {
+                    "key": "9vgd",
+                    "text": "🍺",
+                    "type": "atomic",
+                    "depth": 0,
+                    "inlineStyleRanges": [],
+                    "entityRanges": [
+                        {
+                            "offset": 0,
+                            "length": 1,
+                            "key": 0
+                        }
+                    ]
+                },
+                {
+                    "key": "kst0",
+                    "text": "Find the project on Github.",
+                    "type": "unstyled",
+                    "depth": 0,
+                    "inlineStyleRanges": [],
+                    "entityRanges": [
+                        {
+                            "offset": 20,
+                            "length": 6,
+                            "key": 1
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+]
