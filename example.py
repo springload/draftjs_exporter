@@ -4,7 +4,7 @@ from draft_exporter.entities.link import Link
 
 config = {
     'entity_decorators': {
-        'LINK': Link
+        'LINK': Link()
     },
     'block_map': {
         'header-one': {'element': 'h1'},

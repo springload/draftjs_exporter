@@ -1,24 +1,20 @@
-import codecs
-import json
-import os
 import unittest
 
 from draft_exporter.entities.link import Link
+from draft_exporter.entity_state import EntityException
 from draft_exporter.html import HTML
-
-fixtures_path = os.path.join(os.path.dirname(__file__), 'test_cases.json')
 
 config = {
     'entity_decorators': {
-        'LINK': Link
+        'LINK': Link()
     },
     'block_map': {
         'header-one': {'element': 'h1'},
         'unordered-list-item': {
             'element': 'li',
-            'wrapper': ['ul', {'className': 'public-DraftStyleDefault-ul'}]
+            'wrapper': ['ul', {'className': 'steps'}]
         },
-        'unstyled': {'element': 'div'}
+        'unstyled': {'element': 'p'}
     },
     'style_map': {
         'ITALIC': {'fontStyle': 'italic'},
@@ -31,11 +27,8 @@ config = {
 class TestOutput(unittest.TestCase):
     def setUp(self):
         self.exporter = HTML(config)
-        self.test_cases = json.loads(codecs.open(fixtures_path, 'r', 'utf-8').read())
 
     def test_call_with_different_blocks_decodes(self):
-        # TODO Was <div><h1>Header</h1><div>some paragraph text</div></div>
-        # Which behaviour do we want here?
         self.assertEqual(self.exporter.call({
             'entityMap': {},
             'blocks': [
@@ -56,7 +49,7 @@ class TestOutput(unittest.TestCase):
                     'entityRanges': []
                 }
             ]
-        }), '<h1>Header</h1><div>some paragraph text</div>')
+        }), '<h1>Header</h1><p>some paragraph text</p>')
 
     def test_call_with_inline_styles_decodes(self):
         self.assertEqual(self.exporter.call({
@@ -77,11 +70,19 @@ class TestOutput(unittest.TestCase):
                     'entityRanges': []
                 }
             ]
-        }), '<div><span style="font-style: italic;">some</span> paragraph text</div>')
+        }), '<p><span style="font-style: italic;">some</span> paragraph text</p>')
 
     def test_call_with_multiple_inline_styles_decodes(self):
         self.assertEqual(self.exporter.call({
-            'entityMap': {},
+            'entityMap': {
+                '0': {
+                    'type': 'LINK',
+                    'mutability': 'MUTABLE',
+                    'data': {
+                        'url': 'http://example.com'
+                    }
+                }
+            },
             'blocks': [
                 {
                     'key': '5s7g9',
@@ -118,9 +119,8 @@ class TestOutput(unittest.TestCase):
                     ]
                 }
             ]
-        }), '<h1><span style="font-style: bold;">He</span>ader</h1><div><span style="font-style: bold;text-decoration: underline;">some</span> paragraph text</div>')
+        }), '<h1><span style="font-style: bold;">He</span>ader</h1><p><span style="font-style: bold;text-decoration: underline;">some</span> <a href="http://example.com">paragraph</a> text</p>')
 
-    @unittest.skip('TODO')
     def test_call_with_entities_decodes(self):
         self.assertEqual(self.exporter.call({
             'entityMap': {
@@ -148,11 +148,10 @@ class TestOutput(unittest.TestCase):
                     ]
                 }
             ]
-        }), '<div>some <a href="http://example.com">paragraph</a> text</div>')
+        }), '<p>some <a href="http://example.com">paragraph</a> text</p>')
 
-    @unittest.skip('TODO')
     def test_call_with_entities_crossing_throws(self):
-        with self.assertRaises(ValueError):
+        with self.assertRaises(EntityException):
             self.exporter.call({
                 'entityMap': {
                     '0': {
@@ -214,10 +213,4 @@ class TestOutput(unittest.TestCase):
                     'entityRanges': []
                 }
             ]
-        }), '<ul class="public-DraftStyleDefault-ul"><li>item1</li><li>item2</li></ul>')
-
-    # TODO Find a way to have one test case per case in the JSON file
-    @unittest.skip('TODO')
-    def test_cases(self):
-        for case in self.test_cases:
-            self.assertEqual(self.exporter.call(case.get('content_state')), case.get('output'))
+        }), '<ul class="steps"><li>item1</li><li>item2</li></ul>')
