@@ -8,8 +8,8 @@ init: ## Install dependencies and initialise for development.
 	pip install -r requirements-dev.txt
 
 lint: ## Lint the project.
-	flake8 draft_exporter --max-line-length 1200
-	isort --check-only --diff --recursive draft_exporter
+	flake8 draftjs_exporter --max-line-length 1200
+	isort --check-only --diff --recursive draftjs_exporter
 	flake8 tests --max-line-length 1200
 	isort --check-only --diff --recursive tests
 
@@ -17,12 +17,12 @@ test: ## Test the project.
 	python -m unittest discover
 
 test_watch: ## Restarts the tests whenever a file changes.
-	nodemon -q -e py -w tests -w draft_exporter  -x "clear && make test -s || true"
+	nodemon -q -e py -w tests -w draftjs_exporter  -x "clear && make test -s || true"
 
 test_ci: lint test ## Check for continuous integration.
 
 dev: ## Restarts the example whenever a file changes.
-	nodemon -q -e py -w tests -w draft_exporter  -x "clear && python example.py || true"
+	nodemon -q -e py -w tests -w draftjs_exporter  -x "clear && python example.py || true"
 
 freeze: ## Freeze pip dependencies for development.
 	pip freeze > requirements-dev.txt

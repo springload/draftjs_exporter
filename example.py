@@ -1,5 +1,5 @@
-from draft_exporter.html import HTML
-from draft_exporter.entities.link import Link
+from draftjs_exporter.html import HTML
+from draftjs_exporter.entities.link import Link
 
 
 config = {

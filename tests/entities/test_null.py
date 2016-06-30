@@ -1,5 +1,5 @@
 import unittest
-from draft_exporter.entities.null import Null
+from draftjs_exporter.entities.null import Null
 
 
 class TestNull(unittest.TestCase):

@@ -1,5 +1,5 @@
 import unittest
-from draft_exporter.wrapper_state import WrapperState
+from draftjs_exporter.wrapper_state import WrapperState
 
 block_map = {
     'header-one': {'element': 'h1'},

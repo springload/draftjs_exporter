@@ -1,8 +1,8 @@
 import unittest
 
-from draft_exporter.command import Command
-from draft_exporter.entities.link import Link
-from draft_exporter.html import HTML
+from draftjs_exporter.command import Command
+from draftjs_exporter.entities.link import Link
+from draftjs_exporter.html import HTML
 
 config = {
     'entity_decorators': {

@@ -3,8 +3,8 @@ import json
 import os
 import unittest
 
-from draft_exporter.entities.link import Link
-from draft_exporter.html import HTML
+from draftjs_exporter.entities.link import Link
+from draftjs_exporter.html import HTML
 
 fixtures_path = os.path.join(os.path.dirname(__file__), 'test_exports.json')
 fixtures = json.loads(codecs.open(fixtures_path, 'r', 'utf-8').read())

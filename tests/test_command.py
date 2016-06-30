@@ -1,5 +1,5 @@
 import unittest
-from draft_exporter.command import Command
+from draftjs_exporter.command import Command
 
 
 class TestCommand(unittest.TestCase):

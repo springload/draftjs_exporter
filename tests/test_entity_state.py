@@ -2,9 +2,9 @@ import unittest
 
 from lxml import etree
 
-from draft_exporter.command import Command
-from draft_exporter.entities.link import Link
-from draft_exporter.entity_state import EntityState
+from draftjs_exporter.command import Command
+from draftjs_exporter.entities.link import Link
+from draftjs_exporter.entity_state import EntityState
 
 entity_decorators = {
     'LINK': Link()

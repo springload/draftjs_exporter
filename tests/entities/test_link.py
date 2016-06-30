@@ -1,5 +1,5 @@
 import unittest
-from draft_exporter.entities.link import Link
+from draftjs_exporter.entities.link import Link
 
 
 class TestLink(unittest.TestCase):

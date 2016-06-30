@@ -1,7 +1,7 @@
 import unittest
 
-from draft_exporter.command import Command
-from draft_exporter.style_state import StyleState
+from draftjs_exporter.command import Command
+from draftjs_exporter.style_state import StyleState
 
 style_map = {
     'ITALIC': {'fontStyle': 'italic'},

@@ -1,5 +1,5 @@
-from draft_exporter.entities.null import Null
-from draft_exporter.error import ExporterException
+from draftjs_exporter.entities.null import Null
+from draftjs_exporter.error import ExporterException
 
 
 class EntityException(ExporterException):
