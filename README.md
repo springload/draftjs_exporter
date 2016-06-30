@@ -28,12 +28,14 @@ make init
 ### Commands
 
 ```sh
-make dev             # Restarts the example whenever a file changes.
 make help            # See what commands are available.
 make init            # Install dependencies and initialise for development.
 make lint            # Lint the project.
 make test            # Test the project.
-make test_watch      # Restarts the tests whenever a file changes.
+make test-watch      # Restarts the tests whenever a file changes.
+make test-ci         # Check for continuous integration.
+make dev             # Restarts the example whenever a file changes.
+make clean-pyc       # Remove Python file artifacts.
 ```
 
 ### Debugging
