@@ -22,7 +22,8 @@ config = {
     },
     'style_map': {
         'ITALIC': {'fontStyle': 'italic'},
-        'BOLD': {'fontStyle': 'bold'}
+        'BOLD': {'fontStyle': 'bold'},
+        'HIGHLIGHT': {'fontStyle': 'bold', 'textDecoration': 'underline'},
     }
 }
 
@@ -57,7 +58,6 @@ class TestOutput(unittest.TestCase):
             ]
         }), '<h1>Header</h1><div>some paragraph text</div>')
 
-    @unittest.skip('TODO')
     def test_call_with_inline_styles_decodes(self):
         self.assertEqual(self.exporter.call({
             'entityMap': {},
@@ -78,6 +78,53 @@ class TestOutput(unittest.TestCase):
                 }
             ]
         }), '<div><span style="font-style: italic;">some</span> paragraph text</div>')
+
+    def test_call_with_multiple_inline_styles_decodes(self):
+        self.assertEqual(self.exporter.call({
+            'entityMap': {
+                '0': {
+                    'type': 'LINK',
+                    'mutability': 'MUTABLE',
+                    'data': {
+                        'url': 'http://example.com'
+                    }
+                }
+            },
+            'blocks': [
+                {
+                    'key': '5s7g9',
+                    'text': 'Header',
+                    'type': 'header-one',
+                    'depth': 0,
+                    'inlineStyleRanges': [{
+                        'offset': 0,
+                        'length': 2,
+                        'style': 'BOLD'
+                    }],
+                    'entityRanges': []
+                },
+                {
+                    'key': 'dem5p',
+                    'text': 'some paragraph text',
+                    'type': 'unstyled',
+                    'depth': 0,
+                    'inlineStyleRanges': [
+                        {
+                            'offset': 0,
+                            'length': 4,
+                            'style': 'HIGHLIGHT'
+                        }
+                    ],
+                    'entityRanges': [
+                        {
+                            'offset': 5,
+                            'length': 9,
+                            'key': 0
+                        }
+                    ]
+                }
+            ]
+        }), '<h1><span style="font-style: bold;">He</span>ader</h1><div><span style="font-style: bold;text-decoration: underline;">some</span> paragraph text</div>')
 
     @unittest.skip('TODO')
     def test_call_with_entities_decodes(self):

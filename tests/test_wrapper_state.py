@@ -22,7 +22,7 @@ class TestWrapperState(unittest.TestCase):
             'depth': 0,
             'inlineStyleRanges': [],
             'entityRanges': []
-        }).text, 'Header')
+        }).text, None)
 
     def test_element_for_tag(self):
         self.assertEqual(self.wrapper_state.element_for({
@@ -47,7 +47,7 @@ class TestWrapperState(unittest.TestCase):
             'entityRanges': []
         })
 
-        self.assertEqual(self.wrapper_state.to_string(), '<h1>Header</h1>')
+        self.assertEqual(self.wrapper_state.to_string(), '<h1/>')
 
     def test_str_empty(self):
         self.assertEqual(str(self.wrapper_state), '<WrapperState: >')
@@ -62,7 +62,7 @@ class TestWrapperState(unittest.TestCase):
             'entityRanges': []
         })
 
-        self.assertEqual(str(self.wrapper_state), '<WrapperState: <h1>Header</h1>>')
+        self.assertEqual(str(self.wrapper_state), '<WrapperState: <h1/>>')
 
     # def test_set_wrapper(self):
     #     # self.assertEqual(self.wrapper_state.set_wrapper(element, options=[]), '')

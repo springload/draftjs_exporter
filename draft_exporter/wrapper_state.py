@@ -24,9 +24,6 @@ class WrapperState():
 
         elt = etree.Element(self.block_options(type))
 
-        # TODO To remove
-        elt.text = block.get('text')
-
         parent = self.parent_for(type)
         parent.append(elt)
 

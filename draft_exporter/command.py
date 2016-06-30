@@ -6,3 +6,6 @@ class Command:
 
     def __str__(self):
         return '<Command {0} {1} {2}>'.format(self.name, self.index, self.data)
+
+    def __repr__(self):
+        return str(self)
