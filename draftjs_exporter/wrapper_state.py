@@ -4,6 +4,12 @@ import re
 
 from lxml import etree
 
+from draftjs_exporter.error import ExporterException
+
+
+class BlockException(ExporterException):
+    pass
+
 
 class WrapperState():
     """
@@ -24,9 +30,7 @@ class WrapperState():
 
     def element_for(self, block):
         type = block.get('type', 'unstyled')
-        # print(type, self.block_options(type))
-
-        elt = etree.Element(self.block_options(type))
+        elt = etree.Element(self.get_block_tag(type))
 
         parent = self.parent_for(type)
         parent.append(elt)
@@ -51,7 +55,6 @@ class WrapperState():
     def get_wrapper_options(self):
         return self.wrapper[1]
 
-    # TODO Refactor to remove multi-returns
     def parent_for(self, type):
         parent = None
         options = self.block_map.get(type)
@@ -76,8 +79,13 @@ class WrapperState():
 
         return [name, attributes]
 
-    def block_options(self, type):
-        return self.block_map.get(type).get('element')
+    def get_block_tag(self, type):
+        options = self.block_map.get(type)
+
+        if options is None:
+            raise BlockException('Block "%s" does not exist in block_map' % type)
+
+        return options.get('element')
 
     def create_wrapper(self, options):
         new_options = self.map_options(options[0], options[1])
