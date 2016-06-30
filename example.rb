@@ -1,6 +1,7 @@
 require 'draftjs_exporter/entities/link'
 require 'draftjs_exporter/html'
 
+# https://github.com/ignitionworks/draftjs_exporter
 config = {
   entity_decorators: {
     'LINK' => DraftjsExporter::Entities::Link.new
@@ -15,6 +16,7 @@ config = {
   },
   style_map: {
     'ITALIC' => { fontStyle: 'italic'},
+    'BOLD' => { fontStyle: 'bold' }
   }
 }
 
@@ -38,7 +40,11 @@ puts exporter.call({
       text: 'Header',
       type: 'header-one',
       depth: 0,
-      inlineStyleRanges: [],
+      inlineStyleRanges: [{
+        offset: 0,
+        length: 2,
+        style: 'BOLD'
+      }],
       entityRanges: []
     },
     {
@@ -62,4 +68,4 @@ puts exporter.call({
       ]
     }
   ]
-})
+}).delete("\n")

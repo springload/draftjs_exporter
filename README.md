@@ -1,6 +1,7 @@
-# Draft Exporter [![Build Status](https://travis-ci.org/springload/draftjs_exporter.svg?branch=master)](https://travis-ci.org/springload/draftjs_exporter)
+draftjs_exporter [![Build Status](https://travis-ci.org/springload/draftjs_exporter.svg?branch=master)](https://travis-ci.org/springload/draftjs_exporter) [![Code Climate](https://codeclimate.com/github/springload/draftjs_exporter/badges/gpa.svg)](https://codeclimate.com/github/springload/draftjs_exporter)
+================
 
-Python port of [draftjs_exporter](https://github.com/ignitionworks/draftjs_exporter) ruby library
+> Python port of the [draftjs_exporter](https://github.com/ignitionworks/draftjs_exporter) ruby library.
 
 This is a work in progress.
 
