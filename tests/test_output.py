@@ -28,6 +28,7 @@ config = {
 
 class TestOutput(unittest.TestCase):
     def setUp(self):
+        self.maxDiff = None
         self.exporter = HTML(config)
 
     def test_call_with_different_blocks_decodes(self):
@@ -216,3 +217,124 @@ class TestOutput(unittest.TestCase):
                 }
             ]
         }), '<ul class="steps"><li>item1</li><li>item2</li></ul>')
+
+    def test_call_with_big_content(self):
+        self.assertEqual(HTML({
+            'entity_decorators': {
+                'LINK': Link()
+            },
+            'block_map': {
+                'header-two': {'element': 'h2'},
+                'blockquote': {'element': 'blockquote'},
+                'unordered-list-item': {
+                    'element': 'li',
+                    'wrapper': ['ul', {}]
+                },
+                'unstyled': {'element': 'p'}
+            },
+            'style_map': {
+                'ITALIC': {'fontStyle': 'italic'},
+                'BOLD': {'fontStyle': 'bold'}
+            }
+        }).call({
+            'entityMap': {
+                '0': {
+                    'type': 'LINK',
+                    'mutability': 'MUTABLE',
+                    'data': {
+                        'url': 'http://example.com'
+                    }
+                },
+                '1': {
+                    'type': 'LINK',
+                    'mutability': 'MUTABLE',
+                    'data': {
+                        'url': 'https://www.springload.co.nz/work/nz-festival/'
+                    }
+                }
+            },
+            'blocks': [
+                {
+                    'key': '6mgfh',
+                    'text': 'User experience (UX) design',
+                    'type': 'header-two',
+                    'depth': 0,
+                    'inlineStyleRanges': [
+                        {
+                            'offset': 16,
+                            'length': 4,
+                            'style': 'BOLD'
+                        }
+                    ],
+                    'entityRanges': []
+                },
+                {
+                    'key': '5384u',
+                    'text': 'Everyone at Springload applies the best principles of UX to their work.',
+                    'type': 'blockquote',
+                    'depth': 0,
+                    'inlineStyleRanges': [],
+                    'entityRanges': []
+                },
+                {
+                    'key': 'eelkd',
+                    'text': 'The design decisions we make building tools and services for your customers are based on empathy for what your customers need.',
+                    'type': 'unstyled',
+                    'depth': 0,
+                    'inlineStyleRanges': [],
+                    'entityRanges': []
+                },
+                {
+                    'key': 'b9grk',
+                    'text': 'User research',
+                    'type': 'unordered-list-item',
+                    'depth': 0,
+                    'inlineStyleRanges': [],
+                    'entityRanges': []
+                },
+                {
+                    'key': 'a1tis',
+                    'text': 'User testing and analysis',
+                    'type': 'unordered-list-item',
+                    'depth': 0,
+                    'inlineStyleRanges': [],
+                    'entityRanges': [
+                        {
+                            'offset': 0,
+                            'length': 25,
+                            'key': 0
+                        }
+                    ]
+                },
+                {
+                    'key': 'adjdn',
+                    'text': 'A/B testing',
+                    'type': 'unordered-list-item',
+                    'depth': 0,
+                    'inlineStyleRanges': [],
+                    'entityRanges': []
+                },
+                {
+                    'key': '62lio',
+                    'text': 'Prototyping',
+                    'type': 'unordered-list-item',
+                    'depth': 0,
+                    'inlineStyleRanges': [],
+                    'entityRanges': []
+                },
+                {
+                    'key': 'fq3f',
+                    'text': 'How we made it delightful and easy for people to find NZ Festival shows',
+                    'type': 'unstyled',
+                    'depth': 0,
+                    'inlineStyleRanges': [],
+                    'entityRanges': [
+                        {
+                            'offset': 0,
+                            'length': 71,
+                            'key': 1
+                        }
+                    ]
+                }
+            ]
+        }), '<h2>User experience <span style="font-style: bold;">(UX)</span> design</h2><blockquote>Everyone at Springload applies the best principles of UX to their work.</blockquote><p>The design decisions we make building tools and services for your customers are based on empathy for what your customers need.</p><ul><li>User research</li><li><a href="http://example.com">User testing and analysis</a></li><li>A/B testing</li><li>Prototyping</li></ul><p><a href="https://www.springload.co.nz/work/nz-festival/">How we made it delightful and easy for people to find NZ Festival shows</a></p>')
