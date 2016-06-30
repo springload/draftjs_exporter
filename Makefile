@@ -23,3 +23,6 @@ test_ci: lint test ## Check for continuous integration.
 
 dev: ## Restarts the example whenever a file changes.
 	nodemon -q -e py -w tests -w draft_exporter  -x "clear && python example.py || true"
+
+freeze: ## Freeze pip dependencies for development.
+	pip freeze > requirements-dev.txt
