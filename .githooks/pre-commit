@@ -22,7 +22,7 @@ else
 
     if [ -n "$PY_FILES" ];
     then
-        make test_ci
+        make test-ci
     fi
     exit 0
 fi

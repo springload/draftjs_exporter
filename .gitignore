@@ -1,4 +1,7 @@
 .DS_Store
+/MANIFEST
+/.tox/
+/*.egg-info/
 /.venv/
 /var/static/
 /var/media/

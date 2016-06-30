@@ -4,7 +4,7 @@ python:
 - '2.7'
 - '3.3'
 install: make init
-script: make test_ci
+script: make test-ci
 notifications:
   email: false
   slack:
