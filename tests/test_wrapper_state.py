@@ -1,4 +1,7 @@
+from __future__ import absolute_import, unicode_literals
+
 import unittest
+
 from draftjs_exporter.wrapper_state import WrapperState
 
 block_map = {

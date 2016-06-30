@@ -1,6 +1,7 @@
-from draftjs_exporter.html import HTML
-from draftjs_exporter.entities.link import Link
+from __future__ import absolute_import, unicode_literals
 
+from draftjs_exporter.entities.link import Link
+from draftjs_exporter.html import HTML
 
 config = {
     'entity_decorators': {

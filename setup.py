@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
-from distutils.core import setup
+from __future__ import absolute_import, unicode_literals
 
+from distutils.core import setup
 
 install_requires = [
     'lxml==3.6.0',

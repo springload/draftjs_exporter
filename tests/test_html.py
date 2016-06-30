@@ -1,3 +1,5 @@
+from __future__ import absolute_import, unicode_literals
+
 import unittest
 
 from draftjs_exporter.command import Command
@@ -31,7 +33,7 @@ class TestHTML(unittest.TestCase):
     def test_init(self):
         self.assertIsInstance(self.exporter, HTML)
 
-    def test_call_returns_str(self):
+    def test_call_returns_unicode(self):
         self.assertIsInstance(self.exporter.call({
             'entityMap': {},
             'blocks': [
@@ -44,7 +46,7 @@ class TestHTML(unittest.TestCase):
                     'entityRanges': []
                 },
             ]
-        }), str)
+        }), unicode)
 
     def test_block_contents_exists(self):
         self.assertTrue('block_contents' in dir(self.exporter))

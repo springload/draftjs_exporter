@@ -1,3 +1,5 @@
+from __future__ import absolute_import, unicode_literals
+
 from draftjs_exporter.entities.null import Null
 from draftjs_exporter.error import ExporterException
 
