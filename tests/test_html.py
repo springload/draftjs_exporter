@@ -219,7 +219,6 @@ class TestHTML(unittest.TestCase):
             Command('stop_entity', 4, 1),
         ]))
 
-
     def test_build_command_groups_empty(self):
         self.assertEqual(str(self.exporter.build_command_groups({
             'key': 'dem5p',

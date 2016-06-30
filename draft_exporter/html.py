@@ -1,5 +1,3 @@
-from itertools import groupby
-
 from lxml import etree
 
 from .command import Command
@@ -58,9 +56,8 @@ class HTML():
         """
         commands = self.build_commands(block)
         # TODO Tried using itertools.tee but for some reason that does not work. Oh well.
-        key = lambda c: c.index
-        grouped = groupby(sorted(commands, key=key), key)
-        listed = list(groupby(sorted(commands, key=key), key))
+        grouped = Command.grouped_by_index(commands)
+        listed = list(Command.grouped_by_index(commands))
 
         text = block.get('text')
         grouped_sliced = []
@@ -75,25 +72,14 @@ class HTML():
         return grouped_sliced
 
     def build_commands(self, block):
+        text_commands = Command.start_stop('text', 0, len(block.get('text')))
         style_commands = self.build_style_commands(block)
         entity_commands = self.build_entity_commands(block)
-        return [
-            Command('start_text', 0),
-            Command('stop_text', len(block.get('text'))),
-        ] + style_commands + entity_commands
+
+        return text_commands + style_commands + entity_commands
 
     def build_style_commands(self, block):
-        return self.build_range_commands('inline_style', 'style', block.get('inlineStyleRanges'))
+        return Command.from_ranges(block.get('inlineStyleRanges', []), 'inline_style', 'style')
 
     def build_entity_commands(self, block):
-        return self.build_range_commands('entity', 'key', block.get('entityRanges'))
-
-    def build_range_commands(self, name, data_key, ranges):
-        commands = []
-        for r in ranges:
-            data = r.get(data_key)
-            start = r.get('offset')
-            stop = start + r.get('length')
-            commands.append(Command('start_%s' % name, start, data))
-            commands.append(Command('stop_%s' % name, stop, data))
-        return commands
+        return Command.from_ranges(block.get('entityRanges', []), 'entity', 'key')

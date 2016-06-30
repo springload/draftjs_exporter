@@ -27,12 +27,12 @@ class TestEntityState(unittest.TestCase):
 
     @unittest.skip('TODO')
     def test_apply_start_entity(self):
-        self.assertEquals(self.entity_state.entity_stack, [])
+        self.assertEqual(self.entity_state.entity_stack, [])
         self.entity_state.apply({'name': 'start_entity', 'data': {}})
-        self.assertEquals(self.entity_state.entity_stack, [])
+        self.assertEqual(self.entity_state.entity_stack, [])
 
     @unittest.skip('TODO')
     def test_apply_stop_entity(self):
-        self.assertEquals(self.entity_state.entity_stack, [])
+        self.assertEqual(self.entity_state.entity_stack, [])
         self.entity_state.apply({'name': 'stop_entity', 'data': {}})
-        self.assertEquals(self.entity_state.entity_stack, [])
+        self.assertEqual(self.entity_state.entity_stack, [])

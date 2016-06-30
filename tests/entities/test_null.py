@@ -10,4 +10,4 @@ class TestNull(unittest.TestCase):
         self.assertIsInstance(self.null, Null)
 
     def test_call(self):
-        self.assertEquals(self.null.call({'test': 5}), {'test': 5})
+        self.assertEqual(self.null.call({'test': 5}), {'test': 5})
