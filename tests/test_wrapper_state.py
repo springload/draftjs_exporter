@@ -47,7 +47,7 @@ class TestWrapperState(unittest.TestCase):
             'entityRanges': []
         })
 
-        self.assertEqual(self.wrapper_state.to_string(), '<h1/>')
+        self.assertEqual(self.wrapper_state.to_string(), '<h1></h1>')
 
     def test_str_empty(self):
         self.assertEqual(str(self.wrapper_state), '<WrapperState: >')
@@ -62,7 +62,7 @@ class TestWrapperState(unittest.TestCase):
             'entityRanges': []
         })
 
-        self.assertEqual(str(self.wrapper_state), '<WrapperState: <h1/>>')
+        self.assertEqual(str(self.wrapper_state), '<WrapperState: <h1></h1>>')
 
     # def test_set_wrapper(self):
     #     # self.assertEqual(self.wrapper_state.set_wrapper(element, options=[]), '')
