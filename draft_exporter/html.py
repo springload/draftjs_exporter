@@ -31,8 +31,7 @@ class HTML():
                 entity_state.apply(command)
                 style_state.apply(command)
 
-            # TODO Use entity_state.
-            self.add_node(element, text, style_state)
+            self.add_node(entity_state.current_parent(), text, style_state)
 
     def add_node(self, element, text, style_state):
         if style_state.is_unstyled():
@@ -41,13 +40,6 @@ class HTML():
         else:
             child = etree.SubElement(element, 'span', attrib=style_state.element_attributes())
             child.text = text
-        # document = element.getroot()
-        # node = if state.text?
-        # document.create_text_node(text)
-        # else
-        # document.create_element('span', text, state.element_attributes)
-        # end
-        # element.add_child(node)
 
     def build_command_groups(self, block):
         """
