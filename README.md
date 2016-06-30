@@ -35,6 +35,11 @@ make test            # Test the project.
 make test_watch      # Restarts the tests whenever a file changes.
 ```
 
+### Debugging
+
+- Always run the tests. `npm install -g nodemon`, then `make test_watch`.
+- Use a debugger. `pip install ipdb`, then `import ipdb; ipdb.set_trace()`.
+
 ## R&D notes
 
 ### Generating HTML in Python

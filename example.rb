@@ -14,7 +14,7 @@ config = {
     'unstyled' => { element: 'div' }
   },
   style_map: {
-    'ITALIC' => { fontSt
+    'ITALIC' => { fontStyle: 'italic'},
   }
 }
 
