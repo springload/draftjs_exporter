@@ -33,21 +33,6 @@ class TestHTML(unittest.TestCase):
     def test_init(self):
         self.assertIsInstance(self.exporter, HTML)
 
-    def test_call_returns_unicode(self):
-        self.assertIsInstance(self.exporter.call({
-            'entityMap': {},
-            'blocks': [
-                {
-                    'key': '5s7g9',
-                    'text': 'Header',
-                    'type': 'header-one',
-                    'depth': 0,
-                    'inlineStyleRanges': [],
-                    'entityRanges': []
-                },
-            ]
-        }), unicode)
-
     def test_block_contents_exists(self):
         self.assertTrue('block_contents' in dir(self.exporter))
 
