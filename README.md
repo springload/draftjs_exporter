@@ -45,6 +45,15 @@ make clean-pyc       # Remove Python file artifacts.
 
 ## R&D notes
 
+### Useful resources
+
+#### Draft.js
+
+- https://medium.com/@rajaraodv/how-draft-js-represents-rich-text-data-eeabb5f25cf2
+- https://github.com/nikgraf/awesome-draft-js
+- https://github.com/rajaraodv/draftjs-examples
+- https://github.com/lokiuz/redraft
+
 ### Generating HTML in Python
 
 > https://www.quora.com/What-is-an-easy-to-use-HTML-XML-parser-generator-library-in-Python-similar-to-Hpricot-Nokogiri-in-Ruby
@@ -57,7 +66,7 @@ make clean-pyc       # Remove Python file artifacts.
 
 ### Limitations of `lxml`
 
-- Succinct documentation
+- Succinct documentation (http://lxml.de/tutorial.html is the best)
 - XML parser first, not really meant to generate HTML
 - No support for document fragments
 - No support for text nodes (`.text` and `.tail` instead)

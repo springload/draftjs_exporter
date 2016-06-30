@@ -25,7 +25,7 @@ test-watch: ## Restarts the tests whenever a file changes.
 test-ci: lint test ## Check for continuous integration.
 
 dev: ## Restarts the example whenever a file changes.
-	nodemon -q -e py -w tests -w draftjs_exporter  -x "clear && python example.py || true"
+	nodemon -q -e py -w tests -w draftjs_exporter -w example.py  -x "clear && python example.py || true"
 
 clean-pyc: ## Remove Python file artifacts.
 	find . -name '*.pyc' -exec rm -f {} +
