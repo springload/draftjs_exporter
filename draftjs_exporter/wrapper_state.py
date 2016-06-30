@@ -20,13 +20,10 @@ class WrapperState():
 
     def __init__(self, block_map):
         self.block_map = block_map
-        # TODO lxml does not have the notion of a document fragment.
-        # Or does it? How do we deal with this?
-        self.fragment = etree.Element('fragment')
         self.document = etree.Element('root')
 
         # Default wrapper element is a fragment, does not have options.
-        self.wrapper = [self.fragment, []]
+        self.wrapper = [etree.Element('fragment'), []]
 
     def element_for(self, block):
         type = block.get('type', 'unstyled')
@@ -67,21 +64,23 @@ class WrapperState():
         return parent
 
     def reset_wrapper(self):
-        self.set_wrapper(self.fragment)
+        self.set_wrapper(etree.Element('fragment'))
         return self.get_wrapper_elt()
 
     def map_options(self, name, attributes={}):
         """
         Map attributes/options from Draft.js to lxml lingo.
         """
-        attributes['class'] = attributes.get('className', None)
-        attributes.pop('className', None)
+        if 'className' in attributes:
+            attributes['class'] = attributes.get('className')
+            attributes.pop('className', None)
 
         return [name, attributes]
 
     def get_block_tag(self, type):
         options = self.block_map.get(type)
 
+        # TODO To test
         if options is None:
             raise BlockException('Block "%s" does not exist in block_map' % type)
 
@@ -90,10 +89,9 @@ class WrapperState():
     def create_wrapper(self, options):
         new_options = self.map_options(options[0], options[1])
 
-        # TODO Check object equality in Python
         if new_options != self.get_wrapper_options():
+            print
             wrapper = etree.Element(options[0], attrib=options[1])
-            # self.reset_wrapper().append(wrapper)
             self.set_wrapper(wrapper, options)
 
         return self.get_wrapper_elt()
