@@ -71,10 +71,11 @@ make test_watch      # Restarts the tests whenever a file changes.
 
 and it's not just contentState but contentState + some config
 
-#### Constraints
+#### Constraints (to be weighted)
 
 - Keeping the coupling between the CMS and the editor low so that we can change the editor's capabilities without having to write back-end code
 - Giving the CMS enough control over the generated HTML. Not sure if "the CMS" just means "back-end" or if some JS code next to the editor code counts as well.
 - Maintaining this over time with changing Draft.js output formats and unmaintained or wildly changing AST formats
 - Regardless of implementation, being on the right spot between: "over the lifetime of the site/CMS, a given piece of content should always render the same HTML" and "a piece of content should always render the _best_ HTML"
 - Keeping the coupling between CMS and editor low so that we can swap editors easily (bigger scope than the one of a single site/project here)
+- Favour logical completeness over raw speed. The Wagtail regex parser will be faster than building a DOM. But caching makes that mostly irrelevant. The bottlenecks will all likely be in the DB lookups for inline entities anyway.
