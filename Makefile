@@ -5,7 +5,7 @@ help: ## See what commands are available.
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36mmake %-15s\033[0m # %s\n", $$1, $$2}'
 
 init: ## Install dependencies and initialise for development.
-	pip install -r requirements.txt
+	pip install -r requirements-dev.txt
 
 lint: ## Lint the project.
 	flake8 draft_exporter --max-line-length 1200

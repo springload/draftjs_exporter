@@ -53,4 +53,7 @@ make test_watch      # Restarts the tests whenever a file changes.
 - No support for document fragments
 - No support for text nodes (`.text` and `.tail` instead)
 
-Feels like we would want to use https://github.com/html5lib/html5lib-python but the documentation is even worse.
+### Under consideration
+
+- Use https://github.com/icelab/draft-js-ast-exporter for its less ambiguous but also more opinionated exchange format?
+- Use https://github.com/html5lib/html5lib-python for its nicer API, but the documentation is even worse than lxml.
