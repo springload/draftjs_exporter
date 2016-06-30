@@ -44,4 +44,4 @@ class StyleState():
             for prop in css_style.keys():
                 rules.append('{0}: {1};'.format(camelToDash(prop), css_style[prop]))
 
-        return ''.join(rules)
+        return ''.join(sorted(rules))

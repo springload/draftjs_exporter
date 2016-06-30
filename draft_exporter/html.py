@@ -28,7 +28,6 @@ class HTML():
         entity_state = EntityState(element, self.entity_decorators, entity_map)
         for (text, commands) in self.build_command_groups(block):
             for command in commands:
-                # print command, text
                 entity_state.apply(command)
                 style_state.apply(command)
 
