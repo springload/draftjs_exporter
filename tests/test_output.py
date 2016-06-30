@@ -81,26 +81,20 @@ class TestOutput(unittest.TestCase):
 
     def test_call_with_multiple_inline_styles_decodes(self):
         self.assertEqual(self.exporter.call({
-            'entityMap': {
-                '0': {
-                    'type': 'LINK',
-                    'mutability': 'MUTABLE',
-                    'data': {
-                        'url': 'http://example.com'
-                    }
-                }
-            },
+            'entityMap': {},
             'blocks': [
                 {
                     'key': '5s7g9',
                     'text': 'Header',
                     'type': 'header-one',
                     'depth': 0,
-                    'inlineStyleRanges': [{
-                        'offset': 0,
-                        'length': 2,
-                        'style': 'BOLD'
-                    }],
+                    'inlineStyleRanges': [
+                        {
+                            'offset': 0,
+                            'length': 2,
+                            'style': 'BOLD'
+                        }
+                    ],
                     'entityRanges': []
                 },
                 {

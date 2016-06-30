@@ -1,5 +1,6 @@
 import unittest
 
+from draft_exporter.command import Command
 from draft_exporter.entities.link import Link
 from draft_exporter.html import HTML
 
@@ -45,27 +46,250 @@ class TestHTML(unittest.TestCase):
             ]
         }), str)
 
-    @unittest.skip('TODO')
-    def test_block_contents(self):
-        # self.exporter.block_contents(self, element, block, entity_map)
-        pass
+    def test_block_contents_exists(self):
+        self.assertTrue('block_contents' in dir(self.exporter))
 
-    @unittest.skip('TODO')
     def test_add_node(self):
-        # self.exporter.add_node(self, element, text, style_state)
+        self.assertTrue('add_node' in dir(self.exporter))
         pass
 
-    @unittest.skip('TODO')
-    def test_build_command_groups(self):
-        # self.exporter.build_command_groups(self, block)
-        pass
+    def test_build_style_commands_empty(self):
+        self.assertEqual(str(self.exporter.build_style_commands({
+            'key': '5s7g9',
+            'text': 'Header',
+            'type': 'header-one',
+            'depth': 0,
+            'inlineStyleRanges': [],
+            'entityRanges': []
+        })), str([]))
 
-    @unittest.skip('TODO')
-    def test_build_commands(self):
-        # self.exporter.build_commands(self, block)
-        pass
+    def test_build_style_commands_single(self):
+        self.assertEqual(str(self.exporter.build_style_commands({
+            'key': '5s7g9',
+            'text': 'Header',
+            'type': 'header-one',
+            'depth': 0,
+            'inlineStyleRanges': [
+                {
+                    'offset': 0,
+                    'length': 4,
+                    'style': 'ITALIC'
+                }
+            ],
+            'entityRanges': []
+        })), str([
+            Command('start_inline_style', 0, 'ITALIC'),
+            Command('stop_inline_style', 4, 'ITALIC'),
+        ]))
 
-    @unittest.skip('TODO')
-    def test_build_range_commands(self):
-        # self.exporter.build_range_commands(self, name, data_key, ranges)
-        pass
+    def test_build_style_commands_multiple(self):
+        self.assertEqual(str(self.exporter.build_style_commands({
+            'key': '5s7g9',
+            'text': 'Header',
+            'type': 'header-one',
+            'depth': 0,
+            'inlineStyleRanges': [
+                {
+                    'offset': 0,
+                    'length': 4,
+                    'style': 'ITALIC'
+                },
+                {
+                    'offset': 9,
+                    'length': 3,
+                    'style': 'BOLD'
+                }
+            ],
+            'entityRanges': []
+        })), str([
+            Command('start_inline_style', 0, 'ITALIC'),
+            Command('stop_inline_style', 4, 'ITALIC'),
+            Command('start_inline_style', 9, 'BOLD'),
+            Command('stop_inline_style', 12, 'BOLD'),
+        ]))
+
+    def test_build_entity_commands_empty(self):
+        self.assertEqual(str(self.exporter.build_entity_commands({
+            'key': 'dem5p',
+            'text': 'some paragraph text',
+            'type': 'unstyled',
+            'depth': 0,
+            'inlineStyleRanges': [],
+            'entityRanges': []
+        })), str([]))
+
+    def test_build_entity_commands_single(self):
+        self.assertEqual(str(self.exporter.build_entity_commands({
+            'key': 'dem5p',
+            'text': 'some paragraph text',
+            'type': 'unstyled',
+            'depth': 0,
+            'inlineStyleRanges': [],
+            'entityRanges': [
+                {
+                    'offset': 5,
+                    'length': 9,
+                    'key': 0
+                }
+            ]
+        })), str([
+            Command('start_entity', 5, 0),
+            Command('stop_entity', 14, 0),
+        ]))
+
+    def test_build_entity_commands_multiple(self):
+        self.assertEqual(str(self.exporter.build_entity_commands({
+            'key': 'dem5p',
+            'text': 'some paragraph text',
+            'type': 'unstyled',
+            'depth': 0,
+            'inlineStyleRanges': [],
+            'entityRanges': [
+                {
+                    'offset': 5,
+                    'length': 9,
+                    'key': 0
+                },
+                {
+                    'offset': 0,
+                    'length': 4,
+                    'key': 1
+                }
+            ]
+        })), str([
+            Command('start_entity', 5, 0),
+            Command('stop_entity', 14, 0),
+            Command('start_entity', 0, 1),
+            Command('stop_entity', 4, 1),
+        ]))
+
+    def test_build_commands_empty(self):
+        self.assertEqual(str(self.exporter.build_commands({
+            'key': 'dem5p',
+            'text': 'some paragraph text',
+            'type': 'unstyled',
+            'depth': 0,
+            'inlineStyleRanges': [],
+            'entityRanges': []
+        })), str([
+            Command('start_text', 0),
+            Command('stop_text', 19),
+        ]))
+
+    def test_build_commands_multiple(self):
+        self.assertEqual(str(self.exporter.build_commands({
+            'key': 'dem5p',
+            'text': 'some paragraph text',
+            'type': 'unstyled',
+            'depth': 0,
+            'inlineStyleRanges': [
+                {
+                    'offset': 0,
+                    'length': 4,
+                    'style': 'ITALIC'
+                },
+                {
+                    'offset': 9,
+                    'length': 3,
+                    'style': 'BOLD'
+                }
+            ],
+            'entityRanges': [
+                {
+                    'offset': 5,
+                    'length': 9,
+                    'key': 0
+                },
+                {
+                    'offset': 0,
+                    'length': 4,
+                    'key': 1
+                }
+            ]
+        })), str([
+            Command('start_text', 0),
+            Command('stop_text', 19),
+            Command('start_inline_style', 0, 'ITALIC'),
+            Command('stop_inline_style', 4, 'ITALIC'),
+            Command('start_inline_style', 9, 'BOLD'),
+            Command('stop_inline_style', 12, 'BOLD'),
+            Command('start_entity', 5, 0),
+            Command('stop_entity', 14, 0),
+            Command('start_entity', 0, 1),
+            Command('stop_entity', 4, 1),
+        ]))
+
+
+    def test_build_command_groups_empty(self):
+        self.assertEqual(str(self.exporter.build_command_groups({
+            'key': 'dem5p',
+            'text': 'some paragraph text',
+            'type': 'unstyled',
+            'depth': 0,
+            'inlineStyleRanges': [],
+            'entityRanges': []
+        })), str([
+            ('some paragraph text', [
+                Command('start_text', 0)
+            ]),
+            ('', [
+                Command('stop_text', 19)
+            ]),
+        ]))
+
+    def test_build_command_groups_multiple(self):
+        self.assertEqual(str(self.exporter.build_command_groups({
+            'key': 'dem5p',
+            'text': 'some paragraph text',
+            'type': 'unstyled',
+            'depth': 0,
+            'inlineStyleRanges': [
+                {
+                    'offset': 0,
+                    'length': 4,
+                    'style': 'ITALIC'
+                },
+                {
+                    'offset': 9,
+                    'length': 3,
+                    'style': 'BOLD'
+                }
+            ],
+            'entityRanges': [
+                {
+                    'offset': 5,
+                    'length': 9,
+                    'key': 0
+                },
+                {
+                    'offset': 0,
+                    'length': 4,
+                    'key': 1
+                }
+            ]
+        })), str([
+            ('some', [
+                Command('start_text', 0),
+                Command('start_inline_style', 0, 'ITALIC'),
+                Command('start_entity', 0, 1),
+            ]),
+            (' ', [
+                Command('stop_inline_style', 4, 'ITALIC'),
+                Command('stop_entity', 4, 1),
+            ]),
+            ('para', [
+                Command('start_entity', 5, 0),
+            ]),
+            ('gra', [
+                Command('start_inline_style', 9, 'BOLD'),
+            ]),
+            ('ph', [
+                Command('stop_inline_style', 12, 'BOLD'),
+            ]),
+            (' text', [
+                Command('stop_entity', 14, 0),
+            ]),
+            ('', [
+                Command('stop_text', 19)
+            ]),
+        ]))
