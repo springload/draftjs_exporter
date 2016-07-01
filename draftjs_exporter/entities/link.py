@@ -4,8 +4,21 @@ from lxml import etree
 
 
 class Link():
-    def call(self, parent_element, data):
-        # TODO Use more than just url attribute https://github.com/sstur/draft-js-export-html/blob/master/src/stateToHTML.js#L30
-        element = etree.SubElement(parent_element, 'a', attrib={'href': data.get('data', {}).get('url')})
+    attributes = ['url', 'rel', 'target', 'title']
 
-        return element
+    def is_valid_attribute(self, key):
+        valid_data_attr = (key.startswith('data-') and key.replace('data-', '') and key.replace('data-', '').islower())
+        return key in Link.attributes or valid_data_attr
+
+    def call(self, parent_element, options):
+        # TODO Use more than just url attribute https://github.com/sstur/draft-js-export-html/blob/master/src/stateToHTML.js#L30
+        data = options.get('data', {})
+        attrib = {}
+        for key in data:
+            # TODO How much do we need to whitelist / blacklist attributes?
+            if data[key] and self.is_valid_attribute(key):
+                attr = key if key != 'url' else 'href'
+                attrib[attr] = str(data[key])
+
+        # TODO attributes will be in an unpredictable sort order. Use elt.set(attr, val) instead?
+        return etree.SubElement(parent_element, 'a', attrib=attrib)

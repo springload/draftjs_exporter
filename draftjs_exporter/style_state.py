@@ -35,10 +35,14 @@ class StyleState():
     def is_unstyled(self):
         return not self.styles
 
-    def element_attributes(self):
-        return {} if len(self.styles) == 0 else {
-            'style': self.get_style_value()
-        }
+    def get_style_tags(self):
+        tags = []
+
+        for style in self.styles:
+            config = self.style_map.get(style, {})
+            tags.append(config.get('element', 'span'))
+
+        return sorted(list(set(tags)))
 
     def get_style_value(self):
         rules = []
@@ -46,7 +50,8 @@ class StyleState():
         for style in self.styles:
             css_style = self.style_map.get(style, {})
             for prop in css_style.keys():
-                rules.append('{0}: {1};'.format(camelToDash(prop), css_style[prop]))
+                if prop != 'element':
+                    rules.append('{0}: {1};'.format(camelToDash(prop), css_style[prop]))
 
         return ''.join(sorted(rules))
 
@@ -55,7 +60,19 @@ class StyleState():
             child = etree.SubElement(element, 'textnode')
             child.text = text
         else:
-            child = etree.SubElement(element, 'span', attrib=self.element_attributes())
+            tags = self.get_style_tags()
+            child = element
+
+            # Nest the tags.
+            # Set the text and style attribute (if any) on the deepest node.
+            for tag in tags:
+                child = etree.SubElement(child, tag)
+
+            style_value = self.get_style_value()
+            if style_value:
+                child.set('style', style_value)
+
+            # Does not support unicode at the moment (emojis)
             child.text = text
 
         return child

@@ -90,7 +90,6 @@ class WrapperState():
         new_options = self.map_options(options[0], options[1])
 
         if new_options != self.get_wrapper_options():
-            print
             wrapper = etree.Element(options[0], attrib=options[1])
             self.set_wrapper(wrapper, options)
 
