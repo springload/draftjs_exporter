@@ -14,7 +14,7 @@ Unlike traditional rich text editors, DraftJS stores data in a JSON representati
 There are two main parts:
 
 * blocks - lines of data amd inline style attributes (without newlines).
-* entityMap – collection of Entities
+* entityMap – collection of [Entities](https://facebook.github.io/draft-js/docs/advanced-topics-entities.html#content)
 
 For more information, [this article](https://medium.com/@rajaraodv/how-draft-js-represents-rich-text-data-eeabb5f25cf2) covers the concepts in depth.
 
