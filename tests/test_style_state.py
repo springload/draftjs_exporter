@@ -2,6 +2,8 @@ from __future__ import absolute_import, unicode_literals
 
 import unittest
 
+from lxml import etree
+
 from draftjs_exporter.command import Command
 from draftjs_exporter.style_state import StyleState
 
@@ -53,3 +55,14 @@ class TestStyleState(unittest.TestCase):
     def test_element_attributes_single(self):
         self.style_state.apply(Command('start_inline_style', 0, 'ITALIC'))
         self.assertEqual(self.style_state.element_attributes(), {'style': 'font-style: italic;'})
+
+    def test_add_node_unstyled(self):
+        self.assertEqual(self.style_state.add_node(etree.Element('p'), 'Test text').tag, 'textnode')
+        self.assertEqual(self.style_state.add_node(etree.Element('p'), 'Test text').text, 'Test text')
+
+    def test_add_node_styled(self):
+        self.style_state.apply(Command('start_inline_style', 0, 'ITALIC'))
+        self.assertEqual(self.style_state.add_node(etree.Element('p'), 'Test text').tag, 'span')
+        self.assertEqual(self.style_state.add_node(etree.Element('p'), 'Test text').get('style'), 'font-style: italic;')
+        self.assertEqual(self.style_state.add_node(etree.Element('p'), 'Test text').text, 'Test text')
+        self.style_state.apply(Command('stop_inline_style', 9, 'ITALIC'))

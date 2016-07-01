@@ -2,10 +2,12 @@ from __future__ import absolute_import, unicode_literals
 
 import re
 
+from lxml import etree
+
 # TODO Extract to utils
 # https://gist.github.com/yahyaKacem/8170675
 _first_cap_re = re.compile(r'(.)([A-Z][a-z]+)')
-_all_cap_re = re.compile('([a-z0-9])([A-Z])')
+_all_cap_re = re.compile(b'([a-z0-9])([A-Z])')
 
 
 def camelToDash(camelCasedStr):
@@ -47,3 +49,13 @@ class StyleState():
                 rules.append('{0}: {1};'.format(camelToDash(prop), css_style[prop]))
 
         return ''.join(sorted(rules))
+
+    def add_node(self, element, text):
+        if self.is_unstyled():
+            child = etree.SubElement(element, 'textnode')
+            child.text = text
+        else:
+            child = etree.SubElement(element, 'span', attrib=self.element_attributes())
+            child.text = text
+
+        return child

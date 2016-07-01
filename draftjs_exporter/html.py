@@ -1,7 +1,5 @@
 from __future__ import absolute_import, unicode_literals
 
-from lxml import etree
-
 from .command import Command
 from .entity_state import EntityState
 from .style_state import StyleState
@@ -9,39 +7,32 @@ from .wrapper_state import WrapperState
 
 
 class HTML():
+    """
+    Entry point of the exporter. Combines entity, wrapper and style state
+    to generate the right HTML nodes.
+    """
     def __init__(self, config):
-        self.block_map = config.get('block_map', {})
-        self.style_map = config.get('style_map', {})
         self.entity_decorators = config.get('entity_decorators', {})
-
-        self.wrapper_state = WrapperState(self.block_map)
+        self.wrapper_state = WrapperState(config.get('block_map', {}))
+        self.style_state = StyleState(config.get('style_map', {}))
 
     def call(self, content_state):
         entity_map = content_state.get('entityMap', {})
 
         for block in content_state.get('blocks'):
             element = self.wrapper_state.element_for(block)
-            self.block_contents(element, block, entity_map)
+            self.render_block(element, block, entity_map)
 
         return self.wrapper_state.to_string()
 
-    def block_contents(self, element, block, entity_map):
-        style_state = StyleState(self.style_map)
+    def render_block(self, element, block, entity_map):
         entity_state = EntityState(element, self.entity_decorators, entity_map)
         for (text, commands) in self.build_command_groups(block):
             for command in commands:
                 entity_state.apply(command)
-                style_state.apply(command)
+                self.style_state.apply(command)
 
-            self.add_node(entity_state.current_parent(), text, style_state)
-
-    def add_node(self, element, text, style_state):
-        if style_state.is_unstyled():
-            child = etree.SubElement(element, 'textnode')
-            child.text = text
-        else:
-            child = etree.SubElement(element, 'span', attrib=style_state.element_attributes())
-            child.text = text
+            self.style_state.add_node(entity_state.current_parent(), text)
 
     def build_command_groups(self, block):
         """

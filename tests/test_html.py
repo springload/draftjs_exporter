@@ -25,7 +25,6 @@ config = {
 }
 
 
-# Initialised from https://github.com/ignitionworks/draftjs_exporter/blob/c4a92b303e9f9dbce20e224f66f3114d8a0807ff/spec/integrations/html_spec.rb
 class TestHTML(unittest.TestCase):
     def setUp(self):
         self.exporter = HTML(config)
@@ -33,12 +32,8 @@ class TestHTML(unittest.TestCase):
     def test_init(self):
         self.assertIsInstance(self.exporter, HTML)
 
-    def test_block_contents_exists(self):
-        self.assertTrue('block_contents' in dir(self.exporter))
-
-    def test_add_node(self):
-        self.assertTrue('add_node' in dir(self.exporter))
-        pass
+    def test_render_block_exists(self):
+        self.assertTrue('render_block' in dir(self.exporter))
 
     def test_build_style_commands_empty(self):
         self.assertEqual(str(self.exporter.build_style_commands({
