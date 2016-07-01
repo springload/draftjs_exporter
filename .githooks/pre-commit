@@ -22,6 +22,7 @@ else
 
     if [ -n "$PY_FILES" ];
     then
+        make lint
         make test-ci
     fi
     exit 0
