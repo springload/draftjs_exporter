@@ -2,6 +2,8 @@ from __future__ import absolute_import, unicode_literals
 
 import unittest
 
+from lxml import etree
+
 from draftjs_exporter.entities.link import Link
 
 
@@ -12,6 +14,14 @@ class TestLink(unittest.TestCase):
     def test_init(self):
         self.assertIsInstance(self.link, Link)
 
-    @unittest.skip('TODO')
     def test_call(self):
-        self.assertEqual(self.link.call({'test': 5}), {'test': 5})
+        elt = etree.Element('p')
+        link = self.link.call(elt, {
+            'data': {
+                'url': 'http://example.com',
+            }
+        })
+        self.assertEqual(link.tag, 'a')
+        self.assertEqual(link.text, None)
+        self.assertEqual(link.get('href'), 'http://example.com')
+        self.assertEqual(link.getparent().tag, 'p')
