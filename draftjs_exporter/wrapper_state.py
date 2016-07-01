@@ -38,7 +38,7 @@ class WrapperState():
 
     def to_string(self):
         # Even dirtier but easier to understand.
-        return re.sub(r'</?(root|fragment|textnode)>', '', etree.tostring(self.document, method='html'))
+        return re.sub(r'</?(root|fragment|textnode)>', '', etree.tostring(self.document, method='html').decode('utf-8'))
 
     def __str__(self):
         return '<WrapperState: %s>' % self.to_string()

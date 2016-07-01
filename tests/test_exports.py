@@ -10,7 +10,7 @@ from draftjs_exporter.entities.link import Link
 from draftjs_exporter.html import HTML
 
 fixtures_path = os.path.join(os.path.dirname(__file__), 'test_exports.json')
-fixtures = json.loads(open(fixtures_path, 'r').read().decode('utf-8'))
+fixtures = json.loads(open(fixtures_path, 'r').read())
 
 config = {
     'entity_decorators': {

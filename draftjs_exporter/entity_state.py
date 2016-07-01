@@ -34,7 +34,6 @@ class EntityState():
         new_element = decorator.call(self.current_parent(), entity_details)
 
         self.entity_stack.append([new_element, entity_details])
-        pass
 
     def stop_command(self, command):
         entity_details = self.entity_map.get(str(command.data))
