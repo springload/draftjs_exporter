@@ -3,9 +3,78 @@ draftjs_exporter [![Build Status](https://travis-ci.org/springload/draftjs_expor
 
 > Python port of the [draftjs_exporter](https://github.com/ignitionworks/draftjs_exporter) ruby library.
 
-This is a work in progress.
+This is a work in progress. It is intended to be integrated into [Wagtail CMS](https://wagtail.io).
 
 ## Usage
+
+### Understanding DraftJS contentState
+
+Unlike traditional rich text editors, DraftJS stores data in a JSON representation.
+
+There are two main parts:
+
+* blocks - lines of data amd inline style attributes (without newlines).
+* entityMap – collection of Entities
+
+For more information, [this article](https://medium.com/@rajaraodv/how-draft-js-represents-rich-text-data-eeabb5f25cf2) covers the concepts in depth.
+
+### Using the exporter
+
+The library requires you to explicity define mappings for the types of blocks and entities you wish to render. We may provide some defaults in the future.
+
+
+```python
+from draftjs_exporter.entities.link import Link
+from draftjs_exporter.html import HTML
+
+# Configure your element mappings and entity decorators
+config = {
+    'entity_decorators': {
+        'LINK': Link()
+    },
+    'block_map': {
+        'header-two': {'element': 'h2'},
+        'blockquote': {'element': 'blockquote'},
+        'unstyled': {'element': 'p'}
+    },
+    'style_map': {
+        'ITALIC': {'fontStyle': 'italic'},
+        'BOLD': {'fontStyle': 'bold'}
+    }
+}
+
+# Initialise the exporter with your configuration
+exporter = HTML(config)
+
+# Supply a draftJS `contentState`
+content_state = {
+    'entityMap': {},
+    'blocks': [
+        {
+            'key': '6mgfh',
+            'text': 'User experience (UX) design',
+            'type': 'header-two',
+            'depth': 0,
+            'inlineStyleRanges': [
+                {
+                    'offset': 16,
+                    'length': 4,
+                    'style': 'BOLD'
+                }
+            ],
+            'entityRanges': []
+        }
+    ]
+}
+
+# Render markup
+markup = exporter.call(content_state)
+```
+
+### Running the example
+
+You can run an executable example as follows:
+
 ```
 python ./example.py
 ```
@@ -43,6 +112,8 @@ make clean-pyc       # Remove Python file artifacts.
 - Always run the tests. `npm install -g nodemon`, then `make test_watch`.
 - Use a debugger. `pip install ipdb`, then `import ipdb; ipdb.set_trace()`.
 
+---
+
 ## R&D notes
 
 ### Useful resources
@@ -76,10 +147,14 @@ make clean-pyc       # Remove Python file artifacts.
 - Use https://github.com/icelab/draft-js-ast-exporter for its less ambiguous but also more opinionated exchange format?
 - Use https://github.com/html5lib/html5lib-python for its nicer API, but the documentation is even worse than lxml.
 
+---
+
 ### Other approaches
 
-> Create the HTML in JS when you save it in draft, then apply a similar strategy to Wagtail’s Rich Text, by iterating over the output with regexes?
-> Still get the benefits of a _much_ improved quality of editor. That way we can code awesome FP goodness.
+We have so far discussed a few different strategies to solve the rendering problem. Below are some of our notes.
+
+> We could create the HTML in JS when you save it in draft, then apply a similar strategy to Wagtail’s Rich Text, by iterating over the output with regexes?
+> Still get the benefits of a _much_ improved quality of editor and we can make use of existing JS-based draft exporters.
 
 - `contentState` to JSON, Python doing JSON to HTML, with this contentState -> HTML exporter
 - `contentState` to AST to JSON, with AST to HTML in Python
