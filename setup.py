@@ -14,7 +14,7 @@ testing_extras = [
     # Nothing. Ha!
 
     # For coverage and PEP8 linting
-    # 'coverage>=3.7.0',
+    'coverage>=4.1.0',
     'flake8>=2.2.0',
     'isort>=4.2.0',
 ]

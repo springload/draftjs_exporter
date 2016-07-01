@@ -1,7 +1,7 @@
-draftjs_exporter [![Build Status](https://travis-ci.org/springload/draftjs_exporter.svg?branch=master)](https://travis-ci.org/springload/draftjs_exporter) [![Code Climate](https://codeclimate.com/github/springload/draftjs_exporter/badges/gpa.svg)](https://codeclimate.com/github/springload/draftjs_exporter)
+draftjs_exporter [![Build Status](https://travis-ci.org/springload/draftjs_exporter.svg?branch=master)](https://travis-ci.org/springload/draftjs_exporter) [![Code Climate](https://codeclimate.com/github/springload/draftjs_exporter/badges/gpa.svg)](https://codeclimate.com/github/springload/draftjs_exporter) [![Coverage Status](https://coveralls.io/repos/github/springload/draftjs_exporter/badge.svg?branch=master)](https://coveralls.io/github/springload/draftjs_exporter?branch=master)
 ================
 
-> Python port of the [draftjs_exporter](https://github.com/ignitionworks/draftjs_exporter) ruby library.
+> Library to convert the Facebook Draft.js editor's raw ContentState to HTML. Python port of the [draftjs_exporter](https://github.com/ignitionworks/draftjs_exporter) ruby library.
 
 This is a work in progress. It is intended to be integrated into [Wagtail CMS](https://wagtail.io).
 
@@ -83,7 +83,7 @@ python ./example.py
 
 ### Installation
 
-> Requirements: `virtualenv`, (`nodemon`)
+> Requirements: `virtualenv`
 
 ```sh
 git clone git@github.com:springload/draftjs_exporter.git
@@ -102,6 +102,7 @@ make init            # Install dependencies and initialise for development.
 make lint            # Lint the project.
 make test            # Test the project.
 make test-watch      # Restarts the tests whenever a file changes.
+make test-coverage   # Run the tests while generating test coverage data.
 make test-ci         # Check for continuous integration.
 make dev             # Restarts the example whenever a file changes.
 make clean-pyc       # Remove Python file artifacts.
@@ -170,4 +171,4 @@ and it's not just contentState but contentState + some config
 - Maintaining this over time with changing Draft.js output formats and unmaintained or wildly changing AST formats
 - Regardless of implementation, being on the right spot between: "over the lifetime of the site/CMS, a given piece of content should always render the same HTML" and "a piece of content should always render the _best_ HTML"
 - Keeping the coupling between CMS and editor low so that we can swap editors easily (bigger scope than the one of a single site/project here)
-- Favour logical completeness over raw speed. The Wagtail regex parser will be faster than building a DOM. But caching makes that mostly irrelevant. The bottlenecks will all likely be in the DB lookups for inline entities anyway.
+- Favour logical completeness over raw speed. A regex parser will be faster than building a DOM. But caching makes that mostly irrelevant. The bottlenecks will all likely be in the DB lookups for inline entities anyway.

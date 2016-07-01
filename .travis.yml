@@ -3,8 +3,13 @@ cache: pip
 python:
 - '2.7'
 - '3.3'
-install: make init
-script: make test-ci
+install:
+- make init
+- pip install coveralls
+script:
+- make test-ci
+after_success:
+- coveralls
 notifications:
   email: false
   slack:
