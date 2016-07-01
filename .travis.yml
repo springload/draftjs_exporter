@@ -10,8 +10,6 @@ matrix:
      python: 3.4
    - env: TOXENV=py35
      python: 3.5
-   - env: TOXENV=linting
-     python: 3.5
 install:
 - pip install coveralls
 script:
