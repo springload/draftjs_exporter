@@ -5,13 +5,13 @@ from __future__ import absolute_import, unicode_literals
 from distutils.core import setup
 
 install_requires = [
-    'lxml==3.6.0',
+    'lxml>=3.6.0',
 ]
 
 # Testing dependencies
 testing_extras = [
     # Required for running the tests
-    # Nothing. Ha!
+    'tox>=2.3.1',
 
     # For coverage and PEP8 linting
     'coverage>=4.1.0',

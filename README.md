@@ -83,7 +83,7 @@ python ./example.py
 
 ### Installation
 
-> Requirements: `virtualenv`
+> Requirements: `virtualenv`, `pyenv`
 
 ```sh
 git clone git@github.com:springload/draftjs_exporter.git
@@ -91,7 +91,11 @@ cd draftjs_exporter/
 virtualenv .venv
 source ./.venv/bin/activate
 make init
+# Optionally, install the git hooks
 ./.githooks/deploy
+# Optionally, install all tested python versions
+pyenv install 2.7.11 && pyenv install 3.3.6 && pyenv install 3.4.4 && pyenv install 3.5.1
+pyenv global system 2.7.11 3.3.6 3.4.4 3.5.1
 ```
 
 ### Commands
@@ -103,7 +107,8 @@ make lint            # Lint the project.
 make test            # Test the project.
 make test-watch      # Restarts the tests whenever a file changes.
 make test-coverage   # Run the tests while generating test coverage data.
-make test-ci         # Check for continuous integration.
+make test-versions   # Run the tests against multiple python versions.
+make test-ci         # Continuous integration test suite.
 make dev             # Restarts the example whenever a file changes.
 make clean-pyc       # Remove Python file artifacts.
 ```
