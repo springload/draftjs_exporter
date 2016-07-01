@@ -35,6 +35,7 @@ class StyleState():
     def is_unstyled(self):
         return not self.styles
 
+    # TODO To unit test.
     def get_style_tags(self):
         tags = []
 
