@@ -29,11 +29,11 @@ config = {
         BLOCK_TYPES.CODE: {'element': 'pre'},
     },
     'style_map': {
-        INLINE_STYLES.ITALIC: {'fontStyle': 'italic'}, # em
-        INLINE_STYLES.BOLD: {'fontStyle': 'bold'}, # strong
-        INLINE_STYLES.CODE: {'fontFamily': 'monospace'}, # code
-        INLINE_STYLES.STRIKETHROUGH: {'textDecoration': 'line-through'}, # del
-        INLINE_STYLES.UNDERLINE: {'textDecoration': 'underline'}, # ins
+        INLINE_STYLES.ITALIC: {'element': 'em'},
+        INLINE_STYLES.BOLD: {'element': 'strong'},
+        INLINE_STYLES.CODE: {'element': 'code'},
+        INLINE_STYLES.STRIKETHROUGH: {'textDecoration': 'line-through'},
+        INLINE_STYLES.UNDERLINE: {'textDecoration': 'underline'},
     },
 }
 

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
 
 import unittest
@@ -19,9 +20,9 @@ config = {
         'unstyled': {'element': 'p'}
     },
     'style_map': {
-        'ITALIC': {'fontStyle': 'italic'},
-        'BOLD': {'fontStyle': 'bold'},
-        'HIGHLIGHT': {'fontStyle': 'bold', 'textDecoration': 'underline'},
+        'ITALIC': {'element': 'em'},
+        'BOLD': {'element': 'strong'},
+        'HIGHLIGHT': {'element': 'strong', 'textDecoration': 'underline'},
     }
 }
 
@@ -54,6 +55,21 @@ class TestOutput(unittest.TestCase):
             ]
         }), '<h1>Header</h1><p>some paragraph text</p>')
 
+    def test_call_with_unicode(self):
+        self.assertEqual(self.exporter.call({
+            'entityMap': {},
+            'blocks': [
+                {
+                    'key': 'dem5p',
+                    'text': 'Emojis! 🍺',
+                    'type': 'unstyled',
+                    'depth': 0,
+                    'inlineStyleRanges': [],
+                    'entityRanges': []
+                }
+            ]
+        }), '<p>Emojis! &#127866;</p>')
+
     def test_call_with_inline_styles_decodes(self):
         self.assertEqual(self.exporter.call({
             'entityMap': {},
@@ -73,7 +89,7 @@ class TestOutput(unittest.TestCase):
                     'entityRanges': []
                 }
             ]
-        }), '<p><span style="font-style: italic;">some</span> paragraph text</p>')
+        }), '<p><em>some</em> paragraph text</p>')
 
     def test_call_with_multiple_inline_styles_decodes(self):
         self.assertEqual(self.exporter.call({
@@ -122,7 +138,7 @@ class TestOutput(unittest.TestCase):
                     ]
                 }
             ]
-        }), '<h1><span style="font-style: bold;">He</span>ader</h1><p><span style="font-style: bold;text-decoration: underline;">some</span> <a href="http://example.com">paragraph</a> text</p>')
+        }), '<h1><strong>He</strong>ader</h1><p><strong style="text-decoration: underline;">some</strong> <a href="http://example.com">paragraph</a> text</p>')
 
     def test_call_with_entities_decodes(self):
         self.assertEqual(self.exporter.call({
@@ -233,8 +249,8 @@ class TestOutput(unittest.TestCase):
                 'unstyled': {'element': 'p'}
             },
             'style_map': {
-                'ITALIC': {'fontStyle': 'italic'},
-                'BOLD': {'fontStyle': 'bold'}
+                'ITALIC': {'element': 'em'},
+                'BOLD': {'element': 'strong'}
             }
         }).call({
             'entityMap': {
@@ -337,4 +353,4 @@ class TestOutput(unittest.TestCase):
                     ]
                 }
             ]
-        }), '<h2>User experience <span style="font-style: bold;">(UX)</span> design</h2><blockquote>Everyone at Springload applies the best principles of UX to their work.</blockquote><p>The design decisions we make building tools and services for your customers are based on empathy for what your customers need.</p><ul><li>User research</li><li><a href="http://example.com">User testing and analysis</a></li><li>A/B testing</li><li>Prototyping</li></ul><p><a href="https://www.springload.co.nz/work/nz-festival/">How we made it delightful and easy for people to find NZ Festival shows</a></p>')
+        }), '<h2>User experience <strong>(UX)</strong> design</h2><blockquote>Everyone at Springload applies the best principles of UX to their work.</blockquote><p>The design decisions we make building tools and services for your customers are based on empathy for what your customers need.</p><ul><li>User research</li><li><a href="http://example.com">User testing and analysis</a></li><li>A/B testing</li><li>Prototyping</li></ul><p><a href="https://www.springload.co.nz/work/nz-festival/">How we made it delightful and easy for people to find NZ Festival shows</a></p>')

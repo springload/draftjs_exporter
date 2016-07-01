@@ -110,8 +110,7 @@
                     "data": {
                         "url": "/",
                         "rel": null,
-                        "title": "hi",
-                        "extra": "foo"
+                        "title": "hi"
                     }
                 }
             },
@@ -142,7 +141,7 @@
 
     {
         "label": "Entity with data-*",
-        "output": "<p><a href=\"/\" title=\"hi\" data-id=\"42\" data-mutability=\"mutable\"><em>a</em></a></p>",
+        "output": "<p><a data-id=\"42\" data-mutability=\"mutable\" href=\"/\" title=\"hi\"><em>a</em></a></p>",
         "content_state": {
             "entityMap": {
                 "0": {
@@ -258,11 +257,11 @@
 
     {
         "label": "From https://github.com/icelab/draft-js-ast-exporter/blob/651c807bea12d97dad6f4965ab40481c8f2130dd/test/fixtures/content.js",
-        "output": "",
+        "output": "<h2>DraftJS AST Exporter</h2><p>In your draft-js, <strong>exporting</strong> your <em>content</em>:</p><ol><li>From draft-js internals</li><li>To an abstract syntax tree</li><li>Extensibility.</li></ol><span><img src=\"http://placekitten.com/500/300\">)</span><p>Find the project on <a href=\"https://github.com/icelab/draft-js-ast-exporter\">Github</a>.</p>",
         "content_state": {
             "entityMap": {
                 "0": {
-                    "type": "image",
+                    "type": "IMAGE",
                     "mutability": "IMMUTABLE",
                     "data": {
                         "src": "http://placekitten.com/500/300",
@@ -333,7 +332,7 @@
                 },
                 {
                     "key": "9vgd",
-                    "text": "🍺",
+                    "text": ":)",
                     "type": "atomic",
                     "depth": 0,
                     "inlineStyleRanges": [],

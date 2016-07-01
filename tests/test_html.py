@@ -19,8 +19,8 @@ config = {
         'unstyled': {'element': 'div'}
     },
     'style_map': {
-        'ITALIC': {'fontStyle': 'italic'},
-        'BOLD': {'fontStyle': 'bold'}
+        'ITALIC': {'element': 'em'},
+        'BOLD': {'element': 'strong'}
     }
 }
 

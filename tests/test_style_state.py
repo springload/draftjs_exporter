@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
 
 import unittest
@@ -8,9 +9,9 @@ from draftjs_exporter.command import Command
 from draftjs_exporter.style_state import StyleState
 
 style_map = {
-    'ITALIC': {'fontStyle': 'italic'},
-    'BOLD': {'fontStyle': 'bold'},
-    'HIGHLIGHT': {'fontStyle': 'bold', 'textDecoration': 'underline'},
+    'ITALIC': {'element': 'em'},
+    'BOLD': {'element': 'strong'},
+    'HIGHLIGHT': {'element': 'strong', 'textDecoration': 'underline'},
 }
 
 
@@ -43,26 +44,22 @@ class TestStyleState(unittest.TestCase):
 
     def test_get_style_value_single(self):
         self.style_state.apply(Command('start_inline_style', 0, 'ITALIC'))
-        self.assertEqual(self.style_state.get_style_value(), 'font-style: italic;')
+        self.assertEqual(self.style_state.get_style_value(), '')
 
     def test_get_style_value_multiple(self):
         self.style_state.apply(Command('start_inline_style', 0, 'HIGHLIGHT'))
-        self.assertEqual(self.style_state.get_style_value(), 'font-style: bold;text-decoration: underline;')
-
-    def test_element_attributes_empty(self):
-        self.assertEqual(self.style_state.element_attributes(), {})
-
-    def test_element_attributes_single(self):
-        self.style_state.apply(Command('start_inline_style', 0, 'ITALIC'))
-        self.assertEqual(self.style_state.element_attributes(), {'style': 'font-style: italic;'})
+        self.assertEqual(self.style_state.get_style_value(), 'text-decoration: underline;')
 
     def test_add_node_unstyled(self):
         self.assertEqual(self.style_state.add_node(etree.Element('p'), 'Test text').tag, 'textnode')
         self.assertEqual(self.style_state.add_node(etree.Element('p'), 'Test text').text, 'Test text')
 
+    def test_add_node_unicode(self):
+        self.assertEqual(self.style_state.add_node(etree.Element('p'), '🍺').text, '🍺')
+
     def test_add_node_styled(self):
         self.style_state.apply(Command('start_inline_style', 0, 'ITALIC'))
-        self.assertEqual(self.style_state.add_node(etree.Element('p'), 'Test text').tag, 'span')
-        self.assertEqual(self.style_state.add_node(etree.Element('p'), 'Test text').get('style'), 'font-style: italic;')
+        self.assertEqual(self.style_state.add_node(etree.Element('p'), 'Test text').tag, 'em')
+        self.assertEqual(self.style_state.add_node(etree.Element('p'), 'Test text').get('style'), None)
         self.assertEqual(self.style_state.add_node(etree.Element('p'), 'Test text').text, 'Test text')
         self.style_state.apply(Command('stop_inline_style', 9, 'ITALIC'))
