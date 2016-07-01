@@ -107,7 +107,6 @@ make lint            # Lint the project.
 make test            # Test the project.
 make test-watch      # Restarts the tests whenever a file changes.
 make test-coverage   # Run the tests while generating test coverage data.
-make test-versions   # Run the tests against multiple python versions.
 make test-ci         # Continuous integration test suite.
 make dev             # Restarts the example whenever a file changes.
 make clean-pyc       # Remove Python file artifacts.

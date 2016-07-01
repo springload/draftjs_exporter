@@ -22,10 +22,7 @@ test-watch: ## Restarts the tests whenever a file changes.
 test-coverage: ## Run the tests while generating test coverage data.
 	coverage run -m unittest discover && coverage report
 
-test-versions: ## Run the tests against multiple python versions.
-	tox
-
-test-ci: test-versions ## Continuous integration test suite.
+test-ci: tox ## Continuous integration test suite.
 
 dev: ## Restarts the example whenever a file changes.
 	nodemon -q -e py -w tests -w draftjs_exporter -w example.py  -x "clear && python example.py || true"

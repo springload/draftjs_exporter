@@ -13,7 +13,6 @@ matrix:
    - env: TOXENV=linting
      python: 3.5
 install:
-- make init
 - pip install coveralls
 script:
 - make test-ci
