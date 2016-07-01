@@ -1,4 +1,4 @@
-.PHONY: clean-pyc init help test-versions
+.PHONY: clean-pyc init help test-ci
 .DEFAULT_GOAL := help
 
 help: ## See what commands are available.
@@ -22,7 +22,8 @@ test-watch: ## Restarts the tests whenever a file changes.
 test-coverage: ## Run the tests while generating test coverage data.
 	coverage run -m unittest discover && coverage report
 
-test-ci: tox ## Continuous integration test suite.
+test-ci: ## Continuous integration test suite.
+	tox
 
 dev: ## Restarts the example whenever a file changes.
 	nodemon -q -e py -w tests -w draftjs_exporter -w example.py  -x "clear && python example.py || true"
