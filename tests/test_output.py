@@ -153,7 +153,7 @@ class TestOutput(unittest.TestCase):
             ]
         }), '<p>some <a href="http://example.com">paragraph</a> text</p>')
 
-    def test_call_with_entities_crossing_throws(self):
+    def test_call_with_entities_crossing_raises(self):
         with self.assertRaises(EntityException):
             self.exporter.call({
                 'entityMap': {

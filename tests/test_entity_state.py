@@ -6,7 +6,7 @@ from lxml import etree
 
 from draftjs_exporter.command import Command
 from draftjs_exporter.entities.link import Link
-from draftjs_exporter.entity_state import EntityState
+from draftjs_exporter.entity_state import EntityException, EntityState
 
 entity_decorators = {
     'LINK': Link()
@@ -55,3 +55,11 @@ class TestEntityState(unittest.TestCase):
             'type': 'LINK',
             'mutability': 'MUTABLE',
         })
+
+    def test_start_command_raises(self):
+        with self.assertRaises(EntityException):
+            self.entity_state.start_command(Command('start_entity', 0, 1))
+
+    def test_stop_command_raises(self):
+        with self.assertRaises(EntityException):
+            self.entity_state.start_command(Command('stop_entity', 0, 1))

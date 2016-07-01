@@ -2,7 +2,7 @@ from __future__ import absolute_import, unicode_literals
 
 import unittest
 
-from draftjs_exporter.wrapper_state import WrapperState
+from draftjs_exporter.wrapper_state import BlockException, WrapperState
 
 block_map = {
     'header-one': {'element': 'h1'},
@@ -36,6 +36,17 @@ class TestWrapperState(unittest.TestCase):
             'inlineStyleRanges': [],
             'entityRanges': []
         }).tag, 'h1')
+
+    def test_element_for_raises(self):
+        with self.assertRaises(BlockException):
+            self.wrapper_state.element_for({
+                'key': '5s7g9',
+                'text': 'Header',
+                'type': 'header-two',
+                'depth': 0,
+                'inlineStyleRanges': [],
+                'entityRanges': []
+            })
 
     def test_to_string_empty(self):
         self.assertEqual(self.wrapper_state.to_string(), '')
