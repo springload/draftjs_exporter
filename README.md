@@ -1,4 +1,4 @@
-draftjs_exporter [![Build Status](https://travis-ci.org/springload/draftjs_exporter.svg?branch=master)](https://travis-ci.org/springload/draftjs_exporter) [![Code Climate](https://codeclimate.com/github/springload/draftjs_exporter/badges/gpa.svg)](https://codeclimate.com/github/springload/draftjs_exporter) [![Coverage Status](https://coveralls.io/repos/github/springload/draftjs_exporter/badge.svg?branch=master)](https://coveralls.io/github/springload/draftjs_exporter?branch=master)
+draftjs_exporter [![Build Status](https://travis-ci.org/springload/draftjs_exporter.svg?branch=master)](https://travis-ci.org/springload/draftjs_exporter) [![PyPI](https://img.shields.io/pypi/v/draftjs_exporter.svg?maxAge=2592000)](https://pypi.python.org/pypi/draftjs_exporter) [![Coverage Status](https://coveralls.io/repos/github/springload/draftjs_exporter/badge.svg?branch=master)](https://coveralls.io/github/springload/draftjs_exporter?branch=master) [![Code Climate](https://codeclimate.com/github/springload/draftjs_exporter/badges/gpa.svg)](https://codeclimate.com/github/springload/draftjs_exporter)
 ================
 
 > Library to convert the Facebook Draft.js editor's raw ContentState to HTML. Python port of the [draftjs_exporter](https://github.com/ignitionworks/draftjs_exporter) ruby library.
@@ -19,6 +19,8 @@ There are two main parts:
 For more information, [this article](https://medium.com/@rajaraodv/how-draft-js-represents-rich-text-data-eeabb5f25cf2) covers the concepts in depth.
 
 ### Using the exporter
+
+`pip install draftjs_exporter`
 
 The library requires you to explicity define mappings for the types of blocks and entities you wish to render. We may provide some defaults in the future.
 

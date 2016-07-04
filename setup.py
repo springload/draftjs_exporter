@@ -49,9 +49,8 @@ setup(
     license='MIT',
     long_description=readme,
     classifiers=[
-        'Development Status :: 2 - Pre-Alpha',
+        'Development Status :: 3 - Alpha',
         'Environment :: Web Environment',
-        'Framework :: Draft.js',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
@@ -67,6 +66,7 @@ setup(
         'Topic :: Internet :: WWW/HTTP :: Site Management',
         'Topic :: Software Development :: Libraries :: Application Frameworks',
         'Topic :: Software Development :: Libraries :: Python Modules',
+        'Topic :: Text Editors :: Word Processors',
     ],
     install_requires=install_requires,
     extras_require={
