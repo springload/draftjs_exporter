@@ -16,6 +16,7 @@ bin
 .idea/
 develop-eggs
 build/
+dist/
 # dist
 downloads
 eggs
