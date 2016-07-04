@@ -83,7 +83,7 @@ python ./example.py
 
 ### Installation
 
-> Requirements: `virtualenv`, `pyenv`
+> Requirements: `virtualenv`, `pyenv`, `twine`
 
 ```sh
 git clone git@github.com:springload/draftjs_exporter.git
