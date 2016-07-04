@@ -15,6 +15,7 @@
 bin
 .idea/
 develop-eggs
+build/
 # dist
 downloads
 eggs
@@ -45,4 +46,3 @@ core/static/images/
 core/jinja2/svg.html
 
 *.sql
-

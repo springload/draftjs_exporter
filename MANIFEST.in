@@ -1,3 +1,4 @@
-include LICENSE *.rst *.txt
+include LICENSE *.rst *.txt *.md
 global-exclude __pycache__
 global-exclude *.py[co]
+recursive-include draftjs_exporter *.py
