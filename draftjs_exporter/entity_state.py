@@ -12,7 +12,7 @@ class EntityState():
     def __init__(self, root_element, entity_decorators, entity_map):
         self.entity_decorators = entity_decorators
         self.entity_map = entity_map
-        self.entity_stack = [(Null().call(root_element), {})]
+        self.entity_stack = [(Null().call(root_element, {}), {})]
 
     def apply(self, command):
         if (command.name == 'start_entity'):
