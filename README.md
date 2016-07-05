@@ -78,8 +78,15 @@ markup = exporter.call(content_state)
 You can run an executable example as follows:
 
 ```
-python ./example.py
+python example.py
 ```
+
+### Feature list
+
+- Wrapped blocks (`<li>` elements belong in `<ul>`)
+- Nested wrapped blocks (multiple list levels, arbitrary type and depth)
+- Output inline styles as inline elements
+- Overlapping inline style ranges
 
 ## Development
 

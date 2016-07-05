@@ -135,7 +135,6 @@ content_state = {
         },
         {
             'key': '62lio',
-            # TODO Test HTML entities encoding
             'text': 'Beautiful <code/>',
             'type': 'unordered-list-item',
             'depth': 0,
@@ -169,7 +168,103 @@ content_state = {
                     'key': 1
                 }
             ]
-        }
+        },
+        {
+            'key': '93agv',
+            'text': 'A list item (0)',
+            'type': 'unordered-list-item',
+            'depth': 0,
+            'inlineStyleRanges': [],
+            'entityRanges': [],
+        },
+        {
+            'key': '4ht9m',
+            'text': 'Oops! (1)',
+            'type': 'unordered-list-item',
+            'depth': 1,
+            'inlineStyleRanges': [],
+            'entityRanges': [],
+        },
+        {
+            'key': 'c6gc4',
+            'text': 'Does this support nesting? (2)',
+            'type': 'unordered-list-item',
+            'depth': 2,
+            'inlineStyleRanges': [],
+            'entityRanges': [],
+        },
+        {
+            'key': 'c6gc3',
+            'text': 'Maybe? (2)',
+            'type': 'unordered-list-item',
+            'depth': 2,
+            'inlineStyleRanges': [],
+            'entityRanges': [],
+        },
+        {
+            'key': '3mn5b',
+            'text': 'Yep it does! (3)',
+            'type': 'unordered-list-item',
+            'depth': 3,
+            'inlineStyleRanges': [],
+            'entityRanges': [],
+        },
+        {
+            'key': '28umf',
+            'text': 'How many levels deep? (4)',
+            'type': 'unordered-list-item',
+            'depth': 4,
+            'inlineStyleRanges': [],
+            'entityRanges': [],
+        },
+        {
+            'key': 'c2gc4',
+            'text': 'Backtracking, two at once... (2)',
+            'type': 'unordered-list-item',
+            'depth': 2,
+            'inlineStyleRanges': [],
+            'entityRanges': [],
+        },
+        {
+            'key': 'c1gcb',
+            'text': 'Uh oh (1)',
+            'type': 'unordered-list-item',
+            'depth': 1,
+            'inlineStyleRanges': [],
+            'entityRanges': [],
+        },
+        {
+            'key': 'c2gh4',
+            'text': 'Up, up, and away! (2)',
+            'type': 'unordered-list-item',
+            'depth': 2,
+            'inlineStyleRanges': [],
+            'entityRanges': [],
+        },
+        {
+            'key': 'c1ghb',
+            'text': 'Arh! (1)',
+            'type': 'unordered-list-item',
+            'depth': 1,
+            'inlineStyleRanges': [],
+            'entityRanges': [],
+        },
+        {
+            'key': 'c1gc9',
+            'text': 'Did this work? (0)',
+            'type': 'unordered-list-item',
+            'depth': 0,
+            'inlineStyleRanges': [],
+            'entityRanges': [],
+        },
+        {
+            'key': 'c1gc9',
+            'text': 'Yes! (0)',
+            'type': 'unordered-list-item',
+            'depth': 0,
+            'inlineStyleRanges': [],
+            'entityRanges': [],
+        },
     ]
 }
 
