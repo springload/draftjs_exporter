@@ -37,11 +37,21 @@ class WrapperState():
         parent = self.parent_for(type, depth)
         parent.append(elt)
 
-        if (depth != prev_depth):
+        if (depth > prev_depth):
+            # Only goes one level deeper regardless of actual depth difference.
             grand_parent = prev_wrapper.getchildren()[-1]
             grand_parent.append(parent)
         elif (depth == 0):
+            # At level 0, the element is added directly at the top level.
             self.document.append(parent)
+        elif (depth < prev_depth):
+            grand_parent = prev_wrapper
+            # Goes back as many levels as necessary.
+            # We skip a few parents that correspond to the items instead of
+            # their wrapper
+            for i in range(0, prev_depth - depth):
+                grand_parent = grand_parent.getparent().getparent()
+            grand_parent.getparent().append(parent)
 
         return elt
 

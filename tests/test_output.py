@@ -351,6 +351,109 @@ class TestOutput(unittest.TestCase):
             ],
         }), '<ul class="steps"><li>A list item<ul class="steps"><li>Oops!<ul class="steps"><li>Does this support nesting?</li><li>Maybe?<ul class="steps"><li>Yep it does!<ul class="steps"><li>How many levels deep?</li><li>Lots.</li><li>Ah.</li></ul></li></ul></li></ul></li></ul></li></ul>')
 
+    def test_call_with_backtracking_nested_wrapping(self):
+        self.assertEqual(self.exporter.call({
+            'entityMap': {},
+            'blocks': [
+                {
+                    'key': '93agv',
+                    'text': 'A list item (0)',
+                    'type': 'unordered-list-item',
+                    'depth': 0,
+                    'inlineStyleRanges': [],
+                    'entityRanges': [],
+                },
+                {
+                    'key': '4ht9m',
+                    'text': 'Oops! (1)',
+                    'type': 'unordered-list-item',
+                    'depth': 1,
+                    'inlineStyleRanges': [],
+                    'entityRanges': [],
+                },
+                {
+                    'key': 'c6gc4',
+                    'text': 'Does this support nesting? (2)',
+                    'type': 'unordered-list-item',
+                    'depth': 2,
+                    'inlineStyleRanges': [],
+                    'entityRanges': [],
+                },
+                {
+                    'key': 'c6gc3',
+                    'text': 'Maybe? (2)',
+                    'type': 'unordered-list-item',
+                    'depth': 2,
+                    'inlineStyleRanges': [],
+                    'entityRanges': [],
+                },
+                {
+                    'key': '3mn5b',
+                    'text': 'Yep it does! (3)',
+                    'type': 'unordered-list-item',
+                    'depth': 3,
+                    'inlineStyleRanges': [],
+                    'entityRanges': [],
+                },
+                {
+                    'key': '28umf',
+                    'text': 'How many levels deep? (4)',
+                    'type': 'unordered-list-item',
+                    'depth': 4,
+                    'inlineStyleRanges': [],
+                    'entityRanges': [],
+                },
+                {
+                    'key': 'c2gc4',
+                    'text': 'Backtracking, two at once... (2)',
+                    'type': 'unordered-list-item',
+                    'depth': 2,
+                    'inlineStyleRanges': [],
+                    'entityRanges': [],
+                },
+                {
+                    'key': 'c1gcb',
+                    'text': 'Uh oh (1)',
+                    'type': 'unordered-list-item',
+                    'depth': 1,
+                    'inlineStyleRanges': [],
+                    'entityRanges': [],
+                },
+                {
+                    'key': 'c2gh4',
+                    'text': 'Up, up, and away! (2)',
+                    'type': 'unordered-list-item',
+                    'depth': 2,
+                    'inlineStyleRanges': [],
+                    'entityRanges': [],
+                },
+                {
+                    'key': 'c1ghb',
+                    'text': 'Arh! (1)',
+                    'type': 'unordered-list-item',
+                    'depth': 1,
+                    'inlineStyleRanges': [],
+                    'entityRanges': [],
+                },
+                {
+                    'key': 'c1gc9',
+                    'text': 'Did this work? (0)',
+                    'type': 'unordered-list-item',
+                    'depth': 0,
+                    'inlineStyleRanges': [],
+                    'entityRanges': [],
+                },
+                {
+                    'key': 'c1gc9',
+                    'text': 'Yes! (0)',
+                    'type': 'unordered-list-item',
+                    'depth': 0,
+                    'inlineStyleRanges': [],
+                    'entityRanges': [],
+                },
+            ],
+        }), '<ul class="steps"><li>A list item (0)<ul class="steps"><li>Oops! (1)<ul class="steps"><li>Does this support nesting? (2)</li><li>Maybe? (2)<ul class="steps"><li>Yep it does! (3)<ul class="steps"><li>How many levels deep? (4)</li></ul></li></ul></li></ul><ul class="steps"><li>Backtracking, two at once... (2)</li></ul></li></ul><ul class="steps"><li>Uh oh (1)<ul class="steps"><li>Up, up, and away! (2)</li></ul></li></ul><ul class="steps"><li>Arh! (1)</li></ul></li></ul><ul class="steps"><li>Did this work? (0)</li><li>Yes! (0)</li></ul>')
+
     def test_call_with_big_content(self):
         self.assertEqual(HTML({
             'entity_decorators': {
