@@ -5,6 +5,7 @@ from lxml import etree, html
 from draftjs_exporter.constants import BLOCK_TYPES, ENTITY_TYPES, INLINE_STYLES
 from draftjs_exporter.entities.image import Image
 from draftjs_exporter.entities.link import Link
+from draftjs_exporter.entities.token import Token
 from draftjs_exporter.html import HTML
 
 # TODO Support dt/dd, hr, br, cite, mark, q, s, sub, sup, video?
@@ -12,6 +13,7 @@ config = {
     'entity_decorators': {
         ENTITY_TYPES.LINK: Link(),
         ENTITY_TYPES.IMAGE: Image(),
+        ENTITY_TYPES.TOKEN: Token(),
     },
     'block_map': {
         BLOCK_TYPES.UNSTYLED: {'element': 'p'},
@@ -27,6 +29,7 @@ config = {
         # TODO Ideally would want double wrapping in pre + code.
         # See https://github.com/sstur/draft-js-export-html/blob/master/src/stateToHTML.js#L88
         BLOCK_TYPES.CODE: {'element': 'pre'},
+        BLOCK_TYPES.HORIZONTAL_RULE: {'element': 'hr'},
     },
     'style_map': {
         INLINE_STYLES.ITALIC: {'element': 'em'},
@@ -45,16 +48,21 @@ content_state = {
             'type': 'LINK',
             'mutability': 'MUTABLE',
             'data': {
-                'url': 'http://example.com'
-            }
+                'url': 'http://example.com',
+            },
         },
         '1': {
             'type': 'LINK',
             'mutability': 'MUTABLE',
             'data': {
-                'url': 'https://www.springload.co.nz/work/nz-festival/'
-            }
-        }
+                'url': 'https://www.springload.co.nz/work/nz-festival/',
+            },
+        },
+        '2': {
+            'type': 'TOKEN',
+            'mutability': 'IMMUTABLE',
+            'data': {},
+        },
     },
     'blocks': [
         {
@@ -133,6 +141,20 @@ content_state = {
             'depth': 0,
             'inlineStyleRanges': [],
             'entityRanges': []
+        },
+        {
+            'key': '672oo',
+            'text': ' ',
+            'type': 'horizontal-rule',
+            'depth': 0,
+            'inlineStyleRanges': [],
+            'entityRanges': [
+                {
+                    'offset': 0,
+                    'length': 1,
+                    'key': 2,
+                },
+            ],
         },
         {
             'key': 'fq3f',

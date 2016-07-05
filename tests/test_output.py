@@ -4,26 +4,29 @@ from __future__ import absolute_import, unicode_literals
 import unittest
 
 from draftjs_exporter.entities.link import Link
+from draftjs_exporter.entities.token import Token
 from draftjs_exporter.entity_state import EntityException
 from draftjs_exporter.html import HTML
 
 config = {
     'entity_decorators': {
-        'LINK': Link()
+        'LINK': Link(),
+        'TOKEN': Token(),
     },
     'block_map': {
         'header-one': {'element': 'h1'},
         'unordered-list-item': {
             'element': 'li',
-            'wrapper': ['ul', {'className': 'steps'}]
+            'wrapper': ['ul', {'className': 'steps'}],
         },
-        'unstyled': {'element': 'p'}
+        'unstyled': {'element': 'p'},
+        'horizontal-rule': {'element': 'hr'},
     },
     'style_map': {
         'ITALIC': {'element': 'em'},
         'BOLD': {'element': 'strong'},
         'HIGHLIGHT': {'element': 'strong', 'textDecoration': 'underline'},
-    }
+    },
 }
 
 
@@ -233,6 +236,49 @@ class TestOutput(unittest.TestCase):
                 }
             ]
         }), '<ul class="steps"><li>item1</li><li>item2</li></ul>')
+
+    def test_call_with_token_entity(self):
+        self.assertEqual(self.exporter.call({
+            'entityMap': {
+                '2': {
+                    'type': 'TOKEN',
+                    'mutability': 'IMMUTABLE',
+                    'data': {},
+                },
+            },
+            'blocks': [
+                {
+                    'key': 'dem5p',
+                    'text': 'item1',
+                    'type': 'unordered-list-item',
+                    'depth': 0,
+                    'inlineStyleRanges': [],
+                    'entityRanges': [],
+                },
+                {
+                    'key': 'dem5p',
+                    'text': 'item2',
+                    'type': 'unordered-list-item',
+                    'depth': 0,
+                    'inlineStyleRanges': [],
+                    'entityRanges': []
+                },
+                {
+                    'key': '672oo',
+                    'text': ' ',
+                    'type': 'horizontal-rule',
+                    'depth': 0,
+                    'inlineStyleRanges': [],
+                    'entityRanges': [
+                        {
+                            'offset': 0,
+                            'length': 1,
+                            'key': 2,
+                        },
+                    ],
+                },
+            ]
+        }), '<ul class="steps"><li>item1</li><li>item2</li></ul><hr>')
 
     def test_call_with_big_content(self):
         self.assertEqual(HTML({

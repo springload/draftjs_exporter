@@ -17,5 +17,5 @@ class TestNull(unittest.TestCase):
     def test_call(self):
         elt = etree.Element('p')
         elt.text = 'Test text'
-        self.assertEqual(self.null.call(elt).tag, 'p')
-        self.assertEqual(self.null.call(elt).text, 'Test text')
+        self.assertEqual(self.null.call(elt, {}).tag, 'p')
+        self.assertEqual(self.null.call(elt, {}).text, 'Test text')
