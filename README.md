@@ -130,6 +130,12 @@ make clean-pyc       # Remove Python file artifacts.
 ### Releases
 
 - Update the [changelog](https://github.com/springload/draftjs_exporter/CHANGELOG.md)
+- Update the version number in [`draftjs_exporter/__init__.py`](draftjs_exporter/__init__.py), following semver
+- `git release vx.y.z`
+- `rm dist/*`
+- `python setup.py sdist`
+- `twine upload dist/*`
+- Go to https://pypi.python.org/pypi/draftjs_exporter and check that all is well
 
 ## Documentation
 
