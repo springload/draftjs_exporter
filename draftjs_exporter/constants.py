@@ -25,6 +25,7 @@ class BLOCK_TYPES:
     PULLQUOTE = 'pullquote'
     CODE = 'code-block'
     ATOMIC = 'atomic'
+    HORIZONTAL_RULE = 'horizontal-rule'
 
 ENTITY_TYPES = Enum(('LINK', 'IMAGE'))
 
