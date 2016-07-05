@@ -23,16 +23,25 @@ class WrapperState():
         self.document = etree.Element('root')
 
         # Default wrapper element is a fragment, does not have options.
-        self.wrapper = [etree.Element('fragment'), []]
+        self.wrapper = [etree.Element('fragment'), 0, []]
 
     def element_for(self, block):
         type = block.get('type', 'unstyled')
-        elt = etree.Element(self.get_block_tag(type))
+        depth = block.get('depth', 0)
+        tag = self.get_block_tag(type)
+        elt = etree.Element(tag)
 
-        parent = self.parent_for(type)
+        prev_depth = self.get_wrapper_depth()
+        prev_wrapper = self.get_wrapper_elt()
+
+        parent = self.parent_for(type, depth)
         parent.append(elt)
 
-        self.document.append(parent)
+        if (depth != prev_depth):
+            grand_parent = prev_wrapper.getchildren()[-1]
+            grand_parent.append(parent)
+        elif (depth == 0):
+            self.document.append(parent)
 
         return elt
 
@@ -43,21 +52,24 @@ class WrapperState():
     def __str__(self):
         return '<WrapperState: %s>' % self.to_string()
 
-    def set_wrapper(self, element, options=[]):
-        self.wrapper = [element, options]
+    def set_wrapper(self, element, depth=0, options=[]):
+        self.wrapper = [element, depth, options]
 
     def get_wrapper_elt(self):
         return self.wrapper[0]
 
-    def get_wrapper_options(self):
+    def get_wrapper_depth(self):
         return self.wrapper[1]
 
-    def parent_for(self, type):
+    def get_wrapper_options(self):
+        return self.wrapper[2]
+
+    def parent_for(self, type, depth):
         parent = None
         options = self.block_map.get(type)
 
         if 'wrapper' in options:
-            parent = self.create_wrapper(options.get('wrapper'))
+            parent = self.create_wrapper(options.get('wrapper'), depth)
         else:
             parent = self.reset_wrapper()
 
@@ -67,7 +79,7 @@ class WrapperState():
         self.set_wrapper(etree.Element('fragment'))
         return self.get_wrapper_elt()
 
-    def map_options(self, name, attributes={}):
+    def map_options(self, tag, attributes={}):
         """
         Map attributes/options from Draft.js to lxml lingo.
         """
@@ -75,22 +87,21 @@ class WrapperState():
             attributes['class'] = attributes.get('className')
             attributes.pop('className', None)
 
-        return [name, attributes]
+        return [tag, attributes]
 
     def get_block_tag(self, type):
         options = self.block_map.get(type)
 
-        # TODO To test
         if options is None:
             raise BlockException('Block "%s" does not exist in block_map' % type)
 
         return options.get('element')
 
-    def create_wrapper(self, options):
+    def create_wrapper(self, options, depth):
         new_options = self.map_options(options[0], options[1])
 
-        if new_options != self.get_wrapper_options():
+        if new_options != self.get_wrapper_options() or depth != self.get_wrapper_depth():
             wrapper = etree.Element(options[0], attrib=options[1])
-            self.set_wrapper(wrapper, options)
+            self.set_wrapper(wrapper, depth, options)
 
         return self.get_wrapper_elt()

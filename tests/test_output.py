@@ -280,8 +280,7 @@ class TestOutput(unittest.TestCase):
             ]
         }), '<ul class="steps"><li>item1</li><li>item2</li></ul><hr>')
 
-    @unittest.skip('TODO')
-    def test_call_with_nested_wrapping(self):
+    def test_call_with_unidirectional_nested_wrapping(self):
         self.assertEqual(self.exporter.call({
             'entityMap': {},
             'blocks': [
@@ -349,24 +348,8 @@ class TestOutput(unittest.TestCase):
                     'inlineStyleRanges': [],
                     'entityRanges': [],
                 },
-                {
-                    'key': 'c2gc4',
-                    'text': 'Well, we are good now',
-                    'type': 'unordered-list-item',
-                    'depth': 2,
-                    'inlineStyleRanges': [],
-                    'entityRanges': [],
-                },
-                {
-                    'key': 'c1gc4',
-                    'text': 'Or are we?',
-                    'type': 'unordered-list-item',
-                    'depth': 1,
-                    'inlineStyleRanges': [],
-                    'entityRanges': [],
-                },
             ],
-        }), '')
+        }), '<ul class="steps"><li>A list item<ul class="steps"><li>Oops!<ul class="steps"><li>Does this support nesting?</li><li>Maybe?<ul class="steps"><li>Yep it does!<ul class="steps"><li>How many levels deep?</li><li>Lots.</li><li>Ah.</li></ul></li></ul></li></ul></li></ul></li></ul>')
 
     def test_call_with_big_content(self):
         self.assertEqual(HTML({
