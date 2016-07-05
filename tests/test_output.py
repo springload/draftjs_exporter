@@ -35,7 +35,7 @@ class TestOutput(unittest.TestCase):
         self.maxDiff = None
         self.exporter = HTML(config)
 
-    def test_call_with_different_blocks_decodes(self):
+    def test_call_with_different_blocks(self):
         self.assertEqual(self.exporter.call({
             'entityMap': {},
             'blocks': [
@@ -73,7 +73,7 @@ class TestOutput(unittest.TestCase):
             ]
         }), '<p>Emojis! &#127866;</p>')
 
-    def test_call_with_inline_styles_decodes(self):
+    def test_call_with_inline_styles(self):
         self.assertEqual(self.exporter.call({
             'entityMap': {},
             'blocks': [
@@ -94,7 +94,7 @@ class TestOutput(unittest.TestCase):
             ]
         }), '<p><em>some</em> paragraph text</p>')
 
-    def test_call_with_multiple_inline_styles_decodes(self):
+    def test_call_with_multiple_inline_styles(self):
         self.assertEqual(self.exporter.call({
             'entityMap': {
                 '0': {
@@ -143,7 +143,7 @@ class TestOutput(unittest.TestCase):
             ]
         }), '<h1><strong>He</strong>ader</h1><p><strong style="text-decoration: underline;">some</strong> <a href="http://example.com">paragraph</a> text</p>')
 
-    def test_call_with_entities_decodes(self):
+    def test_call_with_entities(self):
         self.assertEqual(self.exporter.call({
             'entityMap': {
                 '0': {
@@ -214,7 +214,7 @@ class TestOutput(unittest.TestCase):
                 ]
             })
 
-    def test_call_with_wrapped_blocks(self):
+    def test_call_with_wrapping(self):
         self.assertEqual(self.exporter.call({
             'entityMap': {},
             'blocks': [
@@ -248,12 +248,12 @@ class TestOutput(unittest.TestCase):
             },
             'blocks': [
                 {
-                    'key': 'dem5p',
+                    'key': 'dem1p',
                     'text': 'item1',
                     'type': 'unordered-list-item',
                     'depth': 0,
                     'inlineStyleRanges': [],
-                    'entityRanges': [],
+                    'entityRanges': []
                 },
                 {
                     'key': 'dem5p',
@@ -279,6 +279,94 @@ class TestOutput(unittest.TestCase):
                 },
             ]
         }), '<ul class="steps"><li>item1</li><li>item2</li></ul><hr>')
+
+    @unittest.skip('TODO')
+    def test_call_with_nested_wrapping(self):
+        self.assertEqual(self.exporter.call({
+            'entityMap': {},
+            'blocks': [
+                {
+                    'key': '93agv',
+                    'text': 'A list item',
+                    'type': 'unordered-list-item',
+                    'depth': 0,
+                    'inlineStyleRanges': [],
+                    'entityRanges': [],
+                },
+                {
+                    'key': '4ht9m',
+                    'text': 'Oops!',
+                    'type': 'unordered-list-item',
+                    'depth': 1,
+                    'inlineStyleRanges': [],
+                    'entityRanges': [],
+                },
+                {
+                    'key': 'c6gc4',
+                    'text': 'Does this support nesting?',
+                    'type': 'unordered-list-item',
+                    'depth': 2,
+                    'inlineStyleRanges': [],
+                    'entityRanges': [],
+                },
+                {
+                    'key': 'c6gc3',
+                    'text': 'Maybe?',
+                    'type': 'unordered-list-item',
+                    'depth': 2,
+                    'inlineStyleRanges': [],
+                    'entityRanges': [],
+                },
+                {
+                    'key': '3mn5b',
+                    'text': 'Yep it does!',
+                    'type': 'unordered-list-item',
+                    'depth': 3,
+                    'inlineStyleRanges': [],
+                    'entityRanges': [],
+                },
+                {
+                    'key': '28umf',
+                    'text': 'How many levels deep?',
+                    'type': 'unordered-list-item',
+                    'depth': 4,
+                    'inlineStyleRanges': [],
+                    'entityRanges': [],
+                },
+                {
+                    'key': 'd81ns',
+                    'text': 'Lots.',
+                    'type': 'unordered-list-item',
+                    'depth': 4,
+                    'inlineStyleRanges': [],
+                    'entityRanges': [],
+                },
+                {
+                    'key': 'b0tsc',
+                    'text': 'Ah.',
+                    'type': 'unordered-list-item',
+                    'depth': 4,
+                    'inlineStyleRanges': [],
+                    'entityRanges': [],
+                },
+                {
+                    'key': 'c2gc4',
+                    'text': 'Well, we are good now',
+                    'type': 'unordered-list-item',
+                    'depth': 2,
+                    'inlineStyleRanges': [],
+                    'entityRanges': [],
+                },
+                {
+                    'key': 'c1gc4',
+                    'text': 'Or are we?',
+                    'type': 'unordered-list-item',
+                    'depth': 1,
+                    'inlineStyleRanges': [],
+                    'entityRanges': [],
+                },
+            ],
+        }), '')
 
     def test_call_with_big_content(self):
         self.assertEqual(HTML({

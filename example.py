@@ -135,7 +135,6 @@ content_state = {
         },
         {
             'key': '62lio',
-            # TODO Test HTML entities encoding
             'text': 'Beautiful <code/>',
             'type': 'unordered-list-item',
             'depth': 0,
@@ -169,7 +168,71 @@ content_state = {
                     'key': 1
                 }
             ]
-        }
+        },
+        {
+            'key': '93agv',
+            'text': 'A list item',
+            'type': 'unordered-list-item',
+            'depth': 0,
+            'inlineStyleRanges': [],
+            'entityRanges': [],
+        },
+        {
+            'key': '4ht9m',
+            'text': 'Oops!',
+            'type': 'unordered-list-item',
+            'depth': 1,
+            'inlineStyleRanges': [],
+            'entityRanges': [],
+        },
+        {
+            'key': 'c6gc4',
+            'text': 'Does this support nesting?',
+            'type': 'unordered-list-item',
+            'depth': 2,
+            'inlineStyleRanges': [],
+            'entityRanges': [],
+        },
+        {
+            'key': 'c6gc3',
+            'text': 'Maybe?',
+            'type': 'unordered-list-item',
+            'depth': 2,
+            'inlineStyleRanges': [],
+            'entityRanges': [],
+        },
+        {
+            'key': '3mn5b',
+            'text': 'Yep it does!',
+            'type': 'unordered-list-item',
+            'depth': 3,
+            'inlineStyleRanges': [],
+            'entityRanges': [],
+        },
+        {
+            'key': '28umf',
+            'text': 'How many levels deep?',
+            'type': 'unordered-list-item',
+            'depth': 4,
+            'inlineStyleRanges': [],
+            'entityRanges': [],
+        },
+        {
+            'key': 'd81ns',
+            'text': 'Lots.',
+            'type': 'unordered-list-item',
+            'depth': 4,
+            'inlineStyleRanges': [],
+            'entityRanges': [],
+        },
+        {
+            'key': 'b0tsc',
+            'text': 'Ah.',
+            'type': 'unordered-list-item',
+            'depth': 4,
+            'inlineStyleRanges': [],
+            'entityRanges': [],
+        },
     ]
 }
 
