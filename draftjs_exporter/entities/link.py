@@ -21,4 +21,5 @@ class Link():
                 attrib[attr] = str(data[key])
 
         # TODO attributes will be in an unpredictable sort order. Use elt.set(attr, val) instead?
+        # Use from collections import OrderedDict?
         return etree.SubElement(parent_element, 'a', attrib=attrib)

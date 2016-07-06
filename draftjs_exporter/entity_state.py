@@ -31,6 +31,7 @@ class EntityState():
             raise EntityException('Entity "%s" does not exist in the entityMap' % command.data)
 
         decorator = self.entity_decorators.get(entity_details.get('type'))
+        # TODO Raise exception if decorator is not found.
         new_element = decorator.call(self.current_parent(), entity_details)
 
         self.entity_stack.append([new_element, entity_details])
