@@ -64,3 +64,19 @@ We have so far discussed a few different strategies to solve the rendering probl
 - `contentState` to HTML, with extra Python regexes
 
 and it's not just contentState but contentState + some config
+
+## Troubleshooting
+
+### Install
+
+```
+$ pip install draftjs_exporter
+[...]
+*********************************************************************************
+Could not find function xmlCheckVersion in library libxml2. Is libxml2 installed?
+*********************************************************************************
+```
+
+Solution: see http://stackoverflow.com/a/6504860/1798491
+
+`apt-get install libxml2-dev libxslt1-dev python-dev`
