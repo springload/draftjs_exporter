@@ -256,6 +256,25 @@
     },
 
     {
+        "label": "All plain HTML elements we need",
+        "output": "<h2>Title 2</h2><h3>Title 3</h3><h4>Title 4</h4><h5>Title 5</h5><blockquote>Blockquote</blockquote><ul class=\"bullet-list\"><li>List item<ul class=\"bullet-list\"><li>Nested list item</li></ul></li></ul><ol><li>Ordered item <strong>(bold)</strong><ol><li>Nested ordered item <em>(italic)</em></li></ol></li></ol>",
+        "content_state": {
+            "entityMap": {},
+            "blocks": [
+                {"key": "2tb83", "inlineStyleRanges": [], "type": "header-two", "entityRanges": [], "depth": 0, "text": "Title 2"},
+                {"key": "8etgj", "inlineStyleRanges": [], "type": "header-three", "entityRanges": [], "depth": 0, "text": "Title 3"},
+                {"key": "3u324", "inlineStyleRanges": [], "type": "header-four", "entityRanges": [], "depth": 0, "text": "Title 4"},
+                {"key": "31pit", "inlineStyleRanges": [], "type": "header-five", "entityRanges": [], "depth": 0, "text": "Title 5"},
+                {"key": "f4e7d", "inlineStyleRanges": [], "type": "blockquote", "entityRanges": [], "depth": 0, "text": "Blockquote"},
+                {"key": "760g6", "inlineStyleRanges": [], "type": "unordered-list-item", "entityRanges": [], "depth": 0, "text": "List item"},
+                {"key": "br7nd", "inlineStyleRanges": [], "type": "unordered-list-item", "entityRanges": [], "depth": 1, "text": "Nested list item"},
+                {"key": "8q2c6", "inlineStyleRanges": [{"offset": 13, "length": 6, "style": "BOLD"}], "type": "ordered-list-item", "entityRanges": [], "depth": 0, "text": "Ordered item (bold)"},
+                {"key": "dp5ml", "inlineStyleRanges": [{"offset": 20, "length": 8, "style": "ITALIC"}], "type": "ordered-list-item", "entityRanges": [], "depth": 1, "text": "Nested ordered item (italic)"}
+            ]
+        }
+    },
+
+    {
         "label": "From https://github.com/icelab/draft-js-ast-exporter/blob/651c807bea12d97dad6f4965ab40481c8f2130dd/test/fixtures/content.js",
         "output": "<h2>DraftJS AST Exporter</h2><p>In your draft-js, <strong>exporting</strong> your <em>content</em>:</p><ol><li>From draft-js internals</li><li>To an abstract syntax tree</li><li>Extensibility.</li></ol><span><img src=\"http://placekitten.com/500/300\">)</span><p>Find the project on <a href=\"https://github.com/icelab/draft-js-ast-exporter\">Github</a>.</p>",
         "content_state": {

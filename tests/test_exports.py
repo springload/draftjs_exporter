@@ -12,6 +12,7 @@ from draftjs_exporter.html import HTML
 fixtures_path = os.path.join(os.path.dirname(__file__), 'test_exports.json')
 fixtures = json.loads(open(fixtures_path, 'r').read())
 
+# TODO Move this to JSON file.
 config = {
     'entity_decorators': {
         ENTITY_TYPES.LINK: Link(),
@@ -20,9 +21,13 @@ config = {
     'block_map': {
         BLOCK_TYPES.HEADER_ONE: {'element': 'h1'},
         BLOCK_TYPES.HEADER_TWO: {'element': 'h2'},
+        BLOCK_TYPES.HEADER_THREE: {'element': 'h3'},
+        BLOCK_TYPES.HEADER_FOUR: {'element': 'h4'},
+        BLOCK_TYPES.HEADER_FIVE: {'element': 'h5'},
+        BLOCK_TYPES.BLOCKQUOTE: {'element': 'blockquote'},
         BLOCK_TYPES.UNORDERED_LIST_ITEM: {
             'element': 'li',
-            'wrapper': ['ul', {}],
+            'wrapper': ['ul', {'className': 'bullet-list'}],
         },
         BLOCK_TYPES.ORDERED_LIST_ITEM: {
             'element': 'li',
@@ -41,6 +46,8 @@ config = {
 class TestExports(unittest.TestCase):
     # TODO Find a way to have one test case per case in the JSON file
     def test_exports(self):
+        self.maxDiff = None
+
         for export in fixtures:
             exporter = HTML(config)
             self.assertEqual(exporter.call(export.get('content_state')), export.get('output'))
