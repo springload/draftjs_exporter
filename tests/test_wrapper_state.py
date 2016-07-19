@@ -77,35 +77,3 @@ class TestWrapperState(unittest.TestCase):
         })
 
         self.assertEqual(str(self.wrapper_state), '<WrapperState: <h1></h1>>')
-
-    # def test_set_wrapper(self):
-    #     # self.assertEqual(self.wrapper_state.set_wrapper(element, options=[]), '')
-    #     pass
-
-    # def test_get_wrapper_elt(self):
-    #     # self.assertEqual(self.wrapper_state.get_wrapper_elt( '')
-    #     pass
-
-    # def test_get_wrapper_options(self):
-    #     # self.assertEqual(self.wrapper_state.get_wrapper_options( '')
-    #     pass
-
-    # def test_parent_for(self):
-    #     # self.assertEqual(self.wrapper_state.parent_for(type), '')
-    #     pass
-
-    # def test_reset_wrapper(self):
-    #     # self.assertEqual(self.wrapper_state.reset_wrapper( '')
-    #     pass
-
-    # def test_map_options(self):
-    #     # self.assertEqual(self.wrapper_state.map_options(name, attributes={}), '')
-    #     pass
-
-    # def test_block_options(self):
-    #     # self.assertEqual(self.wrapper_state.block_options(type), '')
-    #     pass
-
-    # def test_create_wrapper(self):
-    #     # self.assertEqual(self.wrapper_state.create_wrapper(options), '')
-    #     pass
