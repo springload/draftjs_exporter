@@ -452,7 +452,7 @@ class TestOutput(unittest.TestCase):
                     'entityRanges': [],
                 },
             ],
-        }), '<ul class="steps"><li>A list item (0)<ul class="steps"><li>Oops! (1)<ul class="steps"><li>Does this support nesting? (2)</li><li>Maybe? (2)<ul class="steps"><li>Yep it does! (3)<ul class="steps"><li>How many levels deep? (4)</li></ul></li></ul></li></ul><ul class="steps"><li>Backtracking, two at once... (2)</li></ul></li></ul><ul class="steps"><li>Uh oh (1)<ul class="steps"><li>Up, up, and away! (2)</li></ul></li></ul><ul class="steps"><li>Arh! (1)</li></ul></li></ul><ul class="steps"><li>Did this work? (0)</li><li>Yes! (0)</li></ul>')
+        }), '<ul class="steps"><li>A list item (0)<ul class="steps"><li>Oops! (1)<ul class="steps"><li>Does this support nesting? (2)</li><li>Maybe? (2)<ul class="steps"><li>Yep it does! (3)<ul class="steps"><li>How many levels deep? (4)</li></ul></li></ul></li><li>Backtracking, two at once... (2)</li><li>Up, up, and away! (2)</li></ul></li><li>Uh oh (1)</li><li>Arh! (1)</li></ul></li><li>Did this work? (0)</li><li>Yes! (0)</li></ul>')
 
     def test_call_with_big_content(self):
         self.assertEqual(HTML({
