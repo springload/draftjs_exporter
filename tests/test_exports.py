@@ -43,11 +43,24 @@ config = {
 }
 
 
-class TestExports(unittest.TestCase):
-    # TODO Find a way to have one test case per case in the JSON file
-    def test_exports(self):
-        self.maxDiff = None
+class TestExportsMeta(type):
+    """
+    Generates test cases dynamically.
+    See http://stackoverflow.com/a/20870875/1798491
+    """
+    def __new__(mcs, name, bases, dict):
+        def gen_test(export):
+            def test(self):
+                self.maxDiff = None
+                self.assertEqual(HTML(config).call(export.get('content_state')), export.get('output'))
+            return test
 
         for export in fixtures:
-            exporter = HTML(config)
-            self.assertEqual(exporter.call(export.get('content_state')), export.get('output'))
+            test_name = 'test_export_%s' % export.get('label').lower().replace(' ', '_')
+            dict[test_name] = gen_test(export)
+
+        return type.__new__(mcs, name, bases, dict)
+
+
+class TestExports(unittest.TestCase):
+    __metaclass__ = TestExportsMeta
