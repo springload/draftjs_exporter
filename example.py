@@ -1,8 +1,7 @@
 from __future__ import absolute_import, unicode_literals
 
-from lxml import etree, html
-
 from draftjs_exporter.constants import BLOCK_TYPES, ENTITY_TYPES, INLINE_STYLES
+from draftjs_exporter.dom import DOM
 from draftjs_exporter.entities.image import Image
 from draftjs_exporter.entities.link import Link
 from draftjs_exporter.entities.token import Token
@@ -269,6 +268,4 @@ content_state = {
 }
 
 markup = exporter.call(content_state)
-# Pretty print the markup, removing the top-level node that lxml adds.
-document_root = html.fromstring('<root>%s</root>' % markup)
-print(etree.tostring(document_root, encoding='unicode', pretty_print=True).replace('<root>', '').replace('</root>', ''))
+print(DOM.pretty_print(markup))

@@ -2,7 +2,7 @@ from __future__ import absolute_import, unicode_literals
 
 import re
 
-from lxml import etree
+from draftjs_exporter.dom import DOM
 
 # TODO Extract to utils
 # https://gist.github.com/yahyaKacem/8170675
@@ -58,8 +58,8 @@ class StyleState():
 
     def add_node(self, element, text):
         if self.is_unstyled():
-            child = etree.SubElement(element, 'textnode')
-            child.text = text
+            child = DOM.create_text_node(text)
+            DOM.append_child(element, child)
         else:
             tags = self.get_style_tags()
             child = element
@@ -67,13 +67,14 @@ class StyleState():
             # Nest the tags.
             # Set the text and style attribute (if any) on the deepest node.
             for tag in tags:
-                child = etree.SubElement(child, tag)
+                new_child = DOM.create_element(tag)
+                DOM.append_child(child, new_child)
+                child = new_child
 
             style_value = self.get_style_value()
             if style_value:
-                child.set('style', style_value)
+                DOM.set_attribute(child, 'style', style_value)
 
-            # Does not support unicode at the moment (emojis)
-            child.text = text
+            DOM.set_text_content(child, text)
 
         return child

@@ -3,9 +3,8 @@ from __future__ import absolute_import, unicode_literals
 
 import unittest
 
-from lxml import etree
-
 from draftjs_exporter.command import Command
+from draftjs_exporter.dom import DOM
 from draftjs_exporter.style_state import StyleState
 
 style_map = {
@@ -51,15 +50,15 @@ class TestStyleState(unittest.TestCase):
         self.assertEqual(self.style_state.get_style_value(), 'text-decoration: underline;')
 
     def test_add_node_unstyled(self):
-        self.assertEqual(self.style_state.add_node(etree.Element('p'), 'Test text').tag, 'textnode')
-        self.assertEqual(self.style_state.add_node(etree.Element('p'), 'Test text').text, 'Test text')
+        self.assertEqual(self.style_state.add_node(DOM.create_element('p'), 'Test text').tag, 'textnode')
+        self.assertEqual(self.style_state.add_node(DOM.create_element('p'), 'Test text').text, 'Test text')
 
     def test_add_node_unicode(self):
-        self.assertEqual(self.style_state.add_node(etree.Element('p'), '🍺').text, '🍺')
+        self.assertEqual(self.style_state.add_node(DOM.create_element('p'), '🍺').text, '🍺')
 
     def test_add_node_styled(self):
         self.style_state.apply(Command('start_inline_style', 0, 'ITALIC'))
-        self.assertEqual(self.style_state.add_node(etree.Element('p'), 'Test text').tag, 'em')
-        self.assertEqual(self.style_state.add_node(etree.Element('p'), 'Test text').get('style'), None)
-        self.assertEqual(self.style_state.add_node(etree.Element('p'), 'Test text').text, 'Test text')
+        self.assertEqual(self.style_state.add_node(DOM.create_element('p'), 'Test text').tag, 'em')
+        self.assertEqual(self.style_state.add_node(DOM.create_element('p'), 'Test text').get('style'), None)
+        self.assertEqual(self.style_state.add_node(DOM.create_element('p'), 'Test text').text, 'Test text')
         self.style_state.apply(Command('stop_inline_style', 9, 'ITALIC'))
