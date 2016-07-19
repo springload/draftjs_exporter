@@ -64,6 +64,25 @@ class TestEntityState(unittest.TestCase):
         with self.assertRaises(EntityException):
             self.entity_state.get_entity_details(Command('start_entity', 0, 1))
 
+    def test_get_entity_decorator(self):
+        self.assertIsInstance(self.entity_state.get_entity_decorator({
+            'data': {
+                'url': 'http://example.com'
+            },
+            'type': 'LINK',
+            'mutability': 'MUTABLE',
+        }), Link)
+
+    def test_get_entity_decorator_raises(self):
+        with self.assertRaises(EntityException):
+            self.entity_state.get_entity_decorator({
+                'data': {
+                    'url': 'http://example.com'
+                },
+                'type': 'VIDEO',
+                'mutability': 'MUTABLE',
+            })
+
     def test_start_command_raises(self):
         with self.assertRaises(EntityException):
             self.entity_state.start_command(Command('start_entity', 0, 1))

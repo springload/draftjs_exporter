@@ -24,18 +24,27 @@ class EntityState():
         return self.entity_stack[-1][0]
 
     def get_entity_details(self, command):
-        details = self.entity_map.get(str(command.data))
+        key = str(command.data)
+        details = self.entity_map.get(key)
 
         if details is None:
-            raise EntityException('Entity "%s" does not exist in the entityMap' % command.data)
+            raise EntityException('Entity "%s" does not exist in the entityMap' % key)
 
         return details
 
+    def get_entity_decorator(self, entity_details):
+        type = entity_details.get('type')
+        decorator = self.entity_decorators.get(type)
+
+        if decorator is None:
+            raise EntityException('Decorator "%s" does not exist in entity_decorators' % type)
+
+        return decorator
+
     def start_command(self, command):
         entity_details = self.get_entity_details(command)
+        decorator = self.get_entity_decorator(entity_details)
 
-        decorator = self.entity_decorators.get(entity_details.get('type'))
-        # TODO Raise exception if decorator is not found.
         new_element = decorator.call(self.current_parent(), entity_details)
 
         self.entity_stack.append([new_element, entity_details])

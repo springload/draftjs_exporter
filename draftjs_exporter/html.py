@@ -39,7 +39,7 @@ class HTML():
         Creates block modification commands, grouped by start index, with the text to apply them on.
         """
         commands = self.build_commands(block)
-        # TODO Tried using itertools.tee but for some reason that does not work. Oh well.
+        # Tried using itertools.tee but for some reason that does not work. Oh well.
         grouped = Command.grouped_by_index(commands)
         listed = list(Command.grouped_by_index(commands))
 
