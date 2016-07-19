@@ -3,6 +3,7 @@ from __future__ import absolute_import, unicode_literals
 
 import unittest
 
+from draftjs_exporter.constants import BLOCK_TYPES, ENTITY_TYPES, INLINE_STYLES
 from draftjs_exporter.entities.link import Link
 from draftjs_exporter.entities.token import Token
 from draftjs_exporter.entity_state import EntityException
@@ -10,21 +11,31 @@ from draftjs_exporter.html import HTML
 
 config = {
     'entity_decorators': {
-        'LINK': Link(),
+        ENTITY_TYPES.LINK: Link(),
         'TOKEN': Token(),
     },
     'block_map': {
-        'header-one': {'element': 'h1'},
-        'unordered-list-item': {
+        BLOCK_TYPES.HEADER_ONE: {'element': 'h1'},
+        BLOCK_TYPES.HEADER_TWO: {'element': 'h2'},
+        BLOCK_TYPES.HEADER_THREE: {'element': 'h3'},
+        BLOCK_TYPES.HEADER_FOUR: {'element': 'h4'},
+        BLOCK_TYPES.HEADER_FIVE: {'element': 'h5'},
+        BLOCK_TYPES.BLOCKQUOTE: {'element': 'blockquote'},
+        BLOCK_TYPES.UNORDERED_LIST_ITEM: {
             'element': 'li',
             'wrapper': ['ul', {'className': 'steps'}],
         },
-        'unstyled': {'element': 'p'},
-        'horizontal-rule': {'element': 'hr'},
+        BLOCK_TYPES.ORDERED_LIST_ITEM: {
+            'element': 'li',
+            'wrapper': ['ol', {}],
+        },
+        BLOCK_TYPES.UNSTYLED: {'element': 'p'},
+        BLOCK_TYPES.ATOMIC: {'element': 'span'},
+        BLOCK_TYPES.HORIZONTAL_RULE: {'element': 'hr'},
     },
     'style_map': {
-        'ITALIC': {'element': 'em'},
-        'BOLD': {'element': 'strong'},
+        INLINE_STYLES.ITALIC: {'element': 'em'},
+        INLINE_STYLES.BOLD: {'element': 'strong'},
         'HIGHLIGHT': {'element': 'strong', 'textDecoration': 'underline'},
     },
 }
