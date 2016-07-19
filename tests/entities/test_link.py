@@ -25,3 +25,13 @@ class TestLink(unittest.TestCase):
         self.assertEqual(link.text, None)
         self.assertEqual(link.get('href'), 'http://example.com')
         self.assertEqual(link.getparent().tag, 'p')
+
+    def test_call_invalid(self):
+        elt = etree.Element('p')
+        link = self.link.call(elt, {
+            'data': {
+                'url': 'http://example.com',
+                'disabled': 'true',
+            }
+        })
+        self.assertEqual(link.get('disabled'), None)

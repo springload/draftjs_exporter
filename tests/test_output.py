@@ -42,6 +42,9 @@ config = {
 
 
 class TestOutput(unittest.TestCase):
+    """
+    Test cases related to specific features of the HTML builder.
+    """
     def setUp(self):
         self.maxDiff = None
         self.exporter = HTML(config)
