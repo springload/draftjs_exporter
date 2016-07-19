@@ -23,12 +23,16 @@ class EntityState():
     def current_parent(self):
         return self.entity_stack[-1][0]
 
-    def start_command(self, command):
-        # TODO Does this work without str() casting?
-        entity_details = self.entity_map.get(str(command.data))
+    def get_entity_details(self, command):
+        details = self.entity_map.get(str(command.data))
 
-        if entity_details is None:
+        if details is None:
             raise EntityException('Entity "%s" does not exist in the entityMap' % command.data)
+
+        return details
+
+    def start_command(self, command):
+        entity_details = self.get_entity_details(command)
 
         decorator = self.entity_decorators.get(entity_details.get('type'))
         # TODO Raise exception if decorator is not found.
@@ -37,7 +41,7 @@ class EntityState():
         self.entity_stack.append([new_element, entity_details])
 
     def stop_command(self, command):
-        entity_details = self.entity_map.get(str(command.data))
+        entity_details = self.get_entity_details(command)
         expected_entity_details = self.entity_stack[-1][1]
 
         if expected_entity_details != entity_details:

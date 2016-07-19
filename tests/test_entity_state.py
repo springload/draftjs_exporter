@@ -56,6 +56,19 @@ class TestEntityState(unittest.TestCase):
             'mutability': 'MUTABLE',
         })
 
+    def test_get_entity_details(self):
+        self.assertEqual(self.entity_state.get_entity_details(Command('start_entity', 0, 0)), {
+            'data': {
+                'url': 'http://example.com'
+            },
+            'type': 'LINK',
+            'mutability': 'MUTABLE',
+        })
+
+    def test_get_entity_details_raises(self):
+        with self.assertRaises(EntityException):
+            self.entity_state.get_entity_details(Command('start_entity', 0, 1))
+
     def test_start_command_raises(self):
         with self.assertRaises(EntityException):
             self.entity_state.start_command(Command('start_entity', 0, 1))
