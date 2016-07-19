@@ -30,24 +30,11 @@ class TestEntityState(unittest.TestCase):
     def test_init(self):
         self.assertIsInstance(self.entity_state, EntityState)
 
-    @unittest.skip('TODO')
     def test_apply_start_entity(self):
         self.assertEqual(self.entity_state.entity_stack[-1][0].tag, 'div')
         self.assertEqual(self.entity_state.entity_stack[-1][1], {})
         self.entity_state.apply(Command('start_entity', 0, 0))
-        self.assertEqual(self.entity_state.entity_stack[-1], {
-            'data': {
-                'url': 'http://example.com'
-            },
-            'type': 'LINK',
-            'mutability': 'MUTABLE',
-        })
-
-    @unittest.skip('TODO')
-    def test_apply_stop_entity(self):
-        self.assertEqual(self.entity_state.entity_stack[-1][0].tag, 'div')
-        self.assertEqual(self.entity_state.entity_stack[-1][1], {})
-        self.entity_state.apply(Command('stop_entity', 5, 0))
+        self.assertEqual(self.entity_state.entity_stack[-1][0].tag, 'a')
         self.assertEqual(self.entity_state.entity_stack[-1][1], {
             'data': {
                 'url': 'http://example.com'
@@ -55,6 +42,14 @@ class TestEntityState(unittest.TestCase):
             'type': 'LINK',
             'mutability': 'MUTABLE',
         })
+
+    def test_apply_stop_entity(self):
+        self.assertEqual(self.entity_state.entity_stack[-1][0].tag, 'div')
+        self.assertEqual(self.entity_state.entity_stack[-1][1], {})
+        self.entity_state.apply(Command('start_entity', 0, 0))
+        self.entity_state.apply(Command('stop_entity', 5, 0))
+        self.assertEqual(self.entity_state.entity_stack[-1][0].tag, 'div')
+        self.assertEqual(self.entity_state.entity_stack[-1][1], {})
 
     def test_get_entity_details(self):
         self.assertEqual(self.entity_state.get_entity_details(Command('start_entity', 0, 0)), {
