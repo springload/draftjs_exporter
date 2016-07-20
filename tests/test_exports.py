@@ -4,7 +4,8 @@ import json
 import os
 import unittest
 
-from draftjs_exporter.constants import BLOCK_TYPES, DEFAULT_BLOCK_MAP, ENTITY_TYPES, INLINE_STYLES
+from draftjs_exporter.constants import BLOCK_TYPES, ENTITY_TYPES, INLINE_STYLES
+from draftjs_exporter.defaults import BLOCK_MAP
 from draftjs_exporter.entities.image import Image
 from draftjs_exporter.entities.link import Link
 from draftjs_exporter.html import HTML
@@ -18,7 +19,7 @@ config = {
         ENTITY_TYPES.LINK: Link(),
         ENTITY_TYPES.IMAGE: Image(),
     },
-    'block_map': dict(DEFAULT_BLOCK_MAP, **{
+    'block_map': dict(BLOCK_MAP, **{
         BLOCK_TYPES.UNORDERED_LIST_ITEM: {
             'element': 'li',
             'wrapper': ['ul', {'className': 'bullet-list'}],

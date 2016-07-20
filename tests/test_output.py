@@ -3,7 +3,8 @@ from __future__ import absolute_import, unicode_literals
 
 import unittest
 
-from draftjs_exporter.constants import BLOCK_TYPES, DEFAULT_BLOCK_MAP, ENTITY_TYPES, INLINE_STYLES
+from draftjs_exporter.constants import BLOCK_TYPES, ENTITY_TYPES, INLINE_STYLES
+from draftjs_exporter.defaults import BLOCK_MAP
 from draftjs_exporter.entities.link import Link
 from draftjs_exporter.entities.null import Null
 from draftjs_exporter.entity_state import EntityException
@@ -14,7 +15,7 @@ config = {
         ENTITY_TYPES.LINK: Link(),
         ENTITY_TYPES.TOKEN: Null(),
     },
-    'block_map': dict(DEFAULT_BLOCK_MAP, **{
+    'block_map': dict(BLOCK_MAP, **{
         BLOCK_TYPES.UNORDERED_LIST_ITEM: {
             'element': 'li',
             'wrapper': ['ul', {'className': 'steps'}],
@@ -606,7 +607,7 @@ class TestOutput(unittest.TestCase):
 
     def test_call_with_default_style_map(self):
         self.assertEqual(HTML({
-            'block_map': dict(DEFAULT_BLOCK_MAP, **{
+            'block_map': dict(BLOCK_MAP, **{
                 BLOCK_TYPES.UNORDERED_LIST_ITEM: {
                     'element': 'li',
                     'wrapper': ['ul', {'className': 'steps'}],
