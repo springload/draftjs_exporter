@@ -32,9 +32,7 @@ documentation_extras = [
 
 ]
 
-# Will look strange because pypi expects rst markup. Oh well!
-# TODO Use pandoc at publish time to circumvent this? Convert README to rst?
-with open('README.md', 'r', 'utf-8') as f:
+with open('README.rst', 'r', 'utf-8') as f:
     readme = f.read()
 
 setup(
