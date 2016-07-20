@@ -24,6 +24,9 @@ class TestDOM(unittest.TestCase):
         self.assertEqual(DOM.create_text_node('Test text').tag, 'textnode')
         self.assertEqual(DOM.create_text_node('Test text').text, 'Test text')
 
+    def test_parse_html(self):
+        self.assertEqual(DOM.render(DOM.parse_html('<p><span>Test text</span></p>')), '<p><span>Test text</span></p>')
+
     def test_append_child(self):
         parent = DOM.create_element('p')
         DOM.append_child(parent, DOM.create_element('span', {}, 'Test text'))

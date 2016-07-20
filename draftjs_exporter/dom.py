@@ -66,6 +66,10 @@ class DOM(object):
         return elt
 
     @staticmethod
+    def parse_html(markup):
+        return etree.fromstring(markup)
+
+    @staticmethod
     def append_child(elt, child):
         elt.append(child)
 
