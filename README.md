@@ -84,10 +84,16 @@ python example.py
 
 ### Feature list
 
-- Wrapped blocks (`<li>` elements belong in `<ul>`)
-- Nested wrapped blocks (multiple list levels, arbitrary type and depth)
-- Output inline styles as inline elements (`<em>`, `<strong>`, pick and choose)
-- Overlapping inline style ranges
+This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html) and [measures code coverage](https://coveralls.io/github/springload/draftjs_exporter?branch=master).
+
+- Extensive configuration of the generated HTML.
+- Default, extensible block & inline style maps for common HTML elements.
+- React-like API to create custom entity decorators.
+- Automatic conversion of entity data to HTML attributes (int & boolean to string, `className` to `class`).
+- Wrapped blocks (`<li>` elements belong in `<ul>`).
+- Nested wrapped blocks (multiple list levels, arbitrary type and depth).
+- Output inline styles as inline elements (`<em>`, `<strong>`, pick and choose).
+- Overlapping inline style ranges.
 
 ## Development
 
