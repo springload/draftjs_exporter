@@ -30,10 +30,10 @@ class TestEntityState(unittest.TestCase):
         self.assertIsInstance(self.entity_state, EntityState)
 
     def test_apply_start_entity(self):
-        self.assertEqual(self.entity_state.entity_stack[-1][0].tag, 'fragment')
+        self.assertEqual(DOM.get_tag_name(self.entity_state.entity_stack[-1][0]), 'fragment')
         self.assertEqual(self.entity_state.entity_stack[-1][1], {})
         self.entity_state.apply(Command('start_entity', 0, 0))
-        self.assertEqual(self.entity_state.entity_stack[-1][0].tag, 'a')
+        self.assertEqual(DOM.get_tag_name(self.entity_state.entity_stack[-1][0]), 'a')
         self.assertEqual(self.entity_state.entity_stack[-1][1], {
             'data': {
                 'url': 'http://example.com'
@@ -43,11 +43,11 @@ class TestEntityState(unittest.TestCase):
         })
 
     def test_apply_stop_entity(self):
-        self.assertEqual(self.entity_state.entity_stack[-1][0].tag, 'fragment')
+        self.assertEqual(DOM.get_tag_name(self.entity_state.entity_stack[-1][0]), 'fragment')
         self.assertEqual(self.entity_state.entity_stack[-1][1], {})
         self.entity_state.apply(Command('start_entity', 0, 0))
         self.entity_state.apply(Command('stop_entity', 5, 0))
-        self.assertEqual(self.entity_state.entity_stack[-1][0].tag, 'fragment')
+        self.assertEqual(DOM.get_tag_name(self.entity_state.entity_stack[-1][0]), 'fragment')
         self.assertEqual(self.entity_state.entity_stack[-1][1], {})
 
     def test_get_entity_details(self):

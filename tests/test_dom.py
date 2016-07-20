@@ -7,22 +7,22 @@ from draftjs_exporter.dom import DOM
 
 class TestDOM(unittest.TestCase):
     def test_create_element(self):
-        self.assertEqual(DOM.create_element('p', {'className': 'intro'}, 'Test test').tag, 'p')
+        self.assertEqual(DOM.get_tag_name(DOM.create_element('p', {'className': 'intro'}, 'Test test')), 'p')
         self.assertEqual(DOM.create_element('p', {'className': 'intro'}, 'Test test').get('class'), 'intro')
-        self.assertEqual(DOM.create_element('p', {'className': 'intro'}, 'Test test').text, 'Test test')
+        self.assertEqual(DOM.get_text_content(DOM.create_element('p', {'className': 'intro'}, 'Test test')), 'Test test')
 
     def test_create_element_empty(self):
-        self.assertEqual(DOM.create_element().tag, 'fragment')
+        self.assertEqual(DOM.get_tag_name(DOM.create_element()), 'fragment')
 
     def test_create_element_nested(self):
         self.assertEqual(DOM.render(DOM.create_element('a', {}, DOM.create_element('span', {'className': 'file-info icon-text'}, DOM.create_element('span', {'className': 'icon-text__text'}, 'Test test'), DOM.create_element('svg', {'className': 'icon'}, DOM.create_element('use', {'xlink:href': 'icon-test'}))))), '<a><span class="file-info icon-text"><span class="icon-text__text">Test test</span><svg class="icon"><use xmlns:ns0="http://www.w3.org/1999/xlink" ns0:href="icon-test"></use></svg></span></a>')
 
     def test_create_document_fragment(self):
-        self.assertEqual(DOM.create_document_fragment().tag, 'fragment')
+        self.assertEqual(DOM.get_tag_name(DOM.create_document_fragment()), 'fragment')
 
     def test_create_text_node(self):
-        self.assertEqual(DOM.create_text_node('Test text').tag, 'textnode')
-        self.assertEqual(DOM.create_text_node('Test text').text, 'Test text')
+        self.assertEqual(DOM.get_tag_name(DOM.create_text_node('Test text')), 'textnode')
+        self.assertEqual(DOM.get_text_content(DOM.create_text_node('Test text')), 'Test text')
 
     def test_parse_html(self):
         self.assertEqual(DOM.render(DOM.parse_html('<p><span>Test text</span></p>')), '<p><span>Test text</span></p>')
@@ -37,10 +37,16 @@ class TestDOM(unittest.TestCase):
         DOM.set_attribute(elt, 'href', 'http://example.com')
         self.assertEqual(elt.get('href'), 'http://example.com')
 
+    def test_get_tag_name(self):
+        self.assertEqual(DOM.get_tag_name(DOM.create_element('p', {}, 'Test test')), 'p')
+
+    def test_get_text_content(self):
+        self.assertEqual(DOM.get_text_content(DOM.create_element('p', {}, 'Test test')), 'Test test')
+
     def test_set_text_content(self):
         elt = DOM.create_element('p')
         DOM.set_text_content(elt, 'Test test')
-        self.assertEqual(elt.text, 'Test test')
+        self.assertEqual(DOM.get_text_content(elt), 'Test test')
 
     def test_get_children(self):
         self.assertEqual(len(DOM.get_children(DOM.create_element('span', {}, DOM.create_element('span'), DOM.create_element('span')))), 2)

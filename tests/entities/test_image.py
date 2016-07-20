@@ -2,6 +2,7 @@ from __future__ import absolute_import, unicode_literals
 
 import unittest
 
+from draftjs_exporter.dom import DOM
 from draftjs_exporter.entities.image import Image
 
 
@@ -20,6 +21,6 @@ class TestImage(unittest.TestCase):
                 'height': 580,
             }
         })
-        self.assertEqual(image.tag, 'img')
-        self.assertEqual(image.text, None)
+        self.assertEqual(DOM.get_tag_name(image), 'img')
+        self.assertEqual(DOM.get_text_content(image), None)
         self.assertEqual(image.get('src'), 'http://example.com/example.png')

@@ -2,6 +2,7 @@ from __future__ import absolute_import, unicode_literals
 
 import unittest
 
+from draftjs_exporter.dom import DOM
 from draftjs_exporter.entities.link import Link
 
 
@@ -18,8 +19,8 @@ class TestLink(unittest.TestCase):
                 'url': 'http://example.com',
             }
         })
-        self.assertEqual(link.tag, 'a')
-        self.assertEqual(link.text, None)
+        self.assertEqual(DOM.get_tag_name(link), 'a')
+        self.assertEqual(DOM.get_text_content(link), None)
         self.assertEqual(link.get('href'), 'http://example.com')
 
     def test_render_invalid(self):

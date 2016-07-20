@@ -51,7 +51,7 @@ class DOM(object):
             if hasattr(child, 'tag'):
                 DOM.append_child(elt, child)
             else:
-                elt.text = elt.text + child if elt.text else child
+                DOM.set_text_content(elt, DOM.get_text_content(elt) + child if DOM.get_text_content(elt) else child)
 
         return elt
 
@@ -76,6 +76,14 @@ class DOM(object):
     @staticmethod
     def set_attribute(elt, attr, value):
         elt.set(attr, value)
+
+    @staticmethod
+    def get_tag_name(elt):
+        return elt.tag
+
+    @staticmethod
+    def get_text_content(elt):
+        return elt.text
 
     @staticmethod
     def set_text_content(elt, text):
