@@ -1,6 +1,6 @@
 from __future__ import absolute_import, unicode_literals
 
-from draftjs_exporter.constants import BLOCK_TYPES, DEFAULT_BLOCK_MAP, ENTITY_TYPES, INLINE_STYLES
+from draftjs_exporter.constants import BLOCK_TYPES, DEFAULT_BLOCK_MAP, DEFAULT_STYLE_MAP, ENTITY_TYPES
 from draftjs_exporter.dom import DOM
 from draftjs_exporter.entities.image import Image
 from draftjs_exporter.entities.link import Link
@@ -14,20 +14,17 @@ config = {
         ENTITY_TYPES.IMAGE: Image(),
         ENTITY_TYPES.TOKEN: Token(),
     },
-    # Extend the default block map.
+    # Extend/override the default block map.
     'block_map': dict(DEFAULT_BLOCK_MAP, **{
         BLOCK_TYPES.UNORDERED_LIST_ITEM: {
             'element': 'li',
             'wrapper': ['ul', {'className': 'bullet-list'}],
         },
     }),
-    'style_map': {
-        INLINE_STYLES.ITALIC: {'element': 'em'},
-        INLINE_STYLES.BOLD: {'element': 'strong'},
-        INLINE_STYLES.CODE: {'element': 'code'},
-        INLINE_STYLES.STRIKETHROUGH: {'textDecoration': 'line-through'},
-        INLINE_STYLES.UNDERLINE: {'textDecoration': 'underline'},
-    },
+    # Extend/override the default style map.
+    'style_map': dict(DEFAULT_STYLE_MAP, **{
+        'HIGHLIGHT': {'element': 'strong', 'textDecoration': 'underline'},
+    }),
 }
 
 exporter = HTML(config)

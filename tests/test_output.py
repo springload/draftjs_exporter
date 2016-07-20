@@ -603,3 +603,53 @@ class TestOutput(unittest.TestCase):
                 }
             ]
         }), '<p><em>some</em> paragraph text</p>')
+
+    def test_call_with_default_style_map(self):
+        self.assertEqual(HTML({
+            'block_map': dict(DEFAULT_BLOCK_MAP, **{
+                BLOCK_TYPES.UNORDERED_LIST_ITEM: {
+                    'element': 'li',
+                    'wrapper': ['ul', {'className': 'steps'}],
+                },
+                BLOCK_TYPES.ATOMIC: {'element': 'span'},
+            })
+        }).call({
+            'entityMap': {},
+            'blocks': [
+                {
+                    'key': 'dem5p',
+                    'text': 'some paragraph text',
+                    'type': 'unstyled',
+                    'depth': 0,
+                    'inlineStyleRanges': [
+                        {
+                            'offset': 0,
+                            'length': 4,
+                            'style': 'ITALIC'
+                        }
+                    ],
+                    'entityRanges': []
+                }
+            ]
+        }), '<p><em>some</em> paragraph text</p>')
+
+    def test_call_with_default_config(self):
+        self.assertEqual(HTML().call({
+            'entityMap': {},
+            'blocks': [
+                {
+                    'key': 'dem5p',
+                    'text': 'some paragraph text',
+                    'type': 'unstyled',
+                    'depth': 0,
+                    'inlineStyleRanges': [
+                        {
+                            'offset': 0,
+                            'length': 4,
+                            'style': 'ITALIC'
+                        }
+                    ],
+                    'entityRanges': []
+                }
+            ]
+        }), '<p><em>some</em> paragraph text</p>')

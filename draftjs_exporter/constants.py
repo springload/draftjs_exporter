@@ -48,3 +48,12 @@ DEFAULT_BLOCK_MAP = {
     BLOCK_TYPES.CODE: {'element': 'pre'},
     BLOCK_TYPES.HORIZONTAL_RULE: {'element': 'hr'},
 }
+
+# Default style map to extend.
+DEFAULT_STYLE_MAP = {
+    INLINE_STYLES.ITALIC: {'element': 'em'},
+    INLINE_STYLES.BOLD: {'element': 'strong'},
+    INLINE_STYLES.CODE: {'element': 'code'},
+    INLINE_STYLES.STRIKETHROUGH: {'textDecoration': 'line-through'},
+    INLINE_STYLES.UNDERLINE: {'textDecoration': 'underline'},
+}
