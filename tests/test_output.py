@@ -5,14 +5,14 @@ import unittest
 
 from draftjs_exporter.constants import BLOCK_TYPES, ENTITY_TYPES, INLINE_STYLES
 from draftjs_exporter.entities.link import Link
-from draftjs_exporter.entities.token import Token
+from draftjs_exporter.entities.null import Null
 from draftjs_exporter.entity_state import EntityException
 from draftjs_exporter.html import HTML
 
 config = {
     'entity_decorators': {
         ENTITY_TYPES.LINK: Link(),
-        'TOKEN': Token(),
+        ENTITY_TYPES.TOKEN: Null(),
     },
     'block_map': {
         BLOCK_TYPES.HEADER_ONE: {'element': 'h1'},

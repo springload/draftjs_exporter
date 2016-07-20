@@ -4,5 +4,5 @@ from draftjs_exporter.dom import DOM
 
 
 class Null():
-    def render(self):
+    def render(self, props):
         return DOM.create_element()

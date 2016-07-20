@@ -13,5 +13,5 @@ class TestNull(unittest.TestCase):
         self.assertIsInstance(self.null, Null)
 
     def test_render(self):
-        self.assertEqual(self.null.render().tag, 'fragment')
-        self.assertEqual(self.null.render().text, None)
+        self.assertEqual(self.null.render({}).tag, 'fragment')
+        self.assertEqual(self.null.render({}).text, None)
