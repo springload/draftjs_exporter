@@ -42,7 +42,7 @@ class TestExportsMeta(type):
         def gen_test(export):
             def test(self):
                 self.maxDiff = None
-                self.assertEqual(HTML(config).call(export.get('content_state')), export.get('output'))
+                self.assertEqual(HTML(config).render(export.get('content_state')), export.get('output'))
             return test
 
         for export in fixtures:

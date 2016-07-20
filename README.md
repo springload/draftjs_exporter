@@ -71,7 +71,7 @@ content_state = {
 }
 
 # Render markup
-markup = exporter.call(content_state)
+markup = exporter.render(content_state)
 ```
 
 ### Running the example

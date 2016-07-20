@@ -17,17 +17,21 @@ class HTML():
         self.wrapper_state = WrapperState(config.get('block_map', BLOCK_MAP))
         self.style_state = StyleState(config.get('style_map', STYLE_MAP))
 
-    def call(self, content_state):
+    def render(self, content_state):
+        """
+        Starts the export process on a given piece of content state.
+        """
         entity_map = content_state.get('entityMap', {})
 
         for block in content_state.get('blocks'):
-            element = self.wrapper_state.element_for(block)
-            self.render_block(element, block, entity_map)
+            self.render_block(block, entity_map)
 
         return self.wrapper_state.to_string()
 
-    def render_block(self, element, block, entity_map):
+    def render_block(self, block, entity_map):
+        element = self.wrapper_state.element_for(block)
         entity_state = EntityState(element, self.entity_decorators, entity_map)
+
         for (text, commands) in self.build_command_groups(block):
             for command in commands:
                 entity_state.apply(command)
@@ -37,26 +41,34 @@ class HTML():
 
     def build_command_groups(self, block):
         """
-        Creates block modification commands, grouped by start index, with the text to apply them on.
+        Creates block modification commands, grouped by start index,
+        with the text to apply them on.
         """
+        text = block.get('text')
+
         commands = self.build_commands(block)
-        # Tried using itertools.tee but for some reason that does not work. Oh well.
+        # Tried using itertools.tee but for some reason that failed. Oh well.
         grouped = Command.grouped_by_index(commands)
         listed = list(Command.grouped_by_index(commands))
+        sliced = []
 
-        text = block.get('text')
-        grouped_sliced = []
         i = 0
         for start_index, commands in grouped:
             next_group = listed[i + 1] if i + 1 < len(listed) else False
             stop_index = next_group[0] if next_group else 0
 
-            grouped_sliced.append((text[start_index:stop_index], list(commands)))
+            sliced.append((text[start_index:stop_index], list(commands)))
             i += 1
 
-        return grouped_sliced
+        return sliced
 
     def build_commands(self, block):
+        """
+        Build all of the manipulation commands for a given block.
+        - One pair to set the text.
+        - Multiple pairs for styles.
+        - Multiple pairs for entities.
+        """
         text_commands = Command.start_stop('text', 0, len(block.get('text')))
         style_commands = self.build_style_commands(block)
         entity_commands = self.build_entity_commands(block)
@@ -64,7 +76,9 @@ class HTML():
         return text_commands + style_commands + entity_commands
 
     def build_style_commands(self, block):
-        return Command.from_ranges(block.get('inlineStyleRanges', []), 'inline_style', 'style')
+        ranges = block.get('inlineStyleRanges', [])
+        return Command.from_ranges(ranges, 'inline_style', 'style')
 
     def build_entity_commands(self, block):
-        return Command.from_ranges(block.get('entityRanges', []), 'entity', 'key')
+        ranges = block.get('entityRanges', [])
+        return Command.from_ranges(ranges, 'entity', 'key')

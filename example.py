@@ -256,5 +256,5 @@ content_state = {
     ]
 }
 
-markup = exporter.call(content_state)
+markup = exporter.render(content_state)
 print(DOM.pretty_print(markup))

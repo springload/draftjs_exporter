@@ -38,8 +38,8 @@ class TestOutput(unittest.TestCase):
         self.maxDiff = None
         self.exporter = HTML(config)
 
-    def test_call_with_different_blocks(self):
-        self.assertEqual(self.exporter.call({
+    def test_render_with_different_blocks(self):
+        self.assertEqual(self.exporter.render({
             'entityMap': {},
             'blocks': [
                 {
@@ -61,8 +61,8 @@ class TestOutput(unittest.TestCase):
             ]
         }), '<h1>Header</h1><p>some paragraph text</p>')
 
-    def test_call_with_unicode(self):
-        self.assertEqual(self.exporter.call({
+    def test_render_with_unicode(self):
+        self.assertEqual(self.exporter.render({
             'entityMap': {},
             'blocks': [
                 {
@@ -76,8 +76,8 @@ class TestOutput(unittest.TestCase):
             ]
         }), '<p>Emojis! &#127866;</p>')
 
-    def test_call_with_inline_styles(self):
-        self.assertEqual(self.exporter.call({
+    def test_render_with_inline_styles(self):
+        self.assertEqual(self.exporter.render({
             'entityMap': {},
             'blocks': [
                 {
@@ -97,8 +97,8 @@ class TestOutput(unittest.TestCase):
             ]
         }), '<p><em>some</em> paragraph text</p>')
 
-    def test_call_with_multiple_inline_styles(self):
-        self.assertEqual(self.exporter.call({
+    def test_render_with_multiple_inline_styles(self):
+        self.assertEqual(self.exporter.render({
             'entityMap': {
                 '0': {
                     'type': 'LINK',
@@ -146,8 +146,8 @@ class TestOutput(unittest.TestCase):
             ]
         }), '<h1><strong>He</strong>ader</h1><p><strong style="text-decoration: underline;">some</strong> <a href="http://example.com">paragraph</a> text</p>')
 
-    def test_call_with_entities(self):
-        self.assertEqual(self.exporter.call({
+    def test_render_with_entities(self):
+        self.assertEqual(self.exporter.render({
             'entityMap': {
                 '0': {
                     'type': 'LINK',
@@ -175,9 +175,9 @@ class TestOutput(unittest.TestCase):
             ]
         }), '<p>some <a href="http://example.com">paragraph</a> text</p>')
 
-    def test_call_with_entities_crossing_raises(self):
+    def test_render_with_entities_crossing_raises(self):
         with self.assertRaises(EntityException):
-            self.exporter.call({
+            self.exporter.render({
                 'entityMap': {
                     '0': {
                         'type': 'LINK',
@@ -217,8 +217,8 @@ class TestOutput(unittest.TestCase):
                 ]
             })
 
-    def test_call_with_wrapping(self):
-        self.assertEqual(self.exporter.call({
+    def test_render_with_wrapping(self):
+        self.assertEqual(self.exporter.render({
             'entityMap': {},
             'blocks': [
                 {
@@ -240,8 +240,8 @@ class TestOutput(unittest.TestCase):
             ]
         }), '<ul class="steps"><li>item1</li><li>item2</li></ul>')
 
-    def test_call_with_token_entity(self):
-        self.assertEqual(self.exporter.call({
+    def test_render_with_token_entity(self):
+        self.assertEqual(self.exporter.render({
             'entityMap': {
                 '2': {
                     'type': 'TOKEN',
@@ -283,8 +283,8 @@ class TestOutput(unittest.TestCase):
             ]
         }), '<ul class="steps"><li>item1</li><li>item2</li></ul><hr>')
 
-    def test_call_with_unidirectional_nested_wrapping(self):
-        self.assertEqual(self.exporter.call({
+    def test_render_with_unidirectional_nested_wrapping(self):
+        self.assertEqual(self.exporter.render({
             'entityMap': {},
             'blocks': [
                 {
@@ -354,8 +354,8 @@ class TestOutput(unittest.TestCase):
             ],
         }), '<ul class="steps"><li>A list item<ul class="steps"><li>Oops!<ul class="steps"><li>Does this support nesting?</li><li>Maybe?<ul class="steps"><li>Yep it does!<ul class="steps"><li>How many levels deep?</li><li>Lots.</li><li>Ah.</li></ul></li></ul></li></ul></li></ul></li></ul>')
 
-    def test_call_with_backtracking_nested_wrapping(self):
-        self.assertEqual(self.exporter.call({
+    def test_render_with_backtracking_nested_wrapping(self):
+        self.assertEqual(self.exporter.render({
             'entityMap': {},
             'blocks': [
                 {
@@ -457,7 +457,7 @@ class TestOutput(unittest.TestCase):
             ],
         }), '<ul class="steps"><li>A list item (0)<ul class="steps"><li>Oops! (1)<ul class="steps"><li>Does this support nesting? (2)</li><li>Maybe? (2)<ul class="steps"><li>Yep it does! (3)<ul class="steps"><li>How many levels deep? (4)</li></ul></li></ul></li><li>Backtracking, two at once... (2)</li><li>Up, up, and away! (2)</li></ul></li><li>Uh oh (1)</li><li>Arh! (1)</li></ul></li><li>Did this work? (0)</li><li>Yes! (0)</li></ul>')
 
-    def test_call_with_big_content(self):
+    def test_render_with_big_content(self):
         self.assertEqual(HTML({
             'entity_decorators': {
                 'LINK': Link()
@@ -475,7 +475,7 @@ class TestOutput(unittest.TestCase):
                 'ITALIC': {'element': 'em'},
                 'BOLD': {'element': 'strong'}
             }
-        }).call({
+        }).render({
             'entityMap': {
                 '0': {
                     'type': 'LINK',
@@ -578,14 +578,14 @@ class TestOutput(unittest.TestCase):
             ]
         }), '<h2>User experience <strong>(UX)</strong> design</h2><blockquote>Everyone at Springload applies the best principles of UX to their work.</blockquote><p>The design decisions we make building tools and services for your customers are based on empathy for what your customers need.</p><ul><li>User research</li><li><a href="http://example.com">User testing and analysis</a></li><li>A/B testing</li><li>Prototyping</li></ul><p><a href="https://www.springload.co.nz/work/nz-festival/">How we made it delightful and easy for people to find NZ Festival shows</a></p>')
 
-    def test_call_with_default_block_map(self):
+    def test_render_with_default_block_map(self):
         self.assertEqual(HTML({
             'style_map': {
                 INLINE_STYLES.ITALIC: {'element': 'em'},
                 INLINE_STYLES.BOLD: {'element': 'strong'},
                 'HIGHLIGHT': {'element': 'strong', 'textDecoration': 'underline'},
             },
-        }).call({
+        }).render({
             'entityMap': {},
             'blocks': [
                 {
@@ -605,7 +605,7 @@ class TestOutput(unittest.TestCase):
             ]
         }), '<p><em>some</em> paragraph text</p>')
 
-    def test_call_with_default_style_map(self):
+    def test_render_with_default_style_map(self):
         self.assertEqual(HTML({
             'block_map': dict(BLOCK_MAP, **{
                 BLOCK_TYPES.UNORDERED_LIST_ITEM: {
@@ -614,7 +614,7 @@ class TestOutput(unittest.TestCase):
                 },
                 BLOCK_TYPES.ATOMIC: {'element': 'span'},
             })
-        }).call({
+        }).render({
             'entityMap': {},
             'blocks': [
                 {
@@ -634,8 +634,8 @@ class TestOutput(unittest.TestCase):
             ]
         }), '<p><em>some</em> paragraph text</p>')
 
-    def test_call_with_default_config(self):
-        self.assertEqual(HTML().call({
+    def test_render_with_default_config(self):
+        self.assertEqual(HTML().render({
             'entityMap': {},
             'blocks': [
                 {
