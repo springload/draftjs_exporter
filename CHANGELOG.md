@@ -4,6 +4,12 @@ Changelog
 > All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [[v0.3.1]](https://github.com/springload/draftjs_exporter/releases/tag/v0.3.1) - 2016-07-20
+
+### Fixed
+
+- Use HTML parser instead of XML for DOM API
+
 ## [[v0.3.0]](https://github.com/springload/draftjs_exporter/releases/tag/v0.3.0) - 2016-07-20
 
 ### Added
@@ -22,7 +28,7 @@ This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html
 
 ### Fixed
 
-- Fix nested blocks backtracking creating multiple wrappers at the same depths instead of reusing existing ones ([#9](https://github.com/springload/draftjs_exporter/issues/9))
+- Nested blocks backtracking creating multiple wrappers at the same depths instead of reusing existing ones ([#9](https://github.com/springload/draftjs_exporter/issues/9))
 
 ### Removed
 
