@@ -4,35 +4,24 @@ from __future__ import absolute_import, unicode_literals
 import unittest
 
 from draftjs_exporter.constants import BLOCK_TYPES, ENTITY_TYPES, INLINE_STYLES
+from draftjs_exporter.defaults import BLOCK_MAP
 from draftjs_exporter.entities.link import Link
-from draftjs_exporter.entities.token import Token
+from draftjs_exporter.entities.null import Null
 from draftjs_exporter.entity_state import EntityException
 from draftjs_exporter.html import HTML
 
 config = {
     'entity_decorators': {
         ENTITY_TYPES.LINK: Link(),
-        'TOKEN': Token(),
+        ENTITY_TYPES.TOKEN: Null(),
     },
-    'block_map': {
-        BLOCK_TYPES.HEADER_ONE: {'element': 'h1'},
-        BLOCK_TYPES.HEADER_TWO: {'element': 'h2'},
-        BLOCK_TYPES.HEADER_THREE: {'element': 'h3'},
-        BLOCK_TYPES.HEADER_FOUR: {'element': 'h4'},
-        BLOCK_TYPES.HEADER_FIVE: {'element': 'h5'},
-        BLOCK_TYPES.BLOCKQUOTE: {'element': 'blockquote'},
+    'block_map': dict(BLOCK_MAP, **{
         BLOCK_TYPES.UNORDERED_LIST_ITEM: {
             'element': 'li',
             'wrapper': ['ul', {'className': 'steps'}],
         },
-        BLOCK_TYPES.ORDERED_LIST_ITEM: {
-            'element': 'li',
-            'wrapper': ['ol', {}],
-        },
-        BLOCK_TYPES.UNSTYLED: {'element': 'p'},
         BLOCK_TYPES.ATOMIC: {'element': 'span'},
-        BLOCK_TYPES.HORIZONTAL_RULE: {'element': 'hr'},
-    },
+    }),
     'style_map': {
         INLINE_STYLES.ITALIC: {'element': 'em'},
         INLINE_STYLES.BOLD: {'element': 'strong'},
@@ -588,3 +577,80 @@ class TestOutput(unittest.TestCase):
                 }
             ]
         }), '<h2>User experience <strong>(UX)</strong> design</h2><blockquote>Everyone at Springload applies the best principles of UX to their work.</blockquote><p>The design decisions we make building tools and services for your customers are based on empathy for what your customers need.</p><ul><li>User research</li><li><a href="http://example.com">User testing and analysis</a></li><li>A/B testing</li><li>Prototyping</li></ul><p><a href="https://www.springload.co.nz/work/nz-festival/">How we made it delightful and easy for people to find NZ Festival shows</a></p>')
+
+    def test_call_with_default_block_map(self):
+        self.assertEqual(HTML({
+            'style_map': {
+                INLINE_STYLES.ITALIC: {'element': 'em'},
+                INLINE_STYLES.BOLD: {'element': 'strong'},
+                'HIGHLIGHT': {'element': 'strong', 'textDecoration': 'underline'},
+            },
+        }).call({
+            'entityMap': {},
+            'blocks': [
+                {
+                    'key': 'dem5p',
+                    'text': 'some paragraph text',
+                    'type': 'unstyled',
+                    'depth': 0,
+                    'inlineStyleRanges': [
+                        {
+                            'offset': 0,
+                            'length': 4,
+                            'style': 'ITALIC'
+                        }
+                    ],
+                    'entityRanges': []
+                }
+            ]
+        }), '<p><em>some</em> paragraph text</p>')
+
+    def test_call_with_default_style_map(self):
+        self.assertEqual(HTML({
+            'block_map': dict(BLOCK_MAP, **{
+                BLOCK_TYPES.UNORDERED_LIST_ITEM: {
+                    'element': 'li',
+                    'wrapper': ['ul', {'className': 'steps'}],
+                },
+                BLOCK_TYPES.ATOMIC: {'element': 'span'},
+            })
+        }).call({
+            'entityMap': {},
+            'blocks': [
+                {
+                    'key': 'dem5p',
+                    'text': 'some paragraph text',
+                    'type': 'unstyled',
+                    'depth': 0,
+                    'inlineStyleRanges': [
+                        {
+                            'offset': 0,
+                            'length': 4,
+                            'style': 'ITALIC'
+                        }
+                    ],
+                    'entityRanges': []
+                }
+            ]
+        }), '<p><em>some</em> paragraph text</p>')
+
+    def test_call_with_default_config(self):
+        self.assertEqual(HTML().call({
+            'entityMap': {},
+            'blocks': [
+                {
+                    'key': 'dem5p',
+                    'text': 'some paragraph text',
+                    'type': 'unstyled',
+                    'depth': 0,
+                    'inlineStyleRanges': [
+                        {
+                            'offset': 0,
+                            'length': 4,
+                            'style': 'ITALIC'
+                        }
+                    ],
+                    'entityRanges': []
+                }
+            ]
+        }), '<p><em>some</em> paragraph text</p>')

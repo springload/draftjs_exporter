@@ -1,6 +1,6 @@
 from __future__ import absolute_import, unicode_literals
 
-from draftjs_exporter.entities.null import Null
+from draftjs_exporter.dom import DOM
 from draftjs_exporter.error import ExporterException
 
 
@@ -12,7 +12,11 @@ class EntityState():
     def __init__(self, root_element, entity_decorators, entity_map):
         self.entity_decorators = entity_decorators
         self.entity_map = entity_map
-        self.entity_stack = [(Null().call(root_element, {}), {})]
+
+        stack_start = DOM.create_document_fragment()
+        DOM.append_child(root_element, stack_start)
+
+        self.entity_stack = [(stack_start, {})]
 
     def apply(self, command):
         if (command.name == 'start_entity'):
@@ -45,7 +49,8 @@ class EntityState():
         entity_details = self.get_entity_details(command)
         decorator = self.get_entity_decorator(entity_details)
 
-        new_element = decorator.call(self.current_parent(), entity_details)
+        new_element = decorator.render(entity_details)
+        DOM.append_child(self.current_parent(), new_element)
 
         self.entity_stack.append([new_element, entity_details])
 

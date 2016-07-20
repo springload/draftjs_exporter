@@ -1,9 +1,10 @@
 from __future__ import absolute_import, unicode_literals
 
-from .command import Command
-from .entity_state import EntityState
-from .style_state import StyleState
-from .wrapper_state import WrapperState
+from draftjs_exporter.command import Command
+from draftjs_exporter.defaults import BLOCK_MAP, STYLE_MAP
+from draftjs_exporter.entity_state import EntityState
+from draftjs_exporter.style_state import StyleState
+from draftjs_exporter.wrapper_state import WrapperState
 
 
 class HTML():
@@ -11,10 +12,10 @@ class HTML():
     Entry point of the exporter. Combines entity, wrapper and style state
     to generate the right HTML nodes.
     """
-    def __init__(self, config):
+    def __init__(self, config={}):
         self.entity_decorators = config.get('entity_decorators', {})
-        self.wrapper_state = WrapperState(config.get('block_map', {}))
-        self.style_state = StyleState(config.get('style_map', {}))
+        self.wrapper_state = WrapperState(config.get('block_map', BLOCK_MAP))
+        self.style_state = StyleState(config.get('style_map', STYLE_MAP))
 
     def call(self, content_state):
         entity_map = content_state.get('entityMap', {})

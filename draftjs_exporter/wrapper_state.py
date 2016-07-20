@@ -1,9 +1,6 @@
 from __future__ import absolute_import, unicode_literals
 
-import re
-
-from lxml import etree
-
+from draftjs_exporter.dom import DOM
 from draftjs_exporter.error import ExporterException
 
 
@@ -20,32 +17,30 @@ class WrapperState():
 
     def __init__(self, block_map):
         self.block_map = block_map
-        self.document = etree.Element('root')
+        self.document = DOM.create_document_fragment()
 
         self.wrapper_stack = [
             # Default wrapper element is a fragment, does not have options.
-            [etree.Element('fragment'), 0, []],
+            [DOM.create_document_fragment(), 0, []],
         ]
 
     def element_for(self, block):
         type = block.get('type', 'unstyled')
         depth = block.get('depth', 0)
         tag = self.get_block_tag(type)
-        elt = etree.Element(tag)
+        elt = DOM.create_element(tag)
 
         parent = self.parent_for(type, depth)
-        parent.append(elt)
+        DOM.append_child(parent, elt)
 
         # At level 0, the element is added to the document.
         if (depth == 0):
-            self.document.append(parent)
+            DOM.append_child(self.document, parent)
 
         return elt
 
     def to_string(self):
-        # Removes the fragments that should not have HTML tags. Caveat of lxml.
-        # Dirty, but quite easy to understand.
-        return re.sub(r'</?(root|fragment|textnode)>', '', etree.tostring(self.document, method='html').decode('utf-8'))
+        return DOM.render(self.document)
 
     def __str__(self):
         return '<WrapperState: %s>' % self.to_string()
@@ -54,7 +49,7 @@ class WrapperState():
         new_wrapper = [element, depth, options]
 
         if depth >= len(self.wrapper_stack):
-            self.get_wrapper_elt().getchildren()[-1].append(element)
+            DOM.append_child(DOM.get_children(self.get_wrapper_elt())[-1], element)
 
             self.wrapper_stack.append(new_wrapper)
         else:
@@ -82,17 +77,10 @@ class WrapperState():
         return parent
 
     def reset_wrapper_stack(self):
-        self.set_wrapper(etree.Element('fragment'))
+        self.set_wrapper(DOM.create_document_fragment())
         return self.get_wrapper_elt()
 
     def map_options(self, tag, attributes={}):
-        """
-        Map attributes/options from Draft.js to lxml lingo.
-        """
-        if 'className' in attributes:
-            attributes['class'] = attributes.get('className')
-            attributes.pop('className', None)
-
         return [tag, attributes]
 
     def get_block_tag(self, type):
@@ -107,7 +95,7 @@ class WrapperState():
         new_options = self.map_options(options[0], options[1])
 
         if depth > self.get_wrapper_depth() or new_options != self.get_wrapper_options():
-            wrapper = etree.Element(options[0], attrib=options[1])
+            wrapper = DOM.create_element(options[0], options[1])
             self.set_wrapper(wrapper, depth, options)
 
         return self.get_wrapper_elt(depth)
