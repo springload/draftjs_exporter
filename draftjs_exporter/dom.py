@@ -14,7 +14,7 @@ class DOM(object):
     """
 
     @staticmethod
-    def create_element(type=None, props=None, *children):
+    def create_element(type=None, props={}, *children):
         """
         Signature inspired by React.createElement.
         createElement(
@@ -27,18 +27,25 @@ class DOM(object):
         if not type:
             elt = DOM.create_document_fragment()
         else:
+            attributes = {}
+
             # Map props from React/Draft.js to lxml lingo.
-            if props:
-                if 'className' in props:
-                    props['class'] = props.get('className')
-                    props.pop('className', None)
+            if 'className' in props:
+                props['class'] = props.get('className')
+                props.pop('className', None)
 
-                # TODO Should be in a separate, reusable factory
-                if 'xlink:href' in props:
-                    props['{%s}href' % XLINK] = props.get('xlink:href')
-                    props.pop('xlink:href', None)
+            # TODO One-off fix ATM, even though the problem is everywhere.
+            if 'xlink:href' in props:
+                props['{%s}href' % XLINK] = props.get('xlink:href')
+                props.pop('xlink:href', None)
 
-            elt = etree.Element(type, attrib=props)
+            for key in props:
+                prop = props[key]
+                # Filter null values and cast to string for lxml
+                if prop is not None:
+                    attributes[key] = str(prop)
+
+            elt = etree.Element(type, attrib=attributes)
 
         for child in children:
             if hasattr(child, 'tag'):

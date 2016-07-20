@@ -20,6 +20,6 @@ class Link():
         for key in data:
             if data[key] and Link.is_valid_attribute(key):
                 attr = key if key != 'url' else 'href'
-                attributes[attr] = str(data[key])
+                attributes[attr] = data[key]
 
         return DOM.create_element('a', attributes)

@@ -16,6 +16,8 @@ class TestImage(unittest.TestCase):
         image = self.image.render({
             'data': {
                 'src': 'http://example.com/example.png',
+                'width': 320,
+                'height': 580,
             }
         })
         self.assertEqual(image.tag, 'img')
