@@ -5,7 +5,7 @@ from draftjs_exporter.defaults import BLOCK_MAP, STYLE_MAP
 from draftjs_exporter.dom import DOM
 from draftjs_exporter.entities.image import Image
 from draftjs_exporter.entities.link import Link
-from draftjs_exporter.entities.token import Token
+from draftjs_exporter.entities.null import Null
 from draftjs_exporter.html import HTML
 
 # TODO Support dt/dd, hr, br, cite, mark, q, s, sub, sup, video?
@@ -13,7 +13,7 @@ config = {
     'entity_decorators': {
         ENTITY_TYPES.LINK: Link(),
         ENTITY_TYPES.IMAGE: Image(),
-        ENTITY_TYPES.TOKEN: Token(),
+        ENTITY_TYPES.TOKEN: Null(),
     },
     # Extend/override the default block map.
     'block_map': dict(BLOCK_MAP, **{
