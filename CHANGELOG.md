@@ -2,7 +2,31 @@ Changelog
 =========
 
 > All notable changes to this project will be documented in this file.
-This project adheres to [Semantic Versioning](http://semver.org/).
+This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
+
+## [[v0.3.0]](https://github.com/springload/draftjs_exporter/releases/tag/v0.3.0) - 2016-07-20
+
+### Added
+
+- Automatic conversion of entity data to HTML attributes (int & boolean to string, `className` to `class`).
+- Default, extensible block & inline style maps for common HTML elements.
+- React-like API to create custom entity decorators.
+- DOM API to abstract HTML building code.
+- Dynamically generate test cases from JSON fixture
+- Raise exception for undefined entity decorators
+
+### Changed
+
+- (Breaking change) Exporter API changed to be closer to React's
+- (Breaking change) Entity decorator API changed to be closer to React's
+
+### Fixed
+
+- Fix nested blocks backtracking creating multiple wrappers at the same depths instead of reusing existing ones ([#9](https://github.com/springload/draftjs_exporter/issues/9))
+
+### Removed
+
+- Removed Token entity (identical as Null)
 
 ## [[v0.2.0]](https://github.com/springload/draftjs_exporter/releases/tag/v0.2.0) - 2016-07-05
 
