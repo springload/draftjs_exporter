@@ -1,5 +1,14 @@
-draftjs\_exporter 🐍 |Build Status| |PyPI| |Coverage Status| |Code Climate|
-==========================================================================
+.. image:: https://travis-ci.org/springload/draftjs_exporter.svg?branch=master
+   :target: https://travis-ci.org/springload/draftjs_exporter
+.. image:: https://img.shields.io/pypi/v/draftjs_exporter.svg
+   :target: https://pypi.python.org/pypi/draftjs_exporter
+.. image:: https://coveralls.io/repos/github/springload/draftjs_exporter/badge.svg?branch=master
+   :target: https://coveralls.io/github/springload/draftjs_exporter?branch=master
+.. image:: https://codeclimate.com/github/springload/draftjs_exporter/badges/gpa.svg
+   :target: https://codeclimate.com/github/springload/draftjs_exporter
+
+draftjs_exporter 🐍
+===================
 
     Library to convert the Facebook Draft.js editor’s raw ContentState
     to HTML.
@@ -176,15 +185,6 @@ Documentation
 .. _Wagtail CMS: https://wagtail.io
 .. _Entities: https://facebook.github.io/draft-js/docs/advanced-topics-entities.html#content
 .. _this article: https://medium.com/@rajaraodv/how-draft-js-represents-rich-text-data-eeabb5f25cf2
-.. _Semantic Versioning: http://semver.org/spec/v2.0.0.html
-.. |Build Status| image:: https://travis-ci.org/springload/draftjs_exporter.svg?branch=master
-   :target: https://travis-ci.org/springload/draftjs_exporter
-.. |PyPI| image:: https://img.shields.io/pypi/v/draftjs_exporter.svg
-   :target: https://pypi.python.org/pypi/draftjs_exporter
-.. |Coverage Status| image:: https://coveralls.io/repos/github/springload/draftjs_exporter/badge.svg?branch=master
-   :target: https://coveralls.io/github/springload/draftjs_exporter?branch=master
-.. |Code Climate| image:: https://codeclimate.com/github/springload/draftjs_exporter/badges/gpa.svg
-   :target: https://codeclimate.com/github/springload/draftjs_exporter
 .. _Semantic Versioning: http://semver.org/spec/v2.0.0.html
 .. _measures code coverage: https://coveralls.io/github/springload/draftjs_exporter?branch=master
 .. _changelog: https://github.com/springload/draftjs_exporter/CHANGELOG.md
