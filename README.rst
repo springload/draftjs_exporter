@@ -155,6 +155,7 @@ Commands
     make test-ci         # Continuous integration test suite.
     make dev             # Restarts the example whenever a file changes.
     make clean-pyc       # Remove Python file artifacts.
+    make publish         # Publishes a new version to pypi.
 
 Debugging
 ~~~~~~~~~
@@ -171,7 +172,7 @@ Releases
 *  Update the version number in ``draftjs_exporter/__init__.py``,
    following semver
 *  ``git release vx.y.z``
-*  ``rm dist/* && python setup.py sdist && twine upload dist/*``
+*  ``make publish`` (confirm, and enter your password)
 *  Go to https://pypi.python.org/pypi/draftjs_exporter and check that
    all is well
 
