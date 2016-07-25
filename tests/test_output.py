@@ -38,6 +38,15 @@ class TestOutput(unittest.TestCase):
         self.maxDiff = None
         self.exporter = HTML(config)
 
+    def test_render_empty(self):
+        self.assertEqual(self.exporter.render({
+            'entityMap': {},
+            'blocks': []
+        }), '')
+
+    def test_render_emptiest(self):
+        self.assertEqual(self.exporter.render({}), '')
+
     def test_render_with_different_blocks(self):
         self.assertEqual(self.exporter.render({
             'entityMap': {},

@@ -23,7 +23,7 @@ class HTML():
         """
         entity_map = content_state.get('entityMap', {})
 
-        for block in content_state.get('blocks'):
+        for block in content_state.get('blocks', []):
             self.render_block(block, entity_map)
 
         return self.wrapper_state.to_string()
