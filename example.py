@@ -21,6 +21,10 @@ config = {
     },
     # Extend/override the default block map.
     'block_map': dict(BLOCK_MAP, **{
+        BLOCK_TYPES.HEADER_TWO: {
+            'element': 'h2',
+            'wrapper': 'hgroup',
+        },
         BLOCK_TYPES.UNORDERED_LIST_ITEM: {
             'element': 'li',
             'wrapper': ['ul', {'className': 'bullet-list'}],

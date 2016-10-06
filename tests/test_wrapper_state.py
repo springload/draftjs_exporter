@@ -78,3 +78,26 @@ class TestWrapperState(unittest.TestCase):
         })
 
         self.assertEqual(str(self.wrapper_state), '<WrapperState: <h1></h1>>')
+
+    def test_map_wrapper_options_full(self):
+        self.assertEqual(self.wrapper_state.map_wrapper_options([
+            'ul',
+            {'className': 'bullet-list'},
+        ]), [
+            'ul',
+            {'className': 'bullet-list'},
+        ])
+
+    def test_map_wrapper_options_half(self):
+        self.assertEqual(self.wrapper_state.map_wrapper_options([
+            'ul',
+        ]), [
+            'ul',
+            {},
+        ])
+
+    def test_map_wrapper_options_simplest(self):
+        self.assertEqual(self.wrapper_state.map_wrapper_options('ul'), [
+            'ul',
+            {},
+        ])

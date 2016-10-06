@@ -67,10 +67,10 @@ class WrapperState():
 
     def parent_for(self, type, depth):
         parent = None
-        options = self.block_map.get(type)
+        block_options = self.block_map.get(type)
 
-        if 'wrapper' in options:
-            parent = self.create_wrapper(options.get('wrapper'), depth)
+        if 'wrapper' in block_options:
+            parent = self.create_wrapper(block_options.get('wrapper'), depth)
         else:
             parent = self.reset_wrapper_stack()
 
@@ -80,22 +80,36 @@ class WrapperState():
         self.set_wrapper(DOM.create_document_fragment())
         return self.get_wrapper_elt()
 
-    def map_options(self, tag, attributes={}):
+    def map_wrapper_options(self, opts):
+        """
+        Supports the following options formats:
+        'ul'
+        ['ul']
+        ['ul', {'className': 'bullet-list'}]
+        """
+        if (isinstance(opts, list)):
+            tag = opts[0]
+            attributes = opts[1] if len(opts) > 1 else {}
+        else:
+            tag = opts
+            attributes = {}
+
         return [tag, attributes]
 
     def get_block_tag(self, type):
-        options = self.block_map.get(type)
+        block_options = self.block_map.get(type)
 
-        if options is None:
+        if block_options is None:
             raise BlockException('Block "%s" does not exist in block_map' % type)
 
-        return options.get('element')
+        return block_options.get('element')
 
-    def create_wrapper(self, options, depth):
-        new_options = self.map_options(options[0], options[1])
+    def create_wrapper(self, wrapper_options, depth):
+        # TODO Support options 1 being undefined (BLOCK_TYPES.HEADER_TWO: { 'element': 'h2', 'wrapper': 'div', },)
+        new_options = self.map_wrapper_options(wrapper_options)
 
         if depth > self.get_wrapper_depth() or new_options != self.get_wrapper_options():
-            wrapper = DOM.create_element(options[0], options[1])
-            self.set_wrapper(wrapper, depth, options)
+            wrapper = DOM.create_element(new_options[0], new_options[1])
+            self.set_wrapper(wrapper, depth, new_options)
 
         return self.get_wrapper_elt(depth)
