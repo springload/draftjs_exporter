@@ -83,7 +83,7 @@ class TestOutput(unittest.TestCase):
                     'entityRanges': []
                 }
             ]
-        }), '<p>Emojis! &#127866;</p>')
+        }), '<p>Emojis! \U0001f37a</p>')
 
     def test_render_with_inline_styles(self):
         self.assertEqual(self.exporter.render({
@@ -290,7 +290,7 @@ class TestOutput(unittest.TestCase):
                     ],
                 },
             ]
-        }), '<ul class="steps"><li>item1</li><li>item2</li></ul><hr>')
+        }), '<ul class="steps"><li>item1</li><li>item2</li></ul><hr/>')
 
     def test_render_with_unidirectional_nested_wrapping(self):
         self.assertEqual(self.exporter.render({
