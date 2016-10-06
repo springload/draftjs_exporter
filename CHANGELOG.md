@@ -4,6 +4,15 @@ Changelog
 > All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [[v0.3.3]](https://github.com/springload/draftjs_exporter/releases/tag/v0.3.3) - 2016-10-06
+
+Last release before switching to BeautifulSoup4 / html5lib. If we ever need to switch back to lxml, it should be as simple as looking at the code at [v0.3.3](https://github.com/springload/draftjs_exporter/tree/v0.3.3).
+
+### Added
+
+- Add wrapper method to create new elements.
+- Add wrapper method to retrieve an element's list of classes.
+
 ## [[v0.3.2]](https://github.com/springload/draftjs_exporter/releases/tag/v0.3.2) - 2016-07-25
 
 ### Fixed
