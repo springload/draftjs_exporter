@@ -6,6 +6,11 @@ from draftjs_exporter.dom import DOM
 
 
 class TestDOM(unittest.TestCase):
+    def test_create_tag(self):
+        self.assertEqual(DOM.get_tag_name(DOM.create_tag('p', {'class': 'intro'})), 'p')
+        self.assertEqual(DOM.get_class_list(DOM.create_tag('p', {'class': 'intro'})), ['intro'])
+        self.assertEqual(DOM.get_text_content(DOM.create_tag('p', {'class': 'intro'})), None)
+
     def test_create_element(self):
         self.assertEqual(DOM.get_tag_name(DOM.create_element('p', {'className': 'intro'}, 'Test test')), 'p')
         self.assertEqual(DOM.get_class_list(DOM.create_element('p', {'className': 'intro'}, 'Test test')), ['intro'])
@@ -39,6 +44,9 @@ class TestDOM(unittest.TestCase):
 
     def test_get_tag_name(self):
         self.assertEqual(DOM.get_tag_name(DOM.create_element('p', {}, 'Test test')), 'p')
+
+    def test_get_class_list(self):
+        self.assertEqual(DOM.get_class_list(DOM.create_element('p', {'className': 'intro test'}, 'Test test')), ['intro', 'test'])
 
     def test_get_text_content(self):
         self.assertEqual(DOM.get_text_content(DOM.create_element('p', {}, 'Test test')), 'Test test')
