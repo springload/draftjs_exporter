@@ -4,6 +4,20 @@ Changelog
 > All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [[v0.4.0]](https://github.com/springload/draftjs_exporter/releases/tag/v0.4.0) - 2016-10-07
+
+This release is likely to be a **breaking change**. It is not released as such because the exporter has not [reached 1.0 yet](http://semver.org/#spec-item-4).
+
+### Changed
+
+- Now using [Beautiful Soup 4](https://www.crummy.com/software/BeautifulSoup/bs4/doc/) and the [html5lib](https://github.com/html5lib/html5lib-python) parser instead of lxml.
+
+### Added
+
+- Support for simpler `wrapper` options definition: `{'unordered-list-item' : { 'element': 'li', 'wrapper': 'ul'}}`
+
+can now also be
+
 ## [[v0.3.3]](https://github.com/springload/draftjs_exporter/releases/tag/v0.3.3) - 2016-10-06
 
 Last release before switching to BeautifulSoup4 / html5lib. If we ever need to switch back to lxml, it should be as simple as looking at the code at [v0.3.3](https://github.com/springload/draftjs_exporter/tree/v0.3.3).
