@@ -14,7 +14,7 @@ except ImportError:
 
 install_requires = [
     'beautifulsoup4>=4.4.1',
-    'html5lib==0.999999',
+    'html5lib>=0.999,<=0.9999999',
 ]
 
 # Testing dependencies
