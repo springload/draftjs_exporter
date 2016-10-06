@@ -15,7 +15,7 @@ class TestDOM(unittest.TestCase):
         self.assertEqual(DOM.get_tag_name(DOM.create_element()), 'fragment')
 
     def test_create_element_nested(self):
-        self.assertEqual(DOM.render(DOM.create_element('a', {}, DOM.create_element('span', {'className': 'file-info icon-text'}, DOM.create_element('span', {'className': 'icon-text__text'}, 'Test test'), DOM.create_element('svg', {'className': 'icon'}, DOM.create_element('use', {'xlink:href': 'icon-test'}))))), '<a><span class="file-info icon-text"><span class="icon-text__text">Test test</span><svg class="icon"><use xmlns:ns0="http://www.w3.org/1999/xlink" ns0:href="icon-test"></use></svg></span></a>')
+        self.assertEqual(DOM.render(DOM.create_element('a', {}, DOM.create_element('span', {'className': 'file-info icon-text'}, DOM.create_element('span', {'className': 'icon-text__text'}, 'Test test'), DOM.create_element('svg', {'className': 'icon'}, DOM.create_element('use', {'xlink:href': '#icon-test'}))))), '<a><span class="file-info icon-text"><span class="icon-text__text">Test test</span><svg class="icon"><use xmlns:ns0="http://www.w3.org/1999/xlink" ns0:href="#icon-test"></use></svg></span></a>')
 
     def test_create_document_fragment(self):
         self.assertEqual(DOM.get_tag_name(DOM.create_document_fragment()), 'fragment')
@@ -52,7 +52,7 @@ class TestDOM(unittest.TestCase):
         self.assertEqual(len(DOM.get_children(DOM.create_element('span', {}, DOM.create_element('span'), DOM.create_element('span')))), 2)
 
     def test_render(self):
-        self.assertEqual(DOM.render(DOM.create_element('a', {}, DOM.create_element('span', {'className': 'file-info icon-text'}, DOM.create_element('span', {'className': 'icon-text__text'}, 'Test test'), DOM.create_element('svg', {'className': 'icon'}, DOM.create_element('use', {'xlink:href': 'icon-test'}))))), '<a><span class="file-info icon-text"><span class="icon-text__text">Test test</span><svg class="icon"><use xmlns:ns0="http://www.w3.org/1999/xlink" ns0:href="icon-test"></use></svg></span></a>')
+        self.assertEqual(DOM.render(DOM.create_element('a', {}, DOM.create_element('span', {'className': 'file-info icon-text'}, DOM.create_element('span', {'className': 'icon-text__text'}, 'Test test'), DOM.create_element('svg', {'className': 'icon'}, DOM.create_element('use', {'xlink:href': '#icon-test'}))))), '<a><span class="file-info icon-text"><span class="icon-text__text">Test test</span><svg class="icon"><use xmlns:ns0="http://www.w3.org/1999/xlink" ns0:href="#icon-test"></use></svg></span></a>')
 
     def test_pretty_print(self):
-        self.assertEqual(DOM.pretty_print('<a><span class="file-info icon-text"><span class="icon-text__text">Test test</span><svg class="icon"><use xmlns:ns0="http://www.w3.org/1999/xlink" ns0:href="icon-test"></use></svg></span></a>'), '\n  <a>\n    <span class="file-info icon-text">\n      <span class="icon-text__text">Test test</span>\n      <svg class="icon">\n        <use xmlns:ns0="http://www.w3.org/1999/xlink" ns0:href="icon-test"/>\n      </svg>\n    </span>\n  </a>\n\n')
+        self.assertEqual(DOM.pretty_print('<a><span class="file-info icon-text"><span class="icon-text__text">Test test</span><svg class="icon"><use xmlns:ns0="http://www.w3.org/1999/xlink" ns0:href="#icon-test"></use></svg></span></a>'), '\n  <a>\n    <span class="file-info icon-text">\n      <span class="icon-text__text">Test test</span>\n      <svg class="icon">\n        <use xmlns:ns0="http://www.w3.org/1999/xlink" ns0:href="#icon-test"/>\n      </svg>\n    </span>\n  </a>\n\n')
