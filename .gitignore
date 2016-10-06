@@ -47,3 +47,4 @@ core/static/images/
 core/jinja2/svg.html
 
 *.sql
+example.html

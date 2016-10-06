@@ -257,4 +257,10 @@ content_state = {
 }
 
 markup = exporter.render(content_state)
+
+# Display in console.
 print(DOM.pretty_print(markup))
+
+# Output to a file
+with open('example.html', 'w') as file:
+    file.write(markup)
