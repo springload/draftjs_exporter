@@ -12,6 +12,9 @@ class DOM(object):
     """
     Wrapper around our HTML building library to facilitate changes.
     """
+    @staticmethod
+    def create_tag(type, attributes={}):
+        return etree.Element(type, attrib=attributes)
 
     @staticmethod
     def create_element(type=None, props={}, *children):
@@ -45,7 +48,7 @@ class DOM(object):
                 if prop is not None:
                     attributes[key] = str(prop)
 
-            elt = etree.Element(type, attrib=attributes)
+            elt = DOM.create_tag(type, attributes)
 
         for child in children:
             if hasattr(child, 'tag'):
@@ -57,11 +60,11 @@ class DOM(object):
 
     @staticmethod
     def create_document_fragment():
-        return etree.Element('fragment')
+        return DOM.create_tag('fragment')
 
     @staticmethod
     def create_text_node(text):
-        elt = etree.Element('textnode')
+        elt = DOM.create_tag('textnode')
         DOM.set_text_content(elt, text)
         return elt
 
