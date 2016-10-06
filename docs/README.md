@@ -38,9 +38,17 @@ draftjs_exporter documentation
 ### Limitations of `lxml`
 
 - Succinct documentation (http://lxml.de/tutorial.html is the best)
-- XML parser first, not really meant to build HTML
-- No support for document fragments
-- No support for text nodes (`elt.text` and `elt.tail` attributes instead)
+- XML parser first, not really meant to build HTML.
+- No support for document fragments.
+- No support for text nodes (`elt.text` and `elt.tail` attributes instead).
+
+### Limitations of `html5lib`
+
+- Generated HTML is always "made valid" by being wrapped in '<html><head></head><body></body></html>'.
+
+### Limitations of `BeautifulSoup4`
+
+- The API to parse/generate HTML is clunky.
 
 #### Constraints (to be weighted)
 
