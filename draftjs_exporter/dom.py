@@ -43,10 +43,9 @@ class DOM(object):
 
             for key in props:
                 prop = props[key]
-                # Filter null values and cast to string for lxml.
-                # TODO Is this still necessary with BeautifulSoup / html5lib?
+                # Filter None values.
                 if prop is not None:
-                    attributes[key] = str(prop)
+                    attributes[key] = prop
 
             elt = DOM.create_tag(type, attributes)
 
