@@ -8,7 +8,7 @@ from draftjs_exporter.dom import DOM
 class TestDOM(unittest.TestCase):
     def test_create_element(self):
         self.assertEqual(DOM.get_tag_name(DOM.create_element('p', {'className': 'intro'}, 'Test test')), 'p')
-        self.assertEqual(DOM.create_element('p', {'className': 'intro'}, 'Test test').get('class'), 'intro')
+        self.assertEqual(DOM.get_class_list(DOM.create_element('p', {'className': 'intro'}, 'Test test')), ['intro'])
         self.assertEqual(DOM.get_text_content(DOM.create_element('p', {'className': 'intro'}, 'Test test')), 'Test test')
 
     def test_create_element_empty(self):

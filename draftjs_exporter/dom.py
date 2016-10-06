@@ -85,6 +85,10 @@ class DOM(object):
         return elt.tag
 
     @staticmethod
+    def get_class_list(elt):
+        return [elt.get('class')]
+
+    @staticmethod
     def get_text_content(elt):
         return elt.text
 
