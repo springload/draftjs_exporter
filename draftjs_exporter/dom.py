@@ -4,6 +4,13 @@ import re
 
 from bs4 import BeautifulSoup
 
+# Python 2/3 unicode compatibility hack.
+# See http://stackoverflow.com/questions/6812031/how-to-make-unicode-string-with-python3
+try:
+    UNICODE_EXISTS = bool(type(unicode))
+except NameError:
+    unicode = lambda s: str(s)
+
 
 def Soup(str):
     """
@@ -107,7 +114,7 @@ class DOM(object):
         better way to do this.
         Dirty, but quite easy to understand.
         """
-        return re.sub(r'</?(fragment|textnode|body|html|head)>', '', str(Soup(str(elt).decode('utf-8'))).decode('utf-8')).strip()
+        return re.sub(r'</?(fragment|textnode|body|html|head)>', '', unicode(Soup(unicode(elt)))).strip()
 
     @staticmethod
     def pretty_print(markup):
