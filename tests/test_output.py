@@ -83,7 +83,7 @@ class TestOutput(unittest.TestCase):
                     'entityRanges': []
                 }
             ]
-        }), '<p>Emojis! &#127866;</p>')
+        }), '<p>Emojis! \U0001f37a</p>')
 
     def test_render_with_inline_styles(self):
         self.assertEqual(self.exporter.render({
@@ -249,6 +249,116 @@ class TestOutput(unittest.TestCase):
             ]
         }), '<ul class="steps"><li>item1</li><li>item2</li></ul>')
 
+    def test_render_with_number_attribute(self):
+        self.assertEqual(HTML({
+            'block_map': dict(BLOCK_MAP, **{
+                BLOCK_TYPES.UNORDERED_LIST_ITEM: {
+                    'element': 'li',
+                    'wrapper': ['ul', {'length': 5}],
+                },
+            }),
+        }).render({
+            'entityMap': {},
+            'blocks': [
+                {
+                    'key': 'dem1p',
+                    'text': 'item1',
+                    'type': 'unordered-list-item',
+                    'depth': 0,
+                    'inlineStyleRanges': [],
+                    'entityRanges': []
+                },
+            ],
+        }), '<ul length="5"><li>item1</li></ul>')
+
+    def test_render_with_boolean_attribute_true(self):
+        self.assertEqual(HTML({
+            'block_map': dict(BLOCK_MAP, **{
+                BLOCK_TYPES.UNORDERED_LIST_ITEM: {
+                    'element': 'li',
+                    'wrapper': ['ul', {'disabled': True}],
+                },
+            }),
+        }).render({
+            'entityMap': {},
+            'blocks': [
+                {
+                    'key': 'dem1p',
+                    'text': 'item1',
+                    'type': 'unordered-list-item',
+                    'depth': 0,
+                    'inlineStyleRanges': [],
+                    'entityRanges': []
+                },
+            ],
+        }), '<ul disabled="True"><li>item1</li></ul>')
+
+    def test_render_with_boolean_attribute_false(self):
+        self.assertEqual(HTML({
+            'block_map': dict(BLOCK_MAP, **{
+                BLOCK_TYPES.UNORDERED_LIST_ITEM: {
+                    'element': 'li',
+                    'wrapper': ['ul', {'disabled': False}],
+                },
+            }),
+        }).render({
+            'entityMap': {},
+            'blocks': [
+                {
+                    'key': 'dem1p',
+                    'text': 'item1',
+                    'type': 'unordered-list-item',
+                    'depth': 0,
+                    'inlineStyleRanges': [],
+                    'entityRanges': []
+                },
+            ]
+        }), '<ul disabled="False"><li>item1</li></ul>')
+
+    def test_render_with_none_attribute(self):
+        self.assertEqual(HTML({
+            'block_map': dict(BLOCK_MAP, **{
+                BLOCK_TYPES.UNORDERED_LIST_ITEM: {
+                    'element': 'li',
+                    'wrapper': ['ul', {'disabled': None}],
+                },
+            }),
+        }).render({
+            'entityMap': {},
+            'blocks': [
+                {
+                    'key': 'dem1p',
+                    'text': 'item1',
+                    'type': 'unordered-list-item',
+                    'depth': 0,
+                    'inlineStyleRanges': [],
+                    'entityRanges': []
+                },
+            ],
+        }), '<ul><li>item1</li></ul>')
+
+    def test_render_with_unknown_attribute(self):
+        self.assertEqual(HTML({
+            'block_map': dict(BLOCK_MAP, **{
+                BLOCK_TYPES.UNORDERED_LIST_ITEM: {
+                    'element': 'li',
+                    'wrapper': ['ul', {'*ngFor': 'test'}],
+                },
+            })
+        }).render({
+            'entityMap': {},
+            'blocks': [
+                {
+                    'key': 'dem1p',
+                    'text': 'item1',
+                    'type': 'unordered-list-item',
+                    'depth': 0,
+                    'inlineStyleRanges': [],
+                    'entityRanges': []
+                },
+            ],
+        }), '<ul *ngfor="test"><li>item1</li></ul>')
+
     def test_render_with_token_entity(self):
         self.assertEqual(self.exporter.render({
             'entityMap': {
@@ -290,7 +400,7 @@ class TestOutput(unittest.TestCase):
                     ],
                 },
             ]
-        }), '<ul class="steps"><li>item1</li><li>item2</li></ul><hr>')
+        }), '<ul class="steps"><li>item1</li><li>item2</li></ul><hr/>')
 
     def test_render_with_unidirectional_nested_wrapping(self):
         self.assertEqual(self.exporter.render({

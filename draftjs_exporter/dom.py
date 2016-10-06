@@ -2,10 +2,21 @@ from __future__ import absolute_import, unicode_literals
 
 import re
 
-from lxml import etree, html
+from bs4 import BeautifulSoup
 
-# See http://stackoverflow.com/questions/7703018/how-to-write-namespaced-element-attributes-with-lxml
-XLINK = 'http://www.w3.org/1999/xlink'
+# Python 2/3 unicode compatibility hack.
+# See http://stackoverflow.com/questions/6812031/how-to-make-unicode-string-with-python3
+try:
+    UNICODE_EXISTS = bool(type(unicode))
+except NameError:
+    unicode = lambda s: str(s)
+
+
+def Soup(str):
+    """
+    Wrapper around BeautifulSoup to keep the code DRY.
+    """
+    return BeautifulSoup(str, 'html5lib')
 
 
 class DOM(object):
@@ -14,7 +25,7 @@ class DOM(object):
     """
     @staticmethod
     def create_tag(type, attributes={}):
-        return etree.Element(type, attrib=attributes)
+        return Soup('').new_tag(type, **attributes)
 
     @staticmethod
     def create_element(type=None, props={}, *children):
@@ -32,21 +43,16 @@ class DOM(object):
         else:
             attributes = {}
 
-            # Map props from React/Draft.js to lxml lingo.
+            # Map props from React/Draft.js to HTML lingo.
             if 'className' in props:
                 props['class'] = props.get('className')
                 props.pop('className', None)
 
-            # TODO One-off fix ATM, even though the problem is everywhere.
-            if 'xlink:href' in props:
-                props['{%s}href' % XLINK] = props.get('xlink:href')
-                props.pop('xlink:href', None)
-
             for key in props:
                 prop = props[key]
-                # Filter null values and cast to string for lxml
+                # Filter None values.
                 if prop is not None:
-                    attributes[key] = str(prop)
+                    attributes[key] = prop
 
             elt = DOM.create_tag(type, attributes)
 
@@ -70,7 +76,7 @@ class DOM(object):
 
     @staticmethod
     def parse_html(markup):
-        return html.fromstring(markup)
+        return Soup(markup)
 
     @staticmethod
     def append_child(elt, child):
@@ -78,40 +84,42 @@ class DOM(object):
 
     @staticmethod
     def set_attribute(elt, attr, value):
-        elt.set(attr, value)
+        elt[attr] = value
 
     @staticmethod
     def get_tag_name(elt):
-        return elt.tag
+        return elt.name
 
     @staticmethod
     def get_class_list(elt):
-        return [elt.get('class')]
+        return elt.get('class', [])
 
     @staticmethod
     def get_text_content(elt):
-        return elt.text
+        return elt.string
 
     @staticmethod
     def set_text_content(elt, text):
-        elt.text = text
+        elt.string = text
 
     @staticmethod
     def get_children(elt):
-        return elt.getchildren()
+        return list(elt.children)
 
     @staticmethod
     def render(elt):
         """
-        Removes the fragments that should not have HTML tags. Caveat of lxml.
+        Removes the fragments that should not have HTML tags. Left-over from
+        when this library relied on the lxml HTTP parser. There might be a
+        better way to do this.
         Dirty, but quite easy to understand.
         """
-        return re.sub(r'</?(fragment|textnode)>', '', etree.tostring(elt, method='html').decode('utf-8'))
+        return re.sub(r'</?(fragment|textnode|body|html|head)>', '', unicode(Soup(unicode(elt)))).strip()
 
     @staticmethod
     def pretty_print(markup):
         """
         Convenience method.
-        Pretty print the element, removing the top-level node that lxml needs.
+        Pretty print the element, removing the top-level nodes that html5lib adds.
         """
-        return re.sub(r'</?doc>', '', etree.tostring(html.fromstring('<doc>%s</doc>' % markup), encoding='unicode', pretty_print=True))
+        return re.sub(r'</?(body|html|head)>', '', Soup(markup).prettify()).strip()

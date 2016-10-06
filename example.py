@@ -1,4 +1,8 @@
+# -*- coding: utf-8 -*-
+
 from __future__ import absolute_import, unicode_literals
+
+import codecs
 
 from draftjs_exporter.constants import BLOCK_TYPES, ENTITY_TYPES
 from draftjs_exporter.defaults import BLOCK_MAP, STYLE_MAP
@@ -69,7 +73,7 @@ content_state = {
         },
         {
             'key': '5384u',
-            'text': 'Everyone at Springload applies the best principles of UX to their work.',
+            'text': 'Everyone 🍺 Springload applies the best principles of UX to their work.',
             'type': 'blockquote',
             'depth': 0,
             'inlineStyleRanges': [],
@@ -262,5 +266,5 @@ markup = exporter.render(content_state)
 print(DOM.pretty_print(markup))
 
 # Output to a file
-with open('example.html', 'w') as file:
-    file.write(markup)
+with codecs.open('example.html', 'w', 'utf-8') as file:
+    file.write('<meta charset="utf-8" />' + markup)
