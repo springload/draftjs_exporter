@@ -22,7 +22,7 @@ config = {
     # Extend/override the default block map.
     'block_map': dict(BLOCK_MAP, **{
         BLOCK_TYPES.HEADER_TWO: {
-            'element': 'h2',
+            'element': ['h2', {'className': 'c-amazing-heading'}],
             'wrapper': 'hgroup',
         },
         BLOCK_TYPES.UNORDERED_LIST_ITEM: {

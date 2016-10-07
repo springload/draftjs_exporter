@@ -15,6 +15,7 @@ This release is likely to be a **breaking change**. It is not released as such b
 ### Added
 
 - Support for simpler `wrapper` options definition: `{'unordered-list-item' : { 'element': 'li', 'wrapper': 'ul'}}`
+- Support for options definition for every element, not just wrappers: `{'header-two' : { 'element': ['h2', {'className': 'c-amazing-heading'}]}}`
 
 can now also be
 

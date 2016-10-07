@@ -5,15 +5,13 @@ import unittest
 from draftjs_exporter.dom import DOM
 from draftjs_exporter.wrapper_state import BlockException, WrapperState
 
-block_map = {
-    'header-one': {'element': 'h1'},
-    'unstyled': {'element': 'div'}
-}
-
 
 class TestWrapperState(unittest.TestCase):
     def setUp(self):
-        self.wrapper_state = WrapperState(block_map)
+        self.wrapper_state = WrapperState({
+            'header-one': {'element': 'h1'},
+            'unstyled': {'element': 'div'},
+        })
 
     def test_init(self):
         self.assertIsInstance(self.wrapper_state, WrapperState)
@@ -79,8 +77,8 @@ class TestWrapperState(unittest.TestCase):
 
         self.assertEqual(str(self.wrapper_state), '<WrapperState: <h1></h1>>')
 
-    def test_map_wrapper_options_full(self):
-        self.assertEqual(self.wrapper_state.map_wrapper_options([
+    def test_map_element_options_full(self):
+        self.assertEqual(self.wrapper_state.map_element_options([
             'ul',
             {'className': 'bullet-list'},
         ]), [
@@ -88,16 +86,16 @@ class TestWrapperState(unittest.TestCase):
             {'className': 'bullet-list'},
         ])
 
-    def test_map_wrapper_options_half(self):
-        self.assertEqual(self.wrapper_state.map_wrapper_options([
+    def test_map_element_options_half(self):
+        self.assertEqual(self.wrapper_state.map_element_options([
             'ul',
         ]), [
             'ul',
             {},
         ])
 
-    def test_map_wrapper_options_simplest(self):
-        self.assertEqual(self.wrapper_state.map_wrapper_options('ul'), [
+    def test_map_element_options_simplest(self):
+        self.assertEqual(self.wrapper_state.map_element_options('ul'), [
             'ul',
             {},
         ])

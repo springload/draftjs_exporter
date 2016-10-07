@@ -110,6 +110,7 @@ coverage`_.
 *  Extensive configuration of the generated HTML.
 *  Default, extensible block & inline style maps for common HTML
    elements.
+*  Define any attribute in the block map – custom class names for elements.
 *  React-like API to create custom entity decorators.
 *  Automatic conversion of entity data to HTML attributes (int & boolean
    to string, ``className`` to ``class``).

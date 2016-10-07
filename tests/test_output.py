@@ -359,6 +359,27 @@ class TestOutput(unittest.TestCase):
             ],
         }), '<ul *ngfor="test"><li>item1</li></ul>')
 
+    def test_render_with_element_options(self):
+        self.assertEqual(HTML({
+            'block_map': dict(BLOCK_MAP, **{
+                BLOCK_TYPES.HEADER_TWO: {
+                    'element': ['h2', {'className': 'c-amazing-heading'}],
+                },
+            })
+        }).render({
+            'entityMap': {},
+            'blocks': [
+                {
+                    'key': 'dem1p',
+                    'text': 'item1',
+                    'type': 'header-two',
+                    'depth': 0,
+                    'inlineStyleRanges': [],
+                    'entityRanges': []
+                },
+            ],
+        }), '<h2 class="c-amazing-heading">item1</h2>')
+
     def test_render_with_token_entity(self):
         self.assertEqual(self.exporter.render({
             'entityMap': {
