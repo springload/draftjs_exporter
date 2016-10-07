@@ -107,7 +107,6 @@ class WrapperState():
         return block_options
 
     def create_wrapper(self, wrapper_options, depth):
-        # TODO Support options 1 being undefined (BLOCK_TYPES.HEADER_TWO: { 'element': 'h2', 'wrapper': 'div', },)
         new_options = self.map_element_options(wrapper_options)
 
         if depth > self.get_wrapper_depth() or new_options != self.get_wrapper_options():
