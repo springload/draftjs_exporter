@@ -167,7 +167,7 @@ content_state = {
         },
         {
             'key': '93agv',
-            'text': 'A list item (0)',
+            'text': '1. A list item (0)',
             'type': 'unordered-list-item',
             'depth': 0,
             'inlineStyleRanges': [],
@@ -175,7 +175,7 @@ content_state = {
         },
         {
             'key': '4ht9m',
-            'text': 'Oops! (1)',
+            'text': '2. Oops! (1)',
             'type': 'unordered-list-item',
             'depth': 1,
             'inlineStyleRanges': [],
@@ -183,7 +183,7 @@ content_state = {
         },
         {
             'key': 'c6gc4',
-            'text': 'Does this support nesting? (2)',
+            'text': '3. Does this support nesting? (2)',
             'type': 'unordered-list-item',
             'depth': 2,
             'inlineStyleRanges': [],
@@ -191,7 +191,7 @@ content_state = {
         },
         {
             'key': 'c6gc3',
-            'text': 'Maybe? (2)',
+            'text': '4. Maybe? (2)',
             'type': 'unordered-list-item',
             'depth': 2,
             'inlineStyleRanges': [],
@@ -199,7 +199,7 @@ content_state = {
         },
         {
             'key': '3mn5b',
-            'text': 'Yep it does! (3)',
+            'text': '5. Yep it does! (3)',
             'type': 'unordered-list-item',
             'depth': 3,
             'inlineStyleRanges': [],
@@ -207,7 +207,7 @@ content_state = {
         },
         {
             'key': '28umf',
-            'text': 'How many levels deep? (4)',
+            'text': '6. How many levels deep? (4)',
             'type': 'unordered-list-item',
             'depth': 4,
             'inlineStyleRanges': [],
@@ -215,7 +215,7 @@ content_state = {
         },
         {
             'key': 'c2gc4',
-            'text': 'Backtracking, two at once... (2)',
+            'text': '7. Backtracking, two at once... (2)',
             'type': 'unordered-list-item',
             'depth': 2,
             'inlineStyleRanges': [],
@@ -223,7 +223,7 @@ content_state = {
         },
         {
             'key': 'c1gcb',
-            'text': 'Uh oh (1)',
+            'text': '8. Uh oh (1)',
             'type': 'unordered-list-item',
             'depth': 1,
             'inlineStyleRanges': [],
@@ -231,7 +231,7 @@ content_state = {
         },
         {
             'key': 'c2gh4',
-            'text': 'Up, up, and away! (2)',
+            'text': '9. Up, up, and away! (2)',
             'type': 'unordered-list-item',
             'depth': 2,
             'inlineStyleRanges': [],
@@ -239,7 +239,7 @@ content_state = {
         },
         {
             'key': 'c1ghb',
-            'text': 'Arh! (1)',
+            'text': '10. Arh! (1)',
             'type': 'unordered-list-item',
             'depth': 1,
             'inlineStyleRanges': [],
@@ -247,7 +247,7 @@ content_state = {
         },
         {
             'key': 'c1gc9',
-            'text': 'Did this work? (0)',
+            'text': '11. Did this work? (0)',
             'type': 'unordered-list-item',
             'depth': 0,
             'inlineStyleRanges': [],
@@ -255,7 +255,7 @@ content_state = {
         },
         {
             'key': 'c1gc9',
-            'text': 'Yes! (0)',
+            'text': '12. Yes! (0)',
             'type': 'unordered-list-item',
             'depth': 0,
             'inlineStyleRanges': [],
