@@ -265,10 +265,11 @@ content_state = {
 }
 
 markup = exporter.render(content_state)
+pretty = DOM.pretty_print(markup)
 
 # Display in console.
-print(DOM.pretty_print(markup))
+print(pretty)
 
 # Output to a file
 with codecs.open('example.html', 'w', 'utf-8') as file:
-    file.write('<meta charset="utf-8" />' + markup)
+    file.write('<meta charset="utf-8" />\n' + pretty)
