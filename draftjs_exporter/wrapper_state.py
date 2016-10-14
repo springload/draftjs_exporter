@@ -75,10 +75,10 @@ class WrapperState():
 
     def parent_for(self, type, depth):
         block_options = self.get_block_options(type)
-        wrapper_elt = block_options.get('wrapper', None)
+        wrapper_options = block_options.get('wrapper', None)
 
-        if wrapper_elt:
-            parent = self.get_wrapper(wrapper_elt, depth)
+        if wrapper_options:
+            parent = self.get_wrapper(wrapper_options, depth)
         else:
             parent = self.reset_wrapper_stack()
 
