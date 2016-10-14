@@ -48,7 +48,12 @@ class WrapperState():
     def __str__(self):
         return '<WrapperState: %s>' % self.to_string()
 
-    def set_wrapper(self, element, depth=0, options=[]):
+    def set_wrapper(self, options=[], depth=0):
+        if len(options) == 0:
+            element = DOM.create_document_fragment()
+        else:
+            element = DOM.create_element(options[0], options[1])
+
         new_wrapper = [element, depth, options]
 
         if depth >= len(self.wrapper_stack):
@@ -70,16 +75,17 @@ class WrapperState():
 
     def parent_for(self, type, depth):
         block_options = self.get_block_options(type)
+        wrapper_elt = block_options.get('wrapper', None)
 
-        if 'wrapper' in block_options:
-            parent = self.create_wrapper(block_options.get('wrapper'), depth)
+        if wrapper_elt:
+            parent = self.get_wrapper(wrapper_elt, depth)
         else:
             parent = self.reset_wrapper_stack()
 
         return parent
 
     def reset_wrapper_stack(self):
-        self.set_wrapper(DOM.create_document_fragment())
+        self.set_wrapper()
         return self.get_wrapper_elt()
 
     def map_element_options(self, opts):
@@ -106,11 +112,10 @@ class WrapperState():
 
         return block_options
 
-    def create_wrapper(self, wrapper_options, depth):
+    def get_wrapper(self, wrapper_options, depth):
         new_options = self.map_element_options(wrapper_options)
 
         if depth > self.get_wrapper_depth() or new_options != self.get_wrapper_options():
-            wrapper = DOM.create_element(new_options[0], new_options[1])
-            self.set_wrapper(wrapper, depth, new_options)
+            self.set_wrapper(new_options, depth)
 
         return self.get_wrapper_elt(depth)
