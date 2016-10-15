@@ -57,10 +57,11 @@ class DOM(object):
             elt = DOM.create_tag(type, attributes)
 
         for child in children:
-            if hasattr(child, 'tag'):
-                DOM.append_child(elt, child)
-            else:
-                DOM.set_text_content(elt, DOM.get_text_content(elt) + child if DOM.get_text_content(elt) else child)
+            if child:
+                if hasattr(child, 'tag'):
+                    DOM.append_child(elt, child)
+                else:
+                    DOM.set_text_content(elt, DOM.get_text_content(elt) + child if DOM.get_text_content(elt) else child)
 
         return elt
 

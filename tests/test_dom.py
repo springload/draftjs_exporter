@@ -22,6 +22,9 @@ class TestDOM(unittest.TestCase):
     def test_create_element_nested(self):
         self.assertEqual(DOM.render(DOM.create_element('a', {}, DOM.create_element('span', {'className': 'file-info icon-text'}, DOM.create_element('span', {'className': 'icon-text__text'}, 'Test test'), DOM.create_element('svg', {'className': 'icon'}, DOM.create_element('use', {'xlink:href': '#icon-test'}))))), '<a><span class="file-info icon-text"><span class="icon-text__text">Test test</span><svg class="icon"><use xlink:href="#icon-test"></use></svg></span></a>')
 
+    def test_create_element_none(self):
+        self.assertEqual(DOM.render(DOM.create_element('a', {}, None, DOM.create_element('span', {}, 'Test test'))), '<a><span>Test test</span></a>')
+
     def test_create_document_fragment(self):
         self.assertEqual(DOM.get_tag_name(DOM.create_document_fragment()), 'fragment')
 
