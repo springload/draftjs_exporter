@@ -4,20 +4,25 @@ Changelog
 > All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [[v0.4.0]](https://github.com/springload/draftjs_exporter/releases/tag/v0.4.0) - 2016-10-07
+## [[v0.4.0]](https://github.com/springload/draftjs_exporter/releases/tag/v0.4.0) - 2016-10-15
 
 This release is likely to be a **breaking change**. It is not released as such because the exporter has not [reached 1.0 yet](http://semver.org/#spec-item-4).
 
 ### Changed
 
 - Now using [Beautiful Soup 4](https://www.crummy.com/software/BeautifulSoup/bs4/doc/) and the [html5lib](https://github.com/html5lib/html5lib-python) parser instead of lxml.
+- Entities are now available from `draftjs_exporter.entities` instead of `draftjs_exporter.entities.<entity>`
 
 ### Added
 
 - Support for simpler `wrapper` options definition: `{'unordered-list-item' : { 'element': 'li', 'wrapper': 'ul'}}`
 - Support for options definition for every element, not just wrappers: `{'header-two' : { 'element': ['h2', {'className': 'c-amazing-heading'}]}}`
+- Support for None in the children of an element in `DOM.create_element`, for conditional rendering like what React does.
+- Support for entity class in `DOM.create_element`.
 
-can now also be
+### Fixed
+
+- Fix behavior of wrapper stack in nested wrappers ([#15](https://github.com/springload/draftjs_exporter/issues/15))
 
 ## [[v0.3.3]](https://github.com/springload/draftjs_exporter/releases/tag/v0.3.3) - 2016-10-06
 
