@@ -71,7 +71,12 @@ content_state = {
                     'offset': 16,
                     'length': 4,
                     'style': 'BOLD'
-                }
+                },
+                {
+                    'offset': 16,
+                    'length': 4,
+                    'style': 'CODE'
+                },
             ],
             'entityRanges': []
         },
