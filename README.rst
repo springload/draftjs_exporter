@@ -97,15 +97,14 @@ Running the example
 
 You can run an executable example as follows:
 
-::
+.. code:: sh
 
     python example.py
 
 Feature list
 ~~~~~~~~~~~~
 
-This project adheres to `Semantic Versioning`_ and `measures code
-coverage`_.
+This project adheres to `Semantic Versioning`_ and `measures code coverage`_.
 
 *  Extensive configuration of the generated HTML.
 *  Default, extensible block & inline style maps for common HTML
@@ -114,7 +113,7 @@ coverage`_.
 *  React-like API to create custom entity decorators.
 *  Automatic conversion of entity data to HTML attributes (int & boolean
    to string, ``className`` to ``class``).
-*  Wrapped blocks (``<li>`` elements belong in ``<ul>``).
+*  Wrapped blocks (``<li>`` elements go inside ``<ul>``).
 *  Nested wrapped blocks (multiple list levels, arbitrary type and
    depth).
 *  Output inline styles as inline elements (``<em>``, ``<strong>``, pick
