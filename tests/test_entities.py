@@ -7,26 +7,20 @@ from draftjs_exporter.entities import Image, Link, Null
 
 
 class TestNull(unittest.TestCase):
-    def setUp(self):
-        self.null = Null()
-
     def test_init(self):
-        self.assertIsInstance(self.null, Null)
+        self.assertIsInstance(Null(), Null)
 
     def test_render(self):
-        self.assertEqual(DOM.get_tag_name(self.null.render({})), 'fragment')
-        self.assertEqual(DOM.get_text_content(self.null.render({})), None)
+        self.assertEqual(DOM.get_tag_name(Null().render({})), 'fragment')
+        self.assertEqual(DOM.get_text_content(Null().render({})), None)
 
 
 class TestImage(unittest.TestCase):
-    def setUp(self):
-        self.image = Image()
-
     def test_init(self):
-        self.assertIsInstance(self.image, Image)
+        self.assertIsInstance(Image(), Image)
 
     def test_render(self):
-        image = self.image.render({
+        image = Image().render({
             'data': {
                 'src': 'http://example.com/example.png',
                 'width': 320,
@@ -39,14 +33,11 @@ class TestImage(unittest.TestCase):
 
 
 class TestLink(unittest.TestCase):
-    def setUp(self):
-        self.link = Link()
-
     def test_init(self):
-        self.assertIsInstance(self.link, Link)
+        self.assertIsInstance(Link(), Link)
 
     def test_render(self):
-        link = self.link.render({
+        link = Link().render({
             'data': {
                 'url': 'http://example.com',
             }
@@ -56,7 +47,7 @@ class TestLink(unittest.TestCase):
         self.assertEqual(link.get('href'), 'http://example.com')
 
     def test_render_invalid(self):
-        link = self.link.render({
+        link = Link().render({
             'data': {
                 'url': 'http://example.com',
                 'disabled': 'true',
