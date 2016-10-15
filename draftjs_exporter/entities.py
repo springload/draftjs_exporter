@@ -55,4 +55,4 @@ class Button():
         icon = data.get('icon', None)
         text = data.get('text', '')
 
-        return DOM.create_element('a', {'class': 'icon-text' if icon else None, 'href': href}, Icon().render({'name': icon}) if icon else None, DOM.create_element('span', {'class': 'icon-text__text'}, text) if icon else text)
+        return DOM.create_element('a', {'class': 'icon-text' if icon else None, 'href': href}, DOM.create_element(Icon, {'name': icon}) if icon else None, DOM.create_element('span', {'class': 'icon-text__text'}, text) if icon else text)

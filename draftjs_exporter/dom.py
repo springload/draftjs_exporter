@@ -1,5 +1,6 @@
 from __future__ import absolute_import, unicode_literals
 
+import inspect
 import re
 
 from bs4 import BeautifulSoup
@@ -54,7 +55,11 @@ class DOM(object):
                 if prop is not None:
                     attributes[key] = prop
 
-            elt = DOM.create_tag(type, attributes)
+            # "type" is either an entity with a render method, or a tag name.
+            if inspect.isclass(type):
+                elt = type().render(attributes)
+            else:
+                elt = DOM.create_tag(type, attributes)
 
         for child in children:
             if child:
