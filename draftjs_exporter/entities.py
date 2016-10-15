@@ -11,9 +11,7 @@ class Null():
 class Icon():
     def render(self, props):
         href = 'icon-%s' % props.get('name', '')
-        return DOM.create_element('svg', {'class': 'icon'},
-            DOM.create_element('use', {'xlink:href': href}),
-        )
+        return DOM.create_element('svg', {'class': 'icon'}, DOM.create_element('use', {'xlink:href': href}))
 
 
 class Image():
@@ -48,3 +46,13 @@ class Link():
                 attributes[attr] = data[key]
 
         return DOM.create_element('a', attributes)
+
+
+class Button():
+    def render(self, props):
+        data = props.get('data', {})
+        href = data.get('href', '#')
+        icon = data.get('icon', None)
+        text = data.get('text', '')
+
+        return DOM.create_element('a', {'class': 'icon-text' if icon else None, 'href': href}, Icon().render({'name': icon}) if icon else None, DOM.create_element('span', {'class': 'icon-text__text'}, text) if icon else text)
