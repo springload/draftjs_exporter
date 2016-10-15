@@ -3,7 +3,7 @@ from __future__ import absolute_import, unicode_literals
 import unittest
 
 from draftjs_exporter.dom import DOM
-from draftjs_exporter.entities import Image, Link, Null
+from draftjs_exporter.entities import Icon, Image, Link, Null
 
 
 class TestNull(unittest.TestCase):
@@ -13,6 +13,20 @@ class TestNull(unittest.TestCase):
     def test_render(self):
         self.assertEqual(DOM.get_tag_name(Null().render({})), 'fragment')
         self.assertEqual(DOM.get_text_content(Null().render({})), None)
+
+
+class TestIcon(unittest.TestCase):
+    def test_init(self):
+        self.assertIsInstance(Icon(), Icon)
+
+    def test_render(self):
+        icon = Icon().render({
+            'name': 'rocket',
+        })
+        self.assertEqual(DOM.get_tag_name(icon), 'svg')
+        self.assertEqual(DOM.get_text_content(icon), None)
+        self.assertEqual(DOM.get_class_list(icon), ['icon'])
+        self.assertEqual(DOM.render(icon), '<svg class="icon"><use xlink:href="icon-rocket"></use></svg>')
 
 
 class TestImage(unittest.TestCase):

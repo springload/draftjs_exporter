@@ -8,6 +8,14 @@ class Null():
         return DOM.create_element()
 
 
+class Icon():
+    def render(self, props):
+        href = 'icon-%s' % props.get('name', '')
+        return DOM.create_element('svg', {'class': 'icon'},
+            DOM.create_element('use', {'xlink:href': href}),
+        )
+
+
 class Image():
     def render(self, props):
         data = props.get('data', {})
