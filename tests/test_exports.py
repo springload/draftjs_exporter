@@ -6,8 +6,7 @@ import unittest
 
 from draftjs_exporter.constants import BLOCK_TYPES, ENTITY_TYPES, INLINE_STYLES
 from draftjs_exporter.defaults import BLOCK_MAP
-from draftjs_exporter.entities.image import Image
-from draftjs_exporter.entities.link import Link
+from draftjs_exporter.entities import Image, Link
 from draftjs_exporter.html import HTML
 
 fixtures_path = os.path.join(os.path.dirname(__file__), 'test_exports.json')

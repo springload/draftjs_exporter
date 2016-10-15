@@ -4,7 +4,7 @@ import unittest
 
 from draftjs_exporter.command import Command
 from draftjs_exporter.dom import DOM
-from draftjs_exporter.entities.link import Link
+from draftjs_exporter.entities import Link
 from draftjs_exporter.entity_state import EntityException, EntityState
 
 entity_decorators = {
