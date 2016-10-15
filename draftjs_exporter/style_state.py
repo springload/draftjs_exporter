@@ -27,9 +27,9 @@ class StyleState():
         self.style_map = style_map
 
     def apply(self, command):
-        if (command.name == 'start_inline_style'):
+        if command.name == 'start_inline_style':
             self.styles.append(command.data)
-        elif (command.name == 'stop_inline_style'):
+        elif command.name == 'stop_inline_style':
             self.styles.remove(command.data)
 
     def is_unstyled(self):
