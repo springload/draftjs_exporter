@@ -118,4 +118,8 @@ class WrapperState():
         if depth > self.get_wrapper_depth() or new_options != self.get_wrapper_options():
             self.set_wrapper(new_options, depth)
 
+        # If depth is lower than the maximum, we need to cut the stack.
+        if depth < self.get_wrapper_depth():
+            self.wrapper_stack = self.wrapper_stack[:depth + 1]
+
         return self.get_wrapper_elt(depth)
