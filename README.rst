@@ -10,11 +10,9 @@
 draftjs_exporter 🐍
 ===================
 
-    Library to convert the Facebook Draft.js editor’s raw ContentState
-    to HTML.
+    Library to convert the Facebook Draft.js editor’s raw ContentState to HTML.
 
-This is a work in progress. It is intended to be integrated into
-`Wagtail CMS`_.
+This is a work in progress. It is intended to be integrated into `Wagtail CMS`_.
 
 Usage
 -----
@@ -22,8 +20,7 @@ Usage
 Understanding DraftJS contentState
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Unlike traditional rich text editors, DraftJS stores data in a JSON
-representation.
+Unlike traditional rich text editors, DraftJS stores data in a JSON representation.
 
 There are two main parts:
 
@@ -40,9 +37,7 @@ Using the exporter
 
     pip install draftjs_exporter
 
-The library requires you to explicity define mappings for the types of
-blocks and entities you wish to render. We may provide some defaults in
-the future.
+The library requires you to explicity define mappings for the types of blocks and entities you wish to render. We may provide some defaults in the future.
 
 .. code:: python
 
@@ -107,17 +102,13 @@ Feature list
 This project adheres to `Semantic Versioning`_ and `measures code coverage`_.
 
 *  Extensive configuration of the generated HTML.
-*  Default, extensible block & inline style maps for common HTML
-   elements.
+*  Default, extensible block & inline style maps for common HTML elements.
 *  Define any attribute in the block map – custom class names for elements.
 *  React-like API to create custom entity decorators.
-*  Automatic conversion of entity data to HTML attributes (int & boolean
-   to string, ``className`` to ``class``).
+*  Automatic conversion of entity data to HTML attributes (int & boolean to string, ``className`` to ``class``).
 *  Wrapped blocks (``<li>`` elements go inside ``<ul>``).
-*  Nested wrapped blocks (multiple list levels, arbitrary type and
-   depth).
-*  Output inline styles as inline elements (``<em>``, ``<strong>``, pick
-   and choose).
+*  Nested wrapped blocks (multiple list levels, arbitrary type and depth).
+*  Output inline styles as inline elements (``<em>``, ``<strong>``, pick and choose).
 *  Overlapping inline style ranges.
 
 Development
@@ -160,17 +151,14 @@ Commands
 Debugging
 ~~~~~~~~~
 
-*  Always run the tests. ``npm install -g nodemon``, then
-   ``make test-watch``.
-*  Use a debugger. ``pip install ipdb``, then
-   ``import ipdb; ipdb.set_trace()``.
+*  Always run the tests. ``npm install -g nodemon``, then ``make test-watch``.
+*  Use a debugger. ``pip install ipdb``, then ``import ipdb; ipdb.set_trace()``.
 
 Releases
 ~~~~~~~~
 
-*  Update the `changelog`_
-*  Update the version number in ``draftjs_exporter/__init__.py``,
-   following semver
+*  Update the `changelog`_.
+*  Update the version number in ``draftjs_exporter/__init__.py``, following semver.
 *  ``git release vx.y.z``
 *  ``make publish`` (confirm, and enter your password)
 *  Go to https://pypi.python.org/pypi/draftjs_exporter and check that
