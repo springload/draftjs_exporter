@@ -3,6 +3,7 @@ from __future__ import absolute_import, unicode_literals
 import re
 
 from draftjs_exporter.dom import DOM
+from draftjs_exporter.composite_decorator import get_decorations
 
 # TODO Extract to utils
 # https://gist.github.com/yahyaKacem/8170675
@@ -22,9 +23,10 @@ class StyleState:
     Receives inline_style commands, and generates the element's `style`
     attribute from those.
     """
-    def __init__(self, style_map):
+    def __init__(self, style_map, composite_decorators=None):
         self.styles = []
         self.style_map = style_map
+        self.composite_decorators = composite_decorators or []
 
     def apply(self, command):
         if command.name == 'start_inline_style':
@@ -55,27 +57,16 @@ class StyleState:
 
         return ''.join(sorted(rules))
 
-    def replace_linebreaks(self, text):
-        lines = text.split('\n')
-
-        if len(lines) > 1:
-            wrapper = DOM.create_document_fragment()
-
-            DOM.append_child(wrapper, DOM.create_text_node(lines[0]))
-
-            for l in lines[1:]:
-                DOM.append_child(wrapper, DOM.create_element('br'))
-                DOM.append_child(wrapper, DOM.create_text_node(l))
+    def create_node(self, text, block=None, entity_stack=None):
+        if entity_stack:
+            text_children = [DOM.create_text_node(text)]
         else:
-            wrapper = DOM.create_text_node(text)
-
-        return wrapper
-
-    def create_node(self, text):
-        text_lines = self.replace_linebreaks(text)
+            text_children = get_decorations(self.composite_decorators, text, block)
 
         if self.is_unstyled():
-            node = text_lines
+            node = DOM.create_document_fragment()
+            for child in text_children:
+                DOM.append_child(node, child)
         else:
             tags = self.get_style_tags()
             node = DOM.create_element(tags[0])
@@ -91,7 +82,7 @@ class StyleState:
             style_value = self.get_style_value()
             if style_value:
                 DOM.set_attribute(child, 'style', style_value)
-
-            DOM.append_child(child, text_lines)
+            for text_child in text_children:
+                DOM.append_child(child, text_child)
 
         return node

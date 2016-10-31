@@ -61,7 +61,7 @@ class TestStyleState(unittest.TestCase):
         self.assertEqual(DOM.render(self.style_state.replace_linebreaks('\nTest\nte\nxt\n')), '<br/>Test<br/>te<br/>xt<br/>')
 
     def test_create_node_unstyled(self):
-        self.assertEqual(DOM.get_tag_name(self.style_state.create_node('Test text')), 'textnode')
+        self.assertEqual(DOM.get_tag_name(self.style_state.create_node('Test text')), 'fragment')
         self.assertEqual(DOM.get_text_content(self.style_state.create_node('Test text')), 'Test text')
 
     def test_create_node_unicode(self):

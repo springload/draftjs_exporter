@@ -2,7 +2,9 @@
 
 from __future__ import absolute_import, unicode_literals
 
+import cgi
 import codecs
+import re
 
 from draftjs_exporter.constants import BLOCK_TYPES, ENTITY_TYPES
 from draftjs_exporter.defaults import BLOCK_MAP, STYLE_MAP
@@ -35,12 +37,56 @@ class Link:
         return DOM.create_element('a', {'href': href}, props['children'])
 
 
+class URLDecorator:
+    """
+    Replace plain urls with actual hyperlinks.
+    """
+    SEARCH_RE = re.compile(r'(http://|https://|www\.)([a-zA-Z0-9\.\-%/\?&_=\+#:~!,\'\*\^$]+)')
+
+    def __init__(self, new_window=False):
+        self.new_window = new_window
+
+    def replace(self, match, block_type):
+        protocol = match.group(1)
+        href = match.group(2)
+        href = protocol + href
+        if block_type == BLOCK_TYPES.CODE:
+            return href
+
+        text = cgi.escape(href)
+        if href.startswith("www"):
+            href = "http://" + href
+        props = {'href': href}
+        if self.new_window:
+            props.update(target="_blank")
+
+        return DOM.create_element('a', props, text)
+
+
+class HashTagDecorator:
+    """
+    Wrap hash tags in spans with specific class.
+    """
+
+    SEARCH_RE = re.compile(r'#\w+')
+
+    def replace(self, match, block_type):
+        if block_type == BLOCK_TYPES.CODE:
+            return match.group(0)
+
+        return DOM.create_element('em', {'class': 'hash_tag'}, match.group(0))
+
+
 config = {
     'entity_decorators': {
         ENTITY_TYPES.LINK: Link(),
         ENTITY_TYPES.IMAGE: Image(),
         ENTITY_TYPES.HORIZONTAL_RULE: HR(),
     },
+    'composite_decorators': [
+        URLDecorator(),
+        HashTagDecorator(),
+    ],
     # Extend/override the default block map.
     'block_map': dict(BLOCK_MAP, **{
         BLOCK_TYPES.HEADER_TWO: {
@@ -104,7 +150,7 @@ content_state = {
         },
         {
             'key': '5384u',
-            'text': 'Everyone 🍺 Springload applies the best principles of UX to their work.',
+            'text': 'Everyone 🍺 Springload applies the best #principles of UX to their work. (https://www.springload.co.nz/work/nz-festival/)',
             'type': 'blockquote',
             'depth': 0,
             'inlineStyleRanges': [],
@@ -112,7 +158,7 @@ content_state = {
         },
         {
             'key': 'eelkd',
-            'text': 'The design decisions we make building tools and services for your customers are based on empathy for what your customers need.',
+            'text': 'The design decisions we make building #tools and #services for your customers are based on empathy for what your customers need.',
             'type': 'unstyled',
             'depth': 0,
             'inlineStyleRanges': [],
