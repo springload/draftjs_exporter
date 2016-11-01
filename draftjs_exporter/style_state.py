@@ -59,7 +59,7 @@ class StyleState:
     def create_node(self, text):
 
         for deco in self.composite_decorators:
-            text = deco.process(text)
+            text = deco.process(text, parent=element)
 
         text_children = list(DOM.parse_html(
             '<textnode>' + text + '</textnode>').body.children)
