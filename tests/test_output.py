@@ -643,6 +643,29 @@ class TestOutput(unittest.TestCase):
             ],
         }), '<ul class="steps"><li>A list item (0)<ul class="steps"><li><ul class="steps"><li>Jumps (2)</li></ul></li></ul></li><li>Back (0)<ul class="steps"><li><ul class="steps"><li><ul class="steps"><li>Jumps again (3)</li></ul></li></ul></li><li>Back (1)</li></ul></li></ul>')
 
+    def test_render_with_immediate_jumping(self):
+        self.assertEqual(self.exporter.render({
+            'entityMap': {},
+            'blocks': [
+                {
+                    'key': '93agv',
+                    'text': 'A list item (2)',
+                    'type': 'unordered-list-item',
+                    'depth': 2,
+                    'inlineStyleRanges': [],
+                    'entityRanges': [],
+                },
+                {
+                    'key': '93agv',
+                    'text': 'A list item (0)',
+                    'type': 'unordered-list-item',
+                    'depth': 0,
+                    'inlineStyleRanges': [],
+                    'entityRanges': [],
+                },
+            ],
+        }), '<ul class="steps"><li><ul class="steps"><li><ul class="steps"><li>A list item (2)</li></ul></li></ul></li><li>A list item (0)</li></ul>')
+
     def test_render_with_big_content(self):
         self.assertEqual(HTML({
             'entity_decorators': {

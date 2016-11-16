@@ -19,10 +19,7 @@ class WrapperState:
         self.block_map = block_map
         self.document = DOM.create_document_fragment()
 
-        self.wrapper_stack = [
-            # Default wrapper element is a fragment, does not have options.
-            [DOM.create_document_fragment(), 0, []],
-        ]
+        self.wrapper_stack = []
 
     def element_for(self, block):
         type_ = block.get('type', 'unstyled')
@@ -48,7 +45,7 @@ class WrapperState:
     def __str__(self):
         return '<WrapperState: %s>' % self.to_string()
 
-    def set_wrapper(self, options=None, elt_options=None, depth=0):
+    def set_wrapper(self, options=None, elt_options=None, depth=-1):
         if depth >= len(self.wrapper_stack):
             for d in range(len(self.wrapper_stack), depth + 1):
                 wrapper_elt = self.create_wrapper_elt(options)
@@ -84,10 +81,10 @@ class WrapperState:
         return wrapper_elt
 
     def get_wrapper_elt(self, depth=-1):
-        return self.wrapper_stack[depth][0]
+        return self.wrapper_stack[depth][0] if len(self.wrapper_stack) > 0 else DOM.create_document_fragment()
 
     def get_wrapper_depth(self, depth=-1):
-        return self.wrapper_stack[depth][1]
+        return self.wrapper_stack[depth][1] if len(self.wrapper_stack) > 0 else -1
 
     def get_wrapper_options(self, depth=-1):
         return self.wrapper_stack[depth][2]
