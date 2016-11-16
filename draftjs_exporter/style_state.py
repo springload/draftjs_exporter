@@ -10,13 +10,13 @@ _first_cap_re = re.compile(r'(.)([A-Z][a-z]+)')
 _all_cap_re = re.compile('([a-z0-9])([A-Z])')
 
 
-def camelToDash(camelCasedStr):
-    sub2 = _first_cap_re.sub(r'\1-\2', camelCasedStr)
+def camel_to_dash(camel_cased_str):
+    sub2 = _first_cap_re.sub(r'\1-\2', camel_cased_str)
     dashed_case_str = _all_cap_re.sub(r'\1-\2', sub2).lower()
     return dashed_case_str.replace('--', '-')
 
 
-class StyleState():
+class StyleState:
     """
     Handles the creation of inline styles on elements.
     Receives inline_style commands, and generates the element's `style`
@@ -52,7 +52,7 @@ class StyleState():
             css_style = self.style_map.get(style, {})
             for prop in css_style.keys():
                 if prop != 'element':
-                    rules.append('{0}: {1};'.format(camelToDash(prop), css_style[prop]))
+                    rules.append('{0}: {1};'.format(camel_to_dash(prop), css_style[prop]))
 
         return ''.join(sorted(rules))
 
