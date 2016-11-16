@@ -33,7 +33,7 @@ class WrapperState:
         elt_options = self.map_element_options(block_options.get('element'))
         elt = DOM.create_element(elt_options[0], elt_options[1])
 
-        parent = self.parent_for(type_, depth)
+        parent = self.parent_for(block_options, depth)
         DOM.append_child(parent, elt)
 
         # At level 0, the element is added to the document.
@@ -73,8 +73,7 @@ class WrapperState:
     def get_wrapper_options(self, depth=-1):
         return self.wrapper_stack[depth][2]
 
-    def parent_for(self, type_, depth):
-        block_options = self.get_block_options(type_)
+    def parent_for(self, block_options, depth):
         wrapper_options = block_options.get('wrapper', None)
 
         if wrapper_options:
