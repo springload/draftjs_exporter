@@ -7,6 +7,9 @@ class Enum(object):
         self.tuple_list = tuple_list
 
     def __getattr__(self, name):
+        if name not in self.tuple_list:
+            raise AttributeError("'Enum' has no attribute '{}'".format(name))
+
         return name
 
 
