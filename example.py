@@ -275,4 +275,4 @@ print(pretty)
 
 # Output to a file
 with codecs.open('example.html', 'w', 'utf-8') as file:
-    file.write('<meta charset="utf-8" />\n' + pretty)
+    file.write('<!DOCTYPE html><html><head><meta charset="utf-8" /><title>Test</title></head><body>\n{pretty}\n</body></html>'.format(pretty=pretty))
