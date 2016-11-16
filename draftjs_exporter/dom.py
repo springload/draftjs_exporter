@@ -10,7 +10,8 @@ from bs4 import BeautifulSoup
 try:
     UNICODE_EXISTS = bool(type(unicode))
 except NameError:
-    unicode = lambda s: str(s)
+    def unicode(s):
+        return str(s)
 
 
 def Soup(raw_str):
