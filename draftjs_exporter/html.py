@@ -12,7 +12,10 @@ class HTML():
     Entry point of the exporter. Combines entity, wrapper and style state
     to generate the right HTML nodes.
     """
-    def __init__(self, config={}):
+    def __init__(self, config=None):
+        if config is None:
+            config = {}
+
         self.entity_decorators = config.get('entity_decorators', {})
         self.wrapper_state = WrapperState(config.get('block_map', BLOCK_MAP))
         self.style_state = StyleState(config.get('style_map', STYLE_MAP))

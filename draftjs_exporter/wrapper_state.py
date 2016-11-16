@@ -48,8 +48,8 @@ class WrapperState():
     def __str__(self):
         return '<WrapperState: %s>' % self.to_string()
 
-    def set_wrapper(self, options=[], depth=0):
-        if len(options) == 0:
+    def set_wrapper(self, options=None, depth=0):
+        if not options:
             element = DOM.create_document_fragment()
         else:
             element = DOM.create_element(options[0], options[1])
