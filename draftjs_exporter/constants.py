@@ -3,8 +3,8 @@ from __future__ import absolute_import, unicode_literals
 
 # http://stackoverflow.com/a/22723724/1798491
 class Enum(object):
-    def __init__(self, tupleList):
-        self.tupleList = tupleList
+    def __init__(self, tuple_list):
+        self.tuple_list = tuple_list
 
     def __getattr__(self, name):
         return name

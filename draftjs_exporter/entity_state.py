@@ -8,7 +8,7 @@ class EntityException(ExporterException):
     pass
 
 
-class EntityState():
+class EntityState:
     def __init__(self, root_element, entity_decorators, entity_map):
         self.entity_decorators = entity_decorators
         self.entity_map = entity_map
@@ -19,9 +19,9 @@ class EntityState():
         self.entity_stack = [(stack_start, {})]
 
     def apply(self, command):
-        if (command.name == 'start_entity'):
+        if command.name == 'start_entity':
             self.start_command(command)
-        elif (command.name == 'stop_entity'):
+        elif command.name == 'stop_entity':
             self.stop_command(command)
 
     def current_parent(self):
@@ -52,7 +52,7 @@ class EntityState():
         new_element = decorator.render(entity_details)
         DOM.append_child(self.current_parent(), new_element)
 
-        self.entity_stack.append([new_element, entity_details])
+        self.entity_stack.append((new_element, entity_details))
 
     def stop_command(self, command):
         entity_details = self.get_entity_details(command)

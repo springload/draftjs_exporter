@@ -8,7 +8,7 @@ class BlockException(ExporterException):
     pass
 
 
-class WrapperState():
+class WrapperState:
     """
     This class does the initial node building for the tree.
     It sets elements with the right tag, text content, and attributes.
@@ -37,7 +37,7 @@ class WrapperState():
         DOM.append_child(parent, elt)
 
         # At level 0, the element is added to the document.
-        if (depth == 0):
+        if depth == 0:
             DOM.append_child(self.document, parent)
 
         return elt
@@ -95,7 +95,7 @@ class WrapperState():
         ['ul']
         ['ul', {'className': 'bullet-list'}]
         """
-        if (isinstance(opts, list)):
+        if isinstance(opts, list):
             tag = opts[0]
             attributes = opts[1] if len(opts) > 1 else {}
         else:
