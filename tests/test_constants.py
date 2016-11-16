@@ -2,7 +2,7 @@ from __future__ import absolute_import, unicode_literals
 
 import unittest
 
-from draftjs_exporter.constants import Enum, BLOCK_TYPES, ENTITY_TYPES, INLINE_STYLES
+from draftjs_exporter.constants import BLOCK_TYPES, ENTITY_TYPES, INLINE_STYLES, Enum
 
 
 class EnumConstants(unittest.TestCase):
