@@ -21,7 +21,7 @@ config = {
     'block_map': dict(BLOCK_MAP, **{
         BLOCK_TYPES.HEADER_TWO: {
             'element': ['h2', {'className': 'c-amazing-heading'}],
-            'wrapper': 'hgroup',
+            'wrapper': 'div',
         },
         BLOCK_TYPES.UNORDERED_LIST_ITEM: {
             'element': 'li',
