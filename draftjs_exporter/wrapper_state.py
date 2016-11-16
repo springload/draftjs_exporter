@@ -49,10 +49,10 @@ class WrapperState:
         return '<WrapperState: %s>' % self.to_string()
 
     def set_wrapper(self, options=None, depth=0):
-        if not options:
-            element = DOM.create_document_fragment()
-        else:
+        if options:
             element = DOM.create_element(options[0], options[1])
+        else:
+            element = DOM.create_document_fragment()
 
         new_wrapper = [element, depth, options]
 
