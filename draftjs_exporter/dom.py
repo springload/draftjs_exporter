@@ -25,11 +25,14 @@ class DOM(object):
     Wrapper around our HTML building library to facilitate changes.
     """
     @staticmethod
-    def create_tag(type, attributes={}):
+    def create_tag(type, attributes=None):
+        if attributes is None:
+            attributes = {}
+
         return Soup('').new_tag(type, **attributes)
 
     @staticmethod
-    def create_element(type=None, props={}, *children):
+    def create_element(type=None, props=None, *children):
         """
         Signature inspired by React.createElement.
         createElement(
@@ -39,6 +42,9 @@ class DOM(object):
         )
         https://facebook.github.io/react/docs/top-level-api.html#react.createelement
         """
+        if props is None:
+            props = {}
+
         if not type:
             elt = DOM.create_document_fragment()
         else:
