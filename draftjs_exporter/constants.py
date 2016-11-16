@@ -30,6 +30,7 @@ class BLOCK_TYPES:
     ATOMIC = 'atomic'
     HORIZONTAL_RULE = 'horizontal-rule'
 
+
 ENTITY_TYPES = Enum('LINK', 'IMAGE', 'TOKEN')
 
 INLINE_STYLES = Enum('BOLD', 'CODE', 'ITALIC', 'STRIKETHROUGH', 'UNDERLINE')
