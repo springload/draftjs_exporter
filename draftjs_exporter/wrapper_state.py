@@ -117,7 +117,7 @@ class WrapperState:
         at depth 0, we need to add the wrapper that contains the whole
         tree to the document.
         """
-        document_length = len(DOM.get_children(self.document));
+        document_length = len(DOM.get_children(self.document))
 
         if document_length == 0 and self.stack.length() != 0:
             DOM.append_child(self.document, self.stack.tail().elt)
@@ -163,7 +163,7 @@ class WrapperState:
     def update_stack(self, options, depth):
         if depth >= self.stack.length():
             # If the depth is gte the stack length, we need more wrappers.
-            depth_levels = range(self.stack.length(), depth + 1);
+            depth_levels = range(self.stack.length(), depth + 1)
 
             for level in depth_levels:
                 new_wrapper = Wrapper(level, options.wrapper)
