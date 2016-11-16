@@ -52,8 +52,7 @@ class DOM(object):
 
             # Map props from React/Draft.js to HTML lingo.
             if 'className' in props:
-                props['class'] = props.get('className')
-                props.pop('className', None)
+                props['class'] = props.pop('className')
 
             for key in props:
                 prop = props[key]
