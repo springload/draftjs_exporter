@@ -3,7 +3,7 @@ from __future__ import absolute_import, unicode_literals
 import unittest
 
 from draftjs_exporter.dom import DOM
-from draftjs_exporter.wrapper_state import BlockException, WrapperState
+from draftjs_exporter.wrapper_state import BlockException, Options, WrapperState
 
 
 class TestWrapperState(unittest.TestCase):
@@ -78,7 +78,7 @@ class TestWrapperState(unittest.TestCase):
         self.assertEqual(str(self.wrapper_state), '<WrapperState: <h1></h1>>')
 
     def test_map_element_options_full(self):
-        self.assertEqual(self.wrapper_state.map_element_options([
+        self.assertEqual(Options.map([
             'ul',
             {'className': 'bullet-list'},
         ]), [
@@ -87,7 +87,7 @@ class TestWrapperState(unittest.TestCase):
         ])
 
     def test_map_element_options_half(self):
-        self.assertEqual(self.wrapper_state.map_element_options([
+        self.assertEqual(Options.map([
             'ul',
         ]), [
             'ul',
@@ -95,7 +95,7 @@ class TestWrapperState(unittest.TestCase):
         ])
 
     def test_map_element_options_simplest(self):
-        self.assertEqual(self.wrapper_state.map_element_options('ul'), [
+        self.assertEqual(Options.map('ul'), [
             'ul',
             {},
         ])
