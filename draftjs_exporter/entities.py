@@ -32,7 +32,7 @@ class Link:
     @staticmethod
     def is_valid_attribute(key):
         # TODO How much do we need to whitelist / blacklist attributes?
-        valid_data_attr = (key.startswith('data-') and key.replace('data-', '') and key.replace('data-', '').islower())
+        valid_data_attr = key.startswith('data-') and len(key) > 5 and key.islower()
         return key in Link.attributes or valid_data_attr
 
     def render(self, props):
