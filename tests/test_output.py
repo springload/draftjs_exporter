@@ -596,6 +596,53 @@ class TestOutput(unittest.TestCase):
             ],
         }), '<ul class="steps"><li>A list item (0)<ul class="steps"><li>Oops! (1)<ul class="steps"><li>Does this support nesting? (2)</li><li>Maybe? (2)<ul class="steps"><li>Yep it does! (3)<ul class="steps"><li>How many levels deep? (4)</li></ul></li></ul></li><li>Backtracking, two at once... (2)</li></ul></li><li>Uh oh (1)<ul class="steps"><li>Up, up, and away! (2)</li></ul></li><li>Arh! (1)</li></ul></li><li>Did this work? (0)</li><li>Yes! (0)</li></ul>')
 
+    def test_render_with_jumping_wrapping(self):
+        self.assertEqual(self.exporter.render({
+            'entityMap': {},
+            'blocks': [
+                {
+                    'key': '93agv',
+                    'text': 'A list item (0)',
+                    'type': 'unordered-list-item',
+                    'depth': 0,
+                    'inlineStyleRanges': [],
+                    'entityRanges': [],
+                },
+                {
+                    'key': '4ht9m',
+                    'text': 'Jumps (2)',
+                    'type': 'unordered-list-item',
+                    'depth': 2,
+                    'inlineStyleRanges': [],
+                    'entityRanges': [],
+                },
+                {
+                    'key': 'c6gc4',
+                    'text': 'Back (0)',
+                    'type': 'unordered-list-item',
+                    'depth': 0,
+                    'inlineStyleRanges': [],
+                    'entityRanges': [],
+                },
+                {
+                    'key': 'c6gc3',
+                    'text': 'Jumps again (3)',
+                    'type': 'unordered-list-item',
+                    'depth': 3,
+                    'inlineStyleRanges': [],
+                    'entityRanges': [],
+                },
+                {
+                    'key': '3mn5b',
+                    'text': 'Back (1)',
+                    'type': 'unordered-list-item',
+                    'depth': 1,
+                    'inlineStyleRanges': [],
+                    'entityRanges': [],
+                },
+            ],
+        }), '<ul class="steps"><li>A list item (0)<ul class="steps"><li><ul class="steps"><li>Jumps (2)</li></ul></li></ul></li><li>Back (0)<ul class="steps"><li><ul class="steps"><li><ul class="steps"><li>Jumps again (3)</li></ul></li></ul></li><li>Back (1)</li></ul></li></ul>')
+
     def test_render_with_big_content(self):
         self.assertEqual(HTML({
             'entity_decorators': {

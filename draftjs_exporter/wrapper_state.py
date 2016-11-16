@@ -48,21 +48,40 @@ class WrapperState:
     def __str__(self):
         return '<WrapperState: %s>' % self.to_string()
 
-    def set_wrapper(self, options=None, depth=0):
-        if options:
-            element = DOM.create_element(options[0], options[1])
-        else:
-            element = DOM.create_document_fragment()
-
-        new_wrapper = [element, depth, options]
-
+    def set_wrapper(self, options=None, elt_options=None, depth=0):
         if depth >= len(self.wrapper_stack):
-            DOM.append_child(DOM.get_children(self.get_wrapper_elt())[-1], element)
+            for d in range(len(self.wrapper_stack), depth + 1):
+                wrapper_elt = self.create_wrapper_elt(options)
+                new_wrapper = [wrapper_elt, d, options]
 
-            self.wrapper_stack.append(new_wrapper)
+                wrapper_children = DOM.get_children(self.get_wrapper_elt())
+
+                # Determine where to append the new wrapper.
+                if len(wrapper_children) > 0:
+                    wrapper_parent = wrapper_children[-1]
+                else:
+                    # If there is no content in the current wrapper, we need
+                    # to add an intermediary node.
+                    wrapper_parent = DOM.create_element(elt_options[0], elt_options[1])
+                    DOM.append_child(self.get_wrapper_elt(), wrapper_parent)
+
+                DOM.append_child(wrapper_parent, wrapper_elt)
+
+                self.wrapper_stack.append(new_wrapper)
         else:
+            wrapper_elt = self.create_wrapper_elt(options)
+            new_wrapper = [wrapper_elt, depth, options]
+
             # Cut the stack to where it now stops, and add new wrapper.
             self.wrapper_stack = self.wrapper_stack[:depth] + [new_wrapper]
+
+    def create_wrapper_elt(self, options):
+        if options:
+            wrapper_elt = DOM.create_element(options[0], options[1])
+        else:
+            wrapper_elt = DOM.create_document_fragment()
+
+        return wrapper_elt
 
     def get_wrapper_elt(self, depth=-1):
         return self.wrapper_stack[depth][0]
@@ -74,10 +93,11 @@ class WrapperState:
         return self.wrapper_stack[depth][2]
 
     def parent_for(self, block_options, depth):
+        elt_options = self.map_element_options(block_options.get('element'))
         wrapper_options = block_options.get('wrapper', None)
 
         if wrapper_options:
-            parent = self.get_wrapper(wrapper_options, depth)
+            parent = self.get_wrapper(self.map_element_options(wrapper_options), elt_options, depth)
         else:
             parent = self.reset_wrapper_stack()
 
@@ -111,11 +131,9 @@ class WrapperState:
 
         return block_options
 
-    def get_wrapper(self, wrapper_options, depth):
-        new_options = self.map_element_options(wrapper_options)
-
-        if depth > self.get_wrapper_depth() or new_options != self.get_wrapper_options():
-            self.set_wrapper(new_options, depth)
+    def get_wrapper(self, wrapper_options, elt_options, depth):
+        if depth > self.get_wrapper_depth() or wrapper_options != self.get_wrapper_options():
+            self.set_wrapper(wrapper_options, elt_options, depth)
 
         # If depth is lower than the maximum, we need to cut the stack.
         if depth < self.get_wrapper_depth():
