@@ -73,12 +73,7 @@ class WrapperStack:
         return wrapper
 
     def tail(self):
-        if self.length() > 0:
-            wrapper = self.get(0)
-        else:
-            wrapper = Wrapper(-1, None)
-
-        return wrapper
+        return self.get(0)
 
 
 class Wrapper:
