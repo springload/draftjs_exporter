@@ -23,7 +23,6 @@ draftjs_exporter documentation
 
 ### Unsupported markup
 
-* Nested blocks where nesting jumps one level of depth (depth = 0, then depth = 2).
 
 ## R&D notes
 
