@@ -37,11 +37,11 @@ class EntityState:
         return details
 
     def get_entity_decorator(self, entity_details):
-        type = entity_details.get('type')
-        decorator = self.entity_decorators.get(type)
+        type_ = entity_details.get('type')
+        decorator = self.entity_decorators.get(type_)
 
         if decorator is None:
-            raise EntityException('Decorator "%s" does not exist in entity_decorators' % type)
+            raise EntityException('Decorator "%s" does not exist in entity_decorators' % type_)
 
         return decorator
 

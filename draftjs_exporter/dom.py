@@ -13,11 +13,11 @@ except NameError:
     unicode = lambda s: str(s)
 
 
-def Soup(str):
+def Soup(raw_str):
     """
     Wrapper around BeautifulSoup to keep the code DRY.
     """
-    return BeautifulSoup(str, 'html5lib')
+    return BeautifulSoup(raw_str, 'html5lib')
 
 
 class DOM(object):
@@ -25,14 +25,14 @@ class DOM(object):
     Wrapper around our HTML building library to facilitate changes.
     """
     @staticmethod
-    def create_tag(type, attributes=None):
+    def create_tag(type_, attributes=None):
         if attributes is None:
             attributes = {}
 
-        return Soup('').new_tag(type, **attributes)
+        return Soup('').new_tag(type_, **attributes)
 
     @staticmethod
-    def create_element(type=None, props=None, *children):
+    def create_element(type_=None, props=None, *children):
         """
         Signature inspired by React.createElement.
         createElement(
@@ -45,7 +45,7 @@ class DOM(object):
         if props is None:
             props = {}
 
-        if not type:
+        if not type_:
             elt = DOM.create_document_fragment()
         else:
             attributes = {}
@@ -62,10 +62,10 @@ class DOM(object):
                     attributes[key] = prop
 
             # "type" is either an entity with a render method, or a tag name.
-            if inspect.isclass(type):
-                elt = type().render(attributes)
+            if inspect.isclass(type_):
+                elt = type_().render(attributes)
             else:
-                elt = DOM.create_tag(type, attributes)
+                elt = DOM.create_tag(type_, attributes)
 
         for child in children:
             if child:

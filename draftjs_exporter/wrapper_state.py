@@ -25,15 +25,15 @@ class WrapperState:
         ]
 
     def element_for(self, block):
-        type = block.get('type', 'unstyled')
+        type_ = block.get('type', 'unstyled')
         depth = block.get('depth', 0)
-        block_options = self.get_block_options(type)
+        block_options = self.get_block_options(type_)
 
         # Make an element from the options specified in the block map.
         elt_options = self.map_element_options(block_options.get('element'))
         elt = DOM.create_element(elt_options[0], elt_options[1])
 
-        parent = self.parent_for(type, depth)
+        parent = self.parent_for(type_, depth)
         DOM.append_child(parent, elt)
 
         # At level 0, the element is added to the document.
@@ -73,8 +73,8 @@ class WrapperState:
     def get_wrapper_options(self, depth=-1):
         return self.wrapper_stack[depth][2]
 
-    def parent_for(self, type, depth):
-        block_options = self.get_block_options(type)
+    def parent_for(self, type_, depth):
+        block_options = self.get_block_options(type_)
         wrapper_options = block_options.get('wrapper', None)
 
         if wrapper_options:
@@ -104,11 +104,11 @@ class WrapperState:
 
         return [tag, attributes]
 
-    def get_block_options(self, type):
-        block_options = self.block_map.get(type)
+    def get_block_options(self, type_):
+        block_options = self.block_map.get(type_)
 
         if block_options is None:
-            raise BlockException('Block "%s" does not exist in block_map' % type)
+            raise BlockException('Block "%s" does not exist in block_map' % type_)
 
         return block_options
 
