@@ -60,15 +60,6 @@ class TestLink(unittest.TestCase):
         self.assertEqual(DOM.get_text_content(link), None)
         self.assertEqual(link.get('href'), 'http://example.com')
 
-    def test_render_invalid(self):
-        link = DOM.create_element(Link, {
-            'data': {
-                'url': 'http://example.com',
-                'disabled': 'true',
-            }
-        })
-        self.assertEqual(link.get('disabled'), None)
-
 
 class TestButton(unittest.TestCase):
     def test_init(self):
