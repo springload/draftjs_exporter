@@ -29,6 +29,8 @@ class HTML:
         for block in content_state.get('blocks', []):
             self.render_block(block, entity_map)
 
+        self.wrapper_state.clean_up()
+
         return self.wrapper_state.to_string()
 
     def render_block(self, block, entity_map):
