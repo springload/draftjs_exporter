@@ -169,7 +169,7 @@ Documentation
 
     See the `docs/`_ folder
 
-.. _Dratail: https://github.com/springload/draftail/
+.. _Draftail: https://github.com/springload/draftail/
 .. _Wagtail CMS: https://wagtail.io
 .. _Entities: https://facebook.github.io/draft-js/docs/advanced-topics-entities.html#content
 .. _this article: https://medium.com/@rajaraodv/how-draft-js-represents-rich-text-data-eeabb5f25cf2
