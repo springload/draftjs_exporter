@@ -3,7 +3,6 @@ from __future__ import absolute_import, unicode_literals
 import unittest
 
 from draftjs_exporter.command import Command
-from draftjs_exporter.dom import DOM
 from draftjs_exporter.entities import Link
 from draftjs_exporter.entity_state import EntityException, EntityState
 
@@ -24,17 +23,15 @@ entity_map = {
 
 class TestEntityState(unittest.TestCase):
     def setUp(self):
-        self.entity_state = EntityState(DOM.create_element('div'), entity_decorators, entity_map)
+        self.entity_state = EntityState(entity_decorators, entity_map)
 
     def test_init(self):
         self.assertIsInstance(self.entity_state, EntityState)
 
     def test_apply_start_entity(self):
-        self.assertEqual(DOM.get_tag_name(self.entity_state.entity_stack[-1][0]), 'fragment')
-        self.assertEqual(self.entity_state.entity_stack[-1][1], {})
+        self.assertEqual(len(self.entity_state.entity_stack), 0)
         self.entity_state.apply(Command('start_entity', 0, 0))
-        self.assertEqual(DOM.get_tag_name(self.entity_state.entity_stack[-1][0]), 'a')
-        self.assertEqual(self.entity_state.entity_stack[-1][1], {
+        self.assertEqual(self.entity_state.entity_stack[-1], {
             'data': {
                 'url': 'http://example.com'
             },
@@ -43,12 +40,10 @@ class TestEntityState(unittest.TestCase):
         })
 
     def test_apply_stop_entity(self):
-        self.assertEqual(DOM.get_tag_name(self.entity_state.entity_stack[-1][0]), 'fragment')
-        self.assertEqual(self.entity_state.entity_stack[-1][1], {})
+        self.assertEqual(len(self.entity_state.entity_stack), 0)
         self.entity_state.apply(Command('start_entity', 0, 0))
         self.entity_state.apply(Command('stop_entity', 5, 0))
-        self.assertEqual(DOM.get_tag_name(self.entity_state.entity_stack[-1][0]), 'fragment')
-        self.assertEqual(self.entity_state.entity_stack[-1][1], {})
+        self.assertEqual(len(self.entity_state.entity_stack), 0)
 
     def test_get_entity_details(self):
         self.assertEqual(self.entity_state.get_entity_details(Command('start_entity', 0, 0)), {
