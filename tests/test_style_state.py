@@ -62,3 +62,10 @@ class TestStyleState(unittest.TestCase):
         self.assertEqual(self.style_state.create_node('Test text').get('style'), None)
         self.assertEqual(DOM.get_text_content(self.style_state.create_node('Test text')), 'Test text')
         self.style_state.apply(Command('stop_inline_style', 9, 'ITALIC'))
+
+    def test_create_node_styled_multiple(self):
+        self.style_state.apply(Command('start_inline_style', 0, 'BOLD'))
+        self.style_state.apply(Command('start_inline_style', 0, 'ITALIC'))
+        self.assertEqual(self.style_state.get_style_tags(), ['em', 'strong'])
+        self.assertEqual(DOM.get_tag_name(self.style_state.create_node('wow')), 'em')
+        self.assertEqual(DOM.get_tag_name(DOM.get_children(self.style_state.create_node('wow'))[0]), 'strong')
