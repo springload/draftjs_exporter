@@ -4,11 +4,17 @@ Changelog
 > All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [[v0.x.y]](https://github.com/springload/draftjs_exporter/releases/tag/v0.x.y) - 2016-10-15
+## [[v0.5.0]](https://github.com/springload/draftjs_exporter/releases/tag/v0.x.y) - 2016-11-17
+
+This release is likely to be a **breaking change**. It is not released as such because the exporter has not [reached 1.0 yet](http://semver.org/#spec-item-4).
 
 ### Added
 
 - Add support for more scenarios with nested blocks. Jumping depths eg. 0, 2, 3. Starting directly above 0 eg. 2, 2, 0. Not using 0 at all eg. 3, 3, 3.
+
+### Changed
+
+- Entity decorators now have complete control on where their content (markup, not just text) is inserted into the DOM. This is done via the `children` prop in a similar fashion to React's.
 
 ### Removed
 
