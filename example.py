@@ -7,10 +7,34 @@ import codecs
 from draftjs_exporter.constants import BLOCK_TYPES, ENTITY_TYPES
 from draftjs_exporter.defaults import BLOCK_MAP, STYLE_MAP
 from draftjs_exporter.dom import DOM
-from draftjs_exporter.entities import Image, Link, Null
 from draftjs_exporter.html import HTML
 
-# TODO Support dt/dd, hr, br, cite, mark, q, s, sub, sup, video?
+
+class Null:
+    def render(self, props):
+        return DOM.create_element()
+
+
+class Image:
+    def render(self, props):
+        data = props.get('data', {})
+
+        return DOM.create_element('img', {
+            'src': data.get('src'),
+            'width': data.get('width'),
+            'height': data.get('height'),
+            'alt': data.get('alt'),
+        })
+
+
+class Link:
+    def render(self, props):
+        data = props.get('data', {})
+        href = data['url']
+
+        return DOM.create_element('a', {'href': href}, props['children'])
+
+
 config = {
     'entity_decorators': {
         ENTITY_TYPES.LINK: Link(),

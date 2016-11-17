@@ -3,8 +3,8 @@ from __future__ import absolute_import, unicode_literals
 import unittest
 
 from draftjs_exporter.command import Command
-from draftjs_exporter.entities import Link
 from draftjs_exporter.entity_state import EntityException, EntityState
+from tests.test_entities import Link
 
 entity_decorators = {
     'LINK': Link()

@@ -3,13 +3,10 @@ from __future__ import absolute_import, unicode_literals
 import unittest
 
 from draftjs_exporter.command import Command
-from draftjs_exporter.entities import Link
 from draftjs_exporter.html import HTML
 
 config = {
-    'entity_decorators': {
-        'LINK': Link
-    },
+    'entity_decorators': {},
     'block_map': {
         'header-one': {'element': 'h1'},
         'unordered-list-item': {
