@@ -10,9 +10,9 @@
 draftjs_exporter 🐍
 ===================
 
-    Library to convert the Facebook Draft.js editor’s raw ContentState to HTML.
+    Python library to convert the Facebook Draft.js editor’s raw ContentState to HTML.
 
-This is a work in progress. It is intended to be integrated into `Wagtail CMS`_.
+It is intended to be used with `Draftail`_ and integrated into `Wagtail CMS`_.
 
 Usage
 -----
@@ -24,7 +24,7 @@ Unlike traditional rich text editors, DraftJS stores data in a JSON representati
 
 There are two main parts:
 
--  blocks - lines of data amd inline style attributes (without
+-  blocks - lines of data and inline style attributes (without
    newlines).
 -  entityMap – collection of `Entities`_
 
@@ -41,30 +41,33 @@ The library requires you to explicity define mappings for the types of blocks an
 
 .. code:: python
 
-    from draftjs_exporter.entities.link import Link
     from draftjs_exporter.html import HTML
 
-    # Configure your element mappings and entity decorators
-    config = {
+    # The Link decorator will be used to render LINK entities.
+    class Link:
+        def render(self, props):
+            return DOM.create_element('a', { 'href': data['url'] }, props['children'])
+
+    # Initialise the exporter with your configuration
+    exporter = HTML({
         'entity_decorators': {
             'LINK': Link()
         },
+        # Define how each block should be transformed to HTML.
         'block_map': {
             'header-two': {'element': 'h2'},
             'blockquote': {'element': 'blockquote'},
             'unstyled': {'element': 'p'}
         },
+        # Define how each style is rendered – either inline styles or elements.
         'style_map': {
             'ITALIC': {'fontStyle': 'italic'},
-            'BOLD': {'fontStyle': 'bold'}
+            'BOLD': {'element': 'strong'}
         }
-    }
+    })
 
-    # Initialise the exporter with your configuration
-    exporter = HTML(config)
-
-    # Supply a draftJS `contentState`
-    content_state = {
+    # Render a Draft.js `contentState`
+    markup = exporter.render({
         'entityMap': {},
         'blocks': [
             {
@@ -82,10 +85,7 @@ The library requires you to explicity define mappings for the types of blocks an
                 'entityRanges': []
             }
         ]
-    }
-
-    # Render markup
-    markup = exporter.render(content_state)
+    })
 
 Running the example
 ~~~~~~~~~~~~~~~~~~~
@@ -169,6 +169,7 @@ Documentation
 
     See the `docs/`_ folder
 
+.. _Dratail: https://github.com/springload/draftail/
 .. _Wagtail CMS: https://wagtail.io
 .. _Entities: https://facebook.github.io/draft-js/docs/advanced-topics-entities.html#content
 .. _this article: https://medium.com/@rajaraodv/how-draft-js-represents-rich-text-data-eeabb5f25cf2
