@@ -18,7 +18,7 @@ This release is likely to be a **breaking change**. It is not released as such b
 
 ### Removed
 
-- The `Link` entity no longer filters invalid attributes. Too much responsibility for a single entity. Built-in entities should not be relied upon anyway.
+- Built-in entities are no longer available as part of the library. They should be defined in userland.
 
 ## [[v0.4.0]](https://github.com/springload/draftjs_exporter/releases/tag/v0.4.0) - 2016-10-15
 
