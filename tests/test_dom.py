@@ -3,7 +3,7 @@ from __future__ import absolute_import, unicode_literals
 import unittest
 
 from draftjs_exporter.dom import DOM
-from draftjs_exporter.entities import Icon
+from tests.test_entities import Icon
 
 
 class TestDOM(unittest.TestCase):
