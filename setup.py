@@ -48,7 +48,6 @@ setup(
     license='MIT',
     long_description=readme,
     classifiers=[
-        'Development Status :: 3 - Alpha',
         'Environment :: Web Environment',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
