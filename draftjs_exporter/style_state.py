@@ -66,11 +66,10 @@ class StyleState:
 
             # Nest the tags.
             # Set the text and style attribute (if any) on the deepest node.
-            for i, tag in enumerate(tags):
-                if i > 0:
-                    new_child = DOM.create_element(tag)
-                    DOM.append_child(child, new_child)
-                    child = new_child
+            for tag in tags[1:]:
+                new_child = DOM.create_element(tag)
+                DOM.append_child(child, new_child)
+                child = new_child
 
             style_value = self.get_style_value()
             if style_value:
