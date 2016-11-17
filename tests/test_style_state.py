@@ -49,16 +49,16 @@ class TestStyleState(unittest.TestCase):
         self.style_state.apply(Command('start_inline_style', 0, 'HIGHLIGHT'))
         self.assertEqual(self.style_state.get_style_value(), 'text-decoration: underline;')
 
-    def test_add_node_unstyled(self):
-        self.assertEqual(DOM.get_tag_name(self.style_state.add_node(DOM.create_element('p'), 'Test text')), 'textnode')
-        self.assertEqual(DOM.get_text_content(self.style_state.add_node(DOM.create_element('p'), 'Test text')), 'Test text')
+    def test_create_node_unstyled(self):
+        self.assertEqual(DOM.get_tag_name(self.style_state.create_node('Test text')), 'textnode')
+        self.assertEqual(DOM.get_text_content(self.style_state.create_node('Test text')), 'Test text')
 
-    def test_add_node_unicode(self):
-        self.assertEqual(DOM.get_text_content(self.style_state.add_node(DOM.create_element('p'), '🍺')), '🍺')
+    def test_create_node_unicode(self):
+        self.assertEqual(DOM.get_text_content(self.style_state.create_node('🍺')), '🍺')
 
-    def test_add_node_styled(self):
+    def test_create_node_styled(self):
         self.style_state.apply(Command('start_inline_style', 0, 'ITALIC'))
-        self.assertEqual(DOM.get_tag_name(self.style_state.add_node(DOM.create_element('p'), 'Test text')), 'em')
-        self.assertEqual(self.style_state.add_node(DOM.create_element('p'), 'Test text').get('style'), None)
-        self.assertEqual(DOM.get_text_content(self.style_state.add_node(DOM.create_element('p'), 'Test text')), 'Test text')
+        self.assertEqual(DOM.get_tag_name(self.style_state.create_node('Test text')), 'em')
+        self.assertEqual(self.style_state.create_node('Test text').get('style'), None)
+        self.assertEqual(DOM.get_text_content(self.style_state.create_node('Test text')), 'Test text')
         self.style_state.apply(Command('stop_inline_style', 9, 'ITALIC'))

@@ -56,20 +56,21 @@ class StyleState:
 
         return ''.join(sorted(rules))
 
-    def add_node(self, element, text):
+    def create_node(self, text):
         if self.is_unstyled():
-            child = DOM.create_text_node(text)
-            DOM.append_child(element, child)
+            node = DOM.create_text_node(text)
         else:
             tags = self.get_style_tags()
-            child = element
+            node = DOM.create_element(tags[0])
+            child = node
 
             # Nest the tags.
             # Set the text and style attribute (if any) on the deepest node.
-            for tag in tags:
-                new_child = DOM.create_element(tag)
-                DOM.append_child(child, new_child)
-                child = new_child
+            for i, tag in enumerate(tags):
+                if i > 0:
+                    new_child = DOM.create_element(tag)
+                    DOM.append_child(child, new_child)
+                    child = new_child
 
             style_value = self.get_style_value()
             if style_value:
@@ -77,4 +78,4 @@ class StyleState:
 
             DOM.set_text_content(child, text)
 
-        return child
+        return node

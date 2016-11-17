@@ -35,14 +35,15 @@ class HTML:
 
     def render_block(self, block, entity_map):
         element = self.wrapper_state.element_for(block)
-        entity_state = EntityState(element, self.entity_decorators, entity_map)
+        entity_state = EntityState(self.entity_decorators, entity_map)
 
         for (text, commands) in self.build_command_groups(block):
             for command in commands:
                 entity_state.apply(command)
                 self.style_state.apply(command)
 
-            self.style_state.add_node(entity_state.current_parent(), text)
+            style_node = self.style_state.create_node(text)
+            entity_state.render_entitities(element, style_node)
 
     def build_command_groups(self, block):
         """

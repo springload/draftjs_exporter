@@ -54,10 +54,11 @@ class TestLink(unittest.TestCase):
         link = DOM.create_element(Link, {
             'data': {
                 'url': 'http://example.com',
-            }
+            },
+            'children': 'wow',
         })
         self.assertEqual(DOM.get_tag_name(link), 'a')
-        self.assertEqual(DOM.get_text_content(link), None)
+        self.assertEqual(DOM.get_text_content(link), 'wow')
         self.assertEqual(link.get('href'), 'http://example.com')
 
 

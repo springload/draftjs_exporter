@@ -34,7 +34,7 @@ class Link:
             attr = key if key != 'url' else 'href'
             attributes[attr] = data[key]
 
-        return DOM.create_element('a', attributes)
+        return DOM.create_element('a', attributes, props['children'])
 
 
 class Button:
