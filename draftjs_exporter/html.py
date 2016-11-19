@@ -17,13 +17,15 @@ class HTML:
             config = {}
 
         self.entity_decorators = config.get('entity_decorators', {})
-        self.wrapper_state = WrapperState(config.get('block_map', BLOCK_MAP))
-        self.style_state = StyleState(config.get('style_map', STYLE_MAP))
+        self.block_map = config.get('block_map', BLOCK_MAP)
+        self.style_map = config.get('style_map', STYLE_MAP)
 
     def render(self, content_state):
         """
         Starts the export process on a given piece of content state.
         """
+        self.wrapper_state = WrapperState(self.block_map)
+        self.style_state = StyleState(self.style_map)
         entity_map = content_state.get('entityMap', {})
 
         for block in content_state.get('blocks', []):
