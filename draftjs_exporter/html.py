@@ -46,7 +46,9 @@ class HTML:
                 self.style_state.apply(command)
 
             style_node = self.style_state.create_node(
-                text, with_decorator=not entity_state.entity_stack)
+                text,
+                block=block,
+                entity_stack=entity_state.entity_stack)
             entity_state.render_entitities(element, style_node)
 
     def build_command_groups(self, block):

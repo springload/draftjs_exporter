@@ -56,25 +56,26 @@ class StyleState:
 
         return ''.join(sorted(rules))
 
-    def get_decorated_text(self, text):
+    def get_decorated_text(self, text, block):
+        block_type = block.get('type') if block else None
         while text:
             for deco in self.composite_decorators:
                 match = deco.SEARCH_RE.search(text)
                 if match:
                     begin, end = match.span()
                     yield DOM.create_text_node(text[:begin])
-                    yield deco.replace(match)
+                    yield deco.replace(match, block_type)
                     text = text[end:]
                     break
             else:
                 yield DOM.create_text_node(text)
                 return
 
-    def create_node(self, text, with_decorator=True):
-        if with_decorator:
-            text_children = self.get_decorated_text(text)
-        else:
+    def create_node(self, text, block=None, entity_stack=None):
+        if entity_stack:
             text_children = [DOM.create_text_node(text)]
+        else:
+            text_children = self.get_decorated_text(text, block)
 
         if self.is_unstyled():
             node = DOM.create_document_fragment()

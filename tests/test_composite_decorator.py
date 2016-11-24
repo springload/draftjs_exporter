@@ -4,6 +4,7 @@ import cgi
 import re
 import unittest
 
+from draftjs_exporter.constants import BLOCK_TYPES
 from draftjs_exporter.dom import DOM
 from draftjs_exporter.html import HTML
 
@@ -19,15 +20,17 @@ class URLDecorator:
     def __init__(self, new_window=False):
         self.new_window = new_window
 
-    def replace(self, match):
-        u_protocol = match.group(1)
-        u_href = match.group(2)
-        u_href = u_protocol + u_href
+    def replace(self, match, block_type):
+        protocol = match.group(1)
+        url = match.group(2)
+        href = protocol + url
+        if block_type == BLOCK_TYPES.CODE:
+            return href
 
-        text = cgi.escape(u_href)
-        if u_href.startswith("www"):
-            u_href = "http://" + u_href
-        props = {'href': u_href}
+        text = cgi.escape(href)
+        if href.startswith("www"):
+            href = "http://" + href
+        props = {'href': href}
         if self.new_window:
             props.update(target="_blank")
 
@@ -38,11 +41,17 @@ class HashTagDecorator:
     """
     Wrap hash tags in spans with specific class.
     """
-
     SEARCH_RE = re.compile(r'#\w+')
 
-    def replace(self, match):
-        return DOM.create_element('span', {'class': 'hash_tag'}, match.group(0))
+    def replace(self, match, block_type):
+
+        if block_type == BLOCK_TYPES.CODE:
+            return match.group(0)
+
+        return DOM.create_element(
+            'span',
+            {'class': 'hash_tag'}, match.group(0)
+        )
 
 
 config = {
@@ -54,7 +63,8 @@ config = {
         HashTagDecorator()
     ],
     'block_map': {
-        'unstyled': {'element': 'div'}
+        BLOCK_TYPES.UNSTYLED: {'element': 'div'},
+        BLOCK_TYPES.CODE: {'element': 'pre'}
     },
     'style_map': {
         'ITALIC': {'element': 'em'},
@@ -98,13 +108,20 @@ class TestCompositeDecorator(unittest.TestCase):
                         }
                     ],
                 },
+                {
+                    'key': '34a12',
+                    'text': '#check www.example.com',
+                    'type': 'code-block',
+                    'inlineStyleRanges': [],
+                },
             ]
         }),
             '<div>search <a href="http://amazon.us">http://a.us</a> or '
             '<a href="https://yahoo.com">https://yahoo.com</a> or '
             '<a href="http://www.google.com">www.google.com</a> for '
             '<span class="hash_tag">#github</span> and '
-            '<span class="hash_tag">#facebook</span></div>')
+            '<span class="hash_tag">#facebook</span></div>'
+            '<pre>#check www.example.com</pre>')
 
     def test_render_with_multiple_decorators(self):
         """

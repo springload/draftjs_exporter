@@ -46,15 +46,17 @@ class URLDecorator:
     def __init__(self, new_window=False):
         self.new_window = new_window
 
-    def replace(self, match):
-        u_protocol = match.group(1)
-        u_href = match.group(2)
-        u_href = u_protocol + u_href
+    def replace(self, match, block_type):
+        protocol = match.group(1)
+        href = match.group(2)
+        href = protocol + href
+        if block_type == BLOCK_TYPES.CODE:
+            return href
 
-        text = cgi.escape(u_href)
-        if u_href.startswith("www"):
-            u_href = "http://" + u_href
-        props = {'href': u_href}
+        text = cgi.escape(href)
+        if href.startswith("www"):
+            href = "http://" + href
+        props = {'href': href}
         if self.new_window:
             props.update(target="_blank")
 
@@ -68,7 +70,10 @@ class HashTagDecorator:
 
     SEARCH_RE = re.compile(r'#\w+')
 
-    def replace(self, match):
+    def replace(self, match, block_type):
+        if block_type == BLOCK_TYPES.CODE:
+            return match.group(0)
+
         return DOM.create_element('em', {'class': 'hash_tag'}, match.group(0))
 
 
