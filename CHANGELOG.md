@@ -1,8 +1,19 @@
-Changelog
-=========
+# Changelog
 
 > All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
+
+## [[v0.5.2]](https://github.com/springload/draftjs_exporter/releases/tag/v0.5.2) - 2016-12-10
+
+### Fixed
+
+- Fix state being kept between exports, causing blocks to be duplicated in re-runs.
+
+## [[v0.5.1]](https://github.com/springload/draftjs_exporter/releases/tag/v0.5.1) - 2016-11-17
+
+### Fixed
+
+- Fix broken link in README
 
 ## [[v0.5.0]](https://github.com/springload/draftjs_exporter/releases/tag/v0.5.0) - 2016-11-17
 
