@@ -12,7 +12,7 @@ draftjs_exporter 🐍
 
     Python library to convert the Facebook Draft.js editor’s raw ContentState to HTML.
 
-It is intended to be used with `Draftail`_ and integrated into `Wagtail CMS`_.
+It is intended to be used with `Draftail`_ and integrated into `Wagtail CMS`_. Check out our `online demo`_.
 
 Usage
 -----
@@ -167,13 +167,14 @@ Releases
 Documentation
 -------------
 
-    See the `docs/`_ folder
+    See the `docs`_ folder
 
 .. _Draftail: https://github.com/springload/draftail/
 .. _Wagtail CMS: https://wagtail.io
+.. _online demo: https://draftjs-exporter.herokuapp.com/
 .. _Entities: https://facebook.github.io/draft-js/docs/advanced-topics-entities.html#content
 .. _this article: https://medium.com/@rajaraodv/how-draft-js-represents-rich-text-data-eeabb5f25cf2
 .. _Semantic Versioning: http://semver.org/spec/v2.0.0.html
 .. _measures code coverage: https://coveralls.io/github/springload/draftjs_exporter?branch=master
 .. _changelog: https://github.com/springload/draftjs_exporter/CHANGELOG.md
-.. _docs/: https://github.com/springload/draftjs_exporter/docs/
+.. _docs: https://github.com/springload/draftjs_exporter/docs/
