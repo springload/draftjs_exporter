@@ -22,7 +22,6 @@ config = {
             'element': 'li',
             'wrapper': ['ul', {'className': 'bullet-list'}],
         },
-        BLOCK_TYPES.ATOMIC: {'element': 'span'},
     }),
     'style_map': {
         INLINE_STYLES.ITALIC: {'element': 'em'},
