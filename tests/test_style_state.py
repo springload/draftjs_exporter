@@ -50,7 +50,7 @@ class TestStyleState(unittest.TestCase):
         self.assertEqual(self.style_state.get_style_value(), 'text-decoration: underline;')
 
     def test_create_node_unstyled(self):
-        self.assertEqual(DOM.get_tag_name(self.style_state.create_node('Test text')), 'textnode')
+        self.assertEqual(DOM.get_tag_name(self.style_state.create_node('Test text')), 'fragment')
         self.assertEqual(DOM.get_text_content(self.style_state.create_node('Test text')), 'Test text')
 
     def test_create_node_unicode(self):
