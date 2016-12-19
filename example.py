@@ -10,9 +10,9 @@ from draftjs_exporter.dom import DOM
 from draftjs_exporter.html import HTML
 
 
-class Null:
+class HR:
     def render(self, props):
-        return DOM.create_element()
+        return DOM.create_element('hr')
 
 
 class Image:
@@ -39,7 +39,7 @@ config = {
     'entity_decorators': {
         ENTITY_TYPES.LINK: Link(),
         ENTITY_TYPES.IMAGE: Image(),
-        ENTITY_TYPES.TOKEN: Null(),
+        ENTITY_TYPES.HORIZONTAL_RULE: HR(),
     },
     # Extend/override the default block map.
     'block_map': dict(BLOCK_MAP, **{
@@ -77,7 +77,7 @@ content_state = {
             },
         },
         '2': {
-            'type': 'TOKEN',
+            'type': 'HORIZONTAL_RULE',
             'mutability': 'IMMUTABLE',
             'data': {},
         },
@@ -167,7 +167,7 @@ content_state = {
         {
             'key': '672oo',
             'text': ' ',
-            'type': 'horizontal-rule',
+            'type': 'atomic',
             'depth': 0,
             'inlineStyleRanges': [],
             'entityRanges': [

@@ -7,19 +7,18 @@ from draftjs_exporter.constants import BLOCK_TYPES, ENTITY_TYPES, INLINE_STYLES
 from draftjs_exporter.defaults import BLOCK_MAP
 from draftjs_exporter.entity_state import EntityException
 from draftjs_exporter.html import HTML
-from tests.test_entities import Link, Null
+from tests.test_entities import HR, Link
 
 config = {
     'entity_decorators': {
         ENTITY_TYPES.LINK: Link(),
-        ENTITY_TYPES.TOKEN: Null(),
+        ENTITY_TYPES.HORIZONTAL_RULE: HR(),
     },
     'block_map': dict(BLOCK_MAP, **{
         BLOCK_TYPES.UNORDERED_LIST_ITEM: {
             'element': 'li',
             'wrapper': ['ul', {'className': 'steps'}],
         },
-        BLOCK_TYPES.ATOMIC: {'element': 'span'},
     }),
     'style_map': {
         INLINE_STYLES.ITALIC: {'element': 'em'},
@@ -383,7 +382,7 @@ class TestOutput(unittest.TestCase):
         self.assertEqual(self.exporter.render({
             'entityMap': {
                 '2': {
-                    'type': 'TOKEN',
+                    'type': 'HORIZONTAL_RULE',
                     'mutability': 'IMMUTABLE',
                     'data': {},
                 },
@@ -408,7 +407,7 @@ class TestOutput(unittest.TestCase):
                 {
                     'key': '672oo',
                     'text': ' ',
-                    'type': 'horizontal-rule',
+                    'type': 'atomic',
                     'depth': 0,
                     'inlineStyleRanges': [],
                     'entityRanges': [

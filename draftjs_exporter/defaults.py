@@ -17,7 +17,7 @@ BLOCK_MAP = {
     # TODO Ideally would want double wrapping in pre + code.
     # See https://github.com/sstur/draft-js-export-html/blob/master/src/stateToHTML.js#L88
     BLOCK_TYPES.CODE: {'element': 'pre'},
-    BLOCK_TYPES.HORIZONTAL_RULE: {'element': 'hr'},
+    BLOCK_TYPES.ATOMIC: {'element': 'fragment'},
 }
 
 # Default style map to extend.
