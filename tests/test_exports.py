@@ -12,7 +12,6 @@ from tests.test_entities import Image, Link
 fixtures_path = os.path.join(os.path.dirname(__file__), 'test_exports.json')
 fixtures = json.loads(open(fixtures_path, 'r').read())
 
-# TODO Move this to JSON file.
 config = {
     'entity_decorators': {
         ENTITY_TYPES.LINK: Link(),
