@@ -3,13 +3,23 @@
 > All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [[v0.6.0]](https://github.com/springload/draftjs_exporter/releases/tag/v0.6.0) - 2016-12-10
+## [[v0.6.1]](https://github.com/springload/draftjs_exporter/releases/tag/v0.6.0) - 2016-12-21
+
+### Added
+
+- Automatically convert line breaks to `br` elements.
+
+## [[v0.6.0]](https://github.com/springload/draftjs_exporter/releases/tag/v0.6.0) - 2016-12-19
 
 This release is likely to be a **breaking change**. It is not released as such because the exporter has not [reached 1.0 yet](http://semver.org/#spec-item-4).
 
 ### Changed
 
 - Change `hr` rendering to be done with entities instead of block types. Instead of having a `TOKEN` entity rendering as `Null` inside a `horizontal-rule` block rendering as `hr`, we now have a `HORIZONTAL_RULE` entitiy rendering as `HR` inside an `atomic` block rendering as `fragment`.
+
+### Removed
+
+- Remove custom block type `pullquote`
 
 ## [[v0.5.2]](https://github.com/springload/draftjs_exporter/releases/tag/v0.5.2) - 2016-12-10
 
