@@ -180,7 +180,7 @@ content_state = {
         },
         {
             'key': 'fq3f',
-            'text': 'How we made it delightful and easy for people to find NZ Festival shows',
+            'text': 'How we made it delightful\nand easy for people to find NZ Festival shows',
             'type': 'unstyled',
             'depth': 0,
             'inlineStyleRanges': [],
