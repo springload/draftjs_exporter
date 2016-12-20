@@ -885,3 +885,45 @@ class TestOutput(unittest.TestCase):
                 }
             ]
         }), '<p><em>some</em> paragraph text</p>')
+
+    def test_render_with_line_breaks(self):
+        self.assertEqual(HTML().render({
+            'entityMap': {},
+            'blocks': [
+                {
+                    'key': 'dem5p',
+                    'text': 'some paragraph text\nsplit in half',
+                    'type': 'unstyled',
+                    'depth': 0,
+                    'inlineStyleRanges': [
+                        {
+                            'offset': 0,
+                            'length': 4,
+                            'style': 'ITALIC'
+                        }
+                    ],
+                    'entityRanges': []
+                }
+            ]
+        }), '<p><em>some</em> paragraph text<br/>split in half</p>')
+
+    def test_render_with_many_line_breaks(self):
+        self.assertEqual(HTML().render({
+            'entityMap': {},
+            'blocks': [
+                {
+                    'key': 'dem5p',
+                    'text': '\nsome paragraph text\nsplit in half\n',
+                    'type': 'unstyled',
+                    'depth': 0,
+                    'inlineStyleRanges': [
+                        {
+                            'offset': 1,
+                            'length': 4,
+                            'style': 'ITALIC'
+                        }
+                    ],
+                    'entityRanges': []
+                }
+            ]
+        }), '<p><br/><em>some</em> paragraph text<br/>split in half<br/></p>')
