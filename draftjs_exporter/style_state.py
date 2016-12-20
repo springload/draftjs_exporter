@@ -55,9 +55,27 @@ class StyleState:
 
         return ''.join(sorted(rules))
 
+    def replace_linebreaks(self, text):
+        lines = text.split('\n')
+
+        if len(lines) > 1:
+            wrapper = DOM.create_document_fragment()
+
+            DOM.append_child(wrapper, DOM.create_text_node(lines[0]))
+
+            for l in lines[1:]:
+                DOM.append_child(wrapper, DOM.create_element('br'))
+                DOM.append_child(wrapper, DOM.create_text_node(l))
+        else:
+            wrapper = DOM.create_text_node(text)
+
+        return wrapper
+
     def create_node(self, text):
+        text_lines = self.replace_linebreaks(text)
+
         if self.is_unstyled():
-            node = DOM.create_text_node(text)
+            node = text_lines
         else:
             tags = self.get_style_tags()
             node = DOM.create_element(tags[0])
@@ -74,6 +92,6 @@ class StyleState:
             if style_value:
                 DOM.set_attribute(child, 'style', style_value)
 
-            DOM.set_text_content(child, text)
+            DOM.append_child(child, text_lines)
 
         return node
