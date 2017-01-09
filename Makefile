@@ -26,6 +26,9 @@ test-ci: ## Continuous integration test suite.
 dev: ## Restarts the example whenever a file changes.
 	nodemon -q -e py -w tests -w draftjs_exporter -w example.py  -x "clear && python example.py || true"
 
+profile: ## Runs profiling code to evaluate performance.
+	clear && python profiling.py || true
+
 clean-pyc: ## Remove Python file artifacts.
 	find . -name '*.pyc' -exec rm -f {} +
 	find . -name '*.pyo' -exec rm -f {} +
