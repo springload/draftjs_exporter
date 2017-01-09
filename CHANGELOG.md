@@ -3,7 +3,13 @@
 > All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [[v0.6.1]](https://github.com/springload/draftjs_exporter/releases/tag/v0.6.0) - 2016-12-21
+## [[v0.Y.Z]](https://github.com/springload/draftjs_exporter/releases/tag/v0.Y.Z) - 2017-01-DD
+
+### Added
+
+- Add profiling tooling thanks to [@su27](https://github.com/su27) [#31](https://github.com/springload/draftjs_exporter/issues/31).
+
+## [[v0.6.1]](https://github.com/springload/draftjs_exporter/releases/tag/v0.6.1) - 2016-12-21
 
 ### Added
 
