@@ -99,7 +99,7 @@ You can run an executable example as follows:
 Feature list
 ~~~~~~~~~~~~
 
-This project adheres to `Semantic Versioning`_ and `measures code coverage`_.
+This project adheres to `Semantic Versioning`_, and measures performance and `code coverage`_.
 
 *  Extensive configuration of the generated HTML.
 *  Default, extensible block & inline style maps for common HTML elements.
@@ -146,6 +146,7 @@ Commands
     make test-coverage   # Run the tests while generating test coverage data.
     make test-ci         # Continuous integration test suite.
     make dev             # Restarts the example whenever a file changes.
+    make profile         # Runs profiling code to evaluate performance.
     make clean-pyc       # Remove Python file artifacts.
     make publish         # Publishes a new version to pypi.
 
@@ -176,6 +177,6 @@ Documentation
 .. _Entities: https://facebook.github.io/draft-js/docs/advanced-topics-entities.html#content
 .. _this article: https://medium.com/@rajaraodv/how-draft-js-represents-rich-text-data-eeabb5f25cf2
 .. _Semantic Versioning: http://semver.org/spec/v2.0.0.html
-.. _measures code coverage: https://coveralls.io/github/springload/draftjs_exporter?branch=master
+.. _code coverage: https://coveralls.io/github/springload/draftjs_exporter?branch=master
 .. _changelog: https://github.com/springload/draftjs_exporter/CHANGELOG.md
 .. _docs: https://github.com/springload/draftjs_exporter/docs/
