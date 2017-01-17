@@ -8,8 +8,8 @@ init: clean-pyc ## Install dependencies and initialise for development.
 	pip install -e .[testing,docs] -U
 
 lint: ## Lint the project.
-	flake8 draftjs_exporter tests example.py setup.py
-	isort --check-only --diff --recursive draftjs_exporter tests example.py setup.py
+	flake8 draftjs_exporter tests example.py setup.py profiling.py
+	isort --check-only --diff --recursive draftjs_exporter tests example.py setup.py profiling.py
 
 test: ## Test the project.
 	python -m unittest discover
@@ -25,6 +25,9 @@ test-ci: ## Continuous integration test suite.
 
 dev: ## Restarts the example whenever a file changes.
 	nodemon -q -e py -w tests -w draftjs_exporter -w example.py  -x "clear && python example.py || true"
+
+profile: ## Runs profiling code to evaluate performance.
+	clear && python profiling.py || true
 
 clean-pyc: ## Remove Python file artifacts.
 	find . -name '*.pyc' -exec rm -f {} +
