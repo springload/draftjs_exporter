@@ -1,7 +1,7 @@
 from __future__ import absolute_import, unicode_literals
 
 from draftjs_exporter.command import Command
-from draftjs_exporter.composite_decorators import apply_decorators
+from draftjs_exporter.composite_decorators import render_decorators
 from draftjs_exporter.defaults import BLOCK_MAP, STYLE_MAP
 from draftjs_exporter.dom import DOM
 from draftjs_exporter.entity_state import EntityState
@@ -47,13 +47,11 @@ class HTML:
                 entity_state.apply(command)
                 self.style_state.apply(command)
 
-            if entity_state.entity_stack:
-                decorated_node = DOM.create_text_node(text)
+            # Entities have priority over decorators.
+            if entity_state.is_empty():
+                decorated_node = render_decorators(self.composite_decorators, text, block.get('type', None))
             else:
-                decorated_node = DOM.create_document_fragment()
-
-                for decorated_child in apply_decorators(self.composite_decorators, text, block.get('type', None)):
-                    DOM.append_child(decorated_node, decorated_child)
+                decorated_node = DOM.create_text_node(text)
 
             styled_node = self.style_state.render_styles(decorated_node)
             entity_state.render_entitities(element, styled_node)

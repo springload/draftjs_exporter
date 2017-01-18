@@ -21,6 +21,9 @@ class EntityState:
         elif command.name == 'stop_entity':
             self.stop_command(command)
 
+    def is_empty(self):
+        return not self.entity_stack
+
     def get_entity_details(self, command):
         key = str(command.data)
         details = self.entity_map.get(key)
@@ -59,7 +62,7 @@ class EntityState:
         element_stack = [stack_start]
         new_element = stack_start
 
-        if len(self.entity_stack) == 0:
+        if self.is_empty():
             DOM.append_child(root_element, style_node)
         else:
             for entity_details in self.entity_stack:

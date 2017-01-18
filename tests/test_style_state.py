@@ -31,12 +31,12 @@ class TestStyleState(unittest.TestCase):
         self.style_state.apply(Command('stop_inline_style', 0, 'ITALIC'))
         self.assertEqual(self.style_state.styles, [])
 
-    def test_is_unstyled_default(self):
-        self.assertEqual(self.style_state.is_unstyled(), True)
+    def test_is_empty_default(self):
+        self.assertEqual(self.style_state.is_empty(), True)
 
-    def test_is_unstyled_styled(self):
+    def test_is_empty_styled(self):
         self.style_state.apply(Command('start_inline_style', 0, 'ITALIC'))
-        self.assertEqual(self.style_state.is_unstyled(), False)
+        self.assertEqual(self.style_state.is_empty(), False)
 
     def test_get_style_value_empty(self):
         self.assertEqual(self.style_state.get_style_value(), '')
