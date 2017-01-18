@@ -21,8 +21,7 @@ def get_decorations(decorators, text):
     return decorations
 
 
-def apply_decorators(decorators, text, block=None):
-    block_type = block.get('type') if block else None
+def apply_decorators(decorators, text, block_type=None):
     decorations = get_decorations(decorators, text)
 
     pointer = 0
