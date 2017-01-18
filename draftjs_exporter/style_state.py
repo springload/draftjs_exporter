@@ -57,11 +57,11 @@ class StyleState:
 
         return ''.join(sorted(rules))
 
-    def create_node(self, text, block=None, entity_stack=None):
+    def create_node(self, text, block_type=None, entity_stack=None):
         if entity_stack:
             text_children = [DOM.create_text_node(text)]
         else:
-            text_children = apply_decorators(self.composite_decorators, text, block)
+            text_children = apply_decorators(self.composite_decorators, text, block_type)
 
         if self.is_unstyled():
             node = DOM.create_document_fragment()
