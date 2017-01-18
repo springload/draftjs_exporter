@@ -1,7 +1,9 @@
 from __future__ import absolute_import, unicode_literals
 
 from draftjs_exporter.command import Command
+from draftjs_exporter.composite_decorators import apply_decorators
 from draftjs_exporter.defaults import BLOCK_MAP, STYLE_MAP
+from draftjs_exporter.dom import DOM
 from draftjs_exporter.entity_state import EntityState
 from draftjs_exporter.style_state import StyleState
 from draftjs_exporter.wrapper_state import WrapperState
@@ -26,7 +28,7 @@ class HTML:
         Starts the export process on a given piece of content state.
         """
         self.wrapper_state = WrapperState(self.block_map)
-        self.style_state = StyleState(self.style_map, self.composite_decorators)
+        self.style_state = StyleState(self.style_map)
         entity_map = content_state.get('entityMap', {})
 
         for block in content_state.get('blocks', []):
@@ -45,8 +47,16 @@ class HTML:
                 entity_state.apply(command)
                 self.style_state.apply(command)
 
-            style_node = self.style_state.create_node(text, block.get('type', None), entity_state.entity_stack)
-            entity_state.render_entitities(element, style_node)
+            if entity_state.entity_stack:
+                decorated_node = DOM.create_text_node(text)
+            else:
+                decorated_node = DOM.create_document_fragment()
+
+                for decorated_child in apply_decorators(self.composite_decorators, text, block.get('type', None)):
+                    DOM.append_child(decorated_node, decorated_child)
+
+            styled_node = self.style_state.render_styles(decorated_node)
+            entity_state.render_entitities(element, styled_node)
 
     def build_command_groups(self, block):
         """

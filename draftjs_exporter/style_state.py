@@ -2,7 +2,6 @@ from __future__ import absolute_import, unicode_literals
 
 import re
 
-from draftjs_exporter.composite_decorators import apply_decorators
 from draftjs_exporter.dom import DOM
 
 # TODO Extract to utils
@@ -23,10 +22,9 @@ class StyleState:
     Receives inline_style commands, and generates the element's `style`
     attribute from those.
     """
-    def __init__(self, style_map, composite_decorators=None):
+    def __init__(self, style_map):
         self.styles = []
         self.style_map = style_map
-        self.composite_decorators = composite_decorators or []
 
     def apply(self, command):
         if command.name == 'start_inline_style':
@@ -57,16 +55,9 @@ class StyleState:
 
         return ''.join(sorted(rules))
 
-    def create_node(self, text, block_type=None, entity_stack=None):
-        if entity_stack:
-            text_children = [DOM.create_text_node(text)]
-        else:
-            text_children = apply_decorators(self.composite_decorators, text, block_type)
-
+    def render_styles(self, text_node):
         if self.is_unstyled():
-            node = DOM.create_document_fragment()
-            for child in text_children:
-                DOM.append_child(node, child)
+            node = text_node
         else:
             style = self.get_style_value()
             tags = self.get_style_tags()
@@ -83,7 +74,6 @@ class StyleState:
             if style:
                 DOM.set_attribute(child, 'style', style)
 
-            for text_child in text_children:
-                DOM.append_child(child, text_child)
+            DOM.append_child(child, text_node)
 
         return node
