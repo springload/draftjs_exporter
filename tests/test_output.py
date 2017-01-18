@@ -7,7 +7,7 @@ from draftjs_exporter.constants import BLOCK_TYPES, ENTITY_TYPES, INLINE_STYLES
 from draftjs_exporter.defaults import BLOCK_MAP
 from draftjs_exporter.entity_state import EntityException
 from draftjs_exporter.html import HTML
-from tests.test_composite_decorator import LineBreakDecorator
+from tests.test_composite_decorators import BR
 from tests.test_entities import HR, Link
 
 config = {
@@ -16,7 +16,7 @@ config = {
         ENTITY_TYPES.HORIZONTAL_RULE: HR(),
     },
     'composite_decorators': [
-        LineBreakDecorator(),
+        BR(),
     ],
     'block_map': dict(BLOCK_MAP, **{
         BLOCK_TYPES.UNORDERED_LIST_ITEM: {

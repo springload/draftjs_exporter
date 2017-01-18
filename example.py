@@ -37,7 +37,7 @@ class Link:
         return DOM.create_element('a', {'href': href}, props['children'])
 
 
-class LineBreakDecorator:
+class BR:
     """
     Replace line breaks (\n) with br tags.
     """
@@ -50,7 +50,7 @@ class LineBreakDecorator:
         return DOM.create_element('br')
 
 
-class URLDecorator:
+class URL:
     """
     Replace plain urls with actual hyperlinks.
     """
@@ -76,7 +76,7 @@ class URLDecorator:
         return DOM.create_element('a', props, text)
 
 
-class HashTagDecorator:
+class Hashtag:
     """
     Wrap hash tags in spans with specific class.
     """
@@ -97,9 +97,9 @@ config = {
         ENTITY_TYPES.HORIZONTAL_RULE: HR(),
     },
     'composite_decorators': [
-        LineBreakDecorator(),
-        URLDecorator(),
-        HashTagDecorator(),
+        BR(),
+        URL(),
+        Hashtag(),
     ],
     # Extend/override the default block map.
     'block_map': dict(BLOCK_MAP, **{

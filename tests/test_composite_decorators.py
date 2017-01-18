@@ -11,7 +11,7 @@ from draftjs_exporter.html import HTML
 from .test_entities import Link
 
 
-class URLDecorator:
+class URL:
     """
     Replace plain urls with actual hyperlinks.
     """
@@ -37,7 +37,7 @@ class URLDecorator:
         return DOM.create_element('a', props, text)
 
 
-class HashTagDecorator:
+class Hashtag:
     """
     Wrap hash tags in spans with specific class.
     """
@@ -54,7 +54,7 @@ class HashTagDecorator:
         )
 
 
-class LineBreakDecorator:
+class BR:
     """
     Wrap hash tags in spans with specific class.
     """
@@ -73,8 +73,8 @@ config = {
         'LINK': Link()
     },
     'composite_decorators': [
-        URLDecorator(),
-        HashTagDecorator()
+        URL(),
+        Hashtag()
     ],
     'block_map': {
         BLOCK_TYPES.UNSTYLED: {'element': 'div'},
@@ -87,7 +87,7 @@ config = {
 }
 
 
-class TestCompositeDecorator(unittest.TestCase):
+class TestCompositeDecorators(unittest.TestCase):
 
     def setUp(self):
         self.exporter = HTML(config)
