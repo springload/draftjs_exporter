@@ -2,8 +2,8 @@ from __future__ import absolute_import, unicode_literals
 
 import re
 
-from draftjs_exporter.dom import DOM
 from draftjs_exporter.composite_decorator import get_decorations
+from draftjs_exporter.dom import DOM
 
 # TODO Extract to utils
 # https://gist.github.com/yahyaKacem/8170675

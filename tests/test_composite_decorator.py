@@ -54,6 +54,20 @@ class HashTagDecorator:
         )
 
 
+class LineBreakDecorator:
+    """
+    Wrap hash tags in spans with specific class.
+    """
+    SEARCH_RE = re.compile(r'\n')
+
+    def replace(self, match, block_type):
+
+        if block_type == BLOCK_TYPES.CODE:
+            return match.group(0)
+
+        return DOM.create_element('br')
+
+
 config = {
     'entity_decorators': {
         'LINK': Link()
