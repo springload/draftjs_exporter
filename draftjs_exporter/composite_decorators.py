@@ -4,9 +4,7 @@ from operator import itemgetter
 from draftjs_exporter.dom import DOM
 
 
-def get_decorations(decorators, text, block=None):
-
-    block_type = block.get('type') if block else None
+def get_decorations(decorators, text):
     occupied = {}
     decorations = []
 
@@ -19,6 +17,14 @@ def get_decorations(decorators, text, block=None):
                 decorations.append((begin, end, match, deco))
 
     decorations.sort(key=itemgetter(0))
+
+    return decorations
+
+
+def apply_decorators(decorators, text, block=None):
+    block_type = block.get('type') if block else None
+    decorations = get_decorations(decorators, text)
+
     pointer = 0
     for begin, end, match, deco in decorations:
         if pointer < begin:

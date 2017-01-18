@@ -2,7 +2,7 @@ from __future__ import absolute_import, unicode_literals
 
 import re
 
-from draftjs_exporter.composite_decorators import get_decorations
+from draftjs_exporter.composite_decorators import apply_decorators
 from draftjs_exporter.dom import DOM
 
 # TODO Extract to utils
@@ -61,13 +61,14 @@ class StyleState:
         if entity_stack:
             text_children = [DOM.create_text_node(text)]
         else:
-            text_children = get_decorations(self.composite_decorators, text, block)
+            text_children = apply_decorators(self.composite_decorators, text, block)
 
         if self.is_unstyled():
             node = DOM.create_document_fragment()
             for child in text_children:
                 DOM.append_child(node, child)
         else:
+            style = self.get_style_value()
             tags = self.get_style_tags()
             node = DOM.create_element(tags[0])
             child = node
@@ -79,9 +80,9 @@ class StyleState:
                 DOM.append_child(child, new_child)
                 child = new_child
 
-            style_value = self.get_style_value()
-            if style_value:
-                DOM.set_attribute(child, 'style', style_value)
+            if style:
+                DOM.set_attribute(child, 'style', style)
+
             for text_child in text_children:
                 DOM.append_child(child, text_child)
 
