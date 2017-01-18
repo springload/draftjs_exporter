@@ -37,6 +37,19 @@ class Link:
         return DOM.create_element('a', {'href': href}, props['children'])
 
 
+class LineBreakDecorator:
+    """
+    Replace line breaks (\n) with br tags.
+    """
+    SEARCH_RE = re.compile(r'\n')
+
+    def replace(self, match, block_type):
+        if block_type == BLOCK_TYPES.CODE:
+            return match.group(0)
+
+        return DOM.create_element('br')
+
+
 class URLDecorator:
     """
     Replace plain urls with actual hyperlinks.
@@ -84,6 +97,7 @@ config = {
         ENTITY_TYPES.HORIZONTAL_RULE: HR(),
     },
     'composite_decorators': [
+        LineBreakDecorator(),
         URLDecorator(),
         HashTagDecorator(),
     ],
@@ -232,8 +246,8 @@ content_state = {
             'inlineStyleRanges': [],
             'entityRanges': [
                 {
-                    'offset': 0,
-                    'length': 71,
+                    'offset': 53,
+                    'length': 11,
                     'key': 1
                 }
             ]

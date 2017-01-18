@@ -49,17 +49,6 @@ class TestStyleState(unittest.TestCase):
         self.style_state.apply(Command('start_inline_style', 0, 'HIGHLIGHT'))
         self.assertEqual(self.style_state.get_style_value(), 'text-decoration: underline;')
 
-    def test_replace_linebreaks_no_break(self):
-        self.assertEqual(DOM.get_tag_name(self.style_state.replace_linebreaks('Test text')), 'textnode')
-
-    def test_replace_linebreaks_one_break(self):
-        self.assertEqual(DOM.get_tag_name(self.style_state.replace_linebreaks('Test\ntext')), 'fragment')
-        self.assertEqual(DOM.get_tag_name(DOM.get_children(self.style_state.replace_linebreaks('Test\ntext'))[1]), 'br')
-
-    def test_replace_linebreaks_multiple_breaks(self):
-        self.assertEqual(DOM.get_tag_name(self.style_state.replace_linebreaks('\nTest\nte\nxt\n')), 'fragment')
-        self.assertEqual(DOM.render(self.style_state.replace_linebreaks('\nTest\nte\nxt\n')), '<br/>Test<br/>te<br/>xt<br/>')
-
     def test_create_node_unstyled(self):
         self.assertEqual(DOM.get_tag_name(self.style_state.create_node('Test text')), 'fragment')
         self.assertEqual(DOM.get_text_content(self.style_state.create_node('Test text')), 'Test text')

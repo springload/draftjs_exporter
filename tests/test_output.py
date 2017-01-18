@@ -7,6 +7,7 @@ from draftjs_exporter.constants import BLOCK_TYPES, ENTITY_TYPES, INLINE_STYLES
 from draftjs_exporter.defaults import BLOCK_MAP
 from draftjs_exporter.entity_state import EntityException
 from draftjs_exporter.html import HTML
+from tests.test_composite_decorator import LineBreakDecorator
 from tests.test_entities import HR, Link
 
 config = {
@@ -14,6 +15,9 @@ config = {
         ENTITY_TYPES.LINK: Link(),
         ENTITY_TYPES.HORIZONTAL_RULE: HR(),
     },
+    'composite_decorators': [
+        LineBreakDecorator(),
+    ],
     'block_map': dict(BLOCK_MAP, **{
         BLOCK_TYPES.UNORDERED_LIST_ITEM: {
             'element': 'li',
@@ -887,7 +891,7 @@ class TestOutput(unittest.TestCase):
         }), '<p><em>some</em> paragraph text</p>')
 
     def test_render_with_line_breaks(self):
-        self.assertEqual(HTML().render({
+        self.assertEqual(self.exporter.render({
             'entityMap': {},
             'blocks': [
                 {
@@ -908,7 +912,7 @@ class TestOutput(unittest.TestCase):
         }), '<p><em>some</em> paragraph text<br/>split in half</p>')
 
     def test_render_with_many_line_breaks(self):
-        self.assertEqual(HTML().render({
+        self.assertEqual(self.exporter.render({
             'entityMap': {},
             'blocks': [
                 {
