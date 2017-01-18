@@ -32,7 +32,7 @@ class StyleState:
         elif command.name == 'stop_inline_style':
             self.styles.remove(command.data)
 
-    def is_unstyled(self):
+    def is_empty(self):
         return not self.styles
 
     def get_style_tags(self):
@@ -56,7 +56,7 @@ class StyleState:
         return ''.join(sorted(rules))
 
     def render_styles(self, text_node):
-        if self.is_unstyled():
+        if self.is_empty():
             node = text_node
         else:
             style = self.get_style_value()

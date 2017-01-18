@@ -33,3 +33,12 @@ def apply_decorators(decorators, text, block_type):
 
     if pointer < len(text):
         yield DOM.create_text_node(text[pointer:])
+
+
+def render_decorators(decorators, text, block_type):
+    decorated_node = DOM.create_document_fragment()
+
+    for decorated_child in apply_decorators(decorators, text, block_type):
+        DOM.append_child(decorated_node, decorated_child)
+
+    return decorated_node
