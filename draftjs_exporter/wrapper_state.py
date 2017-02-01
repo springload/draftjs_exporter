@@ -87,7 +87,12 @@ class WrapperState:
     def element_for(self, block):
         type_ = block.get('type', 'unstyled')
         depth = block.get('depth', 0)
+        block_data = block.get('data')
         options = Options.for_block(self.block_map, type_)
+
+        if block_data:
+            props = dict(options.props)
+            props['blockData'] = block_data
 
         # Make an element from the options specified in the block map.
         elt = DOM.create_element(options.element, options.props)
