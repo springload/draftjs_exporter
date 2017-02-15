@@ -47,7 +47,7 @@ class HTML:
                 entity_state.apply(command)
                 self.style_state.apply(command)
 
-            # Entities have priority over decorators.
+            # Decorators are not rendered inside entities.
             if entity_state.is_empty() and len(self.composite_decorators) > 0:
                 decorated_node = render_decorators(self.composite_decorators, text, block.get('type', None))
             else:

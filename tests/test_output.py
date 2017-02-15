@@ -7,7 +7,7 @@ from draftjs_exporter.constants import BLOCK_TYPES, ENTITY_TYPES, INLINE_STYLES
 from draftjs_exporter.defaults import BLOCK_MAP
 from draftjs_exporter.entity_state import EntityException
 from draftjs_exporter.html import HTML
-from tests.test_composite_decorators import BR
+from tests.test_composite_decorators import BR, Hashtag, Linkify
 from tests.test_entities import HR, Link
 
 config = {
@@ -16,6 +16,8 @@ config = {
         ENTITY_TYPES.HORIZONTAL_RULE: HR(),
     },
     'composite_decorators': [
+        Linkify(),
+        Hashtag(),
         BR(),
     ],
     'block_map': dict(BLOCK_MAP, **{
@@ -931,3 +933,69 @@ class TestOutput(unittest.TestCase):
                 }
             ]
         }), '<p><br/><em>some</em> paragraph text<br/>split in half<br/></p>')
+
+    def test_render_with_entity_and_decorators(self):
+        """
+        The composite decorator should never render text in any entities.
+        """
+        self.assertEqual(self.exporter.render({
+            'entityMap': {
+                '1': {
+                    'type': 'LINK',
+                    'mutability': 'MUTABLE',
+                    'data': {
+                        'url': 'http://amazon.us'
+                    }
+                }
+            },
+            'blocks': [
+                {
+                    'key': '5s7g9',
+                    'text': 'search http://a.us or https://yahoo.com or www.google.com for #github and #facebook',
+                    'type': 'unstyled',
+                    'depth': 0,
+                    'inlineStyleRanges': [],
+                    'entityRanges': [
+                        {
+                            'offset': 7,
+                            'length': 11,
+                            'key': 1
+                        }
+                    ],
+                },
+                {
+                    'key': '34a12',
+                    'text': '#check www.example.com',
+                    'type': 'code-block',
+                    'inlineStyleRanges': [],
+                },
+            ]
+        }),
+            '<p>search <a href="http://amazon.us">http://a.us</a> or '
+            '<a href="https://yahoo.com">https://yahoo.com</a> or '
+            '<a href="http://www.google.com">www.google.com</a> for '
+            '<span class="hashtag">#github</span> and '
+            '<span class="hashtag">#facebook</span></p>'
+            '<pre>#check www.example.com</pre>')
+
+    def test_render_with_multiple_decorators(self):
+        """
+        When multiple decorators match the same part of text,
+        only the first one should perform the replacement.
+        """
+        self.assertEqual(self.exporter.render({
+            'entityMap': {},
+            'blocks': [
+                {
+                    'key': '5s7g9',
+                    'text': 'search http://www.google.com#world for the #world',
+                    'type': 'unstyled',
+                    'depth': 0,
+                    'inlineStyleRanges': [],
+                    'entityRanges': [],
+                },
+            ]
+        }),
+            '<p>search <a href="http://www.google.com#world">'
+            'http://www.google.com#world</a> for the '
+            '<span class="hashtag">#world</span></p>')

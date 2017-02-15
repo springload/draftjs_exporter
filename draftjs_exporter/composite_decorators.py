@@ -25,10 +25,15 @@ def apply_decorators(decorators, text, block_type):
     decorations = get_decorations(decorators, text)
 
     pointer = 0
-    for begin, end, match, deco in decorations:
+    for begin, end, match, decorator in decorations:
         if pointer < begin:
             yield DOM.create_text_node(text[pointer:begin])
-        yield deco.replace(match, block_type)
+
+        yield decorator.render({
+            'children': match.group(0),
+            'match': match,
+            'block_type': block_type,
+        })
         pointer = end
 
     if pointer < len(text):
