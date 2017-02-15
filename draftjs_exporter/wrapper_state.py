@@ -130,8 +130,7 @@ class WrapperState:
         # Make an element from the options specified in the block map.
         elt = DOM.create_element(options.element[0], options.element[1])
 
-        parent = self.parent_for(options, depth)
-        DOM.append_child(parent, elt)
+        parent = self.parent_for(options, depth, elt)
 
         # At level 0, the element is added to the document.
         if depth == 0:
@@ -139,14 +138,16 @@ class WrapperState:
 
         return elt
 
-    def parent_for(self, options, depth):
+    def parent_for(self, options, depth, elt):
         if options.wrapper:
             parent = self.get_wrapper_elt(options, depth)
+            DOM.append_child(parent, elt)
         else:
             # Reset the stack if there is no wrapper.
-            self.stack.slice(-1)
-            self.stack.append(Wrapper(-1, None))
-            parent = self.stack.head().elt
+            if self.stack.length() > 0 and self.stack.head().depth != -1 and self.stack.head().options is not None:
+                self.stack.slice(-1)
+                self.stack.append(Wrapper(-1, None))
+            parent = elt
 
         return parent
 
