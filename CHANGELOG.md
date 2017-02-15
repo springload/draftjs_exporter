@@ -8,6 +8,8 @@ This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html
 ### Added
 
 - Add support for decorators thanks to @su27 (#16, #17).
+- Add support for configurable decorators and entities.
+- Add support for decorators and entities in function form.
 
 ## [[v0.6.2]](https://github.com/springload/draftjs_exporter/releases/tag/v0.6.2) - 2017-01-18
 
