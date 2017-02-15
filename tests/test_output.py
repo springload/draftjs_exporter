@@ -12,13 +12,13 @@ from tests.test_entities import HR, Link
 
 config = {
     'entity_decorators': {
-        ENTITY_TYPES.LINK: Link(),
-        ENTITY_TYPES.HORIZONTAL_RULE: HR(),
+        ENTITY_TYPES.LINK: Link,
+        ENTITY_TYPES.HORIZONTAL_RULE: HR,
     },
     'composite_decorators': [
-        Linkify(),
-        Hashtag(),
-        BR(),
+        Linkify,
+        Hashtag,
+        BR,
     ],
     'block_map': dict(BLOCK_MAP, **{
         BLOCK_TYPES.UNORDERED_LIST_ITEM: {
@@ -849,7 +849,6 @@ class TestOutput(unittest.TestCase):
                     'element': 'li',
                     'wrapper': ['ul', {'className': 'steps'}],
                 },
-                BLOCK_TYPES.ATOMIC: {'element': 'span'},
             })
         }).render({
             'entityMap': {},
