@@ -39,9 +39,12 @@ class Image:
 
 
 class Icon:
+    def __init__(self, icon_class='icon'):
+        self.icon_class = icon_class
+
     def render(self, props):
         href = 'icon-%s' % props.get('name', '')
-        return DOM.create_element('svg', {'class': 'icon'}, DOM.create_element('use', {'xlink:href': href}))
+        return DOM.create_element('svg', {'class': self.icon_class}, DOM.create_element('use', {'xlink:href': href}))
 
 
 class Button:
@@ -73,13 +76,10 @@ class TestIcon(unittest.TestCase):
         self.assertIsInstance(Icon(), Icon)
 
     def test_render(self):
-        icon = DOM.create_element(Icon, {
-            'name': 'rocket',
-        })
-        self.assertEqual(DOM.get_tag_name(icon), 'svg')
-        self.assertEqual(DOM.get_text_content(icon), None)
-        self.assertEqual(DOM.get_class_list(icon), ['icon'])
-        self.assertEqual(DOM.render(icon), '<svg class="icon"><use xlink:href="icon-rocket"></use></svg>')
+        self.assertEqual(DOM.render(DOM.create_element(Icon, {'name': 'rocket'})), '<svg class="icon"><use xlink:href="icon-rocket"></use></svg>')
+
+    def test_render_configured(self):
+        self.assertEqual(DOM.render(DOM.create_element(Icon(icon_class='i'), {'name': 'rocket'})), '<svg class="i"><use xlink:href="icon-rocket"></use></svg>')
 
 
 class TestImage(unittest.TestCase):

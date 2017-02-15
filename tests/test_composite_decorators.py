@@ -17,6 +17,9 @@ class Linkify:
     """
     SEARCH_RE = re.compile(r'(http://|https://|www\.)([a-zA-Z0-9\.\-%/\?&_=\+#:~!,\'\*\^$]+)')
 
+    def __init__(self, use_new_window=False):
+        self.use_new_window = use_new_window
+
     def render(self, props):
         match = props.get('match')
         protocol = match.group(1)
@@ -29,6 +32,10 @@ class Linkify:
         link_props = {
             'href': href,
         }
+
+        if self.use_new_window:
+            link_props['target'] = '_blank'
+            link_props['rel'] = 'noreferrer noopener'
 
         if href.startswith('www'):
             link_props['href'] = 'http://' + href
@@ -89,11 +96,20 @@ class TestLinkify(unittest.TestCase):
     def test_render_code_block(self):
         match = next(Linkify.SEARCH_RE.finditer('test https://www.example.com'))
 
-        self.assertEqual(DOM.render(DOM.create_element(Linkify, {
+        self.assertEqual(DOM.create_element(Linkify, {
             'block_type': BLOCK_TYPES.CODE,
             'match': match,
             'children': match.group(0),
-        })), match.group(0))
+        }), match.group(0))
+
+    def test_render_new_window(self):
+        match = next(Linkify.SEARCH_RE.finditer('test https://www.example.com'))
+
+        self.assertEqual(DOM.render(DOM.create_element(Linkify(use_new_window=True), {
+            'block_type': BLOCK_TYPES.UNSTYLED,
+            'match': match,
+            'children': match.group(0),
+        })), '<a href="https://www.example.com" rel="noreferrer noopener" target="_blank">https://www.example.com</a>')
 
 
 class TestHashtag(unittest.TestCase):
