@@ -1,6 +1,6 @@
+
 from __future__ import absolute_import, unicode_literals
 
-import cgi
 import re
 import unittest
 
@@ -16,31 +16,23 @@ class Linkify:
     """
     SEARCH_RE = re.compile(r'(http://|https://|www\.)([a-zA-Z0-9\.\-%/\?&_=\+#:~!,\'\*\^$]+)')
 
-    def __init__(self, new_window=False):
-        self.new_window = new_window
-
     def render(self, props):
         match = props.get('match')
-        block_type = props.get('block_type')
         protocol = match.group(1)
         url = match.group(2)
         href = protocol + url
 
-        if block_type == BLOCK_TYPES.CODE:
+        if props['block_type'] == BLOCK_TYPES.CODE:
             return href
 
-        text = cgi.escape(href)
-        if href.startswith('www'):
-            href = 'http://' + href
-
-        props = {
+        link_props = {
             'href': href,
         }
 
-        if self.new_window:
-            props.update(target="_blank", rel="noreferrer noopener")
+        if href.startswith('www'):
+            link_props['href'] = 'http://' + href
 
-        return DOM.create_element('a', props, text)
+        return DOM.create_element('a', link_props, href)
 
 
 class Hashtag:
@@ -70,13 +62,71 @@ class BR:
 
         return DOM.create_element('br')
 
-# class TestLinkify(unittest.TestCase):
-#     def test_init(self):
-#         self.assertIsInstance(Linkify(), Linkify)
 
-#     def test_render(self):
-#         self.assertEqual(DOM.get_tag_name(DOM.create_element(Linkify, {})), 'fragment')
-#         self.assertEqual(DOM.get_text_content(DOM.create_element(Linkify, {})), None)
+class TestLinkify(unittest.TestCase):
+    def test_init(self):
+        self.assertIsInstance(Linkify(), Linkify)
+
+    def test_render(self):
+        match = next(Linkify.SEARCH_RE.finditer('test https://www.example.com'))
+
+        self.assertEqual(DOM.render(DOM.create_element(Linkify, {
+            'block_type': BLOCK_TYPES.UNSTYLED,
+            'match': match,
+            'children': match.group(0),
+        })), '<a href="https://www.example.com">https://www.example.com</a>')
+
+    def test_render_www(self):
+        match = next(Linkify.SEARCH_RE.finditer('test www.example.com'))
+
+        self.assertEqual(DOM.render(DOM.create_element(Linkify, {
+            'block_type': BLOCK_TYPES.UNSTYLED,
+            'match': match,
+            'children': match.group(0),
+        })), '<a href="http://www.example.com">www.example.com</a>')
+
+    def test_render_code_block(self):
+        match = next(Linkify.SEARCH_RE.finditer('test https://www.example.com'))
+
+        self.assertEqual(DOM.render(DOM.create_element(Linkify, {
+            'block_type': BLOCK_TYPES.CODE,
+            'match': match,
+            'children': match.group(0),
+        })), match.group(0))
+
+
+class TestHashtag(unittest.TestCase):
+    def test_init(self):
+        self.assertIsInstance(Hashtag(), Hashtag)
+
+    def test_render(self):
+        self.assertEqual(DOM.render(DOM.create_element(Hashtag, {
+            'block_type': BLOCK_TYPES.UNSTYLED,
+            'children': '#hashtagtest',
+        })), '<span class="hashtag">#hashtagtest</span>')
+
+    def test_render_code_block(self):
+        self.assertEqual(DOM.render(DOM.create_element(Hashtag, {
+            'block_type': BLOCK_TYPES.CODE,
+            'children': '#hashtagtest',
+        })), '#hashtagtest')
+
+
+class TestBR(unittest.TestCase):
+    def test_init(self):
+        self.assertIsInstance(BR(), BR)
+
+    def test_render(self):
+        self.assertEqual(DOM.render(DOM.create_element(BR, {
+            'block_type': BLOCK_TYPES.UNSTYLED,
+            'children': '\n',
+        })), '<br/>')
+
+    def test_render_code_block(self):
+        self.assertEqual(DOM.create_element(BR, {
+            'block_type': BLOCK_TYPES.CODE,
+            'children': '\n',
+        }), '\n')
 
 
 class TestCompositeDecorators(unittest.TestCase):
