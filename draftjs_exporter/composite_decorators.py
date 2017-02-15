@@ -41,9 +41,13 @@ def apply_decorators(decorators, text, block_type):
 
 
 def render_decorators(decorators, text, block_type):
-    decorated_node = DOM.create_document_fragment()
+    decorated_children = list(apply_decorators(decorators, text, block_type))
 
-    for decorated_child in apply_decorators(decorators, text, block_type):
-        DOM.append_child(decorated_node, decorated_child)
+    if len(decorated_children) == 1:
+        decorated_node = decorated_children[0]
+    else:
+        decorated_node = DOM.create_document_fragment()
+        for decorated_child in decorated_children:
+            DOM.append_child(decorated_node, decorated_child)
 
     return decorated_node
