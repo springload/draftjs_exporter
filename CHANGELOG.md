@@ -11,6 +11,10 @@ This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html
 - Add support for configurable decorators and entities.
 - Add support for decorators and entities in function form.
 
+### Changed
+
+- Stop lowercasing HTML attributes. `*ngFor` will now be exported as `*ngFor`.
+
 ## [[v0.6.2]](https://github.com/springload/draftjs_exporter/releases/tag/v0.6.2) - 2017-01-18
 
 ### Added
