@@ -8,13 +8,13 @@ def get_decorations(decorators, text):
     occupied = {}
     decorations = []
 
-    for deco in decorators:
-        for match in deco.SEARCH_RE.finditer(text):
+    for decorator in decorators:
+        for match in decorator.SEARCH_RE.finditer(text):
             begin, end = match.span()
             if not any(occupied.get(i) for i in range(begin, end)):
                 for i in range(begin, end):
                     occupied[i] = 1
-                decorations.append((begin, end, match, deco))
+                decorations.append((begin, end, match, decorator))
 
     decorations.sort(key=itemgetter(0))
 
