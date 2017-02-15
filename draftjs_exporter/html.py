@@ -8,6 +8,8 @@ from draftjs_exporter.entity_state import EntityState
 from draftjs_exporter.style_state import StyleState
 from draftjs_exporter.wrapper_state import WrapperState
 
+from itertools import groupby
+
 
 class HTML:
     """
@@ -63,20 +65,17 @@ class HTML:
         """
         text = block.get('text')
 
-        commands = self.build_commands(block)
-        # Tried using itertools.tee but for some reason that failed. Oh well.
-        grouped = Command.grouped_by_index(commands)
-        listed = list(Command.grouped_by_index(commands))
+        commands = sorted(self.build_commands(block))
+        grouped = groupby(commands, Command.key)
+        listed = list(groupby(commands, Command.key))
         sliced = []
 
         i = 0
         for start_index, commands in grouped:
-            i += 1
-
-            if i < len(listed):
-                next_group = listed[i]
-                stop_index = next_group[0]
+            if i < len(listed) - 1:
+                stop_index = listed[i + 1][0]
                 sliced.append((text[start_index:stop_index], list(commands)))
+            i += 1
 
         return sliced
 
