@@ -11,9 +11,8 @@ from draftjs_exporter.dom import DOM
 from draftjs_exporter.html import HTML
 
 
-class HR:
-    def render(self, props):
-        return DOM.create_element('hr')
+def HR(props):
+    return DOM.create_element('hr')
 
 
 class Image:
@@ -29,11 +28,20 @@ class Image:
 
 
 class Link:
+    def __init__(self, use_new_window=False):
+        self.use_new_window = use_new_window
+
     def render(self, props):
         data = props.get('data', {})
-        href = data['url']
+        link_props = {
+            'href': data['url'],
+        }
 
-        return DOM.create_element('a', {'href': href}, props['children'])
+        if self.use_new_window:
+            link_props['target'] = '_blank'
+            link_props['rel'] = 'noreferrer noopener'
+
+        return DOM.create_element('a', link_props, props['children'])
 
 
 class BR:
@@ -66,13 +74,13 @@ class Hashtag:
 
 config = {
     'entity_decorators': {
-        ENTITY_TYPES.LINK: Link(),
-        ENTITY_TYPES.IMAGE: Image(),
-        ENTITY_TYPES.HORIZONTAL_RULE: HR(),
+        ENTITY_TYPES.LINK: Link(use_new_window=True),
+        ENTITY_TYPES.IMAGE: Image,
+        ENTITY_TYPES.HORIZONTAL_RULE: HR,
     },
     'composite_decorators': [
-        BR(),
-        Hashtag(),
+        BR,
+        Hashtag,
     ],
     # Extend/override the default block map.
     'block_map': dict(BLOCK_MAP, **{

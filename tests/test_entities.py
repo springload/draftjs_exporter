@@ -5,14 +5,12 @@ import unittest
 from draftjs_exporter.dom import DOM
 
 
-class Null:
-    def render(self, props):
-        return DOM.create_element()
+def Null(props):
+    return DOM.create_element()
 
 
-class HR:
-    def render(self, props):
-        return DOM.create_element('hr')
+def HR(props):
+    return DOM.create_element('hr')
 
 
 class Link:
@@ -63,18 +61,12 @@ class Button:
 
 
 class TestNull(unittest.TestCase):
-    def test_init(self):
-        self.assertIsInstance(Null(), Null)
-
     def test_render(self):
         self.assertEqual(DOM.get_tag_name(DOM.create_element(Null, {})), 'fragment')
         self.assertEqual(DOM.get_text_content(DOM.create_element(Null, {})), None)
 
 
 class TestIcon(unittest.TestCase):
-    def test_init(self):
-        self.assertIsInstance(Icon(), Icon)
-
     def test_render(self):
         self.assertEqual(DOM.render(DOM.create_element(Icon, {'name': 'rocket'})), '<svg class="icon"><use xlink:href="icon-rocket"></use></svg>')
 
@@ -83,9 +75,6 @@ class TestIcon(unittest.TestCase):
 
 
 class TestImage(unittest.TestCase):
-    def test_init(self):
-        self.assertIsInstance(Image(), Image)
-
     def test_render(self):
         image = DOM.create_element(Image, {
             'data': {
@@ -100,9 +89,6 @@ class TestImage(unittest.TestCase):
 
 
 class TestLink(unittest.TestCase):
-    def test_init(self):
-        self.assertIsInstance(Link(), Link)
-
     def test_render(self):
         link = DOM.create_element(Link, {
             'data': {
@@ -116,9 +102,6 @@ class TestLink(unittest.TestCase):
 
 
 class TestButton(unittest.TestCase):
-    def test_init(self):
-        self.assertIsInstance(Button(), Button)
-
     def test_render_with_icon(self):
         button = DOM.create_element(Button, {
             'data': {
