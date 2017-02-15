@@ -3,16 +3,22 @@
 > All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [[v0.7.0]](https://github.com/springload/draftjs_exporter/releases/tag/v0.7.0) - 2017-02-15
+
+### Added
+
+- Add support for decorators thanks to @su27 (#16, #17).
+
 ## [[v0.6.2]](https://github.com/springload/draftjs_exporter/releases/tag/v0.6.2) - 2017-01-18
 
 ### Added
 
-- Add profiling tooling thanks to [@su27](https://github.com/su27) [#31](https://github.com/springload/draftjs_exporter/issues/31).
-- Add more common entity types in constants (#34)
+- Add profiling tooling thanks to @su27 (#31).
+- Add more common entity types in constants (#34).
 
 ### Fixed
 
-- Stop mutating entity data when rendering entities (#36)
+- Stop mutating entity data when rendering entities (#36).
 
 ## [[v0.6.1]](https://github.com/springload/draftjs_exporter/releases/tag/v0.6.1) - 2016-12-21
 
