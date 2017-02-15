@@ -3,7 +3,9 @@
 from __future__ import absolute_import, unicode_literals
 
 import codecs
+import cProfile
 import re
+from pstats import Stats
 
 from draftjs_exporter.constants import BLOCK_TYPES, ENTITY_TYPES
 from draftjs_exporter.defaults import BLOCK_MAP, STYLE_MAP
@@ -332,11 +334,20 @@ content_state = {
     ]
 }
 
+pr = cProfile.Profile()
+pr.enable()
+
 markup = exporter.render(content_state)
+
+pr.disable()
+p = Stats(pr)
+
 pretty = DOM.pretty_print(markup)
 
 # Display in console.
 print(pretty)
+
+p.strip_dirs().sort_stats('cumulative').print_stats(0)
 
 # Output to a file
 with codecs.open('example.html', 'w', 'utf-8') as file:
