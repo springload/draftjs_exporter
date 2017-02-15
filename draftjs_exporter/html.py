@@ -71,11 +71,14 @@ class HTML:
 
         i = 0
         for start_index, commands in grouped:
-            next_group = listed[i + 1] if i + 1 < len(listed) else False
-            stop_index = next_group[0] if next_group else 0
-
-            sliced.append((text[start_index:stop_index], list(commands)))
             i += 1
+
+            if i < len(listed):
+                next_group = listed[i]
+                stop_index = next_group[0]
+                sliced.append((text[start_index:stop_index], list(commands)))
+            else:
+                sliced.append(('', list(commands)))
 
         return sliced
 
