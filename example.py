@@ -2,7 +2,6 @@
 
 from __future__ import absolute_import, unicode_literals
 
-import cgi
 import codecs
 import re
 
@@ -43,51 +42,26 @@ class BR:
     """
     SEARCH_RE = re.compile(r'\n')
 
-    def replace(self, match, block_type):
-        if block_type == BLOCK_TYPES.CODE:
-            return match.group(0)
+    def render(self, props):
+        # Do not process matches inside code blocks.
+        if props['block_type'] == BLOCK_TYPES.CODE:
+            return props['children']
 
         return DOM.create_element('br')
 
 
-class URL:
-    """
-    Replace plain urls with actual hyperlinks.
-    """
-    SEARCH_RE = re.compile(r'(http://|https://|www\.)([a-zA-Z0-9\.\-%/\?&_=\+#:~!,\'\*\^$]+)')
-
-    def __init__(self, new_window=False):
-        self.new_window = new_window
-
-    def replace(self, match, block_type):
-        protocol = match.group(1)
-        href = match.group(2)
-        href = protocol + href
-        if block_type == BLOCK_TYPES.CODE:
-            return href
-
-        text = cgi.escape(href)
-        if href.startswith("www"):
-            href = "http://" + href
-        props = {'href': href}
-        if self.new_window:
-            props.update(target="_blank")
-
-        return DOM.create_element('a', props, text)
-
-
 class Hashtag:
     """
-    Wrap hash tags in spans with specific class.
+    Wrap hashtags in spans with a specific class.
     """
-
     SEARCH_RE = re.compile(r'#\w+')
 
-    def replace(self, match, block_type):
-        if block_type == BLOCK_TYPES.CODE:
-            return match.group(0)
+    def render(self, props):
+        # Do not process matches inside code blocks.
+        if props['block_type'] == BLOCK_TYPES.CODE:
+            return props['children']
 
-        return DOM.create_element('em', {'class': 'hash_tag'}, match.group(0))
+        return DOM.create_element('span', {'class': 'hashtag'}, props['children'])
 
 
 config = {
@@ -98,7 +72,6 @@ config = {
     },
     'composite_decorators': [
         BR(),
-        URL(),
         Hashtag(),
     ],
     # Extend/override the default block map.
@@ -164,7 +137,7 @@ content_state = {
         },
         {
             'key': '5384u',
-            'text': 'Everyone 🍺 Springload applies the best #principles of UX to their work. (https://www.springload.co.nz/work/nz-festival/)',
+            'text': 'Everyone 🍺 Springload applies the best #principles of UX to their work.',
             'type': 'blockquote',
             'depth': 0,
             'inlineStyleRanges': [],
@@ -247,7 +220,7 @@ content_state = {
             'entityRanges': [
                 {
                     'offset': 53,
-                    'length': 11,
+                    'length': 12,
                     'key': 1
                 }
             ]
