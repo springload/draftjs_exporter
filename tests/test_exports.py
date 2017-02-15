@@ -9,6 +9,7 @@ from pstats import Stats
 from draftjs_exporter.constants import BLOCK_TYPES, ENTITY_TYPES, INLINE_STYLES
 from draftjs_exporter.defaults import BLOCK_MAP
 from draftjs_exporter.html import HTML
+from tests.test_composite_decorators import Hashtag, Linkify
 from tests.test_entities import Image, Link
 
 fixtures_path = os.path.join(os.path.dirname(__file__), 'test_exports.json')
@@ -16,9 +17,13 @@ fixtures = json.loads(open(fixtures_path, 'r').read())
 
 exporter = HTML({
     'entity_decorators': {
-        ENTITY_TYPES.LINK: Link(),
-        ENTITY_TYPES.IMAGE: Image(),
+        ENTITY_TYPES.LINK: Link,
+        ENTITY_TYPES.IMAGE: Image,
     },
+    'composite_decorators': [
+        Linkify,
+        Hashtag,
+    ],
     'block_map': dict(BLOCK_MAP, **{
         BLOCK_TYPES.UNORDERED_LIST_ITEM: {
             'element': 'li',
