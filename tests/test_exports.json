@@ -379,5 +379,37 @@
                 }
             ]
         }
+    },
+
+    {
+        "label": "HTML entities escaping",
+        "output": "<p><a href=\"http://www.example.com/?a=1&amp;b=2\">http://www.example.com/?a=1&amp;b=2</a></p>",
+        "content_state": {
+            "entityMap": {
+                "0": {
+                    "type": "LINK",
+                    "mutability": "MUTABLE",
+                    "data": {
+                        "url": "http://www.example.com/?a=1&b=2"
+                    }
+                }
+            },
+            "blocks": [
+                {
+                    "key": "8r91j",
+                    "text": "http://www.example.com/?a=1&b=2",
+                    "type": "unstyled",
+                    "depth": 0,
+                    "inlineStyleRanges": [],
+                    "entityRanges": [
+                        {
+                            "offset": 0,
+                            "length": 31,
+                            "key": 0
+                        }
+                    ]
+                }
+            ]
+        }
     }
 ]
