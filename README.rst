@@ -106,6 +106,7 @@ This project adheres to `Semantic Versioning`_, and measures performance and `co
 *  Convert line breaks to ``<br>`` elements.
 *  Define any attribute in the block map – custom class names for elements.
 *  React-like API to create custom entity decorators.
+*  React-like API to create composite decorators for text.
 *  Automatic conversion of entity data to HTML attributes (int & boolean to string, ``className`` to ``class``).
 *  Wrapped blocks (``<li>`` elements go inside ``<ul>``).
 *  Nested wrapped blocks (multiple list levels, arbitrary type and depth).
