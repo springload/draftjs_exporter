@@ -61,9 +61,11 @@ class DOM(object):
                 if prop is not None:
                     attributes[key] = prop
 
-            # "type" is either an entity with a render method, or a tag name.
+            # "type" is either a class to instantiate, or an object with a render method, or a tag name.
             if inspect.isclass(type_):
                 elt = type_().render(attributes)
+            elif callable(getattr(type_, 'render', None)):
+                elt = type_.render(attributes)
             else:
                 elt = DOM.create_tag(type_, attributes)
 

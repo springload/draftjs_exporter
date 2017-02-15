@@ -29,7 +29,7 @@ def apply_decorators(decorators, text, block_type):
         if pointer < begin:
             yield DOM.create_text_node(text[pointer:begin])
 
-        yield decorator.render({
+        yield DOM.create_element(decorator, {
             'children': match.group(0),
             'match': match,
             'block_type': block_type,
