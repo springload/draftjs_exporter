@@ -28,7 +28,6 @@ class HTML:
         Starts the export process on a given piece of content state.
         """
         self.wrapper_state = WrapperState(self.block_map)
-        self.style_state = StyleState(self.style_map)
         entity_map = content_state.get('entityMap', {})
 
         for block in content_state.get('blocks', []):
@@ -41,11 +40,12 @@ class HTML:
     def render_block(self, block, entity_map):
         element = self.wrapper_state.element_for(block)
         entity_state = EntityState(self.entity_decorators, entity_map)
+        style_state = StyleState(self.style_map)
 
         for (text, commands) in self.build_command_groups(block):
             for command in commands:
                 entity_state.apply(command)
-                self.style_state.apply(command)
+                style_state.apply(command)
 
             # Decorators are not rendered inside entities.
             if entity_state.is_empty() and len(self.composite_decorators) > 0:
@@ -53,7 +53,7 @@ class HTML:
             else:
                 decorated_node = DOM.create_text_node(text)
 
-            styled_node = self.style_state.render_styles(decorated_node)
+            styled_node = style_state.render_styles(decorated_node)
             entity_state.render_entitities(element, styled_node)
 
     def build_command_groups(self, block):
