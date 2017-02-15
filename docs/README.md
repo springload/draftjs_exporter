@@ -7,20 +7,21 @@ draftjs_exporter documentation
 
 > Full list on https://github.com/nikgraf/awesome-draft-js
 
-* [BackDraft.js](https://github.com/evanc/backdraft-js)
-* [Draft.js Exporter](https://github.com/rkpasia/draft-js-exporter)
-* [Draft.js: Export ContentState to HTML](https://github.com/sstur/draft-js-export-html)
-* [Redraft](https://github.com/lokiuz/redraft)
-* [Draft.js exporter (Ruby)](https://github.com/ignitionworks/draftjs_exporter)
-* [Draft.js AST Exporter](https://github.com/icelab/draft-js-ast-exporter)
-* [Draft.js AST Importer](https://github.com/icelab/draft-js-ast-importer)
+- [BackDraft.js](https://github.com/evanc/backdraft-js)
+- [Draft.js Exporter](https://github.com/rkpasia/draft-js-exporter)
+- [Draft.js: Export ContentState to HTML](https://github.com/sstur/draft-js-export-html)
+- [Redraft](https://github.com/lokiuz/redraft)
+- [Draft.js exporter (Ruby)](https://github.com/ignitionworks/draftjs_exporter)
+- [Draft.js AST Exporter](https://github.com/icelab/draft-js-ast-exporter)
+- [Draft.js AST Importer](https://github.com/icelab/draft-js-ast-importer)
 
 ## Exporter behavior
 
-* HTML attributes are added in alphabetical order.
-* `unstyled` blocks without text render as an empty element.
-* Inline ranges aiming the same offset and length are always rendered in the same order (alphabetical order of the tag name - `code`, `em`, `strong`).
-* Invalid attributes are left for the html5lib parser to handle.
+- HTML attributes are added in alphabetical order.
+- `unstyled` blocks without text render as an empty element.
+- Inline ranges aiming the same offset and length are always rendered in the same order (alphabetical order of the tag name - `code`, `em`, `strong`).
+- Invalid attributes are left for the BeautifulSoup / html5lib parser to handle.
+- HTML escaping is automatically done by BeautifulSoup / html5lib.
 
 ### Unsupported markup
 
