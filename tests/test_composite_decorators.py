@@ -4,6 +4,7 @@ from __future__ import absolute_import, unicode_literals
 import re
 import unittest
 
+from draftjs_exporter.composite_decorators import render_decorators
 from draftjs_exporter.constants import BLOCK_TYPES
 from draftjs_exporter.dom import DOM
 
@@ -130,6 +131,14 @@ class TestBR(unittest.TestCase):
 
 
 class TestCompositeDecorators(unittest.TestCase):
+    def test_render_decorators_empty(self):
+        self.assertEqual(DOM.render(render_decorators([], 'test https://www.example.com#hash #hashtagtest', BLOCK_TYPES.UNSTYLED)), 'test https://www.example.com#hash #hashtagtest')
 
-    def setUp(self):
-        pass
+    def test_render_decorators_single(self):
+        self.assertEqual(DOM.render(render_decorators([Linkify()], 'test https://www.example.com#hash #hashtagtest', BLOCK_TYPES.UNSTYLED)), 'test <a href="https://www.example.com#hash">https://www.example.com#hash</a> #hashtagtest')
+
+    def test_render_decorators_conflicting_order_one(self):
+        self.assertEqual(DOM.render(render_decorators([Linkify(), Hashtag()], 'test https://www.example.com#hash #hashtagtest', BLOCK_TYPES.UNSTYLED)), 'test <a href="https://www.example.com#hash">https://www.example.com#hash</a> <span class="hashtag">#hashtagtest</span>')
+
+    def test_render_decorators_conflicting_order_two(self):
+        self.assertEqual(DOM.render(render_decorators([Hashtag(), Linkify()], 'test https://www.example.com#hash #hashtagtest', BLOCK_TYPES.UNSTYLED)), 'test https://www.example.com<span class="hashtag">#hash</span> <span class="hashtag">#hashtagtest</span>')
