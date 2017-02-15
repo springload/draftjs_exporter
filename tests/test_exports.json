@@ -411,5 +411,23 @@
                 }
             ]
         }
+    },
+
+    {
+        "label": "Multiple decorators",
+        "output": "<p>search <a href=\"http://www.google.com#world\">http://www.google.com#world</a> for the <span class=\"hashtag\">#world</span></p>",
+        "content_state": {
+            "entityMap": {},
+            "blocks": [
+                {
+                    "key": "8r91j",
+                    "text": "search http://www.google.com#world for the #world",
+                    "type": "unstyled",
+                    "depth": 0,
+                    "inlineStyleRanges": [],
+                    "entityRanges": []
+                }
+            ]
+        }
     }
 ]
