@@ -28,10 +28,6 @@ class Command:
         return command.index
 
     @staticmethod
-    def grouped_by_index(commands):
-        return groupby(sorted(commands), Command.key)
-
-    @staticmethod
     def start_stop(name, start, stop, data=''):
         """
         Builds a pair of start/stop commands with the same data.
