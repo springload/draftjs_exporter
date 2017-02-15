@@ -21,6 +21,10 @@ def Soup(raw_str):
     return BeautifulSoup(raw_str, 'html5lib')
 
 
+# Cache empty soup so we can create tags in isolation without the performance overhead.
+soup = Soup('')
+
+
 class DOM(object):
     """
     Wrapper around our HTML building library to facilitate changes.
@@ -30,7 +34,7 @@ class DOM(object):
         if attributes is None:
             attributes = {}
 
-        return Soup('').new_tag(type_, **attributes)
+        return soup.new_tag(type_, **attributes)
 
     @staticmethod
     def create_element(type_=None, props=None, *children):
