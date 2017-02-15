@@ -361,7 +361,7 @@ class TestOutput(unittest.TestCase):
                     'entityRanges': []
                 },
             ],
-        }), '<ul *ngfor="test"><li>item1</li></ul>')
+        }), '<ul *ngFor="test"><li>item1</li></ul>')
 
     def test_render_with_element_options(self):
         self.assertEqual(HTML({

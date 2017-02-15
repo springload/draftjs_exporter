@@ -133,7 +133,7 @@ class DOM(object):
         better way to do this.
         Dirty, but quite easy to understand.
         """
-        return re.sub(r'</?(fragment|textnode|body|html|head)>', '', unicode(Soup(unicode(elt)))).strip()
+        return re.sub(r'</?(fragment|textnode|body|html|head)>', '', unicode(elt)).strip()
 
     @staticmethod
     def pretty_print(markup):

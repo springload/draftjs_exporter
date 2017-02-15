@@ -141,7 +141,7 @@
 
     {
         "label": "Entity with data-*",
-        "output": "<p><a data-=\"no\" data-false=\"bad\" data-id=\"42\" data-mutability=\"mutable\" extra=\"foo\" href=\"/\" title=\"hi\"><em>a</em></a></p>",
+        "output": "<p><a data-=\"no\" data-False=\"bad\" data-id=\"42\" data-mutability=\"mutable\" extra=\"foo\" href=\"/\" title=\"hi\"><em>a</em></a></p>",
         "content_state": {
             "entityMap": {
                 "0": {
