@@ -77,8 +77,6 @@ class HTML:
                 next_group = listed[i]
                 stop_index = next_group[0]
                 sliced.append((text[start_index:stop_index], list(commands)))
-            else:
-                sliced.append(('', list(commands)))
 
         return sliced
 
