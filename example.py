@@ -75,15 +75,6 @@ class Hashtag:
 
 
 config = {
-    'entity_decorators': {
-        ENTITY_TYPES.LINK: Link(use_new_window=True),
-        ENTITY_TYPES.IMAGE: Image,
-        ENTITY_TYPES.HORIZONTAL_RULE: HR,
-    },
-    'composite_decorators': [
-        BR,
-        Hashtag,
-    ],
     # Extend/override the default block map.
     'block_map': dict(BLOCK_MAP, **{
         BLOCK_TYPES.HEADER_TWO: {
@@ -99,6 +90,15 @@ config = {
     'style_map': dict(STYLE_MAP, **{
         'HIGHLIGHT': {'element': 'strong', 'textDecoration': 'underline'},
     }),
+    'entity_decorators': {
+        ENTITY_TYPES.LINK: Link(use_new_window=True),
+        ENTITY_TYPES.IMAGE: Image,
+        ENTITY_TYPES.HORIZONTAL_RULE: HR,
+    },
+    'composite_decorators': [
+        BR,
+        Hashtag,
+    ],
 }
 
 exporter = HTML(config)

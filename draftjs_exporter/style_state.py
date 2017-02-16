@@ -4,7 +4,6 @@ import re
 
 from draftjs_exporter.dom import DOM
 
-# TODO Extract to utils
 # https://gist.github.com/yahyaKacem/8170675
 _first_cap_re = re.compile(r'(.)([A-Z][a-z]+)')
 _all_cap_re = re.compile('([a-z0-9])([A-Z])')
