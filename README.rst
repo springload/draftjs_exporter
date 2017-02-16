@@ -1,7 +1,7 @@
-.. image:: https://travis-ci.org/springload/draftjs_exporter.svg?branch=master
-   :target: https://travis-ci.org/springload/draftjs_exporter
 .. image:: https://img.shields.io/pypi/v/draftjs_exporter.svg
    :target: https://pypi.python.org/pypi/draftjs_exporter
+.. image:: https://travis-ci.org/springload/draftjs_exporter.svg?branch=master
+   :target: https://travis-ci.org/springload/draftjs_exporter
 .. image:: https://coveralls.io/repos/github/springload/draftjs_exporter/badge.svg?branch=master
    :target: https://coveralls.io/github/springload/draftjs_exporter?branch=master
 .. image:: https://codeclimate.com/github/springload/draftjs_exporter/badges/gpa.svg
@@ -10,108 +10,109 @@
 draftjs_exporter 🐍
 ===================
 
-    Python library to convert the Facebook Draft.js editor’s raw ContentState to HTML.
+    Library to convert the Facebook Draft.js editor’s raw ContentState to HTML.
 
-It is intended to be used with `Draftail`_ and integrated into `Wagtail CMS`_. Check out our `online demo`_.
+It is developed alongside the `Draftail <https://github.com/springload/draftail/>`_ rich text editor, for integration into `Wagtail <https://wagtail.io/>`_. Check out `wagtaildraftail <https://github.com/springload/wagtaildraftail>`_ and the `online demo <https://draftjs-exporter.herokuapp.com/>`_!
 
-Usage
------
+Features
+--------
 
-Understanding DraftJS contentState
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Unlike traditional rich text editors, DraftJS stores data in a JSON representation.
-
-There are two main parts:
-
--  blocks - lines of data and inline style attributes (without
-   newlines).
--  entityMap – collection of `Entities`_
-
-For more information, `this article`_ covers the concepts in depth.
-
-Using the exporter
-~~~~~~~~~~~~~~~~~~
-
-.. code:: sh
-
-    pip install draftjs_exporter
-
-The library requires you to explicity define mappings for the types of blocks and entities you wish to render. We may provide some defaults in the future.
-
-.. code:: python
-
-    from draftjs_exporter.html import HTML
-
-    # The Link decorator will be used to render LINK entities.
-    class Link:
-        def render(self, props):
-            return DOM.create_element('a', { 'href': data['url'] }, props['children'])
-
-    # Initialise the exporter with your configuration
-    exporter = HTML({
-        'entity_decorators': {
-            'LINK': Link()
-        },
-        # Define how each block should be transformed to HTML.
-        'block_map': {
-            'header-two': {'element': 'h2'},
-            'blockquote': {'element': 'blockquote'},
-            'unstyled': {'element': 'p'}
-        },
-        # Define how each style is rendered – either inline styles or elements.
-        'style_map': {
-            'ITALIC': {'fontStyle': 'italic'},
-            'BOLD': {'element': 'strong'}
-        }
-    })
-
-    # Render a Draft.js `contentState`
-    markup = exporter.render({
-        'entityMap': {},
-        'blocks': [
-            {
-                'key': '6mgfh',
-                'text': 'User experience (UX) design',
-                'type': 'header-two',
-                'depth': 0,
-                'inlineStyleRanges': [
-                    {
-                        'offset': 16,
-                        'length': 4,
-                        'style': 'BOLD'
-                    }
-                ],
-                'entityRanges': []
-            }
-        ]
-    })
-
-Running the example
-~~~~~~~~~~~~~~~~~~~
-
-You can run an executable example as follows:
-
-.. code:: sh
-
-    python example.py
-
-Feature list
-~~~~~~~~~~~~
-
-This project adheres to `Semantic Versioning`_, and measures performance and `code coverage`_.
+This project adheres to `Semantic Versioning <http://semver.org/spec/v2.0.0.html>`_, and measures performance and `code coverage <https://coveralls.io/github/springload/draftjs_exporter>`_.
 
 *  Extensive configuration of the generated HTML.
 *  Default, extensible block & inline style maps for common HTML elements.
 *  Convert line breaks to ``<br>`` elements.
 *  Define any attribute in the block map – custom class names for elements.
-*  React-like API to create custom entity decorators.
-*  React-like API to create composite decorators for text.
+*  React-like API to create custom components.
 *  Automatic conversion of entity data to HTML attributes (int & boolean to string, ``className`` to ``class``).
-*  Wrapped blocks (``<li>`` elements go inside ``<ul>``).
-*  Nested wrapped blocks (multiple list levels, arbitrary type and depth).
+*  Wrapped blocks (``<li>`` elements go inside ``<ul>`` or ``<ol>``).
+*  Nested wrapped blocks (multiple nesting levels, arbitrary type and depth).
 *  Output inline styles as inline elements (``<em>``, ``<strong>``, pick and choose).
 *  Overlapping inline style ranges.
+
+Usage
+-----
+
+Draft.js stores data in a JSON representation based on blocks, representing lines of content in the editor, annotated with entities and styles to represent rich text. For more information, `this article <https://medium.com/@rajaraodv/how-draft-js-represents-rich-text-data-eeabb5f25cf2>`_ covers the concepts further.
+
+Getting started
+~~~~~~~~~~~~~~~
+
+This exporter takes the Draft.js ContentState data as input, and outputs HTML based on its configuration. To get started, install the package:
+
+.. code:: sh
+
+    pip install draftjs_exporter
+
+In your code, create an exporter and use the ``render`` method to create HTML:
+
+.. code:: python
+
+    from draftjs_exporter.html import HTML
+
+    # Configuration options are detailed below.
+    config = {}
+
+    # Initialise the exporter.
+    exporter = HTML(config)
+
+    # Render a Draft.js `contentState`
+    html = exporter.render({
+        'entityMap': {},
+        'blocks': [{
+            'key': '6mgfh',
+            'text': 'Hello, world!',
+            'type': 'unstyled',
+            'depth': 0,
+            'inlineStyleRanges': [],
+            'entityRanges': []
+        }]
+    })
+
+
+You can also run an example by downloading this repository and then using ``python example.py``.
+
+Configuration options
+~~~~~~~~~~~~~~~~~~~~~
+
+The exporter output is extensively configurable to cater for varying content types.
+
+.. code:: python
+
+    # draftjs_exporter provides default configurations and predefined constants for reuse.
+    from draftjs_exporter.constants import BLOCK_TYPES, ENTITY_TYPES
+    from draftjs_exporter.defaults import BLOCK_MAP, STYLE_MAP
+
+    # The configuration is a single object with predefined keys.
+    config = {
+        # `block_map` is a mapping from Draft.js block types to a definition of their HTML representation.
+        # Extend BLOCK_MAP to start with sane defaults, or make your own from scratch.
+        'block_map': dict(BLOCK_MAP, **{
+            # The most basic mapping format, block type to tag name.
+            BLOCK_TYPES.HEADER_TWO: {'element': 'h2'},
+            # TODO Describe full configuration below.
+            BLOCK_TYPES.BLOCKQUOTE: ['blockquote', {'className': 'c-pullquote'}],
+            BLOCK_TYPES.UNORDERED_LIST_ITEM: {
+                'element': 'li',
+                'wrapper': ['ul', {'className': 'bullet-list'}],
+            },
+        }),
+        # Extend/override the default style map.
+        'style_map': dict(STYLE_MAP, **{
+            'HIGHLIGHT': {'element': 'strong', 'textDecoration': 'underline'},
+        }),
+        'entity_decorators': {
+            ENTITY_TYPES.LINK: Link(use_new_window=True),
+            ENTITY_TYPES.IMAGE: Image,
+            ENTITY_TYPES.HORIZONTAL_RULE: HR,
+        },
+        'composite_decorators': [
+            BR,
+            Hashtag,
+        ],
+    }
+
+See ``examples.py`` for more details.
 
 Development
 -----------
@@ -125,14 +126,15 @@ Installation
 
     git clone git@github.com:springload/draftjs_exporter.git
     cd draftjs_exporter/
+    # Install the git hooks.
+    ./.githooks/deploy
+    # Install the Python environment.
     virtualenv .venv
     source ./.venv/bin/activate
     make init
-    # Optionally, install the git hooks
-    ./.githooks/deploy
-    # Optionally, install all tested python versions
-    pyenv install 2.7.11 && pyenv install 3.3.6 && pyenv install 3.4.4 && pyenv install 3.5.1
-    pyenv global system 2.7.11 3.3.6 3.4.4 3.5.1
+    # Install all tested python versions.
+    pyenv install 2.7.11 && pyenv install 3.4.4 && pyenv install 3.5.1
+    pyenv global system 2.7.11 3.4.4 3.5.1
 
 Commands
 ~~~~~~~~
@@ -147,7 +149,6 @@ Commands
     make test-coverage   # Run the tests while generating test coverage data.
     make test-ci         # Continuous integration test suite.
     make dev             # Restarts the example whenever a file changes.
-    make profile         # Runs profiling code to evaluate performance.
     make clean-pyc       # Remove Python file artifacts.
     make publish         # Publishes a new version to pypi.
 
@@ -160,24 +161,13 @@ Debugging
 Releases
 ~~~~~~~~
 
-*  Update the `changelog`_.
+*  Update the `changelog <https://github.com/springload/draftjs_exporter/CHANGELOG.md>`_.
 *  Update the version number in ``draftjs_exporter/__init__.py``, following semver.
 *  ``git release vx.y.z``
 *  ``make publish`` (confirm, and enter your password)
-*  Go to https://pypi.python.org/pypi/draftjs_exporter and check that
-   all is well
+*  Go to https://pypi.python.org/pypi/draftjs_exporter and check that all is well.
 
 Documentation
 -------------
 
-    See the `docs`_ folder
-
-.. _Draftail: https://github.com/springload/draftail/
-.. _Wagtail CMS: https://wagtail.io
-.. _online demo: https://draftjs-exporter.herokuapp.com/
-.. _Entities: https://facebook.github.io/draft-js/docs/advanced-topics-entities.html#content
-.. _this article: https://medium.com/@rajaraodv/how-draft-js-represents-rich-text-data-eeabb5f25cf2
-.. _Semantic Versioning: http://semver.org/spec/v2.0.0.html
-.. _code coverage: https://coveralls.io/github/springload/draftjs_exporter?branch=master
-.. _changelog: https://github.com/springload/draftjs_exporter/CHANGELOG.md
-.. _docs: https://github.com/springload/draftjs_exporter/docs/
+    See the `docs <https://github.com/springload/draftjs_exporter/docs/>`_ folder

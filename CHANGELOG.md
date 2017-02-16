@@ -3,7 +3,7 @@
 > All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [[v0.7.0]](https://github.com/springload/draftjs_exporter/releases/tag/v0.7.0) - 2017-02-15
+## [v0.7.0](https://github.com/springload/draftjs_exporter/releases/tag/v0.7.0)
 
 ### Added
 
@@ -15,7 +15,11 @@ This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html
 
 - Stop lowercasing HTML attributes. `*ngFor` will now be exported as `*ngFor`.
 
-## [[v0.6.2]](https://github.com/springload/draftjs_exporter/releases/tag/v0.6.2) - 2017-01-18
+### Removed
+
+- Drop Python 3.3 support (likely still runs fine, but tests are not ran on it).
+
+## [v0.6.2](https://github.com/springload/draftjs_exporter/releases/tag/v0.6.2)
 
 ### Added
 
@@ -26,13 +30,13 @@ This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html
 
 - Stop mutating entity data when rendering entities (#36).
 
-## [[v0.6.1]](https://github.com/springload/draftjs_exporter/releases/tag/v0.6.1) - 2016-12-21
+## [v0.6.1](https://github.com/springload/draftjs_exporter/releases/tag/v0.6.1)
 
 ### Added
 
 - Automatically convert line breaks to `br` elements.
 
-## [[v0.6.0]](https://github.com/springload/draftjs_exporter/releases/tag/v0.6.0) - 2016-12-19
+## [v0.6.0](https://github.com/springload/draftjs_exporter/releases/tag/v0.6.0)
 
 This release is likely to be a **breaking change**. It is not released as such because the exporter has not [reached 1.0 yet](http://semver.org/#spec-item-4).
 
@@ -44,19 +48,19 @@ This release is likely to be a **breaking change**. It is not released as such b
 
 - Remove custom block type `pullquote`
 
-## [[v0.5.2]](https://github.com/springload/draftjs_exporter/releases/tag/v0.5.2) - 2016-12-10
+## [v0.5.2](https://github.com/springload/draftjs_exporter/releases/tag/v0.5.2)
 
 ### Fixed
 
 - Fix state being kept between exports, causing blocks to be duplicated in re-runs.
 
-## [[v0.5.1]](https://github.com/springload/draftjs_exporter/releases/tag/v0.5.1) - 2016-11-17
+## [v0.5.1](https://github.com/springload/draftjs_exporter/releases/tag/v0.5.1)
 
 ### Fixed
 
 - Fix broken link in README
 
-## [[v0.5.0]](https://github.com/springload/draftjs_exporter/releases/tag/v0.5.0) - 2016-11-17
+## [v0.5.0](https://github.com/springload/draftjs_exporter/releases/tag/v0.5.0)
 
 This release is likely to be a **breaking change**. It is not released as such because the exporter has not [reached 1.0 yet](http://semver.org/#spec-item-4).
 
@@ -72,7 +76,7 @@ This release is likely to be a **breaking change**. It is not released as such b
 
 - Built-in entities are no longer available as part of the library. They should be defined in userland.
 
-## [[v0.4.0]](https://github.com/springload/draftjs_exporter/releases/tag/v0.4.0) - 2016-10-15
+## [v0.4.0](https://github.com/springload/draftjs_exporter/releases/tag/v0.4.0)
 
 This release is likely to be a **breaking change**. It is not released as such because the exporter has not [reached 1.0 yet](http://semver.org/#spec-item-4).
 
@@ -92,7 +96,7 @@ This release is likely to be a **breaking change**. It is not released as such b
 
 - Fix behavior of wrapper stack in nested wrappers ([#15](https://github.com/springload/draftjs_exporter/issues/15))
 
-## [[v0.3.3]](https://github.com/springload/draftjs_exporter/releases/tag/v0.3.3) - 2016-10-06
+## [v0.3.3](https://github.com/springload/draftjs_exporter/releases/tag/v0.3.3)
 
 Last release before switching to BeautifulSoup4 / html5lib. If we ever need to switch back to lxml, it should be as simple as looking at the code at [v0.3.3](https://github.com/springload/draftjs_exporter/tree/v0.3.3).
 
@@ -101,19 +105,19 @@ Last release before switching to BeautifulSoup4 / html5lib. If we ever need to s
 - Add wrapper method to create new elements.
 - Add wrapper method to retrieve an element's list of classes.
 
-## [[v0.3.2]](https://github.com/springload/draftjs_exporter/releases/tag/v0.3.2) - 2016-07-25
+## [v0.3.2](https://github.com/springload/draftjs_exporter/releases/tag/v0.3.2)
 
 ### Fixed
 
 - Fix exporter crashing on empty blocks (renders empty string instead)
 
-## [[v0.3.1]](https://github.com/springload/draftjs_exporter/releases/tag/v0.3.1) - 2016-07-20
+## [v0.3.1](https://github.com/springload/draftjs_exporter/releases/tag/v0.3.1)
 
 ### Fixed
 
 - Use HTML parser instead of XML for DOM API
 
-## [[v0.3.0]](https://github.com/springload/draftjs_exporter/releases/tag/v0.3.0) - 2016-07-20
+## [v0.3.0](https://github.com/springload/draftjs_exporter/releases/tag/v0.3.0)
 
 ### Added
 
@@ -137,20 +141,20 @@ Last release before switching to BeautifulSoup4 / html5lib. If we ever need to s
 
 - Removed Token entity (identical as Null)
 
-## [[v0.2.0]](https://github.com/springload/draftjs_exporter/releases/tag/v0.2.0) - 2016-07-05
+## [v0.2.0](https://github.com/springload/draftjs_exporter/releases/tag/v0.2.0)
 
 ### Added
 
 - Support for `<hr/>` tag / `TOKEN` entities
 - Support for wrapped item nesting (arbitrary depth)
 
-## [[v0.1.0]](https://github.com/springload/draftjs_exporter/releases/tag/v0.1.0) - 2016-07-04
+## [v0.1.0](https://github.com/springload/draftjs_exporter/releases/tag/v0.1.0)
 
 First usable release!
 
 -------------
 
-## [[x.y.z]](https://github.com/springload/draftjs_exporter/releases/tag/x.y.z) - YYYY-MM-DD (Template: http://keepachangelog.com/)
+## [vx.y.z](https://github.com/springload/draftjs_exporter/releases/tag/x.y.z) (Template: http://keepachangelog.com/)
 
 ### Added
 

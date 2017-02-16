@@ -7,6 +7,7 @@ import cProfile
 import re
 from pstats import Stats
 
+# draftjs_exporter provides default configurations and predefined constants for reuse.
 from draftjs_exporter.constants import BLOCK_TYPES, ENTITY_TYPES
 from draftjs_exporter.defaults import BLOCK_MAP, STYLE_MAP
 from draftjs_exporter.dom import DOM
@@ -75,12 +76,13 @@ class Hashtag:
 
 
 config = {
-    # Extend/override the default block map.
+    # `block_map` is a mapping from Draft.js block types to a definition of their HTML representation.
+    # Extend BLOCK_MAP to start with sane defaults, or make your own from scratch.
     'block_map': dict(BLOCK_MAP, **{
-        BLOCK_TYPES.HEADER_TWO: {
-            'element': ['h2', {'className': 'c-amazing-heading'}],
-            'wrapper': 'div',
-        },
+        # The most basic mapping format, block type to tag name.
+        BLOCK_TYPES.HEADER_TWO: {'element': 'h2'},
+        # TODO Describe full configuration below.
+        BLOCK_TYPES.BLOCKQUOTE: ['blockquote', {'className': 'c-pullquote'}],
         BLOCK_TYPES.UNORDERED_LIST_ITEM: {
             'element': 'li',
             'wrapper': ['ul', {'className': 'bullet-list'}],
