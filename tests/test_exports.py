@@ -6,6 +6,8 @@ import os
 import unittest
 from pstats import Stats
 
+import six
+
 from draftjs_exporter.constants import BLOCK_TYPES, ENTITY_TYPES, INLINE_STYLES
 from draftjs_exporter.defaults import BLOCK_MAP
 from draftjs_exporter.html import HTML
@@ -56,9 +58,7 @@ class TestExportsMeta(type):
         return type.__new__(mcs, name, bases, dict)
 
 
-class TestExports(unittest.TestCase):
-    __metaclass__ = TestExportsMeta
-
+class TestExports(six.with_metaclass(TestExportsMeta, unittest.TestCase)):
     @classmethod
     def setUpClass(cls):
         cls.pr = cProfile.Profile()
@@ -69,6 +69,9 @@ class TestExports(unittest.TestCase):
         cls.pr.disable()
         p = Stats(cls.pr)
         p.strip_dirs().sort_stats('cumulative').print_stats(20)
+
+    def test_init(self):
+        self.assertIsInstance(exporter, HTML)
 
 
 if __name__ == "__main__":
