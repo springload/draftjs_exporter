@@ -1,5 +1,7 @@
 from __future__ import absolute_import, unicode_literals
 
+from itertools import groupby
+
 from draftjs_exporter.command import Command
 from draftjs_exporter.composite_decorators import render_decorators
 from draftjs_exporter.defaults import BLOCK_MAP, STYLE_MAP
@@ -7,8 +9,6 @@ from draftjs_exporter.dom import DOM
 from draftjs_exporter.entity_state import EntityState
 from draftjs_exporter.style_state import StyleState
 from draftjs_exporter.wrapper_state import WrapperState
-
-from itertools import groupby
 
 
 class HTML:
