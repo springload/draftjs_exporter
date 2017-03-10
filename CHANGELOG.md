@@ -16,6 +16,7 @@ This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html
 ### Changed
 
 - Replace array-style mapping declarations of element and wrapper props with `props` and `wrapper_props` attributes (dictionaries of props).
+- Moved and renamed `BlockException` to `ConfigException`.
 
 ### How to upgrade
 
@@ -30,6 +31,9 @@ This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html
 - 'wrapper': ['ul', {'className': 'bullet-list'}],
 + 'wrapper': 'ul',
 + 'wrapper_props': {'className': 'bullet-list'},
+# Change location and name of exceptions:
+- from draftjs_exporter.wrapper_state import BlockException
++ from draftjs_exporter.options import ConfigException
 ```
 
 ## [v0.7.0](https://github.com/springload/draftjs_exporter/releases/tag/v0.7.0)
