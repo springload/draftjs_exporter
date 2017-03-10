@@ -13,6 +13,8 @@ This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html
 ### Removed
 
 - Remove array-style block element and wrapper declarations (`['ul']`, `['ul', {'className': 'bullet-list'}]`).
+- Remove support for `STRIKETHROUGH` styles in default style map.
+- Remove support for `UNDERLINE` styles in default style map.
 
 ### Changed
 
@@ -42,6 +44,10 @@ This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html
 # Change object-style style declarations:
 - 'HIGHLIGHT': {'element': 'strong', 'textDecoration': 'underline'},
 + 'HIGHLIGHT': {'element': 'strong', 'props': {'style': {'textDecoration': 'underline'}}},
+# Create custom STRIKETHROUGH styles:
++ 'STRIKETHROUGH': {'element': 'span', 'props': {'style': {'textDecoration': 'line-through'}}},
+# Create custom UNDERLINE styles:
++ 'UNDERLINE': {'element': 'span', 'props': {'style': {'textDecoration': 'underline'}}},
 ```
 
 ## [v0.7.0](https://github.com/springload/draftjs_exporter/releases/tag/v0.7.0)

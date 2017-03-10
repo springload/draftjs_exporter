@@ -25,6 +25,4 @@ STYLE_MAP = {
     INLINE_STYLES.ITALIC: 'em',
     INLINE_STYLES.BOLD: 'strong',
     INLINE_STYLES.CODE: 'code',
-    INLINE_STYLES.STRIKETHROUGH: {'element': 'span', 'props': {'style': {'textDecoration': 'line-through'}}},
-    INLINE_STYLES.UNDERLINE: {'element': 'span', 'props': {'style': {'textDecoration': 'underline'}}},
 }
