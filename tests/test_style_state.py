@@ -41,17 +41,6 @@ class TestStyleState(unittest.TestCase):
         self.style_state.apply(Command('start_inline_style', 0, 'ITALIC'))
         self.assertEqual(self.style_state.is_empty(), False)
 
-    def test_get_style_value_empty(self):
-        self.assertEqual(self.style_state.get_style_value(), '')
-
-    def test_get_style_value_single(self):
-        self.style_state.apply(Command('start_inline_style', 0, 'ITALIC'))
-        self.assertEqual(self.style_state.get_style_value(), '')
-
-    def test_get_style_value_multiple(self):
-        self.style_state.apply(Command('start_inline_style', 0, 'HIGHLIGHT'))
-        self.assertEqual(self.style_state.get_style_value(), 'text-decoration: underline;')
-
     def test_render_styles_unstyled(self):
         self.assertEqual(DOM.get_tag_name(self.style_state.render_styles(DOM.create_text_node('Test text'))), 'textnode')
         self.assertEqual(DOM.get_text_content(self.style_state.render_styles(DOM.create_text_node('Test text'))), 'Test text')
@@ -69,6 +58,5 @@ class TestStyleState(unittest.TestCase):
     def test_render_styles_styled_multiple(self):
         self.style_state.apply(Command('start_inline_style', 0, 'BOLD'))
         self.style_state.apply(Command('start_inline_style', 0, 'ITALIC'))
-        self.assertEqual(self.style_state.get_style_tags(), ['em', 'strong'])
         self.assertEqual(DOM.get_tag_name(self.style_state.render_styles(DOM.create_text_node('Test text'))), 'em')
         self.assertEqual(DOM.get_tag_name(DOM.get_children(self.style_state.render_styles(DOM.create_text_node('Test text')))[0]), 'strong')

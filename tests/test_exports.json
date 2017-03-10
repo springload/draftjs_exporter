@@ -71,6 +71,35 @@
     },
 
     {
+        "label": "Nested inline styles (inverted)",
+        "output": "<p><em><strong>ItalicBold</strong></em></p>",
+        "content_state": {
+            "entityMap": {},
+            "blocks": [
+                {
+                    "key": "9nc73",
+                    "text": "ItalicBold",
+                    "type": "unstyled",
+                    "depth": 0,
+                    "inlineStyleRanges": [
+                        {
+                            "offset": 0,
+                            "length": 10,
+                            "style": "ITALIC"
+                        },
+                        {
+                            "offset": 0,
+                            "length": 10,
+                            "style": "BOLD"
+                        }
+                    ],
+                    "entityRanges": []
+                }
+            ]
+        }
+    },
+
+    {
         "label": "Adjacent inline styles",
         "output": "<p><em>Bold</em><strong>Italic</strong></p>",
         "content_state": {

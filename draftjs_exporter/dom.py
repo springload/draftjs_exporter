@@ -12,6 +12,10 @@ try:
 except NameError:
     unicode = lambda s: str(s)
 
+# https://gist.github.com/yahyaKacem/8170675
+_first_cap_re = re.compile(r'(.)([A-Z][a-z]+)')
+_all_cap_re = re.compile('([a-z0-9])([A-Z])')
+
 
 def Soup(raw_str):
     """
@@ -60,6 +64,11 @@ class DOM(object):
 
             for key in props:
                 prop = props[key]
+
+                if key == 'style':
+                    rules = ['{0}: {1};'.format(DOM.camel_to_dash(style), prop[style]) for style in prop.keys()]
+                    prop = ''.join(sorted(rules))
+
                 # Filter None values.
                 if prop is not None:
                     attributes[key] = prop
@@ -95,6 +104,12 @@ class DOM(object):
     @staticmethod
     def parse_html(markup):
         return Soup(markup)
+
+    @staticmethod
+    def camel_to_dash(camel_cased_str):
+        sub2 = _first_cap_re.sub(r'\1-\2', camel_cased_str)
+        dashed_case_str = _all_cap_re.sub(r'\1-\2', sub2).lower()
+        return dashed_case_str.replace('--', '-')
 
     @staticmethod
     def append_child(elt, child):
