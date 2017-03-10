@@ -65,7 +65,7 @@ class DOM(object):
             for key in props:
                 prop = props[key]
 
-                if key == 'style':
+                if key == 'style' and isinstance(prop, dict):
                     rules = ['{0}: {1};'.format(DOM.camel_to_dash(style), prop[style]) for style in prop.keys()]
                     prop = ''.join(sorted(rules))
 

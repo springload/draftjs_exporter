@@ -13,8 +13,11 @@ class TestDOM(unittest.TestCase):
     def test_create_element(self):
         self.assertEqual(DOM.render(DOM.create_element('p', {'className': 'intro'}, 'Test test')), '<p class="intro">Test test</p>')
 
-    def test_create_element_styled(self):
+    def test_create_element_style_dict(self):
         self.assertEqual(DOM.render(DOM.create_element('p', {'style': {'borderColor': 'red', 'textDecoration': 'underline'}}, 'Test test')), '<p style="border-color: red;text-decoration: underline;">Test test</p>')
+
+    def test_create_element_style_str(self):
+        self.assertEqual(DOM.render(DOM.create_element('p', {'style': 'border-color: red;text-decoration: underline;'}, 'Test test')), '<p style="border-color: red;text-decoration: underline;">Test test</p>')
 
     def test_create_element_empty(self):
         self.assertEqual(DOM.get_tag_name(DOM.create_element()), 'fragment')
