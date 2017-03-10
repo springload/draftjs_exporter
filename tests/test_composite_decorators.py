@@ -80,8 +80,7 @@ class TestLinkify(unittest.TestCase):
         self.assertEqual(DOM.render(DOM.create_element(Linkify, {
             'block_type': BLOCK_TYPES.UNSTYLED,
             'match': match,
-            'children': match.group(0),
-        })), '<a href="https://www.example.com">https://www.example.com</a>')
+        }, match.group(0))), '<a href="https://www.example.com">https://www.example.com</a>')
 
     def test_render_www(self):
         match = next(Linkify.SEARCH_RE.finditer('test www.example.com'))
@@ -89,8 +88,7 @@ class TestLinkify(unittest.TestCase):
         self.assertEqual(DOM.render(DOM.create_element(Linkify, {
             'block_type': BLOCK_TYPES.UNSTYLED,
             'match': match,
-            'children': match.group(0),
-        })), '<a href="http://www.example.com">www.example.com</a>')
+        }, match.group(0))), '<a href="http://www.example.com">www.example.com</a>')
 
     def test_render_code_block(self):
         match = next(Linkify.SEARCH_RE.finditer('test https://www.example.com'))
@@ -98,8 +96,7 @@ class TestLinkify(unittest.TestCase):
         self.assertEqual(DOM.create_element(Linkify, {
             'block_type': BLOCK_TYPES.CODE,
             'match': match,
-            'children': match.group(0),
-        }), match.group(0))
+        }, match.group(0)), match.group(0))
 
     def test_render_new_window(self):
         match = next(Linkify.SEARCH_RE.finditer('test https://www.example.com'))
@@ -107,8 +104,7 @@ class TestLinkify(unittest.TestCase):
         self.assertEqual(DOM.render(DOM.create_element(Linkify(use_new_window=True), {
             'block_type': BLOCK_TYPES.UNSTYLED,
             'match': match,
-            'children': match.group(0),
-        })), '<a href="https://www.example.com" rel="noreferrer noopener" target="_blank">https://www.example.com</a>')
+        }, match.group(0))), '<a href="https://www.example.com" rel="noreferrer noopener" target="_blank">https://www.example.com</a>')
 
 
 class TestHashtag(unittest.TestCase):
@@ -116,16 +112,10 @@ class TestHashtag(unittest.TestCase):
         self.assertIsInstance(Hashtag(), Hashtag)
 
     def test_render(self):
-        self.assertEqual(DOM.render(DOM.create_element(Hashtag, {
-            'block_type': BLOCK_TYPES.UNSTYLED,
-            'children': '#hashtagtest',
-        })), '<span class="hashtag">#hashtagtest</span>')
+        self.assertEqual(DOM.render(DOM.create_element(Hashtag, {'block_type': BLOCK_TYPES.UNSTYLED}, '#hashtagtest')), '<span class="hashtag">#hashtagtest</span>')
 
     def test_render_code_block(self):
-        self.assertEqual(DOM.render(DOM.create_element(Hashtag, {
-            'block_type': BLOCK_TYPES.CODE,
-            'children': '#hashtagtest',
-        })), '#hashtagtest')
+        self.assertEqual(DOM.render(DOM.create_element(Hashtag, {'block_type': BLOCK_TYPES.CODE}, '#hashtagtest')), '#hashtagtest')
 
 
 class TestBR(unittest.TestCase):
@@ -133,16 +123,10 @@ class TestBR(unittest.TestCase):
         self.assertIsInstance(BR(), BR)
 
     def test_render(self):
-        self.assertEqual(DOM.render(DOM.create_element(BR, {
-            'block_type': BLOCK_TYPES.UNSTYLED,
-            'children': '\n',
-        })), '<br/>')
+        self.assertEqual(DOM.render(DOM.create_element(BR, {'block_type': BLOCK_TYPES.UNSTYLED}, '\n')), '<br/>')
 
     def test_render_code_block(self):
-        self.assertEqual(DOM.create_element(BR, {
-            'block_type': BLOCK_TYPES.CODE,
-            'children': '\n',
-        }), '\n')
+        self.assertEqual(DOM.create_element(BR, {'block_type': BLOCK_TYPES.CODE}, '\n'), '\n')
 
 
 class TestCompositeDecorators(unittest.TestCase):

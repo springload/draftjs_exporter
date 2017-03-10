@@ -11,6 +11,7 @@ This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html
 - Raise exception when `style_map` does not define an `element` for the style.
 - Add support for any props on `style_map`.
 - Automatically convert `style` prop from a dict of camelCase properties to a string, on all elements (if `style` is already a string, it will be output as is).
+- Support components (`render` function returning `create_element` nodes) in style_map.
 
 ### Removed
 
@@ -24,6 +25,7 @@ This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html
 - Moved and renamed `BlockException` to `ConfigException`.
 - Replace `style_map` config format to the one of the `block_map`.
 - Move internal `camel_to_dash` method to `DOM` for official use.
+- Change ordering of inline styles - now using alphabetical ordering of style key instead of tag name.
 
 ### How to upgrade
 
