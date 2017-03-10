@@ -14,6 +14,10 @@ style_map = {
         'element': 'strong',
         'props': {'style': {'textDecoration': 'underline'}},
     },
+    'KBD': {
+        'element': 'kbd',
+        'props': {'className': 'o-keyboard-shortcut'}
+    }
 }
 
 
@@ -50,13 +54,14 @@ class TestStyleState(unittest.TestCase):
 
     def test_render_styles_styled(self):
         self.style_state.apply(Command('start_inline_style', 0, 'ITALIC'))
-        self.assertEqual(DOM.get_tag_name(self.style_state.render_styles(DOM.create_text_node('Test text'))), 'em')
-        self.assertEqual(self.style_state.render_styles(DOM.create_text_node('Test text')).get('style'), None)
-        self.assertEqual(DOM.get_text_content(self.style_state.render_styles(DOM.create_text_node('Test text'))), 'Test text')
+        self.assertEqual(DOM.render(self.style_state.render_styles(DOM.create_text_node('Test text'))), '<em>Test text</em>')
         self.style_state.apply(Command('stop_inline_style', 9, 'ITALIC'))
 
     def test_render_styles_styled_multiple(self):
         self.style_state.apply(Command('start_inline_style', 0, 'BOLD'))
         self.style_state.apply(Command('start_inline_style', 0, 'ITALIC'))
-        self.assertEqual(DOM.get_tag_name(self.style_state.render_styles(DOM.create_text_node('Test text'))), 'em')
-        self.assertEqual(DOM.get_tag_name(DOM.get_children(self.style_state.render_styles(DOM.create_text_node('Test text')))[0]), 'strong')
+        self.assertEqual(DOM.render(self.style_state.render_styles(DOM.create_text_node('Test text'))), '<em><strong>Test text</strong></em>')
+
+    def test_render_styles_attributes(self):
+        self.style_state.apply(Command('start_inline_style', 0, 'KBD'))
+        self.assertEqual(DOM.render(self.style_state.render_styles(DOM.create_text_node('Test text'))), '<kbd class="o-keyboard-shortcut">Test text</kbd>')

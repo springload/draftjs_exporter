@@ -8,14 +8,13 @@ from tests.test_entities import Icon
 
 class TestDOM(unittest.TestCase):
     def test_create_tag(self):
-        self.assertEqual(DOM.get_tag_name(DOM.create_tag('p', {'class': 'intro'})), 'p')
-        self.assertEqual(DOM.get_class_list(DOM.create_tag('p', {'class': 'intro'})), ['intro'])
-        self.assertEqual(DOM.get_text_content(DOM.create_tag('p', {'class': 'intro'})), None)
+        self.assertEqual(DOM.render(DOM.create_tag('p', {'class': 'intro'})), '<p class="intro"></p>')
 
     def test_create_element(self):
-        self.assertEqual(DOM.get_tag_name(DOM.create_element('p', {'className': 'intro'}, 'Test test')), 'p')
-        self.assertEqual(DOM.get_class_list(DOM.create_element('p', {'className': 'intro'}, 'Test test')), ['intro'])
-        self.assertEqual(DOM.get_text_content(DOM.create_element('p', {'className': 'intro'}, 'Test test')), 'Test test')
+        self.assertEqual(DOM.render(DOM.create_element('p', {'className': 'intro'}, 'Test test')), '<p class="intro">Test test</p>')
+
+    def test_create_element_styled(self):
+        self.assertEqual(DOM.render(DOM.create_element('p', {'style': {'borderColor': 'red', 'textDecoration': 'underline'}}, 'Test test')), '<p style="border-color: red;text-decoration: underline;">Test test</p>')
 
     def test_create_element_empty(self):
         self.assertEqual(DOM.get_tag_name(DOM.create_element()), 'fragment')
@@ -41,6 +40,14 @@ class TestDOM(unittest.TestCase):
 
     def test_parse_html(self):
         self.assertEqual(DOM.render(DOM.parse_html('<p><span>Test text</span></p>')), '<p><span>Test text</span></p>')
+
+    def test_camel_to_dash(self):
+        self.assertEqual(DOM.camel_to_dash('testCamelToDash'), 'test-camel-to-dash')
+        self.assertEqual(DOM.camel_to_dash('TestCamelToDash'), 'test-camel-to-dash')
+        self.assertEqual(DOM.camel_to_dash('TestCamelTODash'), 'test-camel-to-dash')
+        self.assertEqual(DOM.camel_to_dash('TestCamelTODasH'), 'test-camel-to-das-h')
+        self.assertEqual(DOM.camel_to_dash('testcameltodash'), 'testcameltodash')
+        self.assertEqual(DOM.camel_to_dash('test-Camel-ToDash'), 'test-camel-to-dash')
 
     def test_append_child(self):
         parent = DOM.create_element('p')
