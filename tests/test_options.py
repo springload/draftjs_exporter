@@ -16,28 +16,39 @@ class TestOptions(unittest.TestCase):
         self.assertNotEqual(Options('li'), Options('p'))
 
     def test_for_block_full(self):
-        block_map = {'unordered-list-item': 'li'}
-        self.assertEqual(Options.for_block(block_map, 'unordered-list-item'), Options('li'))
+        self.assertEqual(Options.for_block({'unordered-list-item': 'li'}, 'unordered-list-item'), Options('li'))
 
     def test_for_block_half(self):
-        block_map = {'unordered-list-item': 'li'}
-        self.assertEqual(Options.for_block(block_map, 'unordered-list-item'), Options('li'))
+        self.assertEqual(Options.for_block({'unordered-list-item': 'li'}, 'unordered-list-item'), Options('li'))
 
     def test_for_block_simplest(self):
-        block_map = {'unordered-list-item': 'li'}
-        self.assertEqual(Options.for_block(block_map, 'unordered-list-item'), Options('li'))
+        self.assertEqual(Options.for_block({'unordered-list-item': 'li'}, 'unordered-list-item'), Options('li'))
 
     def test_for_block_raises_missing_type(self):
-        block_map = {'header-one': 'h1'}
         with self.assertRaises(ConfigException):
-            Options.for_block(block_map, 'header-two')
+            Options.for_block({'header-one': 'h1'}, 'header-two')
 
     def test_for_block_raises_missing_element(self):
-        block_map = {'header-one': {}}
         with self.assertRaises(ConfigException):
-            Options.for_block(block_map, 'header-one')
+            Options.for_block({'header-one': {}}, 'header-one')
 
     def test_for_block_raises_wrong_format(self):
-        block_map = {'header-one': []}
         with self.assertRaises(ConfigException):
-            Options.for_block(block_map, 'header-one')
+            Options.for_block({'header-one': []}, 'header-one')
+
+    def test_for_style_full(self):
+        self.assertEqual(Options.for_style({'ITALIC': 'em'}, 'ITALIC'), Options('em'))
+
+    def test_for_style_half(self):
+        self.assertEqual(Options.for_style({'ITALIC': 'em'}, 'ITALIC'), Options('em'))
+
+    def test_for_style_simplest(self):
+        self.assertEqual(Options.for_style({'ITALIC': 'em'}, 'ITALIC'), Options('em'))
+
+    def test_for_style_raises_missing_type(self):
+        with self.assertRaises(ConfigException):
+            Options.for_style({'BOLD': 'strong'}, 'CODE')
+
+    def test_for_style_raises_missing_element(self):
+        with self.assertRaises(ConfigException):
+            Options.for_style({'BOLD': {}}, 'BOLD')
