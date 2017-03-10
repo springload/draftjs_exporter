@@ -3,6 +3,35 @@
 > All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [v0.8.0](https://github.com/springload/draftjs_exporter/releases/tag/v0.8.0)
+
+### Added
+
+- Add simplified block mapping format: `BLOCK_TYPES.HEADER_TWO: 'h2'`.
+
+### Removed
+
+- Remove array-style block element and wrapper declarations (`['ul']`, `['ul', {'className': 'bullet-list'}]`).
+
+### Changed
+
+- Replace array-style mapping declarations of element and wrapper props with `props` and `wrapper_props` attributes (dictionaries of props).
+
+### How to upgrade
+
+```diff
+# Change element-only block declarations:
+- BLOCK_TYPES.HEADER_TWO: {'element': 'h2'},
++ BLOCK_TYPES.HEADER_TWO: 'h2',
+# Change array-style block declarations:
+- BLOCK_TYPES.BLOCKQUOTE: ['blockquote', {'className': 'c-pullquote'}]
++ BLOCK_TYPES.BLOCKQUOTE: {'element': 'blockquote', 'props': {'className': 'c-pullquote'}}
+# Change block wrapper declarations:
+- 'wrapper': ['ul', {'className': 'bullet-list'}],
++ 'wrapper': 'ul',
++ 'wrapper_props': {'className': 'bullet-list'},
+```
+
 ## [v0.7.0](https://github.com/springload/draftjs_exporter/releases/tag/v0.7.0)
 
 ### Added
@@ -165,3 +194,5 @@ First usable release!
 ### Fixed
 
 ### Removed
+
+### How to upgrade

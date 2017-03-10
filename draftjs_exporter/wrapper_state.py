@@ -101,8 +101,8 @@ class Wrapper:
 class WrapperState:
     """
     This class does the initial node building for the tree.
-    It sets elements with the right tag, text content, and attributes.
-    It adds a wrapper element around multiple elements, if required.
+    It sets elements with the right tag, text content, and props.
+    It adds a wrapper element around elements, if required.
     """
 
     def __init__(self, block_map):
