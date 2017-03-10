@@ -3,6 +3,7 @@ from __future__ import absolute_import, unicode_literals
 import re
 
 from draftjs_exporter.dom import DOM
+from draftjs_exporter.options import Options
 
 # https://gist.github.com/yahyaKacem/8170675
 _first_cap_re = re.compile(r'(.)([A-Z][a-z]+)')
@@ -38,8 +39,8 @@ class StyleState:
         tags = []
 
         for style in self.styles:
-            config = self.style_map.get(style, {})
-            tags.append(config.get('element', 'span'))
+            options = Options.for_style(self.style_map, style)
+            tags.append(options.element)
 
         return sorted(list(set(tags)))
 
@@ -47,9 +48,10 @@ class StyleState:
         rules = []
 
         for style in self.styles:
-            css_style = self.style_map.get(style, {})
-            for prop in css_style.keys():
-                if prop != 'element':
+            props = Options.for_style(self.style_map, style).props
+            if props:
+                css_style = props.get('style', {})
+                for prop in css_style.keys():
                     rules.append('{0}: {1};'.format(camel_to_dash(prop), css_style[prop]))
 
         return ''.join(sorted(rules))

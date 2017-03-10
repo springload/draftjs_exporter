@@ -8,9 +8,12 @@ from draftjs_exporter.dom import DOM
 from draftjs_exporter.style_state import StyleState
 
 style_map = {
-    'ITALIC': {'element': 'em'},
-    'BOLD': {'element': 'strong'},
-    'HIGHLIGHT': {'element': 'strong', 'textDecoration': 'underline'},
+    'ITALIC': 'em',
+    'BOLD': 'strong',
+    'HIGHLIGHT': {
+        'element': 'strong',
+        'props': {'style': {'textDecoration': 'underline'}},
+    },
 }
 
 

@@ -28,9 +28,12 @@ config = {
         },
     }),
     'style_map': {
-        INLINE_STYLES.ITALIC: {'element': 'em'},
-        INLINE_STYLES.BOLD: {'element': 'strong'},
-        'HIGHLIGHT': {'element': 'strong', 'textDecoration': 'underline'},
+        INLINE_STYLES.ITALIC: 'em',
+        INLINE_STYLES.BOLD: 'strong',
+        'HIGHLIGHT': {
+            'element': 'strong',
+            'props': {'style': {'textDecoration': 'underline'}},
+        },
     },
 }
 
