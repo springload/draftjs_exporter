@@ -18,7 +18,7 @@ test-watch: ## Restarts the tests whenever a file changes.
 	nodemon -q -e py -w tests -w draftjs_exporter  -x "clear && make test -s || true"
 
 test-coverage: ## Run the tests while generating test coverage data.
-	coverage run -m unittest discover && coverage report
+	coverage run -m unittest discover && coverage report && coverage html
 
 test-ci: ## Continuous integration test suite.
 	tox
