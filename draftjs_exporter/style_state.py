@@ -1,19 +1,7 @@
 from __future__ import absolute_import, unicode_literals
 
-import re
-
 from draftjs_exporter.dom import DOM
 from draftjs_exporter.options import Options
-
-# https://gist.github.com/yahyaKacem/8170675
-_first_cap_re = re.compile(r'(.)([A-Z][a-z]+)')
-_all_cap_re = re.compile('([a-z0-9])([A-Z])')
-
-
-def camel_to_dash(camel_cased_str):
-    sub2 = _first_cap_re.sub(r'\1-\2', camel_cased_str)
-    dashed_case_str = _all_cap_re.sub(r'\1-\2', sub2).lower()
-    return dashed_case_str.replace('--', '-')
 
 
 class StyleState:
@@ -35,45 +23,21 @@ class StyleState:
     def is_empty(self):
         return not self.styles
 
-    def get_style_tags(self):
-        tags = []
-
-        for style in self.styles:
-            options = Options.for_style(self.style_map, style)
-            tags.append(options.element)
-
-        return sorted(list(set(tags)))
-
-    def get_style_value(self):
-        rules = []
-
-        for style in self.styles:
-            props = Options.for_style(self.style_map, style).props
-            if props:
-                css_style = props.get('style', {})
-                for prop in css_style.keys():
-                    rules.append('{0}: {1};'.format(camel_to_dash(prop), css_style[prop]))
-
-        return ''.join(sorted(rules))
-
     def render_styles(self, text_node):
         if self.is_empty():
             node = text_node
         else:
-            style = self.get_style_value()
-            tags = self.get_style_tags()
-            node = DOM.create_element(tags[0])
+            options = [Options.for_style(self.style_map, s) for s in self.styles]
+            options.sort(key=lambda o: o.element)
+
+            node = DOM.create_element(options[0].element, options[0].props)
             child = node
 
             # Nest the tags.
-            # Set the text and style attribute (if any) on the deepest node.
-            for tag in tags[1:]:
-                new_child = DOM.create_element(tag)
+            for opt in options[1:]:
+                new_child = DOM.create_element(opt.element, opt.props)
                 DOM.append_child(child, new_child)
                 child = new_child
-
-            if style:
-                DOM.set_attribute(child, 'style', style)
 
             DOM.append_child(child, text_node)
 
