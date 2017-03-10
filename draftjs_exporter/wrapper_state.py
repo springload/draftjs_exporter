@@ -37,7 +37,9 @@ class Options:
 
         block = block_map.get(type_)
 
-        if isinstance(block, dict):
+        if isinstance(block, list):
+            raise BlockException('Block "%s" uses unsupported list-style config' % type_)
+        elif isinstance(block, dict):
             if 'element' not in block:
                 raise BlockException('Block "%s" does not define an element' % type_)
 

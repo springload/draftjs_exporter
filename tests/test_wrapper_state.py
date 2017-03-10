@@ -10,10 +10,10 @@ class TestOptions(unittest.TestCase):
     def test_str(self):
         self.assertEqual(str(Options('li')), '<Options li None None None>')
 
-    def test_eq_is_eq(self):
+    def test_eq(self):
         self.assertEqual(Options('li'), Options('li'))
 
-    def test_eq_is_not_eq(self):
+    def test_not_eq(self):
         self.assertNotEqual(Options('li'), Options('p'))
 
     def test_for_block_full(self):
@@ -27,6 +27,21 @@ class TestOptions(unittest.TestCase):
     def test_for_block_simplest(self):
         block_map = {'unordered-list-item': 'li'}
         self.assertEqual(Options.for_block(block_map, 'unordered-list-item'), Options('li'))
+
+    def test_for_block_raises_missing_type(self):
+        block_map = {'header-one': 'h1'}
+        with self.assertRaises(BlockException):
+            Options.for_block(block_map, 'header-two')
+
+    def test_for_block_raises_missing_element(self):
+        block_map = {'header-one': {}}
+        with self.assertRaises(BlockException):
+            Options.for_block(block_map, 'header-one')
+
+    def test_for_block_raises_wrong_format(self):
+        block_map = {'header-one': []}
+        with self.assertRaises(BlockException):
+            Options.for_block(block_map, 'header-one')
 
 
 class TestWrapperState(unittest.TestCase):
@@ -58,17 +73,6 @@ class TestWrapperState(unittest.TestCase):
             'inlineStyleRanges': [],
             'entityRanges': []
         })), 'h1')
-
-    def test_element_for_raises(self):
-        with self.assertRaises(BlockException):
-            self.wrapper_state.element_for({
-                'key': '5s7g9',
-                'text': 'Header',
-                'type': 'header-two',
-                'depth': 0,
-                'inlineStyleRanges': [],
-                'entityRanges': []
-            })
 
     def test_to_string_empty(self):
         self.assertEqual(self.wrapper_state.to_string(), '')
