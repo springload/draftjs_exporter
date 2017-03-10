@@ -83,18 +83,19 @@ The exporter output is extensively configurable to cater for varying content typ
     from draftjs_exporter.constants import BLOCK_TYPES, ENTITY_TYPES
     from draftjs_exporter.defaults import BLOCK_MAP, STYLE_MAP
 
-    # The configuration is a single object with predefined keys.
     config = {
         # `block_map` is a mapping from Draft.js block types to a definition of their HTML representation.
         # Extend BLOCK_MAP to start with sane defaults, or make your own from scratch.
         'block_map': dict(BLOCK_MAP, **{
             # The most basic mapping format, block type to tag name.
-            BLOCK_TYPES.HEADER_TWO: {'element': 'h2'},
-            # TODO Describe full configuration below.
-            BLOCK_TYPES.BLOCKQUOTE: ['blockquote', {'className': 'c-pullquote'}],
+            BLOCK_TYPES.HEADER_TWO: 'h2',
+            # Use a dict to define props on the block.
+            BLOCK_TYPES.BLOCKQUOTE: {'element': 'blockquote', 'props': {'className': 'pullquote'}},
+            # Add a wrapper (and wrapper_props) to wrap adjacent blocks.
             BLOCK_TYPES.UNORDERED_LIST_ITEM: {
                 'element': 'li',
-                'wrapper': ['ul', {'className': 'bullet-list'}],
+                'wrapper': 'ul',
+                'wrapper_props': {'className': 'bullet-list'},
             },
         }),
         # Extend/override the default style map.
