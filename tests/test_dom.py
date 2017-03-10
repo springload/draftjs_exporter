@@ -27,10 +27,10 @@ class TestDOM(unittest.TestCase):
         self.assertEqual(DOM.render(DOM.create_element('a', {}, None, DOM.create_element('span', {}, 'Test test'))), '<a><span>Test test</span></a>')
 
     def test_create_element_entity(self):
-        self.assertEqual(DOM.render(DOM.create_element(Icon, {'name': 'rocket'})), '<svg class="icon"><use xlink:href="icon-rocket"></use></svg>')
+        self.assertEqual(DOM.render(DOM.create_element(Icon, {'name': 'rocket'})), '<svg class="icon"><use xlink:href="#icon-rocket"></use></svg>')
 
     def test_create_element_entity_configured(self):
-        self.assertEqual(DOM.render(DOM.create_element(Icon(icon_class='i'), {'name': 'rocket'})), '<svg class="i"><use xlink:href="icon-rocket"></use></svg>')
+        self.assertEqual(DOM.render(DOM.create_element(Icon(icon_class='i'), {'name': 'rocket'})), '<svg class="i"><use xlink:href="#icon-rocket"></use></svg>')
 
     def test_create_document_fragment(self):
         self.assertEqual(DOM.get_tag_name(DOM.create_document_fragment()), 'fragment')
