@@ -9,6 +9,8 @@ This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html
 
 - Add simplified block mapping format: `BLOCK_TYPES.HEADER_TWO: 'h2'`.
 - Raise exception when `style_map` does not define an `element` for the style.
+- Add support for any props on `style_map`.
+- Automatically convert `style` prop from a dict of camelCase properties to a string, on all elements (if `style` is already a string, it will be output as is).
 
 ### Removed
 
@@ -21,6 +23,7 @@ This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html
 - Replace array-style mapping declarations of block element and wrapper props with `props` and `wrapper_props` attributes (dictionaries of props).
 - Moved and renamed `BlockException` to `ConfigException`.
 - Replace `style_map` config format to the one of the `block_map`.
+- Move internal `camel_to_dash` method to `DOM` for official use.
 
 ### How to upgrade
 
@@ -48,6 +51,11 @@ This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html
 + 'STRIKETHROUGH': {'element': 'span', 'props': {'style': {'textDecoration': 'line-through'}}},
 # Create custom UNDERLINE styles:
 + 'UNDERLINE': {'element': 'span', 'props': {'style': {'textDecoration': 'underline'}}},
+# New camel_to_dash location:
+- from draftjs_exporter.style_state import camel_to_dash
+- camel_to_dash()
++ from draftjs_exporter.dom import DOM
++ DOM.camel_to_dash()
 ```
 
 ## [v0.7.0](https://github.com/springload/draftjs_exporter/releases/tag/v0.7.0)

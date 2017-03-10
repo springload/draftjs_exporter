@@ -27,7 +27,7 @@ This project adheres to `Semantic Versioning <http://semver.org/spec/v2.0.0.html
 *  Automatic conversion of entity data to HTML attributes (int & boolean to string, ``className`` to ``class``).
 *  Wrapped blocks (``<li>`` elements go inside ``<ul>`` or ``<ol>``).
 *  Nested wrapped blocks (multiple nesting levels, arbitrary type and depth).
-*  Output inline styles as inline elements (``<em>``, ``<strong>``, pick and choose).
+*  Output inline styles as inline elements (``<em>``, ``<strong>``, pick and choose, with any attribute).
 *  Overlapping inline style ranges.
 
 Usage

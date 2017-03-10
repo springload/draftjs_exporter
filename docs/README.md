@@ -20,6 +20,7 @@ draftjs_exporter documentation
 - HTML attributes are added in alphabetical order.
 - `unstyled` blocks without text render as an empty element.
 - Inline ranges aiming the same offset and length are always rendered in the same order (alphabetical order of the tag name - `code`, `em`, `strong`).
+- `style` prop is rendered as-is if it is a string, or can also be a dict in which case its properties are converted into a string using `camel_to_dash`.
 - Invalid attributes are left for the BeautifulSoup / html5lib parser to handle.
 - HTML escaping is automatically done by BeautifulSoup / html5lib.
 
