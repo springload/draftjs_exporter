@@ -90,9 +90,14 @@ config = {
             'wrapper_props': {'className': 'bullet-list'},
         },
     }),
-    # Extend/override the default style map.
+    # `style_map` defines the HTML representation of inline elements.
+    # Extend STYLE_MAP to start with sane defaults, or make your own from scratch.
     'style_map': dict(STYLE_MAP, **{
-        'HIGHLIGHT': {'element': 'strong', 'textDecoration': 'underline'},
+        # Use the same mapping format as in the `block_map`.
+        'KBD': 'kbd',
+        # 'STRIKETHROUGH': {'element': 'span', 'props': {'className': 'u-strikethrough'}},
+        'STRIKETHROUGH': {'element': 'span', 'props': {'style': {'textDecoration': 'line-through'}}},
+        'HIGHLIGHT': {'element': 'strong', 'props': {'style': {'textDecoration': 'underline'}}},
     }),
     'entity_decorators': {
         ENTITY_TYPES.LINK: Link(use_new_window=True),
@@ -178,7 +183,13 @@ content_state = {
             'text': 'User testing and analysis',
             'type': 'unordered-list-item',
             'depth': 0,
-            'inlineStyleRanges': [],
+            'inlineStyleRanges': [
+                {
+                    'offset': 13,
+                    'length': 12,
+                    'style': 'STRIKETHROUGH'
+                },
+            ],
             'entityRanges': [
                 {
                     'offset': 0,
@@ -333,6 +344,20 @@ content_state = {
             'type': 'unordered-list-item',
             'depth': 0,
             'inlineStyleRanges': [],
+            'entityRanges': [],
+        },
+        {
+            'key': '33gc9',
+            'text': 'Use cmd + b to style text as bold',
+            'type': 'unstyled',
+            'depth': 0,
+            'inlineStyleRanges': [
+                {
+                    'offset': 4,
+                    'length': 7,
+                    'style': 'KBD'
+                },
+            ],
             'entityRanges': [],
         },
     ]

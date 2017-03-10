@@ -8,6 +8,7 @@ This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html
 ### Added
 
 - Add simplified block mapping format: `BLOCK_TYPES.HEADER_TWO: 'h2'`.
+- Raise exception when `style_map` does not define an `element` for the style.
 
 ### Removed
 
@@ -15,8 +16,9 @@ This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html
 
 ### Changed
 
-- Replace array-style mapping declarations of element and wrapper props with `props` and `wrapper_props` attributes (dictionaries of props).
+- Replace array-style mapping declarations of block element and wrapper props with `props` and `wrapper_props` attributes (dictionaries of props).
 - Moved and renamed `BlockException` to `ConfigException`.
+- Replace `style_map` config format to the one of the `block_map`.
 
 ### How to upgrade
 
@@ -34,6 +36,12 @@ This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html
 # Change location and name of exceptions:
 - from draftjs_exporter.wrapper_state import BlockException
 + from draftjs_exporter.options import ConfigException
+# Change element-only style declarations:
+- 'KBD': {'element': 'kbd'},
++ 'KBD': 'kbd',
+# Change object-style style declarations:
+- 'HIGHLIGHT': {'element': 'strong', 'textDecoration': 'underline'},
++ 'HIGHLIGHT': {'element': 'strong', 'props': {'style': {'textDecoration': 'underline'}}},
 ```
 
 ## [v0.7.0](https://github.com/springload/draftjs_exporter/releases/tag/v0.7.0)
