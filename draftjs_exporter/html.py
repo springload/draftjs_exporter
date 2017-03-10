@@ -25,6 +25,7 @@ class HTML:
         self.block_map = config.get('block_map', BLOCK_MAP)
         self.style_map = config.get('style_map', STYLE_MAP)
 
+
     def render(self, content_state):
         """
         Starts the export process on a given piece of content state.

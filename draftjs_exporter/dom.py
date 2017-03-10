@@ -73,13 +73,21 @@ class DOM(object):
                 if prop is not None:
                     attributes[key] = prop
 
+            # Class component.
             if inspect.isclass(type_):
+                attributes['children'] = children[0] if len(children) == 1 else children
                 elt = type_().render(attributes)
+            # Object instance component.
             elif callable(getattr(type_, 'render', None)):
+                attributes['children'] = children[0] if len(children) == 1 else children
                 elt = type_.render(attributes)
+            # Functional component.
             elif callable(type_):
+                attributes['children'] = children[0] if len(children) == 1 else children
                 elt = type_(attributes)
             else:
+                # Never render children attribute on a raw tag.
+                attributes.pop('children', None)
                 elt = DOM.create_tag(type_, attributes)
 
                 for child in children:

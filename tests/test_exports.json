@@ -43,7 +43,7 @@
 
     {
         "label": "Nested inline styles",
-        "output": "<p><em><strong>BoldItalic</strong></em></p>",
+        "output": "<p><strong><em>BoldItalic</em></strong></p>",
         "content_state": {
             "entityMap": {},
             "blocks": [
@@ -72,7 +72,7 @@
 
     {
         "label": "Nested inline styles (inverted)",
-        "output": "<p><em><strong>ItalicBold</strong></em></p>",
+        "output": "<p><strong><em>ItalicBold</em></strong></p>",
         "content_state": {
             "entityMap": {},
             "blocks": [

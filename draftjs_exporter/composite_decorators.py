@@ -30,10 +30,9 @@ def apply_decorators(decorators, text, block_type):
             yield DOM.create_text_node(text[pointer:begin])
 
         yield DOM.create_element(decorator, {
-            'children': match.group(0),
             'match': match,
             'block_type': block_type,
-        })
+        }, match.group(0))
         pointer = end
 
     if pointer < len(text):

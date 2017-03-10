@@ -7,6 +7,13 @@ from draftjs_exporter.command import Command
 from draftjs_exporter.dom import DOM
 from draftjs_exporter.style_state import StyleState
 
+Important = lambda props: DOM.create_element('strong', {'style': {'color': 'red'}}, props['children'])
+
+
+def Shout(props):
+    return DOM.create_element('span', {'style': {'textTransform': 'uppercase'}}, props['children'])
+
+
 style_map = {
     'ITALIC': 'em',
     'BOLD': 'strong',
@@ -17,7 +24,9 @@ style_map = {
     'KBD': {
         'element': 'kbd',
         'props': {'className': 'o-keyboard-shortcut'}
-    }
+    },
+    'IMPORTANT': Important,
+    'SHOUT': Shout,
 }
 
 
@@ -60,8 +69,28 @@ class TestStyleState(unittest.TestCase):
     def test_render_styles_styled_multiple(self):
         self.style_state.apply(Command('start_inline_style', 0, 'BOLD'))
         self.style_state.apply(Command('start_inline_style', 0, 'ITALIC'))
-        self.assertEqual(DOM.render(self.style_state.render_styles(DOM.create_text_node('Test text'))), '<em><strong>Test text</strong></em>')
+        self.assertEqual(DOM.render(self.style_state.render_styles(DOM.create_text_node('Test text'))), '<strong><em>Test text</em></strong>')
 
     def test_render_styles_attributes(self):
         self.style_state.apply(Command('start_inline_style', 0, 'KBD'))
         self.assertEqual(DOM.render(self.style_state.render_styles(DOM.create_text_node('Test text'))), '<kbd class="o-keyboard-shortcut">Test text</kbd>')
+        self.style_state.apply(Command('stop_inline_style', 9, 'KBD'))
+
+    def test_render_styles_component(self):
+        self.style_state.apply(Command('start_inline_style', 0, 'IMPORTANT'))
+        self.assertEqual(DOM.render(self.style_state.render_styles(DOM.create_text_node('Test text'))), '<strong style="color: red;">Test text</strong>')
+        self.style_state.apply(Command('stop_inline_style', 9, 'IMPORTANT'))
+
+    def test_render_styles_component_multiple(self):
+        self.style_state.apply(Command('start_inline_style', 0, 'IMPORTANT'))
+        self.style_state.apply(Command('start_inline_style', 0, 'SHOUT'))
+        self.assertEqual(DOM.render(self.style_state.render_styles(DOM.create_text_node('Test text'))), '<strong style="color: red;"><span style="text-transform: uppercase;">Test text</span></strong>')
+        self.style_state.apply(Command('stop_inline_style', 9, 'IMPORTANT'))
+        self.style_state.apply(Command('stop_inline_style', 9, 'SHOUT'))
+
+    def test_render_styles_component_multiple_invert(self):
+        self.style_state.apply(Command('start_inline_style', 0, 'SHOUT'))
+        self.style_state.apply(Command('start_inline_style', 0, 'IMPORTANT'))
+        self.assertEqual(DOM.render(self.style_state.render_styles(DOM.create_text_node('Test text'))), '<strong style="color: red;"><span style="text-transform: uppercase;">Test text</span></strong>')
+        self.style_state.apply(Command('stop_inline_style', 9, 'SHOUT'))
+        self.style_state.apply(Command('stop_inline_style', 9, 'IMPORTANT'))

@@ -26,8 +26,8 @@ class StyleState:
     def render_styles(self, text_node):
         node = text_node
         if not self.is_empty():
+            self.styles.sort(reverse=True)
             options = [Options.for_style(self.style_map, s) for s in self.styles]
-            options.sort(key=lambda o: o.element, reverse=True)
 
             # Nest the tags.
             for opt in options:
