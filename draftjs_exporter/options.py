@@ -9,7 +9,7 @@ class ConfigException(ExporterException):
 
 class Options:
     """
-    Facilitates querying configuration from the block_map.
+    Facilitates querying data from a config map.
     """
     def __init__(self, element, props=None, wrapper=None, wrapper_props=None):
         self.element = element
@@ -45,5 +45,22 @@ class Options:
             opts = Options(**block)
         else:
             opts = Options(block)
+
+        return opts
+
+    @staticmethod
+    def for_style(style_map, type_):
+        if type_ not in style_map:
+            raise ConfigException('Style "%s" does not exist in style_map' % type_)
+
+        style = style_map.get(type_)
+
+        if isinstance(style, dict):
+            if 'element' not in style:
+                raise ConfigException('Style "%s" does not define an element' % type_)
+
+            opts = Options(**style)
+        else:
+            opts = Options(style)
 
         return opts

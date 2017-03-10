@@ -22,9 +22,9 @@ BLOCK_MAP = {
 
 # Default style map to extend.
 STYLE_MAP = {
-    INLINE_STYLES.ITALIC: {'element': 'em'},
-    INLINE_STYLES.BOLD: {'element': 'strong'},
-    INLINE_STYLES.CODE: {'element': 'code'},
-    INLINE_STYLES.STRIKETHROUGH: {'textDecoration': 'line-through'},
-    INLINE_STYLES.UNDERLINE: {'textDecoration': 'underline'},
+    INLINE_STYLES.ITALIC: 'em',
+    INLINE_STYLES.BOLD: 'strong',
+    INLINE_STYLES.CODE: 'code',
+    INLINE_STYLES.STRIKETHROUGH: {'element': 'span', 'props': {'style': {'textDecoration': 'line-through'}}},
+    INLINE_STYLES.UNDERLINE: {'element': 'span', 'props': {'style': {'textDecoration': 'underline'}}},
 }
