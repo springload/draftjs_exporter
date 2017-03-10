@@ -23,7 +23,8 @@ config = {
     'block_map': dict(BLOCK_MAP, **{
         BLOCK_TYPES.UNORDERED_LIST_ITEM: {
             'element': 'li',
-            'wrapper': ['ul', {'className': 'steps'}],
+            'wrapper': 'ul',
+            'wrapper_props': {'className': 'steps'},
         },
     }),
     'style_map': {
@@ -258,7 +259,8 @@ class TestOutput(unittest.TestCase):
             'block_map': dict(BLOCK_MAP, **{
                 BLOCK_TYPES.UNORDERED_LIST_ITEM: {
                     'element': 'li',
-                    'wrapper': ['ul', {'length': 5}],
+                    'wrapper': 'ul',
+                    'wrapper_props': {'length': 5},
                 },
             }),
         }).render({
@@ -280,7 +282,8 @@ class TestOutput(unittest.TestCase):
             'block_map': dict(BLOCK_MAP, **{
                 BLOCK_TYPES.UNORDERED_LIST_ITEM: {
                     'element': 'li',
-                    'wrapper': ['ul', {'disabled': True}],
+                    'wrapper': 'ul',
+                    'wrapper_props': {'disabled': True},
                 },
             }),
         }).render({
@@ -302,7 +305,8 @@ class TestOutput(unittest.TestCase):
             'block_map': dict(BLOCK_MAP, **{
                 BLOCK_TYPES.UNORDERED_LIST_ITEM: {
                     'element': 'li',
-                    'wrapper': ['ul', {'disabled': False}],
+                    'wrapper': 'ul',
+                    'wrapper_props': {'disabled': False},
                 },
             }),
         }).render({
@@ -324,7 +328,8 @@ class TestOutput(unittest.TestCase):
             'block_map': dict(BLOCK_MAP, **{
                 BLOCK_TYPES.UNORDERED_LIST_ITEM: {
                     'element': 'li',
-                    'wrapper': ['ul', {'disabled': None}],
+                    'wrapper': 'ul',
+                    'wrapper_props': {'disabled': None},
                 },
             }),
         }).render({
@@ -346,7 +351,8 @@ class TestOutput(unittest.TestCase):
             'block_map': dict(BLOCK_MAP, **{
                 BLOCK_TYPES.UNORDERED_LIST_ITEM: {
                     'element': 'li',
-                    'wrapper': ['ul', {'*ngFor': 'test'}],
+                    'wrapper': 'ul',
+                    'wrapper_props': {'*ngFor': 'test'},
                 },
             })
         }).render({
@@ -367,7 +373,8 @@ class TestOutput(unittest.TestCase):
         self.assertEqual(HTML({
             'block_map': dict(BLOCK_MAP, **{
                 BLOCK_TYPES.HEADER_TWO: {
-                    'element': ['h2', {'className': 'c-amazing-heading'}],
+                    'element': 'h2',
+                    'props': {'className': 'c-amazing-heading'},
                 },
             })
         }).render({
@@ -704,7 +711,8 @@ class TestOutput(unittest.TestCase):
                 'blockquote': {'element': 'blockquote'},
                 'unordered-list-item': {
                     'element': 'li',
-                    'wrapper': ['ul', {}]
+                    'wrapper': 'ul',
+                    'wrapper_props': {},
                 },
                 'unstyled': {'element': 'p'}
             },
@@ -847,7 +855,8 @@ class TestOutput(unittest.TestCase):
             'block_map': dict(BLOCK_MAP, **{
                 BLOCK_TYPES.UNORDERED_LIST_ITEM: {
                     'element': 'li',
-                    'wrapper': ['ul', {'className': 'steps'}],
+                    'wrapper': 'ul',
+                    'wrapper_props': {'className': 'steps'},
                 },
             })
         }).render({

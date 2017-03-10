@@ -29,7 +29,8 @@ exporter = HTML({
     'block_map': dict(BLOCK_MAP, **{
         BLOCK_TYPES.UNORDERED_LIST_ITEM: {
             'element': 'li',
-            'wrapper': ['ul', {'className': 'bullet-list'}],
+            'wrapper': 'ul',
+            'wrapper_props': {'className': 'bullet-list'},
         },
     }),
     'style_map': {

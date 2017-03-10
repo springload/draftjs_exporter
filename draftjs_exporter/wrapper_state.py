@@ -12,35 +12,40 @@ class Options:
     """
     Facilitates querying configuration from the block_map.
     """
-    def __init__(self, element_options, wrapper_options):
-        self.element = Options.map(element_options)
-        self.wrapper = Options.map(wrapper_options) if wrapper_options else None
+    def __init__(self, element, props=None, wrapper=None, wrapper_props=None):
+        self.element = element
+        self.props = props
+        self.wrapper = wrapper
+        self.wrapper_props = wrapper_props
 
-    @staticmethod
-    def map(opts):
-        """
-        Supports the following options formats:
-        'ul'
-        ['ul']
-        ['ul', {'className': 'bullet-list'}]
-        """
-        if isinstance(opts, list):
-            tag = opts[0]
-            attributes = opts[1] if len(opts) > 1 else {}
-        else:
-            tag = opts
-            attributes = {}
+    def __str__(self):
+        return '<Options {0} {1} {2} {3}>'.format(self.element, self.props, self.wrapper, self.wrapper_props)
 
-        return [tag, attributes]
+    def __repr__(self):
+        return str(self)
+
+    def __eq__(self, other):
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other):
+        return not self == other
 
     @staticmethod
     def for_block(block_map, type_):
-        block_options = block_map.get(type_)
-
-        if block_options is None:
+        if type_ not in block_map:
             raise BlockException('Block "%s" does not exist in block_map' % type_)
 
-        return Options(block_options.get('element'), block_options.get('wrapper'))
+        block = block_map.get(type_)
+
+        if isinstance(block, dict):
+            if 'element' not in block:
+                raise BlockException('Block "%s" does not define an element' % type_)
+
+            opts = Options(**block)
+        else:
+            opts = Options(block)
+
+        return opts
 
 
 class WrapperStack:
@@ -68,7 +73,7 @@ class WrapperStack:
         if self.length() > 0:
             wrapper = self.get(-1)
         else:
-            wrapper = Wrapper(-1, None)
+            wrapper = Wrapper(-1)
 
         return wrapper
 
@@ -82,14 +87,15 @@ class Wrapper:
     when the depth of a block is different than 0, so the DOM elements
     have the appropriate amount of nesting.
     """
-    def __init__(self, depth, options):
-        if options:
-            self.elt = DOM.create_element(options[0], options[1])
-        else:
-            self.elt = DOM.create_document_fragment()
-
+    def __init__(self, depth, elt=None, props=None):
         self.depth = depth
-        self.options = options
+        self.type = elt
+        self.elt = DOM.create_element(elt, props)
+        self.props = props
+
+    def is_different(self, depth, elt, props):
+        return depth > self.depth or elt != self.type or props != self.props
+
 
 
 class WrapperState:
@@ -128,7 +134,7 @@ class WrapperState:
         options = Options.for_block(self.block_map, type_)
 
         # Make an element from the options specified in the block map.
-        elt = DOM.create_element(options.element[0], options.element[1])
+        elt = DOM.create_element(options.element, options.props)
 
         parent = self.parent_for(options, depth, elt)
 
@@ -144,7 +150,8 @@ class WrapperState:
             DOM.append_child(parent, elt)
         else:
             # Reset the stack if there is no wrapper.
-            if self.stack.length() > 0 and self.stack.head().depth != -1 and self.stack.head().options is not None:
+            head = self.stack.head()
+            if self.stack.length() > 0 and head.depth != -1 and head.props is not None:
                 self.stack.slice(-1)
                 self.stack.append(Wrapper(-1, None))
             parent = elt
@@ -152,11 +159,12 @@ class WrapperState:
         return parent
 
     def get_wrapper_elt(self, options, depth):
-        if depth > self.stack.head().depth or options.wrapper != self.stack.head().options:
+        head = self.stack.head()
+        if head.is_different(depth, options.wrapper, options.wrapper_props):
             self.update_stack(options, depth)
 
         # If depth is lower than the maximum, we cut the stack.
-        if depth < self.stack.head().depth:
+        if depth < head.depth:
             self.stack.slice(depth + 1)
 
         return self.stack.get(depth).elt
@@ -167,7 +175,7 @@ class WrapperState:
             depth_levels = range(self.stack.length(), depth + 1)
 
             for level in depth_levels:
-                new_wrapper = Wrapper(level, options.wrapper)
+                new_wrapper = Wrapper(level, options.wrapper, options.wrapper_props)
 
                 wrapper_children = DOM.get_children(self.stack.head().elt)
 
@@ -175,7 +183,7 @@ class WrapperState:
                 if len(wrapper_children) == 0:
                     # If there is no content in the current wrapper, we need
                     # to add an intermediary node.
-                    wrapper_parent = DOM.create_element(options.element[0], options.element[1])
+                    wrapper_parent = DOM.create_element(options.element, options.props)
                     DOM.append_child(self.stack.head().elt, wrapper_parent)
                 else:
                     # Otherwise we can append at the end of the last child.
@@ -187,4 +195,4 @@ class WrapperState:
         else:
             # Cut the stack to where it now stops, and add new wrapper.
             self.stack.slice(depth)
-            self.stack.append(Wrapper(depth, options.wrapper))
+            self.stack.append(Wrapper(depth, options.wrapper, options.wrapper_props))
