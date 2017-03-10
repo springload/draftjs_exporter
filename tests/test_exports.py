@@ -34,8 +34,8 @@ exporter = HTML({
         },
     }),
     'style_map': {
-        INLINE_STYLES.ITALIC: {'element': 'em'},
-        INLINE_STYLES.BOLD: {'element': 'strong'},
+        INLINE_STYLES.ITALIC: 'em',
+        INLINE_STYLES.BOLD: 'strong',
     },
 })
 
