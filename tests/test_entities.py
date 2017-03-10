@@ -41,7 +41,7 @@ class Icon:
         self.icon_class = icon_class
 
     def render(self, props):
-        href = 'icon-%s' % props.get('name', '')
+        href = '#icon-%s' % props.get('name', '')
         return DOM.create_element('svg', {'class': self.icon_class}, DOM.create_element('use', {'xlink:href': href}))
 
 
@@ -68,10 +68,10 @@ class TestNull(unittest.TestCase):
 
 class TestIcon(unittest.TestCase):
     def test_render(self):
-        self.assertEqual(DOM.render(DOM.create_element(Icon, {'name': 'rocket'})), '<svg class="icon"><use xlink:href="icon-rocket"></use></svg>')
+        self.assertEqual(DOM.render(DOM.create_element(Icon, {'name': 'rocket'})), '<svg class="icon"><use xlink:href="#icon-rocket"></use></svg>')
 
     def test_render_configured(self):
-        self.assertEqual(DOM.render(DOM.create_element(Icon(icon_class='i'), {'name': 'rocket'})), '<svg class="i"><use xlink:href="icon-rocket"></use></svg>')
+        self.assertEqual(DOM.render(DOM.create_element(Icon(icon_class='i'), {'name': 'rocket'})), '<svg class="i"><use xlink:href="#icon-rocket"></use></svg>')
 
 
 class TestImage(unittest.TestCase):
@@ -114,7 +114,7 @@ class TestButton(unittest.TestCase):
         self.assertEqual(DOM.get_text_content(button), None)
         self.assertEqual(button.get('href'), 'http://example.com')
         self.assertEqual(DOM.get_class_list(button), ['icon-text'])
-        self.assertEqual(DOM.render(button), '<a class="icon-text" href="http://example.com"><svg class="icon"><use xlink:href="icon-rocket"></use></svg><span class="icon-text__text">Launch</span></a>')
+        self.assertEqual(DOM.render(button), '<a class="icon-text" href="http://example.com"><svg class="icon"><use xlink:href="#icon-rocket"></use></svg><span class="icon-text__text">Launch</span></a>')
 
     def test_render_without_icon(self):
         button = DOM.create_element(Button, {
