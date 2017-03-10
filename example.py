@@ -95,8 +95,7 @@ config = {
     'style_map': dict(STYLE_MAP, **{
         # Use the same mapping format as in the `block_map`.
         'KBD': 'kbd',
-        # 'STRIKETHROUGH': {'element': 'span', 'props': {'className': 'u-strikethrough'}},
-        'STRIKETHROUGH': {'element': 'span', 'props': {'style': {'textDecoration': 'line-through'}}},
+        'STRIKETHROUGH': {'element': 'span', 'props': {'className': 'u-strikethrough'}},
         'HIGHLIGHT': {'element': 'strong', 'props': {'style': {'textDecoration': 'underline'}}},
     }),
     'entity_decorators': {
