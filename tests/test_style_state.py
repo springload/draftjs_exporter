@@ -38,7 +38,6 @@ class TestStyleState(unittest.TestCase):
         self.assertIsInstance(self.style_state, StyleState)
 
     def test_apply_start_inline_style(self):
-        self.assertEqual(self.style_state.styles, [])
         self.style_state.apply(Command('start_inline_style', 0, 'ITALIC'))
         self.assertEqual(self.style_state.styles, ['ITALIC'])
 
