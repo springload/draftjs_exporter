@@ -19,7 +19,7 @@ def Blockquote(props):
 
     return DOM.create_element('blockquote', {
         'cite': block_data.get('cite')
-    })
+    }, props['children'])
 
 
 def ListItem(props):
@@ -27,7 +27,7 @@ def ListItem(props):
 
     return DOM.create_element('li', {
         'class': 'list-item--depth-{0}'.format(depth)
-    })
+    }, props['children'])
 
 
 def HR(props):

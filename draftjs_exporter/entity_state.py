@@ -55,15 +55,14 @@ class EntityState:
 
         self.entity_stack.pop()
 
-    def render_entitities(self, root_element, style_node):
+    def render_entitities(self, style_node):
         if self.is_empty():
-            DOM.append_child(root_element, style_node)
+            elt = style_node
         else:
-            stack_start = DOM.create_document_fragment()
-            DOM.append_child(root_element, stack_start)
+            elt = DOM.create_document_fragment()
 
-            element_stack = [stack_start]
-            new_element = stack_start
+            element_stack = [elt]
+            new_element = elt
 
             for entity_details in self.entity_stack:
                 decorator = self.get_entity_decorator(entity_details)
@@ -72,3 +71,5 @@ class EntityState:
                 new_element = DOM.create_element(decorator, props, style_node)
                 DOM.append_child(element_stack[-1], new_element)
                 element_stack.append(new_element)
+
+        return elt

@@ -41,7 +41,7 @@ class HTML:
         return self.wrapper_state.to_string()
 
     def render_block(self, block, entity_map):
-        element = self.wrapper_state.element_for(block)
+        content = DOM.create_document_fragment()
         entity_state = EntityState(self.entity_decorators, entity_map)
         style_state = StyleState(self.style_map)
 
@@ -57,7 +57,9 @@ class HTML:
                 decorated_node = DOM.create_text_node(text)
 
             styled_node = style_state.render_styles(decorated_node)
-            entity_state.render_entitities(element, styled_node)
+            DOM.append_child(content, entity_state.render_entitities(styled_node))
+
+        self.wrapper_state.element_for(block, content)
 
     def build_command_groups(self, block):
         """

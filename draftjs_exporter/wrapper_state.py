@@ -84,7 +84,7 @@ class WrapperState:
         if document_length == 0 and self.stack.length() != 0:
             DOM.append_child(self.document, self.stack.tail().elt)
 
-    def element_for(self, block):
+    def element_for(self, block, block_content):
         type_ = block.get('type', 'unstyled')
         depth = block.get('depth', 0)
         data = block.get('data', {})
@@ -96,7 +96,7 @@ class WrapperState:
         }
 
         # Make an element from the options specified in the block map.
-        elt = DOM.create_element(options.element, props)
+        elt = DOM.create_element(options.element, props, block_content)
 
         parent = self.parent_for(options, depth, elt)
 

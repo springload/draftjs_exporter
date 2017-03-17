@@ -50,12 +50,12 @@ class DOM(object):
         )
         https://facebook.github.io/react/docs/top-level-api.html#react.createelement
         """
-        if props is None:
-            props = {}
-
         if not type_:
             elt = DOM.create_document_fragment()
         else:
+            if props is None:
+                props = {}
+
             attributes = {}
 
             # Map props from React/Draft.js to HTML lingo.
