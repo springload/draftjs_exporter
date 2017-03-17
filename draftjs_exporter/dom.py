@@ -4,13 +4,17 @@ import inspect
 import re
 
 from bs4 import BeautifulSoup
+from .dom_lxml import DOM_LXML
+
+DOM = DOM_LXML
 
 # Python 2/3 unicode compatibility hack.
 # See http://stackoverflow.com/questions/6812031/how-to-make-unicode-string-with-python3
 try:
     UNICODE_EXISTS = bool(type(unicode))
 except NameError:
-    unicode = lambda s: str(s)
+    def unicode(s):
+        return str(s)
 
 # https://gist.github.com/yahyaKacem/8170675
 _first_cap_re = re.compile(r'(.)([A-Z][a-z]+)')
@@ -26,7 +30,6 @@ def Soup(raw_str):
 
 # Cache empty soup so we can create tags in isolation without the performance overhead.
 soup = Soup('')
-
 
 def create_tag(type_, attributes=None):
     """
@@ -50,7 +53,7 @@ def set_text_content(elt, text):
         elt.append(text)
 
 
-class DOM(object):
+class DOM_BS(object):
     @staticmethod
     def create_element(type_=None, props=None, *children):
         """
@@ -78,7 +81,7 @@ class DOM(object):
                 prop = props[key]
 
                 if key == 'style' and isinstance(prop, dict):
-                    rules = ['{0}: {1};'.format(DOM.camel_to_dash(style), prop[style]) for style in prop.keys()]
+                    rules = ['{0}: {1};'.format(DOM_BS.camel_to_dash(style), prop[style]) for style in prop.keys()]
                     prop = ''.join(sorted(rules))
 
                 # Filter None values.
@@ -98,7 +101,6 @@ class DOM(object):
                 attributes['children'] = children[0] if len(children) == 1 else children
                 elt = type_(attributes)
             else:
-
                 # Never render those attributes on a raw tag.
                 attributes.pop('children', None)
                 attributes.pop('block', None)
@@ -109,7 +111,7 @@ class DOM(object):
                 for child in children:
                     if child:
                         if hasattr(child, 'tag'):
-                            DOM.append_child(elt, child)
+                            DOM_BS.append_child(elt, child)
                         else:
                             set_text_content(elt, get_text_content(elt) + child if get_text_content(elt) else child)
 
