@@ -13,7 +13,7 @@ class Options:
     """
     def __init__(self, element, props=None, wrapper=None, wrapper_props=None):
         self.element = element
-        self.props = props
+        self.props = props if props else {}
         self.wrapper = wrapper
         self.wrapper_props = wrapper_props
 

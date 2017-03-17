@@ -14,6 +14,22 @@ from draftjs_exporter.dom import DOM
 from draftjs_exporter.html import HTML
 
 
+def Blockquote(props):
+    block_data = props['block']['data']
+
+    return DOM.create_element('blockquote', {
+        'cite': block_data.get('cite')
+    })
+
+
+def ListItem(props):
+    depth = props['block']['depth']
+
+    return DOM.create_element('li', {
+        'class': 'list-item--depth-{0}'.format(depth)
+    })
+
+
 def HR(props):
     return DOM.create_element('hr')
 
@@ -82,13 +98,19 @@ config = {
         # The most basic mapping format, block type to tag name.
         BLOCK_TYPES.HEADER_TWO: 'h2',
         # Use a dict to define props on the block.
-        BLOCK_TYPES.BLOCKQUOTE: {'element': 'blockquote', 'props': {'className': 'pullquote'}},
+        BLOCK_TYPES.HEADER_THREE: {'element': 'h3', 'props': {'className': 'u-text-center'}},
         # Add a wrapper (and wrapper_props) to wrap adjacent blocks.
         BLOCK_TYPES.UNORDERED_LIST_ITEM: {
             'element': 'li',
             'wrapper': 'ul',
             'wrapper_props': {'className': 'bullet-list'},
         },
+        # Use a component for more flexibility (reading block data or depth).
+        BLOCK_TYPES.BLOCKQUOTE: Blockquote,
+        BLOCK_TYPES.ORDERED_LIST_ITEM: {
+            'element': ListItem,
+            'wrapper': 'ol',
+        }
     }),
     # `style_map` defines the HTML representation of inline elements.
     # Extend STYLE_MAP to start with sane defaults, or make your own from scratch.
@@ -154,10 +176,21 @@ content_state = {
             'entityRanges': []
         },
         {
+            'key': '6bvvh',
+            'text': 'Front-end (FED) development',
+            'type': 'header-three',
+            'depth': 0,
+            'inlineStyleRanges': [],
+            'entityRanges': []
+        },
+        {
             'key': '5384u',
             'text': 'Everyone 🍺 Springload applies the best #principles of UX to their work.',
             'type': 'blockquote',
             'depth': 0,
+            'data': {
+                'cite': 'http://example.com/',
+            },
             'inlineStyleRanges': [],
             'entityRanges': []
         },
@@ -172,7 +205,7 @@ content_state = {
         {
             'key': 'b9grk',
             'text': 'User research',
-            'type': 'unordered-list-item',
+            'type': 'ordered-list-item',
             'depth': 0,
             'inlineStyleRanges': [],
             'entityRanges': []
@@ -180,7 +213,7 @@ content_state = {
         {
             'key': 'a1tis',
             'text': 'User testing and analysis',
-            'type': 'unordered-list-item',
+            'type': 'ordered-list-item',
             'depth': 0,
             'inlineStyleRanges': [
                 {
@@ -200,24 +233,24 @@ content_state = {
         {
             'key': 'adjdn',
             'text': 'A/B testing',
-            'type': 'unordered-list-item',
-            'depth': 0,
+            'type': 'ordered-list-item',
+            'depth': 1,
             'inlineStyleRanges': [],
             'entityRanges': []
         },
         {
             'key': '62lio',
             'text': 'Prototyping',
-            'type': 'unordered-list-item',
-            'depth': 0,
+            'type': 'ordered-list-item',
+            'depth': 1,
             'inlineStyleRanges': [],
             'entityRanges': []
         },
         {
             'key': '62lio',
             'text': 'Beautiful <code/>',
-            'type': 'unordered-list-item',
-            'depth': 0,
+            'type': 'ordered-list-item',
+            'depth': 1,
             'inlineStyleRanges': [],
             'entityRanges': []
         },

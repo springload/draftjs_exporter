@@ -87,15 +87,16 @@ class WrapperState:
     def element_for(self, block):
         type_ = block.get('type', 'unstyled')
         depth = block.get('depth', 0)
-        block_data = block.get('data')
+        data = block.get('data', {})
         options = Options.for_block(self.block_map, type_)
-
-        if block_data:
-            props = dict(options.props)
-            props['blockData'] = block_data
+        props = dict(options.props)
+        props['block'] = {
+            'depth': depth,
+            'data': data,
+        }
 
         # Make an element from the options specified in the block map.
-        elt = DOM.create_element(options.element, options.props)
+        elt = DOM.create_element(options.element, props)
 
         parent = self.parent_for(options, depth, elt)
 
@@ -144,7 +145,12 @@ class WrapperState:
                 if len(wrapper_children) == 0:
                     # If there is no content in the current wrapper, we need
                     # to add an intermediary node.
-                    wrapper_parent = DOM.create_element(options.element, options.props)
+                    props = dict(options.props)
+                    props['block'] = {
+                        'data': {},
+                        'depth': depth,
+                    }
+                    wrapper_parent = DOM.create_element(options.element, props)
                     DOM.append_child(self.stack.head().elt, wrapper_parent)
                 else:
                     # Otherwise we can append at the end of the last child.
