@@ -104,14 +104,13 @@ The exporter output is extensively configurable to cater for varied rich text re
             BLOCK_TYPES.ORDERED_LIST_ITEM: {
                 'element': ListItem,
                 'wrapper': 'ol',
-            }
+            },
         }),
         # `style_map` defines the HTML representation of inline elements.
         # Extend STYLE_MAP to start with sane defaults, or make your own from scratch.
         'style_map': dict(STYLE_MAP, **{
             # Use the same mapping format as in the `block_map`.
             'KBD': 'kbd',
-            'STRIKETHROUGH': {'element': 'span', 'props': {'className': 'u-strikethrough'}},
             # The `style` prop can be defined as a dict, that will automatically be converted to a string.
             'HIGHLIGHT': {'element': 'strong', 'props': {'style': {'textDecoration': 'underline'}}},
         }),
@@ -122,11 +121,13 @@ The exporter output is extensively configurable to cater for varied rich text re
             ENTITY_TYPES.LINK: Link(use_new_window=True),
             # Lambdas work too.
             ENTITY_TYPES.HORIZONTAL_RULE: lambda props: DOM.create_element('hr'),
+            ENTITY_TYPES.EMBED: None,
         },
         'composite_decorators': [
             # Use composite decorators to replace text based on a regular expression.
             BR,
             Hashtag,
+            Linkify,
         ],
     }
 
