@@ -25,8 +25,7 @@ This project adheres to `Semantic Versioning <http://semver.org/spec/v2.0.0.html
 *  Define any attribute in the block map – custom class names for elements.
 *  React-like API to create custom components.
 *  Automatic conversion of entity data to HTML attributes (int & boolean to string, ``className`` to ``class``).
-*  Wrapped blocks (``<li>`` elements go inside ``<ul>`` or ``<ol>``).
-*  Nested wrapped blocks (multiple nesting levels, arbitrary type and depth).
+*  Nested lists (``<li>`` elements go inside ``<ul>`` or ``<ol>``, with multiple levels).
 *  Output inline styles as inline elements (``<em>``, ``<strong>``, pick and choose, with any attribute).
 *  Overlapping inline style ranges.
 
