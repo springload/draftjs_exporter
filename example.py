@@ -38,14 +38,13 @@ def OrderedList(props):
     }, props['children'])
 
 
-class Image:
-    def render(self, props):
-        return DOM.create_element('img', {
-            'src': props.get('src'),
-            'width': props.get('width'),
-            'height': props.get('height'),
-            'alt': props.get('alt'),
-        })
+def Image(props):
+    return DOM.create_element('img', {
+        'src': props.get('src'),
+        'width': props.get('width'),
+        'height': props.get('height'),
+        'alt': props.get('alt'),
+    })
 
 
 class Link:

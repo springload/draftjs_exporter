@@ -84,6 +84,7 @@ The exporter output is extensively configurable to cater for varied rich text re
     # draftjs_exporter provides default configurations and predefined constants for reuse.
     from draftjs_exporter.constants import BLOCK_TYPES, ENTITY_TYPES
     from draftjs_exporter.defaults import BLOCK_MAP, STYLE_MAP
+    from draftjs_exporter.dom import DOM
 
     config = {
         # `block_map` is a mapping from Draft.js block types to a definition of their HTML representation.
@@ -132,6 +133,53 @@ The exporter output is extensively configurable to cater for varied rich text re
     }
 
 See ``examples.py`` for more details.
+
+Custom components
+~~~~~~~~~~~~~~~~~
+
+To produce arbitrary markup with dynamic data, draftjs_exporter comes with an API to create rendering components. This API mirrors React's `createElement <https://facebook.github.io/react/docs/top-level-api.html#react.createelement>`_ API (what compiled JSX produces).
+
+.. code:: python
+
+    # All of the API is available from a single `DOM` namespace
+    from draftjs_exporter.dom import DOM
+
+
+    # Components are simple functions that take `props` as parameter and return DOM elements.
+    def Image(props):
+        # This component creates an image element, with the relevant attributes.
+        return DOM.create_element('img', {
+            'src': props.get('src'),
+            'width': props.get('width'),
+            'height': props.get('height'),
+            'alt': props.get('alt'),
+        })
+
+
+    def Blockquote(props):
+        # This component uses block data to render a blockquote.
+        block_data = props['block']['data']
+
+        # Here, we want to display the block's content so we pass the `children` prop as the last parameter.
+        return DOM.create_element('blockquote', {
+            'cite': block_data.get('cite')
+        }, props['children'])
+
+
+    class Button:
+        def render(self, props):
+            href = props.get('href', '#')
+            icon = props.get('icon', None)
+            text = props.get('text', '')
+
+            # There can be as many `children` as required.
+            # It is also possible to reuse other components and render them instead of HTML tags.
+            return DOM.create_element(
+                'a',
+                {'class': 'icon-text' if icon else None, 'href': href},
+                DOM.create_element(Icon, {'name': icon}) if icon else None,
+                DOM.create_element('span', {'class': 'icon-text__text'}, text) if icon else text
+            )
 
 Development
 -----------
@@ -189,4 +237,4 @@ Releases
 Documentation
 -------------
 
-    See the `docs <https://github.com/springload/draftjs_exporter/docs/>`_ folder
+    See the `docs <https://github.com/springload/draftjs_exporter/docs/>`_ folder.
