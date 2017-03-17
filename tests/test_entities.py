@@ -15,24 +15,21 @@ def HR(props):
 
 class Link:
     def render(self, props):
-        data = props.get('data', {})
         attributes = {}
-        for key in data:
+        for key in props:
             attr = key if key != 'url' else 'href'
-            attributes[attr] = data[key]
+            attributes[attr] = props[key]
 
         return DOM.create_element('a', attributes, props['children'])
 
 
 class Image:
     def render(self, props):
-        data = props.get('data', {})
-
         return DOM.create_element('img', {
-            'src': data.get('src'),
-            'width': data.get('width'),
-            'height': data.get('height'),
-            'alt': data.get('alt'),
+            'src': props.get('src'),
+            'width': props.get('width'),
+            'height': props.get('height'),
+            'alt': props.get('alt'),
         })
 
 
@@ -47,10 +44,9 @@ class Icon:
 
 class Button:
     def render(self, props):
-        data = props.get('data', {})
-        href = data.get('href', '#')
-        icon = data.get('icon', None)
-        text = data.get('text', '')
+        href = props.get('href', '#')
+        icon = props.get('icon', None)
+        text = props.get('text', '')
 
         return DOM.create_element(
             'a',
@@ -76,37 +72,29 @@ class TestIcon(unittest.TestCase):
 class TestImage(unittest.TestCase):
     def test_render(self):
         self.assertEqual(DOM.render(DOM.create_element(Image, {
-            'data': {
-                'src': 'http://example.com/example.png',
-                'width': 320,
-                'height': 580,
-            }
+            'src': 'http://example.com/example.png',
+            'width': 320,
+            'height': 580,
         })), '<img height="580" src="http://example.com/example.png" width="320"/>')
 
 
 class TestLink(unittest.TestCase):
     def test_render(self):
         self.assertEqual(DOM.render(DOM.create_element(Link, {
-            'data': {
-                'url': 'http://example.com',
-            },
+            'url': 'http://example.com',
         }, 'wow')), '<a href="http://example.com">wow</a>')
 
 
 class TestButton(unittest.TestCase):
     def test_render_with_icon(self):
         self.assertEqual(DOM.render(DOM.create_element(Button, {
-            'data': {
-                'href': 'http://example.com',
-                'icon': 'rocket',
-                'text': 'Launch',
-            }
+            'href': 'http://example.com',
+            'icon': 'rocket',
+            'text': 'Launch',
         })), '<a class="icon-text" href="http://example.com"><svg class="icon"><use xlink:href="#icon-rocket"></use></svg><span class="icon-text__text">Launch</span></a>')
 
     def test_render_without_icon(self):
         self.assertEqual(DOM.render(DOM.create_element(Button, {
-            'data': {
-                'href': 'http://example.com',
-                'text': 'Launch',
-            }
+            'href': 'http://example.com',
+            'text': 'Launch',
         })), '<a href="http://example.com">Launch</a>')

@@ -47,6 +47,7 @@ KEYBOARD = 'kbd'
 - `STRIKETHROUGH` styles in default style map now map to `s` tag.
 - `UNDERLINE` styles in default style map now map to `u` tag.
 - By default, `code-block` blocks are now rendered inside a combination of `pre` and `code` tags.
+- For entities, directly pass `data` dict as props instead of whole entity map declaration.
 
 ### How to upgrade
 
@@ -84,6 +85,13 @@ KEYBOARD = 'kbd'
 + BLOCK_TYPES.CODE: lambda props: DOM.create_element('pre', {}, DOM.create_element('code', {}, props['children'])),
 # Use the new pre block to produce the previous result, or override the default for code-block.
 +    BLOCK_TYPES.PRE: 'pre',
+# Entities now receive the content of `data` directly, instead of the whole entity:
+  def render(self, props):
+-     data = props.get('data', {})
+      link_props = {
+-         'href': data['url'],
++         'href': props['url'],
+      }
 ```
 
 ## [v0.7.0](https://github.com/springload/draftjs_exporter/releases/tag/v0.7.0)
