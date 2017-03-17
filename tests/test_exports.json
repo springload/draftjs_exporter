@@ -129,6 +129,95 @@
     },
 
     {
+        "label": "Style map defaults",
+        "output": "<p><strong>0</strong><code>1</code><em>2</em><u>3</u><s>4</s><sup>5</sup><sub>6</sub><mark>7</mark><q>8</q><small>9</small><samp>a</samp><ins>b</ins><del>c</del><kbd>d</kbd>ef</p>",
+        "content_state": {
+            "entityMap": {},
+            "blocks": [
+                {
+                    "key": "9nc73",
+                    "text": "0123456789abcdef",
+                    "type": "unstyled",
+                    "depth": 0,
+                    "inlineStyleRanges": [
+                        {
+                            "offset": 0,
+                            "length": 1,
+                            "style": "BOLD"
+                        },
+                        {
+                            "offset": 1,
+                            "length": 1,
+                            "style": "CODE"
+                        },
+                        {
+                            "offset": 2,
+                            "length": 1,
+                            "style": "ITALIC"
+                        },
+                        {
+                            "offset": 3,
+                            "length": 1,
+                            "style": "UNDERLINE"
+                        },
+                        {
+                            "offset": 4,
+                            "length": 1,
+                            "style": "STRIKETHROUGH"
+                        },
+                        {
+                            "offset": 5,
+                            "length": 1,
+                            "style": "SUPERSCRIPT"
+                        },
+                        {
+                            "offset": 6,
+                            "length": 1,
+                            "style": "SUBSCRIPT"
+                        },
+                        {
+                            "offset": 7,
+                            "length": 1,
+                            "style": "MARK"
+                        },
+                        {
+                            "offset": 8,
+                            "length": 1,
+                            "style": "QUOTATION"
+                        },
+                        {
+                            "offset": 9,
+                            "length": 1,
+                            "style": "SMALL"
+                        },
+                        {
+                            "offset": 10,
+                            "length": 1,
+                            "style": "SAMPLE"
+                        },
+                        {
+                            "offset": 11,
+                            "length": 1,
+                            "style": "INSERT"
+                        },
+                        {
+                            "offset": 12,
+                            "length": 1,
+                            "style": "DELETE"
+                        },
+                        {
+                            "offset": 13,
+                            "length": 1,
+                            "style": "KEYBOARD"
+                        }
+                    ],
+                    "entityRanges": []
+                }
+            ]
+        }
+    },
+
+    {
         "label": "Entity",
         "output": "<p><a href=\"/\" title=\"hi\"><em>a</em></a></p>",
         "content_state": {

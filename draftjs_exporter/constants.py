@@ -31,4 +31,19 @@ class BLOCK_TYPES:
 
 ENTITY_TYPES = Enum('LINK', 'DOCUMENT', 'IMAGE', 'EMBED', 'HORIZONTAL_RULE')
 
-INLINE_STYLES = Enum('BOLD', 'CODE', 'ITALIC')
+INLINE_STYLES = Enum(
+    'BOLD',
+    'CODE',
+    'ITALIC',
+    'UNDERLINE',
+    'STRIKETHROUGH',
+    'SUPERSCRIPT',
+    'SUBSCRIPT',
+    'MARK',
+    'QUOTATION',
+    'SMALL',
+    'SAMPLE',
+    'INSERT',
+    'DELETE',
+    'KEYBOARD',
+)

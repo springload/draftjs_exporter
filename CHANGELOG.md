@@ -12,6 +12,24 @@ This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html
 - Add support for any props on `style_map`.
 - Automatically convert `style` prop from a dict of camelCase properties to a string, on all elements (if `style` is already a string, it will be output as is).
 - Support components (`render` function returning `create_element` nodes) in style_map.
+- Add more defaults in the style map:
+
+```python
+BOLD = 'strong'
+CODE = 'code'
+ITALIC = 'em'
+UNDERLINE = 'u'
+STRIKETHROUGH = 's'
+SUPERSCRIPT = 'sup'
+SUBSCRIPT = 'sub'
+MARK = 'mark'
+QUOTATION = 'q'
+SMALL = 'small'
+SAMPLE = 'samp'
+INSERT = 'ins'
+DELETE = 'del'
+KEYBOARD = 'kbd'
+```
 
 ### Removed
 
