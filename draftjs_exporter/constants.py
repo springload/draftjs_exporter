@@ -25,6 +25,7 @@ class BLOCK_TYPES:
     UNORDERED_LIST_ITEM = 'unordered-list-item'
     ORDERED_LIST_ITEM = 'ordered-list-item'
     BLOCKQUOTE = 'blockquote'
+    PRE = 'pre'
     CODE = 'code-block'
     ATOMIC = 'atomic'
 

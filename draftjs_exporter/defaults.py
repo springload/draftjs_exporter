@@ -1,6 +1,7 @@
 from __future__ import absolute_import, unicode_literals
 
 from draftjs_exporter.constants import BLOCK_TYPES, INLINE_STYLES
+from draftjs_exporter.dom import DOM
 
 # Default block map to extend.
 BLOCK_MAP = {
@@ -14,9 +15,8 @@ BLOCK_MAP = {
     BLOCK_TYPES.UNORDERED_LIST_ITEM: {'element': 'li', 'wrapper': 'ul'},
     BLOCK_TYPES.ORDERED_LIST_ITEM: {'element': 'li', 'wrapper': 'ol'},
     BLOCK_TYPES.BLOCKQUOTE: 'blockquote',
-    # TODO Ideally would want double wrapping in pre + code.
-    # See https://github.com/sstur/draft-js-export-html/blob/master/src/stateToHTML.js#L88
-    BLOCK_TYPES.CODE: 'pre',
+    BLOCK_TYPES.PRE: 'pre',
+    BLOCK_TYPES.CODE: lambda props: DOM.create_element('pre', {}, DOM.create_element('code', {}, props['children'])),
     BLOCK_TYPES.ATOMIC: lambda props: props['children'],
 }
 

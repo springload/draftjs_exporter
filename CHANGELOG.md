@@ -31,11 +31,11 @@ DELETE = 'del'
 KEYBOARD = 'kbd'
 ```
 
+- Add new `pre` block type.
+
 ### Removed
 
 - Remove array-style block element and wrapper declarations (`['ul']`, `['ul', {'className': 'bullet-list'}]`).
-- Remove support for `STRIKETHROUGH` styles in default style map.
-- Remove support for `UNDERLINE` styles in default style map.
 
 ### Changed
 
@@ -44,6 +44,9 @@ KEYBOARD = 'kbd'
 - Replace `style_map` config format to the one of the `block_map`.
 - Move internal `camel_to_dash` method to `DOM` for official use.
 - Change ordering of inline styles - now using alphabetical ordering of style key instead of tag name.
+- `STRIKETHROUGH` styles in default style map now map to `s` tag.
+- `UNDERLINE` styles in default style map now map to `u` tag.
+- By default, `code-block` blocks are now rendered inside a combination of `pre` and `code` tags.
 
 ### How to upgrade
 
@@ -76,6 +79,11 @@ KEYBOARD = 'kbd'
 - camel_to_dash()
 + from draftjs_exporter.dom import DOM
 + DOM.camel_to_dash()
+# New default rendering for code-block:
+- BLOCK_TYPES.CODE: 'pre',
++ BLOCK_TYPES.CODE: lambda props: DOM.create_element('pre', {}, DOM.create_element('code', {}, props['children'])),
+# Use the new pre block to produce the previous result, or override the default for code-block.
++    BLOCK_TYPES.PRE: 'pre',
 ```
 
 ## [v0.7.0](https://github.com/springload/draftjs_exporter/releases/tag/v0.7.0)

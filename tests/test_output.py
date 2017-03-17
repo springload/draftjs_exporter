@@ -987,7 +987,7 @@ class TestOutput(unittest.TestCase):
             '<a href="http://www.google.com">www.google.com</a> for '
             '<span class="hashtag">#github</span> and '
             '<span class="hashtag">#facebook</span></p>'
-            '<pre>#check www.example.com</pre>')
+            '<pre><code>#check www.example.com</code></pre>')
 
     def test_render_with_multiple_decorators(self):
         """
