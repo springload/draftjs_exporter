@@ -51,9 +51,8 @@ class Link:
         self.use_new_window = use_new_window
 
     def render(self, props):
-        data = props.get('data', {})
         link_props = {
-            'href': data['url'],
+            'href': props['url'],
         }
 
         if self.use_new_window:

@@ -66,7 +66,7 @@ class EntityState:
 
             for entity_details in self.entity_stack:
                 decorator = self.get_entity_decorator(entity_details)
-                props = entity_details.copy()
+                props = entity_details.get('data').copy()
 
                 new_element = DOM.create_element(decorator, props, style_node)
                 DOM.append_child(element_stack[-1], new_element)
