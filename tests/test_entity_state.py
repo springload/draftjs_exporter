@@ -45,12 +45,12 @@ class TestEntityState(unittest.TestCase):
         self.entity_state.apply(Command('stop_entity', 5, 0))
         self.assertEqual(len(self.entity_state.entity_stack), 0)
 
-    def test_is_empty_default(self):
-        self.assertEqual(self.entity_state.is_empty(), True)
+    def test_has_no_entity_default(self):
+        self.assertEqual(self.entity_state.has_no_entity(), True)
 
-    def test_is_empty_styled(self):
+    def test_has_no_entity_styled(self):
         self.entity_state.apply(Command('start_entity', 0, 0))
-        self.assertEqual(self.entity_state.is_empty(), False)
+        self.assertEqual(self.entity_state.has_no_entity(), False)
 
     def test_get_entity_details(self):
         self.assertEqual(self.entity_state.get_entity_details(Command('start_entity', 0, 0)), {

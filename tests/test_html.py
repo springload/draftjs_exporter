@@ -208,8 +208,11 @@ class TestHTML(unittest.TestCase):
             'entityRanges': []
         })), str([
             ('some paragraph text', [
-                Command('start_text', 0)
+                Command('start_text', 0),
             ]),
+            ('', [
+                Command('stop_text', 19),
+            ])
         ]))
 
     def test_build_command_groups_multiple(self):
@@ -264,6 +267,9 @@ class TestHTML(unittest.TestCase):
             (' text', [
                 Command('stop_entity', 14, 0),
             ]),
+            ('', [
+                Command('stop_text', 19),
+            ])
         ]))
 
     def test_render(self):

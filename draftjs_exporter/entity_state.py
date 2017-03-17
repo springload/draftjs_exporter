@@ -14,6 +14,8 @@ class EntityState:
         self.entity_map = entity_map
 
         self.entity_stack = []
+        self.completed_entity = None
+        self.element_stack = []
 
     def apply(self, command):
         if command.name == 'start_entity':
@@ -21,7 +23,7 @@ class EntityState:
         elif command.name == 'stop_entity':
             self.stop_command(command)
 
-    def is_empty(self):
+    def has_no_entity(self):
         return not self.entity_stack
 
     def get_entity_details(self, command):
@@ -54,23 +56,26 @@ class EntityState:
         if expected_entity_details != entity_details:
             raise EntityException('Expected {0}, got {1}'.format(expected_entity_details, entity_details))
 
-        self.entity_stack.pop()
+        self.completed_entity = self.entity_stack.pop()
 
     def render_entitities(self, style_node):
-        if self.is_empty():
+
+        if self.completed_entity:
+            # self.element_stack.append(style_node)
+            decorator = self.get_entity_decorator(self.completed_entity)
+            props = self.completed_entity.get('data').copy()
+
+            nodes = DOM.create_document_fragment()
+            for n in self.element_stack:
+                DOM.append_child(nodes, n)
+
+            elt = DOM.create_element(decorator, props, nodes)
+            self.completed_entity = None
+            self.element_stack = []
+        elif self.has_no_entity():
             elt = style_node
         else:
-            elt = DOM.create_document_fragment()
-
-            element_stack = [elt]
-            new_element = elt
-
-            for entity_details in self.entity_stack:
-                decorator = self.get_entity_decorator(entity_details)
-                props = entity_details.get('data').copy()
-
-                new_element = DOM.create_element(decorator, props, style_node)
-                DOM.append_child(element_stack[-1], new_element)
-                element_stack.append(new_element)
+            self.element_stack.append(style_node)
+            elt = None
 
         return elt

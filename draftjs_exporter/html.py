@@ -51,13 +51,16 @@ class HTML:
                 style_state.apply(command)
 
             # Decorators are not rendered inside entities.
-            if entity_state.is_empty() and len(self.composite_decorators) > 0:
+            if entity_state.has_no_entity() and len(self.composite_decorators) > 0:
                 decorated_node = render_decorators(self.composite_decorators, text, block.get('type', None))
             else:
                 decorated_node = DOM.create_text_node(text)
 
             styled_node = style_state.render_styles(decorated_node)
-            DOM.append_child(content, entity_state.render_entitities(styled_node))
+            entity_node = entity_state.render_entitities(styled_node)
+            if entity_node:
+                DOM.append_child(content, entity_node)
+                DOM.append_child(content, styled_node)
 
         self.wrapper_state.element_for(block, content)
 
@@ -78,6 +81,8 @@ class HTML:
             if i < len(listed) - 1:
                 stop_index = listed[i + 1][0]
                 sliced.append((text[start_index:stop_index], list(commands)))
+            else:
+                sliced.append((text[start_index:start_index], list(commands)))
             i += 1
 
         return sliced
