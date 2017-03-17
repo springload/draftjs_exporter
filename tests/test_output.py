@@ -28,6 +28,7 @@ config = {
         },
     }),
     'style_map': {
+        INLINE_STYLES.CODE: 'code',
         INLINE_STYLES.ITALIC: 'em',
         INLINE_STYLES.BOLD: 'strong',
         'HIGHLIGHT': {
@@ -233,6 +234,64 @@ class TestOutput(unittest.TestCase):
                     }
                 ]
             })
+
+    def test_render_with_styles_in_entities(self):
+        self.assertEqual(self.exporter.render({
+            'entityMap': {
+                '0': {
+                    'type': 'LINK',
+                    'mutability': 'MUTABLE',
+                    'data': {
+                        'url': 'http://example.com'
+                    }
+                },
+                '1': {
+                    'type': 'HORIZONTAL_RULE',
+                    'mutability': 'IMMUTABLE',
+                    'data': {},
+                },
+            },
+            'blocks': [
+                {
+                    'key': 'f4gp0',
+                    'text': 'test className to class).',
+                    'type': 'unordered-list-item',
+                    'depth': 0,
+                    'inlineStyleRanges': [
+                        {
+                            'offset': 5,
+                            'length': 9,
+                            'style': 'CODE',
+                        },
+                        {
+                            'offset': 18,
+                            'length': 5,
+                            'style': 'CODE',
+                        }
+                    ],
+                    'entityRanges': [
+                        {
+                            'offset': 5,
+                            'length': 18,
+                            'key': 0
+                        },
+                    ],
+                    'data': {},
+                }, {
+                    'key': 'f4fp0',
+                    'text': ' ',
+                    'type': 'atomic',
+                    'depth': 0,
+                    'inlineStyleRanges': [],
+                    'entityRanges': [{
+                        'offset': 0,
+                        'length': 1,
+                        'key': 1
+                    }],
+                    'data': {},
+                }
+            ]
+        }), '<ul class="steps"><li>test <a href="http://example.com"><code>className</code> to <code>class</code></a>).</li></ul><hr/>')
 
     def test_render_with_wrapping(self):
         self.assertEqual(self.exporter.render({

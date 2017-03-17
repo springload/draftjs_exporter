@@ -7,9 +7,6 @@ from tests.test_entities import Icon
 
 
 class TestDOM(unittest.TestCase):
-    def test_create_tag(self):
-        self.assertEqual(DOM.render(DOM.create_tag('p', {'class': 'intro'})), '<p class="intro"></p>')
-
     def test_create_element(self):
         self.assertEqual(DOM.render(DOM.create_element('p', {'className': 'intro'}, 'Test test')), '<p class="intro">Test test</p>')
 
