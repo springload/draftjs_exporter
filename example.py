@@ -30,10 +30,6 @@ def ListItem(props):
     }, props['children'])
 
 
-def HR(props):
-    return DOM.create_element('hr')
-
-
 class Image:
     def render(self, props):
         data = props.get('data', {})
@@ -114,17 +110,22 @@ config = {
     # `style_map` defines the HTML representation of inline elements.
     # Extend STYLE_MAP to start with sane defaults, or make your own from scratch.
     'style_map': dict(STYLE_MAP, **{
-        # Use the same mapping format as in the `block_map`.
+        # Use the same mapping format as in the `blqock_map`.
         'KBD': 'kbd',
         'STRIKETHROUGH': {'element': 'span', 'props': {'className': 'u-strikethrough'}},
+        # The `style` prop can be defined as a dict, that will automatically be converted to a string.
         'HIGHLIGHT': {'element': 'strong', 'props': {'style': {'textDecoration': 'underline'}}},
     }),
     'entity_decorators': {
-        ENTITY_TYPES.LINK: Link(use_new_window=True),
+        # Map entities to components so they can be rendered with their data.
         ENTITY_TYPES.IMAGE: Image,
-        ENTITY_TYPES.HORIZONTAL_RULE: HR,
+        # Components can be defined as classes to receive extra parameters.
+        ENTITY_TYPES.LINK: Link(use_new_window=True),
+        # Lambdas work too.
+        ENTITY_TYPES.HORIZONTAL_RULE: lambda props: DOM.create_element('hr'),
     },
     'composite_decorators': [
+        # Use composite decorators to replace text based on a regular expression.
         BR,
         Hashtag,
     ],

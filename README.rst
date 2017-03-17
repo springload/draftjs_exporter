@@ -47,6 +47,7 @@ In your code, create an exporter and use the ``render`` method to create HTML:
 
 .. code:: python
 
+    from draftjs_exporter.dom import DOM
     from draftjs_exporter.html import HTML
 
     # Configuration options are detailed below.
@@ -68,13 +69,15 @@ In your code, create an exporter and use the ``render`` method to create HTML:
         }]
     })
 
+    print(DOM.pretty_print(html))
 
-You can also run an example by downloading this repository and then using ``python example.py``.
 
-Configuration options
-~~~~~~~~~~~~~~~~~~~~~
+You can also run an example by downloading this repository and then using ``python example.py``, or by using our `online demo <https://draftjs-exporter.herokuapp.com/>`_.
 
-The exporter output is extensively configurable to cater for varying content types.
+Configuration
+~~~~~~~~~~~~~
+
+The exporter output is extensively configurable to cater for varied rich text requirements.
 
 .. code:: python
 
@@ -89,24 +92,39 @@ The exporter output is extensively configurable to cater for varying content typ
             # The most basic mapping format, block type to tag name.
             BLOCK_TYPES.HEADER_TWO: 'h2',
             # Use a dict to define props on the block.
-            BLOCK_TYPES.BLOCKQUOTE: {'element': 'blockquote', 'props': {'className': 'pullquote'}},
+            BLOCK_TYPES.HEADER_THREE: {'element': 'h3', 'props': {'className': 'u-text-center'}},
             # Add a wrapper (and wrapper_props) to wrap adjacent blocks.
             BLOCK_TYPES.UNORDERED_LIST_ITEM: {
                 'element': 'li',
                 'wrapper': 'ul',
                 'wrapper_props': {'className': 'bullet-list'},
             },
+            # Use a component for more flexibility (reading block data or depth).
+            BLOCK_TYPES.BLOCKQUOTE: Blockquote,
+            BLOCK_TYPES.ORDERED_LIST_ITEM: {
+                'element': ListItem,
+                'wrapper': 'ol',
+            }
         }),
-        # Extend/override the default style map.
+        # `style_map` defines the HTML representation of inline elements.
+        # Extend STYLE_MAP to start with sane defaults, or make your own from scratch.
         'style_map': dict(STYLE_MAP, **{
-            'HIGHLIGHT': {'element': 'strong', 'textDecoration': 'underline'},
+            # Use the same mapping format as in the `blqock_map`.
+            'KBD': 'kbd',
+            'STRIKETHROUGH': {'element': 'span', 'props': {'className': 'u-strikethrough'}},
+            # The `style` prop can be defined as a dict, that will automatically be converted to a string.
+            'HIGHLIGHT': {'element': 'strong', 'props': {'style': {'textDecoration': 'underline'}}},
         }),
         'entity_decorators': {
-            ENTITY_TYPES.LINK: Link(use_new_window=True),
+            # Map entities to components so they can be rendered with their data.
             ENTITY_TYPES.IMAGE: Image,
-            ENTITY_TYPES.HORIZONTAL_RULE: HR,
+            # Components can be defined as classes to receive extra parameters.
+            ENTITY_TYPES.LINK: Link(use_new_window=True),
+            # Lambdas work too.
+            ENTITY_TYPES.HORIZONTAL_RULE: lambda props: DOM.create_element('hr'),
         },
         'composite_decorators': [
+            # Use composite decorators to replace text based on a regular expression.
             BR,
             Hashtag,
         ],
