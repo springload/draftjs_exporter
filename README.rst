@@ -109,7 +109,7 @@ The exporter output is extensively configurable to cater for varied rich text re
         # `style_map` defines the HTML representation of inline elements.
         # Extend STYLE_MAP to start with sane defaults, or make your own from scratch.
         'style_map': dict(STYLE_MAP, **{
-            # Use the same mapping format as in the `blqock_map`.
+            # Use the same mapping format as in the `block_map`.
             'KBD': 'kbd',
             'STRIKETHROUGH': {'element': 'span', 'props': {'className': 'u-strikethrough'}},
             # The `style` prop can be defined as a dict, that will automatically be converted to a string.
