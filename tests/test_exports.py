@@ -9,7 +9,7 @@ from pstats import Stats
 import six
 
 from draftjs_exporter.constants import BLOCK_TYPES, ENTITY_TYPES, INLINE_STYLES
-from draftjs_exporter.defaults import BLOCK_MAP
+from draftjs_exporter.defaults import BLOCK_MAP, STYLE_MAP
 from draftjs_exporter.html import HTML
 from tests.test_composite_decorators import Hashtag, Linkify
 from tests.test_entities import Image, Link
@@ -33,10 +33,10 @@ exporter = HTML({
             'wrapper_props': {'className': 'bullet-list'},
         },
     }),
-    'style_map': {
+    'style_map': dict(STYLE_MAP, **{
         INLINE_STYLES.ITALIC: 'em',
         INLINE_STYLES.BOLD: 'strong',
-    },
+    }),
 })
 
 

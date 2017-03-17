@@ -21,8 +21,22 @@ BLOCK_MAP = {
 }
 
 # Default style map to extend.
+# Tags come from https://developer.mozilla.org/en-US/docs/Web/HTML/Element.
+# and are loosely aligned with https://github.com/jpuri/draftjs-to-html.
+# Only styles that map to HTML elements are allowed as defaults.
 STYLE_MAP = {
-    INLINE_STYLES.ITALIC: 'em',
     INLINE_STYLES.BOLD: 'strong',
     INLINE_STYLES.CODE: 'code',
+    INLINE_STYLES.ITALIC: 'em',
+    INLINE_STYLES.UNDERLINE: 'u',
+    INLINE_STYLES.STRIKETHROUGH: 's',
+    INLINE_STYLES.SUPERSCRIPT: 'sup',
+    INLINE_STYLES.SUBSCRIPT: 'sub',
+    INLINE_STYLES.MARK: 'mark',
+    INLINE_STYLES.QUOTATION: 'q',
+    INLINE_STYLES.SMALL: 'small',
+    INLINE_STYLES.SAMPLE: 'samp',
+    INLINE_STYLES.INSERT: 'ins',
+    INLINE_STYLES.DELETE: 'del',
+    INLINE_STYLES.KEYBOARD: 'kbd',
 }
