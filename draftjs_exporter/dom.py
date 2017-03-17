@@ -86,8 +86,13 @@ class DOM(object):
                 attributes['children'] = children[0] if len(children) == 1 else children
                 elt = type_(attributes)
             else:
+
                 # Never render children attribute on a raw tag.
                 attributes.pop('children', None)
+
+                # Never render block attribute on a raw tag.
+                attributes.pop('block', None)
+
                 elt = DOM.create_tag(type_, attributes)
 
                 for child in children:

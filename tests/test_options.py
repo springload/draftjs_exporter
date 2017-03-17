@@ -7,7 +7,7 @@ from draftjs_exporter.options import ConfigException, Options
 
 class TestOptions(unittest.TestCase):
     def test_str(self):
-        self.assertEqual(str(Options('li')), '<Options li None None None>')
+        self.assertEqual(str(Options('li')), '<Options li {} None None>')
 
     def test_eq(self):
         self.assertEqual(Options('li'), Options('li'))
