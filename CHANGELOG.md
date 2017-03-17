@@ -11,7 +11,7 @@ This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html
 - Raise exception when `style_map` does not define an `element` for the style.
 - Add support for any props on `style_map`.
 - Automatically convert `style` prop from a dict of camelCase properties to a string, on all elements (if `style` is already a string, it will be output as is).
-- Support components (`render` function returning `create_element` nodes) in style_map.
+- Support components (`render` function returning `create_element` nodes) in `style_map`.
 - Add more defaults in the style map:
 
 ```python
@@ -32,6 +32,7 @@ KEYBOARD = 'kbd'
 ```
 
 - Add new `pre` block type.
+- Support components (`render` function returning `create_element` nodes) in `block_map`, for both `element` and `wrapper`.
 
 ### Removed
 

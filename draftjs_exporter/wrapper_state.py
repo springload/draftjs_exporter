@@ -46,7 +46,11 @@ class Wrapper:
     def __init__(self, depth, elt=None, props=None):
         self.depth = depth
         self.type = elt
-        self.elt = DOM.create_element(elt, props)
+        wrapper_props = dict(props) if props else {}
+        wrapper_props['block'] = {
+            'depth': depth,
+        }
+        self.elt = DOM.create_element(elt, wrapper_props)
         self.props = props
 
     def is_different(self, depth, elt, props):

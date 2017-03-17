@@ -30,6 +30,14 @@ def ListItem(props):
     }, props['children'])
 
 
+def OrderedList(props):
+    depth = props['block']['depth']
+
+    return DOM.create_element('ol', {
+        'class': 'list--depth-{0}'.format(depth)
+    }, props['children'])
+
+
 class Image:
     def render(self, props):
         return DOM.create_element('img', {
@@ -129,7 +137,7 @@ config = {
         BLOCK_TYPES.BLOCKQUOTE: Blockquote,
         BLOCK_TYPES.ORDERED_LIST_ITEM: {
             'element': ListItem,
-            'wrapper': 'ol',
+            'wrapper': OrderedList,
         },
     }),
     # `style_map` defines the HTML representation of inline elements.

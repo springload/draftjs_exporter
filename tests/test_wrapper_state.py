@@ -22,6 +22,14 @@ def ListItem(props):
     }, props['children'])
 
 
+def OrderedList(props):
+    depth = props['block']['depth']
+
+    return DOM.create_element('ol', {
+        'class': 'list--depth-{0}'.format(depth)
+    }, props['children'])
+
+
 class TestWrapperState(unittest.TestCase):
     def setUp(self):
         self.wrapper_state = WrapperState({
@@ -30,7 +38,10 @@ class TestWrapperState(unittest.TestCase):
             'atomic': lambda props: props['children'],
             'ignore': None,
             'blockquote': Blockquote,
-            'unordered-liste-item': ListItem,
+            'ordered-list-item': {
+                'element': ListItem,
+                'wrapper': OrderedList
+            },
         })
 
     def test_init(self):
@@ -88,6 +99,18 @@ class TestWrapperState(unittest.TestCase):
             'inlineStyleRanges': [],
             'entityRanges': []
         }, 'Test')), '<blockquote cite="http://example.com/">Test</blockquote>')
+
+    def test_element_for_component_wrapper(self):
+        self.wrapper_state.element_for({
+            'key': '5s7g9',
+            'text': 'Test',
+            'type': 'ordered-list-item',
+            'depth': 0,
+            'data': {},
+            'inlineStyleRanges': [],
+            'entityRanges': []
+        }, 'Test')
+        self.assertEqual(DOM.render(self.wrapper_state.document), '<ol class="list--depth-0"><li class="list-item--depth-0">Test</li></ol>')
 
     def test_to_string_empty(self):
         self.assertEqual(self.wrapper_state.to_string(), '')
