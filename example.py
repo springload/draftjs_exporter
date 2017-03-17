@@ -32,13 +32,11 @@ def ListItem(props):
 
 class Image:
     def render(self, props):
-        data = props.get('data', {})
-
         return DOM.create_element('img', {
-            'src': data.get('src'),
-            'width': data.get('width'),
-            'height': data.get('height'),
-            'alt': data.get('alt'),
+            'src': props.get('src'),
+            'width': props.get('width'),
+            'height': props.get('height'),
+            'alt': props.get('alt'),
         })
 
 
@@ -139,7 +137,6 @@ config = {
     'style_map': dict(STYLE_MAP, **{
         # Use the same mapping format as in the `block_map`.
         'KBD': 'kbd',
-        'STRIKETHROUGH': {'element': 'span', 'props': {'className': 'u-strikethrough'}},
         # The `style` prop can be defined as a dict, that will automatically be converted to a string.
         'HIGHLIGHT': {'element': 'strong', 'props': {'style': {'textDecoration': 'underline'}}},
     }),
@@ -150,8 +147,7 @@ config = {
         ENTITY_TYPES.LINK: Link(use_new_window=True),
         # Lambdas work too.
         ENTITY_TYPES.HORIZONTAL_RULE: lambda props: DOM.create_element('hr'),
-        # Discard entities you do not want to render:
-        ENTITY_TYPES.EMBED: lambda props: props['children'],
+        ENTITY_TYPES.EMBED: None,
     },
     'composite_decorators': [
         # Use composite decorators to replace text based on a regular expression.
@@ -203,8 +199,9 @@ content_state = {
             "mutability": "IMMUTABLE",
             "data": {
                 "alt": "Test image alt text",
-                "alignment": "left",
-                "src": "assets/example-image.png"
+                "src": "https://placekitten.com/g/300/200",
+                "width": 300,
+                "height": 200
             }
         },
         "6": {
@@ -245,7 +242,9 @@ content_state = {
         "depth": 0,
         "inlineStyleRanges": [],
         "entityRanges": [],
-        "data": {}
+        "data": {
+            "cite": "http://example.com/"
+        }
     }, {
         "key": "7htbd",
         "text": "Features 📝🍸",
@@ -479,18 +478,6 @@ content_state = {
         }],
         "data": {}
     }, {
-        "key": "eb00n",
-        "text": "The Embeds in this example are powered by Embedly:",
-        "type": "unstyled",
-        "depth": 0,
-        "inlineStyleRanges": [],
-        "entityRanges": [{
-            "offset": 42,
-            "length": 7,
-            "key": 6
-        }],
-        "data": {}
-    }, {
         "key": "f7s8c",
         "text": " ",
         "type": "atomic",
@@ -544,39 +531,7 @@ content_state = {
         "data": {}
     }, {
         "key": "ed7hu",
-        "text": "def Blockquote(props):",
-        "type": "code-block",
-        "depth": 0,
-        "inlineStyleRanges": [],
-        "entityRanges": [],
-        "data": {}
-    }, {
-        "key": "dhds3",
-        "text": "    block_data = props['block']['data']",
-        "type": "code-block",
-        "depth": 0,
-        "inlineStyleRanges": [],
-        "entityRanges": [],
-        "data": {}
-    }, {
-        "key": "8bs7h",
-        "text": "    return DOM.create_element('blockquote', {",
-        "type": "code-block",
-        "depth": 0,
-        "inlineStyleRanges": [],
-        "entityRanges": [],
-        "data": {}
-    }, {
-        "key": "bgo3c",
-        "text": "        'cite': block_data.get('cite')",
-        "type": "code-block",
-        "depth": 0,
-        "inlineStyleRanges": [],
-        "entityRanges": [],
-        "data": {}
-    }, {
-        "key": "6hfbk",
-        "text": "    }, props['children'])",
+        "text": "def Blockquote(props):\n    block_data = props['block']['data']\n    return DOM.create_element('blockquote', {\n        'cite': block_data.get('cite')\n    }, props['children'])\n",
         "type": "code-block",
         "depth": 0,
         "inlineStyleRanges": [],
@@ -596,18 +551,29 @@ content_state = {
 pr = cProfile.Profile()
 pr.enable()
 
-markup = exporter.render(content_state)
+html = exporter.render(content_state)
 
 pr.disable()
 p = Stats(pr)
 
-pretty = DOM.pretty_print(markup)
+pretty = DOM.pretty_print(html)
 
 # Display in console.
 print(pretty)
 
 p.strip_dirs().sort_stats('cumulative').print_stats(0)
 
+styles = """
+/* Tacit CSS framework https://yegor256.github.io/tacit/ */
+input,textarea,select,button,html,body{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:18px;font-stretch:normal;font-style:normal;font-weight:300;line-height:29.7px}input,textarea,select,button,html,body{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:18px;font-stretch:normal;font-style:normal;font-weight:300;line-height:29.7px}th{font-weight:600}td,th{border-bottom:1.08px solid #ccc;padding:14.85px 18px}thead th{border-bottom-width:2.16px;padding-bottom:6.3px}table{display:block;max-width:100%;overflow-x:auto}input,textarea,select,button,html,body{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:18px;font-stretch:normal;font-style:normal;font-weight:300;line-height:29.7px}input,textarea,select,button{display:block;max-width:100%;padding:9.9px}label{display:block;margin-bottom:14.76px}input[type="submit"],input[type="reset"],button{background:#f2f2f2;border-radius:3.6px;color:#8c8c8c;cursor:pointer;display:inline;margin-bottom:18px;margin-right:7.2px;padding:6.525px 23.4px;text-align:center}input[type="submit"]:hover,input[type="reset"]:hover,button:hover{background:#d9d9d9;color:#000}input[type="submit"][disabled],input[type="reset"][disabled],button[disabled]{background:#e6e6e6;color:#b3b3b3;cursor:not-allowed}input[type="submit"],button[type="submit"]{background:#367ac3;color:#fff}input[type="submit"]:hover,button[type="submit"]:hover{background:#255587;color:#bfbfbf}input[type="text"],input[type="password"],input[type="email"],input[type="url"],input[type="phone"],input[type="tel"],input[type="number"],input[type="datetime"],input[type="date"],input[type="month"],input[type="week"],input[type="color"],input[type="time"],input[type="search"],input[type="range"],input[type="file"],input[type="datetime-local"],select,textarea{border:1px solid #ccc;margin-bottom:18px;padding:5.4px 6.3px}input[type="checkbox"],input[type="radio"]{float:left;line-height:36px;margin-right:9px;margin-top:8.1px}input,textarea,select,button,html,body{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:18px;font-stretch:normal;font-style:normal;font-weight:300;line-height:29.7px}pre,code,kbd,samp,var,output{font-family:Menlo,Monaco,Consolas,"Courier New",monospace;font-size:16.2px}pre{border-left:1.8px solid #96bbe2;line-height:25.2px;margin-top:29.7px;overflow:auto;padding-left:18px}pre code{background:none;border:0;line-height:29.7px;padding:0}code{background:#ededed;border:1.8px solid #ccc;border-radius:3.6px;display:inline-block;line-height:18px;padding:3px 6px 2px}input,textarea,select,button,html,body{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:18px;font-stretch:normal;font-style:normal;font-weight:300;line-height:29.7px}h1,h2,h3,h4,h5,h6{color:#000;margin-bottom:18px}h1{font-size:36px;font-weight:500;margin-top:36px}h2{font-size:25.2px;font-weight:400;margin-top:27px}h3{font-size:21.6px;margin-top:21.6px}h4{font-size:18px;margin-top:18px}h5{font-size:14.4px;font-weight:bold;margin-top:18px;text-transform:uppercase}h6{color:#ccc;font-size:14.4px;font-weight:bold;margin-top:18px;text-transform:uppercase}input,textarea,select,button,html,body{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:18px;font-stretch:normal;font-style:normal;font-weight:300;line-height:29.7px}a{color:#367ac3;text-decoration:none}a:hover{text-decoration:underline}hr{border-bottom:1px solid #ccc}small{font-size:15.3px}em,i{font-style:italic}strong,b{font-weight:600}*{border:0;border-collapse:separate;border-spacing:0;box-sizing:border-box;margin:0;outline:0;padding:0;text-align:left;vertical-align:baseline}html,body{height:100%;width:100%}body{background:#f5f5f5;color:#1a1a1a;padding:36px}p,ul,ol,dl,blockquote,hr,pre,table,form,fieldset,figure,address{margin-bottom:29.7px}section{margin-left:auto;margin-right:auto;max-width:100%;width:900px}article{background:#fff;border:1.8px solid #d9d9d9;border-radius:7.2px;padding:43.2px}header{margin-bottom:36px}footer{margin-top:36px}nav{text-align:center}nav ul{list-style:none;margin-left:0;text-align:center}nav ul li{display:inline;margin-left:9px;margin-right:9px}nav ul li:first-child{margin-left:0}nav ul li:last-child{margin-right:0}ol,ul{margin-left:29.7px}li ol,li ul{margin-bottom:0}@media (max-width: 767px){body{padding:18px}article{border-radius:0;margin:-18px;padding:18px}textarea,input,select{max-width:100%}fieldset{min-width:0}section{width:auto}fieldset,x:-moz-any-link{display:table-cell}}
+/* Custom styles to help with debugging */
+blockquote { border-left: 0.25rem solid #aaa; padding-left: 1rem; font-style: italic; }
+.u-text-center { text-align: center; }
+a:hover, a:focus { outline: 1px solid red; }
+.hashtag { color: pink; }
+.list-item--depth-1 { margin-left: 5rem; }
+"""
+
 # Output to a file
 with codecs.open('example.html', 'w', 'utf-8') as file:
-    file.write('<!DOCTYPE html><html><head><meta charset="utf-8" /><title>Test</title></head><body>\n{pretty}\n</body></html>'.format(pretty=pretty))
+    file.write('<!DOCTYPE html><html><head><meta charset="utf-8" /><title>draftjs_exporter test page</title><style>{styles}</style></head><body>{html}</body></html>'.format(styles=styles, html=html))
