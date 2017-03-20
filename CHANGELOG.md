@@ -120,7 +120,7 @@ KEYBOARD = 'kbd'
 - BLOCK_TYPES.CODE: 'pre',
 + BLOCK_TYPES.CODE: lambda props: DOM.create_element('pre', {}, DOM.create_element('code', {}, props['children'])),
 # Use the new pre block to produce the previous result, or override the default for code-block.
-+    BLOCK_TYPES.PRE: 'pre',
++ BLOCK_TYPES.PRE: 'pre',
 # Entities now receive the content of `data` directly, instead of the whole entity:
   def render(self, props):
 -     data = props.get('data', {})
