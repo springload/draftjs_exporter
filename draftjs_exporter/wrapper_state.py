@@ -116,10 +116,7 @@ class WrapperState:
             DOM.append_child(parent, elt)
         else:
             # Reset the stack if there is no wrapper.
-            head = self.stack.head()
-            if self.stack.length() > 0 and head.depth != -1 and head.props is not None:
-                self.stack.slice(-1)
-                self.stack.append(Wrapper(-1, None))
+            self.stack = WrapperStack()
             parent = elt
 
         return parent
