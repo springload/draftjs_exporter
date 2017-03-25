@@ -31,12 +31,6 @@ class TestDOM(unittest.TestCase):
     def test_create_element_entity_configured(self):
         self.assertEqual(DOM.render_debug(DOM.create_element(Icon(icon_class='i'), {'name': 'rocket'})), '<svg class="i"><use xlink:href="#icon-rocket"></use></svg>')
 
-    def test_create_document_fragment(self):
-        self.assertEqual(DOM.render_debug(DOM.create_document_fragment()), '<fragment></fragment>')
-
-    def test_create_text_node(self):
-        self.assertEqual(DOM.render_debug(DOM.create_text_node('Test text')), '<textnode>Test text</textnode>')
-
     def test_parse_html(self):
         self.assertEqual(DOM.render_debug(DOM.parse_html('<p><span>Test text</span></p>')), '<p><span>Test text</span></p>')
 
@@ -52,14 +46,6 @@ class TestDOM(unittest.TestCase):
         parent = DOM.create_element('p')
         DOM.append_child(parent, DOM.create_element('span', {}, 'Test text'))
         self.assertEqual(DOM.render_debug(parent), '<p><span>Test text</span></p>')
-
-    def test_get_text_content(self):
-        self.assertEqual(DOM.get_text_content(DOM.create_element('p', {}, 'Test test')), 'Test test')
-
-    def test_set_text_content(self):
-        elt = DOM.create_element('p')
-        DOM.set_text_content(elt, 'Test test')
-        self.assertEqual(DOM.get_text_content(elt), 'Test test')
 
     def test_get_children(self):
         self.assertEqual(len(DOM.get_children(DOM.create_element('span', {}, DOM.create_element('span'), DOM.create_element('span')))), 2)

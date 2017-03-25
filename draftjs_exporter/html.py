@@ -31,7 +31,7 @@ class HTML:
         Starts the export process on a given piece of content state.
         """
         self.wrapper_state = WrapperState(self.block_map)
-        self.document = DOM.create_document_fragment()
+        self.document = DOM.create_element()
         entity_map = content_state['entityMap']
         min_depth = 0
 
@@ -54,7 +54,7 @@ class HTML:
         return DOM.render(self.document)
 
     def render_block(self, block, entity_map):
-        content = DOM.create_document_fragment()
+        content = DOM.create_element()
         entity_state = EntityState(self.entity_decorators, entity_map)
         style_state = StyleState(self.style_map)
 

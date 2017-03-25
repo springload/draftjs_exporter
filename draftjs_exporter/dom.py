@@ -38,6 +38,18 @@ def create_tag(type_, attributes=None):
     return soup.new_tag(type_, **attributes)
 
 
+def create_document_fragment():
+        return create_tag('fragment')
+
+
+def get_text_content(elt):
+        return elt.string
+
+
+def set_text_content(elt, text):
+        elt.append(text)
+
+
 class DOM(object):
     @staticmethod
     def create_element(type_=None, props=None, *children):
@@ -51,7 +63,7 @@ class DOM(object):
         https://facebook.github.io/react/docs/top-level-api.html#react.createelement
         """
         if not type_:
-            elt = DOM.create_document_fragment()
+            elt = create_document_fragment()
         else:
             if props is None:
                 props = {}
@@ -100,18 +112,8 @@ class DOM(object):
                         if hasattr(child, 'tag'):
                             DOM.append_child(elt, child)
                         else:
-                            DOM.set_text_content(elt, DOM.get_text_content(elt) + child if DOM.get_text_content(elt) else child)
+                            set_text_content(elt, get_text_content(elt) + child if get_text_content(elt) else child)
 
-        return elt
-
-    @staticmethod
-    def create_document_fragment():
-        return create_tag('fragment')
-
-    @staticmethod
-    def create_text_node(text):
-        elt = create_tag('textnode')
-        DOM.set_text_content(elt, text)
         return elt
 
     @staticmethod
@@ -129,14 +131,6 @@ class DOM(object):
         elt.append(child)
 
     @staticmethod
-    def get_text_content(elt):
-        return elt.string
-
-    @staticmethod
-    def set_text_content(elt, text):
-        elt.string = text
-
-    @staticmethod
     def get_children(elt):
         return list(elt.children)
 
@@ -148,7 +142,7 @@ class DOM(object):
         better way to do this.
         Dirty, but quite easy to understand.
         """
-        return re.sub(r'</?(fragment|textnode|body|html|head)>', '', unicode(elt)).strip()
+        return re.sub(r'</?(fragment|body|html|head)>', '', unicode(elt)).strip()
 
     @staticmethod
     def render_debug(elt):
