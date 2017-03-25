@@ -1152,7 +1152,9 @@ class TestOutput(unittest.TestCase):
                     'key': '34a12',
                     'text': '#check www.example.com',
                     'type': 'code-block',
+                    'depth': 0,
                     'inlineStyleRanges': [],
+                    'entityRanges': [],
                 },
             ]
         }),

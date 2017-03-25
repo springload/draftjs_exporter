@@ -101,7 +101,7 @@ class TestWrapperState(unittest.TestCase):
         }, 'Test')), '<blockquote cite="http://example.com/">Test</blockquote>')
 
     def test_element_for_component_wrapper(self):
-        self.wrapper_state.element_for({
+        self.assertEqual(DOM.render(self.wrapper_state.element_for({
             'key': '5s7g9',
             'text': 'Test',
             'type': 'ordered-list-item',
@@ -109,38 +109,17 @@ class TestWrapperState(unittest.TestCase):
             'data': {},
             'inlineStyleRanges': [],
             'entityRanges': []
-        }, 'Test')
-        self.assertEqual(DOM.render(self.wrapper_state.document), '<ol class="list--depth-0"><li class="list-item--depth-0">Test</li></ol>')
-
-    def test_to_string_empty(self):
-        self.assertEqual(self.wrapper_state.to_string(), '')
-
-    def test_to_string_elts(self):
-        self.wrapper_state.element_for({
-            'key': '5s7g9',
-            'text': 'Header',
-            'type': 'header-one',
-            'depth': 0,
-            'inlineStyleRanges': [],
-            'entityRanges': []
-        }, '')
-
-        self.assertEqual(self.wrapper_state.to_string(), '<h1></h1>')
-
-    def test_str_empty(self):
-        self.assertEqual(str(self.wrapper_state), '<WrapperState: >')
+        }, 'Test')), '<ol class="list--depth-0"><li class="list-item--depth-0">Test</li></ol>')
 
     def test_str_elts(self):
-        self.wrapper_state.element_for({
+        self.assertEqual(str(self.wrapper_state.element_for({
             'key': '5s7g9',
             'text': 'Header',
             'type': 'header-one',
             'depth': 0,
             'inlineStyleRanges': [],
             'entityRanges': []
-        }, '')
-
-        self.assertEqual(str(self.wrapper_state), '<WrapperState: <h1></h1>>')
+        }, '')), '<h1></h1>')
 
 
 class TestBlockquote(unittest.TestCase):

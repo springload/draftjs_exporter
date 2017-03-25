@@ -13,6 +13,9 @@ class WrapperStack:
     def __init__(self):
         self.stack = []
 
+    def __str__(self):
+        return str(self.stack)
+
     def length(self):
         return len(self.stack)
 
@@ -67,30 +70,14 @@ class WrapperState:
 
     def __init__(self, block_map):
         self.block_map = block_map
-        self.document = DOM.create_document_fragment()
-
         self.stack = WrapperStack()
 
     def __str__(self):
-        return '<WrapperState: %s>' % self.to_string()
-
-    def to_string(self):
-        return DOM.render(self.document)
-
-    def clean_up(self):
-        """
-        Special method to handle a rare corner case: if there is no block
-        at depth 0, we need to add the wrapper that contains the whole
-        tree to the document.
-        """
-        document_length = len(DOM.get_children(self.document))
-
-        if document_length == 0 and self.stack.length() != 0:
-            DOM.append_child(self.document, self.stack.tail().elt)
+        return '<WrapperState: %s>' % self.stack
 
     def element_for(self, block, block_content):
-        type_ = block.get('type', 'unstyled')
-        depth = block.get('depth', 0)
+        type_ = block['type']
+        depth = block['depth']
         data = block.get('data', {})
         options = Options.for_block(self.block_map, type_)
         props = dict(options.props)
@@ -104,11 +91,7 @@ class WrapperState:
 
         parent = self.parent_for(options, depth, elt)
 
-        # At level 0, the element is added to the document.
-        if depth == 0:
-            DOM.append_child(self.document, parent)
-
-        return elt
+        return parent
 
     def parent_for(self, options, depth, elt):
         if options.wrapper:
