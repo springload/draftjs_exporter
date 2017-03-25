@@ -26,11 +26,9 @@ class StyleState:
     def render_styles(self, text_node):
         node = text_node
         if not self.is_empty():
-            self.styles.sort(reverse=True)
-            options = [Options.for_style(self.style_map, s) for s in self.styles]
-
             # Nest the tags.
-            for opt in options:
+            for s in sorted(self.styles, reverse=True):
+                opt = Options.for_style(self.style_map, s)
                 node = DOM.create_element(opt.element, opt.props, node)
 
         return node
