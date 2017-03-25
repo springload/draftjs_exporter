@@ -5,15 +5,35 @@ import unittest
 
 from draftjs_exporter.constants import BLOCK_TYPES, ENTITY_TYPES, INLINE_STYLES
 from draftjs_exporter.defaults import BLOCK_MAP
+from draftjs_exporter.dom import DOM
 from draftjs_exporter.entity_state import EntityException
 from draftjs_exporter.html import HTML
 from tests.test_composite_decorators import BR, Hashtag, Linkify
-from tests.test_entities import HR, Link
+from tests.test_entities import HR, Image, Link
+
+
+def Blockquote(props):
+    block_data = props['block']['data']
+
+    return DOM.create_element('blockquote', {
+        'cite': block_data.get('cite')
+    }, props['children'])
+
+
+def Pullquote(props):
+    block_data = props['block']['data']
+
+    return DOM.create_element('div', {
+        'cite': block_data.get('cite'),
+        'class': 'pullquote',
+    }, props['children'])
+
 
 config = {
     'entity_decorators': {
         ENTITY_TYPES.LINK: Link,
         ENTITY_TYPES.HORIZONTAL_RULE: HR,
+        ENTITY_TYPES.IMAGE: Image
     },
     'composite_decorators': [
         Linkify,
@@ -25,6 +45,14 @@ config = {
             'element': 'li',
             'wrapper': 'ul',
             'wrapper_props': {'className': 'steps'},
+        },
+        'blockquote': {
+            'element': Blockquote,
+            'wrapper': 'div',
+        },
+        'pullquote': {
+            'element': Pullquote,
+            'wrapper': 'div',
         },
     }),
     'style_map': {
@@ -495,6 +523,106 @@ class TestOutput(unittest.TestCase):
                 },
             ]
         }), '<ul class="steps"><li>item1</li><li>item2</li></ul><hr/>')
+
+    def test_render_with_wrapping_reset(self):
+        self.assertEqual(self.exporter.render({
+            'entityMap': {},
+            'blocks': [
+                {
+                    'key': '93agv',
+                    'text': '1',
+                    'type': 'unstyled',
+                    'depth': 0,
+                    'inlineStyleRanges': [],
+                    'entityRanges': [],
+                },
+                {
+                    'key': '4ht9m',
+                    'text': '2',
+                    'type': 'unordered-list-item',
+                    'depth': 0,
+                    'inlineStyleRanges': [],
+                    'entityRanges': [],
+                },
+                {
+                    'key': 'c6gc4',
+                    'text': '3',
+                    'type': 'unstyled',
+                    'depth': 0,
+                    'inlineStyleRanges': [],
+                    'entityRanges': [],
+                },
+                {
+                    'key': 'c6gc3',
+                    'text': '4',
+                    'type': 'unordered-list-item',
+                    'depth': 0,
+                    'inlineStyleRanges': [],
+                    'entityRanges': [],
+                },
+                {
+                    'key': '3mn5b',
+                    'text': '5',
+                    'type': 'unstyled',
+                    'depth': 0,
+                    'inlineStyleRanges': [],
+                    'entityRanges': [],
+                },
+            ],
+        }), '<p>1</p><ul class="steps"><li>2</li></ul><p>3</p><ul class="steps"><li>4</li></ul><p>5</p>')
+
+    def test_render_with_wrapping_reset_block_components(self):
+        self.assertEqual(self.exporter.render({
+            'entityMap': {},
+            'blocks': [
+                {
+                    'key': '93agv',
+                    'text': '1',
+                    'type': 'unstyled',
+                    'depth': 0,
+                    'inlineStyleRanges': [],
+                    'entityRanges': [],
+                },
+                {
+                    'key': '4ht9m',
+                    'text': '2',
+                    'type': 'blockquote',
+                    'depth': 0,
+                    'data': {
+                        'cite': 'http://example.com/'
+                    },
+                    'inlineStyleRanges': [],
+                    'entityRanges': [],
+                },
+                {
+                    'key': 'c6gc4',
+                    'text': '3',
+                    'type': 'unstyled',
+                    'depth': 0,
+                    'inlineStyleRanges': [],
+                    'entityRanges': [],
+                },
+                {
+                    'key': 'c6gc3',
+                    'text': '4',
+                    'type': 'pullquote',
+                    'depth': 0,
+                    'data': {
+                        'cite': 'http://example.com/'
+                    },
+                    'inlineStyleRanges': [],
+                    'entityRanges': [],
+                },
+                {
+                    'key': '3mn5b',
+                    'text': '5',
+                    'type': 'unstyled',
+                    'depth': 0,
+                    'inlineStyleRanges': [],
+                    'entityRanges': [],
+                },
+            ],
+        }), '<p>1</p><ul class="steps"><li>2</li></ul><p>3</p><ul class="steps"><li>4</li></ul><p>5</p>')
 
     def test_render_with_unidirectional_nested_wrapping(self):
         self.assertEqual(self.exporter.render({
