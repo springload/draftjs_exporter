@@ -27,7 +27,7 @@ def apply_decorators(decorators, text, block_type):
     pointer = 0
     for begin, end, match, decorator in decorations:
         if pointer < begin:
-            yield DOM.create_text_node(text[pointer:begin])
+            yield text[pointer:begin]
 
         yield DOM.create_element(decorator, {
             'match': match,
@@ -36,7 +36,7 @@ def apply_decorators(decorators, text, block_type):
         pointer = end
 
     if pointer < len(text):
-        yield DOM.create_text_node(text[pointer:])
+        yield text[pointer:]
 
 
 def render_decorators(decorators, text, block_type):
@@ -45,7 +45,7 @@ def render_decorators(decorators, text, block_type):
     if len(decorated_children) == 1:
         decorated_node = decorated_children[0]
     else:
-        decorated_node = DOM.create_document_fragment()
+        decorated_node = DOM.create_element()
         for decorated_child in decorated_children:
             DOM.append_child(decorated_node, decorated_child)
 

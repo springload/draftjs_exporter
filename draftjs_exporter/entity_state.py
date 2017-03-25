@@ -55,7 +55,7 @@ class EntityState:
             decorator = self.get_entity_decorator(entity_details['type'])
             props = entity_details['data'].copy()
 
-            nodes = DOM.create_document_fragment()
+            nodes = DOM.create_element()
 
             for n in self.element_stack:
                 DOM.append_child(nodes, n)
