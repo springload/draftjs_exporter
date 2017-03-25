@@ -32,9 +32,9 @@ class HTML:
         """
         self.wrapper_state = WrapperState(self.block_map)
         self.document = DOM.create_document_fragment()
-        entity_map = content_state.get('entityMap', {})
+        entity_map = content_state['entityMap']
 
-        for block in content_state.get('blocks', []):
+        for block in content_state['blocks']:
             depth = block['depth']
             elt = self.render_block(block, entity_map)
 
@@ -66,7 +66,7 @@ class HTML:
 
             # Decorators are not rendered inside entities.
             if entity_state.has_no_entity() and len(self.composite_decorators) > 0:
-                decorated_node = render_decorators(self.composite_decorators, text, block.get('type', None))
+                decorated_node = render_decorators(self.composite_decorators, text, block['type'])
             else:
                 decorated_node = DOM.create_text_node(text)
 
@@ -83,7 +83,7 @@ class HTML:
         Creates block modification commands, grouped by start index,
         with the text to apply them on.
         """
-        text = block.get('text')
+        text = block['text']
 
         commands = sorted(self.build_commands(block))
         grouped = groupby(commands, Command.key)
@@ -108,16 +108,16 @@ class HTML:
         - Multiple pairs for styles.
         - Multiple pairs for entities.
         """
-        text_commands = Command.start_stop('text', 0, len(block.get('text')))
+        text_commands = Command.start_stop('text', 0, len(block['text']))
         style_commands = self.build_style_commands(block)
         entity_commands = self.build_entity_commands(block)
 
         return text_commands + style_commands + entity_commands
 
     def build_style_commands(self, block):
-        ranges = block.get('inlineStyleRanges', [])
+        ranges = block['inlineStyleRanges']
         return Command.from_ranges(ranges, 'inline_style', 'style')
 
     def build_entity_commands(self, block):
-        ranges = block.get('entityRanges', [])
+        ranges = block['entityRanges']
         return Command.from_ranges(ranges, 'entity', 'key')

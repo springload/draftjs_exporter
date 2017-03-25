@@ -5,20 +5,11 @@ import unittest
 
 from draftjs_exporter.constants import BLOCK_TYPES, ENTITY_TYPES, INLINE_STYLES
 from draftjs_exporter.defaults import BLOCK_MAP
-from draftjs_exporter.dom import DOM
 from draftjs_exporter.entity_state import EntityException
 from draftjs_exporter.html import HTML
 from tests.test_composite_decorators import BR, Hashtag, Linkify
 from tests.test_entities import HR, Image, Link
-
-
-def Blockquote(props):
-    block_data = props['block']['data']
-
-    return DOM.create_element('blockquote', {
-        'cite': block_data.get('cite')
-    }, props['children'])
-
+from tests.test_wrapper_state import Blockquote
 
 config = {
     'entity_decorators': {
@@ -67,9 +58,6 @@ class TestOutput(unittest.TestCase):
             'entityMap': {},
             'blocks': []
         }), '')
-
-    def test_render_emptiest(self):
-        self.assertEqual(self.exporter.render({}), '')
 
     def test_render_with_different_blocks(self):
         self.assertEqual(self.exporter.render({

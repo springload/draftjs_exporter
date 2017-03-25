@@ -43,8 +43,8 @@ class Command:
         """
         commands = []
         for r in ranges:
-            data = r.get(data_key)
-            start = r.get(start_key)
-            stop = start + r.get(length_key)
+            data = r[data_key]
+            start = r[start_key]
+            stop = start + r[length_key]
             commands.extend(Command.start_stop(name, start, stop, data))
         return commands

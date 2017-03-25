@@ -57,7 +57,7 @@ class TestDOM(unittest.TestCase):
     def test_set_attribute(self):
         elt = DOM.create_element('a')
         DOM.set_attribute(elt, 'href', 'http://example.com')
-        self.assertEqual(elt.get('href'), 'http://example.com')
+        self.assertEqual(DOM.render(elt), '<a href="http://example.com"></a>')
 
     def test_get_tag_name(self):
         self.assertEqual(DOM.get_tag_name(DOM.create_element('p', {}, 'Test test')), 'p')
