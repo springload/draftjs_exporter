@@ -31,19 +31,18 @@ class TestEntityState(unittest.TestCase):
     def test_apply_start_entity(self):
         self.assertEqual(len(self.entity_state.entity_stack), 0)
         self.entity_state.apply(Command('start_entity', 0, 0))
-        self.assertEqual(self.entity_state.entity_stack[-1], {
-            'data': {
-                'url': 'http://example.com'
-            },
-            'type': 'LINK',
-            'mutability': 'MUTABLE',
-        })
+        self.assertEqual(self.entity_state.entity_stack[-1], 0)
 
     def test_apply_stop_entity(self):
         self.assertEqual(len(self.entity_state.entity_stack), 0)
         self.entity_state.apply(Command('start_entity', 0, 0))
         self.entity_state.apply(Command('stop_entity', 5, 0))
         self.assertEqual(len(self.entity_state.entity_stack), 0)
+
+    def test_apply_raises(self):
+        with self.assertRaises(EntityException):
+            self.entity_state.apply(Command('start_entity', 0, 0))
+            self.entity_state.apply(Command('stop_entity', 0, 1))
 
     def test_has_no_entity_default(self):
         self.assertEqual(self.entity_state.has_no_entity(), True)
@@ -53,7 +52,7 @@ class TestEntityState(unittest.TestCase):
         self.assertEqual(self.entity_state.has_no_entity(), False)
 
     def test_get_entity_details(self):
-        self.assertEqual(self.entity_state.get_entity_details(Command('start_entity', 0, 0)), {
+        self.assertEqual(self.entity_state.get_entity_details(0), {
             'data': {
                 'url': 'http://example.com'
             },
@@ -63,31 +62,11 @@ class TestEntityState(unittest.TestCase):
 
     def test_get_entity_details_raises(self):
         with self.assertRaises(EntityException):
-            self.entity_state.get_entity_details(Command('start_entity', 0, 1))
+            self.entity_state.get_entity_details(1)
 
     def test_get_entity_decorator(self):
-        self.assertIsInstance(self.entity_state.get_entity_decorator({
-            'data': {
-                'url': 'http://example.com'
-            },
-            'type': 'LINK',
-            'mutability': 'MUTABLE',
-        }), Link)
+        self.assertIsInstance(self.entity_state.get_entity_decorator('LINK'), Link)
 
     def test_get_entity_decorator_raises(self):
         with self.assertRaises(EntityException):
-            self.entity_state.get_entity_decorator({
-                'data': {
-                    'url': 'http://example.com'
-                },
-                'type': 'VIDEO',
-                'mutability': 'MUTABLE',
-            })
-
-    def test_start_command_raises(self):
-        with self.assertRaises(EntityException):
-            self.entity_state.start_command(Command('start_entity', 0, 1))
-
-    def test_stop_command_raises(self):
-        with self.assertRaises(EntityException):
-            self.entity_state.start_command(Command('stop_entity', 0, 1))
+            self.entity_state.get_entity_decorator('VIDEO')
