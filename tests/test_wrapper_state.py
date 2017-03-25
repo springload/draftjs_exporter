@@ -121,6 +121,9 @@ class TestWrapperState(unittest.TestCase):
             'entityRanges': []
         }, '')), '<h1></h1>')
 
+    def test_str(self):
+        self.assertEqual(str(self.wrapper_state), '<WrapperState: []>')
+
 
 class TestBlockquote(unittest.TestCase):
     def test_render(self):
