@@ -55,11 +55,10 @@ class TestStyleState(unittest.TestCase):
         self.assertEqual(self.style_state.is_empty(), False)
 
     def test_render_styles_unstyled(self):
-        self.assertEqual(DOM.get_tag_name(self.style_state.render_styles(DOM.create_text_node('Test text'))), 'textnode')
-        self.assertEqual(DOM.get_text_content(self.style_state.render_styles(DOM.create_text_node('Test text'))), 'Test text')
+        self.assertEqual(DOM.render(self.style_state.render_styles(DOM.create_text_node('Test text'))), 'Test text')
 
     def test_render_styles_unicode(self):
-        self.assertEqual(DOM.get_text_content(self.style_state.render_styles(DOM.create_text_node('🍺'))), '🍺')
+        self.assertEqual(DOM.render(self.style_state.render_styles(DOM.create_text_node('🍺'))), '🍺')
 
     def test_render_styles_styled(self):
         self.style_state.apply(Command('start_inline_style', 0, 'ITALIC'))

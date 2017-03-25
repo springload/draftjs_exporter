@@ -28,17 +28,17 @@ def Soup(raw_str):
 soup = Soup('')
 
 
-class DOM(object):
+def create_tag(type_, attributes=None):
     """
     Wrapper around our HTML building library to facilitate changes.
     """
-    @staticmethod
-    def create_tag(type_, attributes=None):
-        if attributes is None:
-            attributes = {}
+    if attributes is None:
+        attributes = {}
 
-        return soup.new_tag(type_, **attributes)
+    return soup.new_tag(type_, **attributes)
 
+
+class DOM(object):
     @staticmethod
     def create_element(type_=None, props=None, *children):
         """
@@ -93,7 +93,7 @@ class DOM(object):
                 # Never render block attribute on a raw tag.
                 attributes.pop('block', None)
 
-                elt = DOM.create_tag(type_, attributes)
+                elt = create_tag(type_, attributes)
 
                 for child in children:
                     if child:
@@ -106,11 +106,11 @@ class DOM(object):
 
     @staticmethod
     def create_document_fragment():
-        return DOM.create_tag('fragment')
+        return create_tag('fragment')
 
     @staticmethod
     def create_text_node(text):
-        elt = DOM.create_tag('textnode')
+        elt = create_tag('textnode')
         DOM.set_text_content(elt, text)
         return elt
 
@@ -127,18 +127,6 @@ class DOM(object):
     @staticmethod
     def append_child(elt, child):
         elt.append(child)
-
-    @staticmethod
-    def set_attribute(elt, attr, value):
-        elt[attr] = value
-
-    @staticmethod
-    def get_tag_name(elt):
-        return elt.name
-
-    @staticmethod
-    def get_class_list(elt):
-        return elt.get('class', [])
 
     @staticmethod
     def get_text_content(elt):
@@ -161,6 +149,10 @@ class DOM(object):
         Dirty, but quite easy to understand.
         """
         return re.sub(r'</?(fragment|textnode|body|html|head)>', '', unicode(elt)).strip()
+
+    @staticmethod
+    def render_debug(elt):
+        return re.sub(r'</?(body|html|head)>', '', unicode(elt)).strip()
 
     @staticmethod
     def pretty_print(markup):
