@@ -33,23 +33,22 @@ class HTML:
         self.wrapper_state = WrapperState(self.block_map)
         self.document = DOM.create_document_fragment()
         entity_map = content_state['entityMap']
+        min_depth = 0
 
         for block in content_state['blocks']:
             depth = block['depth']
             elt = self.render_block(block, entity_map)
 
+            if depth > min_depth:
+                min_depth = depth
+
             # At level 0, the element is added to the document.
             if depth == 0:
                 DOM.append_child(self.document, elt)
 
-        """
-        Special method to handle a rare corner case: if there is no block
-        at depth 0, we need to add the wrapper that contains the whole
-        tree to the document.
-        """
-        document_length = len(DOM.get_children(self.document))
-
-        if document_length == 0 and self.wrapper_state.stack.length() != 0:
+        # If there is no block at depth 0, we need to add the wrapper that contains the whole tree to the document.
+        # TODO This might not be enough when specific wrappers never reach 0.
+        if min_depth > 0 and self.wrapper_state.stack.length() != 0:
             DOM.append_child(self.document, self.wrapper_state.stack.tail().elt)
 
         return DOM.render(self.document)
