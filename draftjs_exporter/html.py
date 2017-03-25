@@ -31,14 +31,28 @@ class HTML:
         Starts the export process on a given piece of content state.
         """
         self.wrapper_state = WrapperState(self.block_map)
+        self.document = DOM.create_document_fragment()
         entity_map = content_state.get('entityMap', {})
 
         for block in content_state.get('blocks', []):
-            self.render_block(block, entity_map)
+            depth = block['depth']
+            elt = self.render_block(block, entity_map)
 
-        self.wrapper_state.clean_up()
+            # At level 0, the element is added to the document.
+            if depth == 0:
+                DOM.append_child(self.document, elt)
 
-        return self.wrapper_state.to_string()
+        """
+        Special method to handle a rare corner case: if there is no block
+        at depth 0, we need to add the wrapper that contains the whole
+        tree to the document.
+        """
+        document_length = len(DOM.get_children(self.document))
+
+        if document_length == 0 and self.wrapper_state.stack.length() != 0:
+            DOM.append_child(self.document, self.wrapper_state.stack.tail().elt)
+
+        return DOM.render(self.document)
 
     def render_block(self, block, entity_map):
         content = DOM.create_document_fragment()
@@ -62,7 +76,7 @@ class HTML:
                 DOM.append_child(content, entity_node)
                 DOM.append_child(content, styled_node)
 
-        self.wrapper_state.element_for(block, content)
+        return self.wrapper_state.element_for(block, content)
 
     def build_command_groups(self, block):
         """
