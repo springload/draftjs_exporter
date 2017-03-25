@@ -50,6 +50,10 @@ KEYBOARD = 'kbd'
 - By default, `code-block` blocks are now rendered inside a combination of `pre` and `code` tags.
 - For entities, directly pass `data` dict as props instead of whole entity map declaration.
 
+### Fixed
+
+- Fix block ordering with block components and wrapper. Fix #55.
+
 ### How to upgrade
 
 ```diff
