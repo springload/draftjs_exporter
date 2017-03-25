@@ -37,6 +37,7 @@ KEYBOARD = 'kbd'
 ### Removed
 
 - Remove array-style block element and wrapper declarations (`['ul']`, `['ul', {'className': 'bullet-list'}]`).
+- Remove `DOM.create_text_node` method.
 
 ### Changed
 
@@ -97,6 +98,15 @@ KEYBOARD = 'kbd'
 -         'href': data['url'],
 +         'href': props['url'],
       }
+# Remove wrapping around text items.
+- DOM.create_text_node(text)
++ text
+# Remove fragment calls.
+- DOM.create_document_fragment()
++ DOM.create_element()
+# Remove text getters and setters. This is not supported anymore.
+- DOM.get_text_content(elt)
+- DOM.set_text_content(elt, text)
 ```
 
 ## [v0.7.0](https://github.com/springload/draftjs_exporter/releases/tag/v0.7.0)
