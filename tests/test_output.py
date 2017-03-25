@@ -576,7 +576,7 @@ class TestOutput(unittest.TestCase):
                     'type': 'blockquote',
                     'depth': 0,
                     'data': {
-                        'cite': 'http://example.com/'
+                        'cite': '2'
                     },
                     'inlineStyleRanges': [],
                     'entityRanges': [],
@@ -595,7 +595,7 @@ class TestOutput(unittest.TestCase):
                     'type': 'blockquote',
                     'depth': 0,
                     'data': {
-                        'cite': 'http://example.com/'
+                        'cite': '4'
                     },
                     'inlineStyleRanges': [],
                     'entityRanges': [],
@@ -609,7 +609,7 @@ class TestOutput(unittest.TestCase):
                     'entityRanges': [],
                 },
             ],
-        }), '<p>1</p><ul class="steps"><li>2</li></ul><p>3</p><ul class="steps"><li>4</li></ul><p>5</p>')
+        }), '<p>1</p><div><blockquote cite="2">2</blockquote></div><p>3</p><div><blockquote cite="4">4</blockquote></div><p>5</p>')
 
     def test_render_with_unidirectional_nested_wrapping(self):
         self.assertEqual(self.exporter.render({
