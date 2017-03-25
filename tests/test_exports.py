@@ -49,11 +49,11 @@ class TestExportsMeta(type):
         def gen_test(export):
             def test(self):
                 self.maxDiff = None
-                self.assertEqual(exporter.render(export.get('content_state')), export.get('output'))
+                self.assertEqual(exporter.render(export['content_state']), export['output'])
             return test
 
         for export in fixtures:
-            test_name = 'test_export_%s' % export.get('label').lower().replace(' ', '_')
+            test_name = 'test_export_%s' % export['label'].lower().replace(' ', '_')
             dict[test_name] = gen_test(export)
 
         return type.__new__(mcs, name, bases, dict)

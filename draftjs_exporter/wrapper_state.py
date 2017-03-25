@@ -30,14 +30,14 @@ class WrapperStack:
 
     def head(self):
         if self.length() > 0:
-            wrapper = self.get(-1)
+            wrapper = self.stack[-1]
         else:
             wrapper = Wrapper(-1)
 
         return wrapper
 
     def tail(self):
-        return self.get(0)
+        return self.stack[0]
 
 
 class Wrapper:

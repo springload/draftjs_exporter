@@ -20,7 +20,7 @@ class Linkify:
         self.use_new_window = use_new_window
 
     def render(self, props):
-        match = props.get('match')
+        match = props['match']
         protocol = match.group(1)
         url = match.group(2)
         href = protocol + url

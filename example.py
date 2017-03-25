@@ -100,7 +100,7 @@ class Linkify:
     SEARCH_RE = re.compile(r'(http://|https://|www\.)([a-zA-Z0-9\.\-%/\?&_=\+#:~!,\'\*\^$]+)')
 
     def render(self, props):
-        match = props.get('match')
+        match = props['match']
         protocol = match.group(1)
         url = match.group(2)
         href = protocol + url
