@@ -20,15 +20,6 @@ def Blockquote(props):
     }, props['children'])
 
 
-def Pullquote(props):
-    block_data = props['block']['data']
-
-    return DOM.create_element('div', {
-        'cite': block_data.get('cite'),
-        'class': 'pullquote',
-    }, props['children'])
-
-
 config = {
     'entity_decorators': {
         ENTITY_TYPES.LINK: Link,
@@ -48,10 +39,6 @@ config = {
         },
         'blockquote': {
             'element': Blockquote,
-            'wrapper': 'div',
-        },
-        'pullquote': {
-            'element': Pullquote,
             'wrapper': 'div',
         },
     }),
@@ -605,7 +592,7 @@ class TestOutput(unittest.TestCase):
                 {
                     'key': 'c6gc3',
                     'text': '4',
-                    'type': 'pullquote',
+                    'type': 'blockquote',
                     'depth': 0,
                     'data': {
                         'cite': 'http://example.com/'
