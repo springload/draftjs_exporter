@@ -68,13 +68,14 @@ class HTML:
             if entity_state.has_no_entity() and len(self.composite_decorators) > 0:
                 decorated_node = render_decorators(self.composite_decorators, text, block['type'])
             else:
-                decorated_node = DOM.create_text_node(text)
+                decorated_node = text
 
             styled_node = style_state.render_styles(decorated_node)
             entity_node = entity_state.render_entitities(styled_node)
             if entity_node:
                 DOM.append_child(content, entity_node)
-                DOM.append_child(content, styled_node)
+                if styled_node != entity_node:
+                    DOM.append_child(content, styled_node)
 
         return self.wrapper_state.element_for(block, content)
 
