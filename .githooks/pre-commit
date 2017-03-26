@@ -17,12 +17,11 @@ else
     # Fail on first line that fails.
     set -e
 
-    NEW_FILES=$(git --no-pager diff --name-only --cached)
+    NEW_FILES=$(git --no-pager diff --name-only --cached --diff-filter=d)
     PY_FILES=$(echo "$NEW_FILES" | { grep .py || true; })
 
     if [ -n "$PY_FILES" ];
     then
-        make lint
         make test-ci
     fi
     exit 0
