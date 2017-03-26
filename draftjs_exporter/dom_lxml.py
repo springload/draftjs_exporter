@@ -5,10 +5,12 @@ import re
 
 from lxml import etree, html
 
+NSMAP = {
+    'xlink': 'http://www.w3.org/1999/xlink',
+}
+
 # Python 2/3 unicode compatibility hack.
 # See http://stackoverflow.com/questions/6812031/how-to-make-unicode-string-with-python3
-XLINK = 'http://www.w3.org/1999/xlink'
-
 try:
     UNICODE_EXISTS = bool(type(unicode))
 except NameError:
@@ -20,14 +22,10 @@ _first_cap_re = re.compile(r'(.)([A-Z][a-z]+)')
 _all_cap_re = re.compile('([a-z0-9])([A-Z])')
 
 
-def clean_str(s):
-    if not isinstance(s, basestring):
-        s = unicode(s)
-
-    elif not isinstance(s, unicode):
-        s = s.decode('utf8')
-        # See http://stackoverflow.com/questions/8733233/filtering-out-certain-bytes-in-python
-    return re.sub(u'[^\u0020-\uD7FF\u0009\u000A\u000D\uE000-\uFFFD\u10000-\u10FFFF]+', '', s)
+def camel_to_dash(camel_cased_str):
+    sub2 = _first_cap_re.sub(r'\1-\2', camel_cased_str)
+    dashed_case_str = _all_cap_re.sub(r'\1-\2', sub2).lower()
+    return dashed_case_str.replace('--', '-')
 
 
 class DOM_LXML(object):
@@ -35,8 +33,42 @@ class DOM_LXML(object):
     Wrapper around our HTML building library to facilitate changes.
     """
     @staticmethod
-    def create_tag(type_, attributes=None):
-        return etree.Element(type_, attrib=attributes)
+    def create_tag(type_, attr=None):
+        nsmap = None
+
+        if attr:
+            # Never render children attribute on a raw tag.
+            attr.pop('children', None)
+
+            # Never render block attribute on a raw tag.
+            attr.pop('block', None)
+
+            if 'xlink:href' in attr:
+                attr['{%s}href' % NSMAP['xlink']] = attr.pop('xlink:href')
+                nsmap = NSMAP
+
+            if 'style' in attr and isinstance(attr['style'], dict):
+                rules = ['{0}: {1};'.format(camel_to_dash(s), attr['style'][s]) for s in attr['style'].keys()]
+                attr['style'] = ''.join(sorted(rules))
+
+            # Map props from React/Draft.js to HTML lingo.
+            if 'className' in attr:
+                attr['class'] = attr.pop('className')
+
+            attributes = {}
+            for key in attr:
+                if attr[key] is False:
+                    attr[key] = 'false'
+
+                if attr[key] is True:
+                    attr[key] = 'true'
+
+                if attr[key] is not None:
+                    attributes[key] = unicode(attr[key])
+
+            attr = attributes
+
+        return etree.Element(type_, attrib=attr, nsmap=nsmap)
 
     @staticmethod
     def create_element(type_=None, props=None, *children):
@@ -55,45 +87,29 @@ class DOM_LXML(object):
         if not type_:
             return DOM_LXML.create_document_fragment()
         else:
-            attributes = {}
-
-            # Map props from React/Draft.js to HTML lingo.
-            if 'className' in props:
-                props['class'] = props.pop('className')
-
-            if 'xlink:href' in props:
-                props['{%s}href' % XLINK] = props.pop('xlink:href')
-
-            for key in props:
-                prop = props[key]
-
-                if key == 'style' and isinstance(prop, dict):
-                    rules = ['{0}: {1};'.format(DOM_LXML.camel_to_dash(style), prop[style]) for style in prop.keys()]
-                    prop = ''.join(sorted(rules))
-
-                # Filter None values.
-                if prop is not None:
-                    attributes[key] = prop
-
             if len(children) and isinstance(children[0], (list, tuple)):
                 children = children[0]
 
             if inspect.isclass(type_):
-                elt = type_().render(attributes)
+                props['children'] = children[0] if len(children) == 1 else children
+                elt = type_().render(props)
             elif callable(getattr(type_, 'render', None)):
-                elt = type_.render(attributes)
+                props['children'] = children[0] if len(children) == 1 else children
+                elt = type_.render(props)
             elif callable(type_):
-                elt = type_(attributes)
+                props['children'] = children[0] if len(children) == 1 else children
+                elt = type_(props)
             else:
-                try:
-                    attributes = {k: unicode(v) for k, v in props.items() if v is not None}
-                except:
-                    attributes = {k: clean_str(v) for k, v in props.items() if v is not None}
+                elt = DOM_LXML.create_tag(type_, props)
 
-                elt = DOM_LXML.create_tag(type_, attributes)
-
-            for child in children:
-                DOM_LXML.append_child(elt, child)
+                for child in children:
+                    if child not in (None, ''):
+                        if hasattr(child, 'tag'):
+                            elt.append(child)
+                        else:
+                            elt_text = DOM_LXML.get_text_content(elt) or ''
+                            elt_text += child
+                            DOM_LXML.set_text_content(elt, elt_text)
 
         return elt
 
@@ -102,46 +118,21 @@ class DOM_LXML(object):
         return DOM_LXML.create_tag('fragment')
 
     @staticmethod
-    def create_text_node(text):
-        elt = DOM_LXML.create_tag('textnode')
-        DOM_LXML.set_text_content(elt, text)
-        return elt
-
-    @staticmethod
     def parse_html(markup):
         return html.fromstring(markup)
 
     @staticmethod
     def camel_to_dash(camel_cased_str):
-        sub2 = _first_cap_re.sub(r'\1-\2', camel_cased_str)
-        dashed_case_str = _all_cap_re.sub(r'\1-\2', sub2).lower()
-        return dashed_case_str.replace('--', '-')
+        return camel_to_dash(camel_cased_str)
 
     @staticmethod
     def append_child(elt, child):
-        if child not in (None, ''):
-            if hasattr(child, 'tag'):
-                elt.append(child)
-            else:
-                elt_text = DOM_LXML.get_text_content(elt) or ''
-                try:
-                    elt_text += child
-                except:
-                    elt_text += clean_str(child)
-                DOM_LXML.set_text_content(elt, elt_text)
-
-    @staticmethod
-    def set_attribute(elt, attr, value):
-        elt.set(attr, value)
-
-    @staticmethod
-    def get_tag_name(elt):
-        return elt.tag
-
-    @staticmethod
-    def get_class_list(elt):
-        class_name = elt.get('class')
-        return re.split('\ +', class_name) if class_name else []
+        if hasattr(child, 'tag'):
+            elt.append(child)
+        else:
+            c = DOM_LXML.create_document_fragment()
+            DOM_LXML.set_text_content(c, child)
+            elt.append(c)
 
     @staticmethod
     def get_text_content(elt):
@@ -149,10 +140,7 @@ class DOM_LXML(object):
 
     @staticmethod
     def set_text_content(elt, text):
-        try:
-            elt.text = text
-        except:
-            elt.text = clean_str(text)
+        elt.text = text
 
     @staticmethod
     def get_children(elt):
@@ -164,8 +152,11 @@ class DOM_LXML(object):
         Removes the fragments that should not have HTML tags. Caveat of lxml.
         Dirty, but quite easy to understand.
         """
-        return re.sub(r'</?(fragment|textnode)>', '',
-                      etree.tostring(elt, method='xml', encoding=unicode))
+        return re.sub(r'(</?(fragment)>|xmlns:xlink="http://www.w3.org/1999/xlink" )', '', etree.tostring(elt, method='html', encoding='unicode'))
+
+    @staticmethod
+    def render_debug(elt):
+        return re.sub(r'(xmlns:xlink="http://www.w3.org/1999/xlink" )', '', etree.tostring(elt, method='html', encoding='unicode'))
 
     @staticmethod
     def pretty_print(markup):

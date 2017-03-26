@@ -31,6 +31,7 @@ def Soup(raw_str):
 # Cache empty soup so we can create tags in isolation without the performance overhead.
 soup = Soup('')
 
+
 def create_tag(type_, attributes=None):
     """
     Wrapper around our HTML building library to facilitate changes.

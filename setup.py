@@ -26,6 +26,8 @@ testing_extras = [
     'coverage>=4.1.0',
     'flake8>=3.2.0',
     'isort>=4.2.5',
+
+    'lxml>=3.6.0',
 ]
 
 # Documentation dependencies

@@ -394,7 +394,7 @@
 
     {
         "label": "From https://github.com/icelab/draft-js-ast-exporter/blob/651c807bea12d97dad6f4965ab40481c8f2130dd/test/fixtures/content.js",
-        "output": "<h2>DraftJS AST Exporter</h2><p>In your draft-js, <strong>exporting</strong> your <em>content</em>:</p><ol><li>From draft-js internals</li><li>To an abstract syntax tree</li><li>Extensibility.</li></ol><img src=\"http://placekitten.com/500/300\"/>:)<p>Find the project on <a href=\"https://github.com/icelab/draft-js-ast-exporter\">Github</a>.</p>",
+        "output": "<h2>DraftJS AST Exporter</h2><p>In your draft-js, <strong>exporting</strong> your <em>content</em>:</p><ol><li>From draft-js internals</li><li>To an abstract syntax tree</li><li>Extensibility.</li></ol><img src=\"http://placekitten.com/500/300\">:)<p>Find the project on <a href=\"https://github.com/icelab/draft-js-ast-exporter\">Github</a>.</p>",
         "content_state": {
             "entityMap": {
                 "0": {
