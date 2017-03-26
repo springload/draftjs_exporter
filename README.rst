@@ -199,8 +199,11 @@ Installation
     virtualenv .venv
     source ./.venv/bin/activate
     make init
-    # Install all tested python versions.
-    pyenv install 2.7.11 && pyenv install 3.4.4 && pyenv install 3.5.1
+    # Install required Python versions
+    pyenv install --skip-existing 2.7.11
+	pyenv install --skip-existing 3.4.4
+	pyenv install --skip-existing 3.5.1
+    # Make required Python versions available globally.
     pyenv global system 2.7.11 3.4.4 3.5.1
 
 Commands
