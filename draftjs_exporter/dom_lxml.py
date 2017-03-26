@@ -157,15 +157,3 @@ class DOM_LXML(object):
     @staticmethod
     def render_debug(elt):
         return re.sub(r'(xmlns:xlink="http://www.w3.org/1999/xlink" )', '', etree.tostring(elt, method='html', encoding='unicode'))
-
-    @staticmethod
-    def pretty_print(markup):
-        """
-        Convenience method.
-        Pretty print the element, removing the top-level node that lxml needs.
-        """
-        return re.sub(r'</?doc>', '',
-                      etree.tostring(
-                          html.fromstring('<doc>%s</doc>' % markup),
-                          encoding='unicode',
-                          pretty_print=True))
