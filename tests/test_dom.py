@@ -8,13 +8,13 @@ from tests.test_entities import Icon
 
 class TestDOM(unittest.TestCase):
     def test_create_element(self):
-        self.assertEqual(DOM.render(DOM.create_element('p', {'className': 'intro'}, 'Test test')), '<p class="intro">Test test</p>')
+        self.assertEqual(DOM.render_debug(DOM.create_element('p', {'className': 'intro'}, 'Test test')), '<p class="intro">Test test</p>')
 
     def test_create_element_style_dict(self):
-        self.assertEqual(DOM.render(DOM.create_element('p', {'style': {'borderColor': 'red', 'textDecoration': 'underline'}}, 'Test test')), '<p style="border-color: red;text-decoration: underline;">Test test</p>')
+        self.assertEqual(DOM.render_debug(DOM.create_element('p', {'style': {'borderColor': 'red', 'textDecoration': 'underline'}}, 'Test test')), '<p style="border-color: red;text-decoration: underline;">Test test</p>')
 
     def test_create_element_style_str(self):
-        self.assertEqual(DOM.render(DOM.create_element('p', {'style': 'border-color: red;text-decoration: underline;'}, 'Test test')), '<p style="border-color: red;text-decoration: underline;">Test test</p>')
+        self.assertEqual(DOM.render_debug(DOM.create_element('p', {'style': 'border-color: red;text-decoration: underline;'}, 'Test test')), '<p style="border-color: red;text-decoration: underline;">Test test</p>')
 
     def test_create_element_empty(self):
         self.assertEqual(DOM.render_debug(DOM.create_element()), '<fragment></fragment>')
@@ -50,7 +50,7 @@ class TestDOM(unittest.TestCase):
     def test_get_children(self):
         self.assertEqual(len(DOM.get_children(DOM.create_element('span', {}, DOM.create_element('span'), DOM.create_element('span')))), 2)
 
-    def test_render(self):
-        self.assertEqual(DOM.render(
+    def test_render_debug(self):
+        self.assertEqual(DOM.render_debug(
             DOM.create_element('a', {}, DOM.create_element('span', {'className': 'file-info icon-text'}, DOM.create_element('span', {'className': 'icon-text__text'}, 'Test test'), DOM.create_element('svg', {'className': 'icon'}, DOM.create_element('use', {'xlink:href': '#icon-test'}))))
         ), '<a><span class="file-info icon-text"><span class="icon-text__text">Test test</span><svg class="icon"><use xlink:href="#icon-test"></use></svg></span></a>')

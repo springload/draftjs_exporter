@@ -48,7 +48,7 @@ class TestWrapperState(unittest.TestCase):
         self.assertIsInstance(self.wrapper_state, WrapperState)
 
     def test_element_for_simple_content(self):
-        self.assertEqual(DOM.render(self.wrapper_state.element_for({
+        self.assertEqual(DOM.render_debug(self.wrapper_state.element_for({
             'key': '5s7g9',
             'text': 'Header',
             'type': 'header-one',
@@ -58,7 +58,7 @@ class TestWrapperState(unittest.TestCase):
         }, 'Header')), '<h1>Header</h1>')
 
     def test_element_for_element_content(self):
-        self.assertEqual(DOM.render(self.wrapper_state.element_for({
+        self.assertEqual(DOM.render_debug(self.wrapper_state.element_for({
             'key': '5s7g9',
             'text': 'Paragraph',
             'type': 'unstyled',
@@ -68,17 +68,17 @@ class TestWrapperState(unittest.TestCase):
         }, DOM.create_element('strong', {}, 'Paragraph'))), '<div><strong>Paragraph</strong></div>')
 
     def test_element_for_dismiss_content(self):
-        self.assertEqual(DOM.render(self.wrapper_state.element_for({
+        self.assertEqual(DOM.render_debug(self.wrapper_state.element_for({
             'key': '5s7g9',
             'text': 'Paragraph',
             'type': 'ignore',
             'depth': 0,
             'inlineStyleRanges': [],
             'entityRanges': []
-        }, DOM.create_element('img', {'src': '/example.png'}))), '')
+        }, DOM.create_element('img', {'src': '/example.png'}))), '<fragment></fragment>')
 
     def test_element_for_no_block(self):
-        self.assertEqual(DOM.render(self.wrapper_state.element_for({
+        self.assertEqual(DOM.render_debug(self.wrapper_state.element_for({
             'key': '5s7g9',
             'text': 'Paragraph',
             'type': 'atomic',
@@ -88,7 +88,7 @@ class TestWrapperState(unittest.TestCase):
         }, DOM.create_element('img', {'src': '/example.png'}))), '<img src="/example.png">')
 
     def test_element_for_component(self):
-        self.assertEqual(DOM.render(self.wrapper_state.element_for({
+        self.assertEqual(DOM.render_debug(self.wrapper_state.element_for({
             'key': '5s7g9',
             'text': 'Paragraph',
             'type': 'blockquote',
@@ -101,7 +101,7 @@ class TestWrapperState(unittest.TestCase):
         }, 'Test')), '<blockquote cite="http://example.com/">Test</blockquote>')
 
     def test_element_for_component_wrapper(self):
-        self.assertEqual(DOM.render(self.wrapper_state.element_for({
+        self.assertEqual(DOM.render_debug(self.wrapper_state.element_for({
             'key': '5s7g9',
             'text': 'Test',
             'type': 'ordered-list-item',
@@ -126,8 +126,8 @@ class TestWrapperState(unittest.TestCase):
 
 
 class TestBlockquote(unittest.TestCase):
-    def test_render(self):
-        self.assertEqual(DOM.render(DOM.create_element(Blockquote, {
+    def test_render_debug(self):
+        self.assertEqual(DOM.render_debug(DOM.create_element(Blockquote, {
             'block': {
                 'data': {
                     'cite': 'http://example.com/',
@@ -137,8 +137,8 @@ class TestBlockquote(unittest.TestCase):
 
 
 class TestListItem(unittest.TestCase):
-    def test_render(self):
-        self.assertEqual(DOM.render(DOM.create_element(ListItem, {
+    def test_render_debug(self):
+        self.assertEqual(DOM.render_debug(DOM.create_element(ListItem, {
             'block': {
                 'depth': 5,
             },
