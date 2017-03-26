@@ -152,11 +152,3 @@ class DOM_BS(object):
     @staticmethod
     def render_debug(elt):
         return re.sub(r'</?(body|html|head)>', '', unicode(elt)).strip()
-
-    @staticmethod
-    def pretty_print(markup):
-        """
-        Convenience method.
-        Pretty print the element, removing the top-level nodes that html5lib adds.
-        """
-        return re.sub(r'</?(body|html|head)>', '', Soup(markup).prettify()).strip()
