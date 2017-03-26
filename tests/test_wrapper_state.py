@@ -85,7 +85,7 @@ class TestWrapperState(unittest.TestCase):
             'depth': 0,
             'inlineStyleRanges': [],
             'entityRanges': []
-        }, DOM.create_element('img', {'src': '/example.png'}))), '<img src="/example.png"/>')
+        }, DOM.create_element('img', {'src': '/example.png'}))), '<img src="/example.png">')
 
     def test_element_for_component(self):
         self.assertEqual(DOM.render(self.wrapper_state.element_for({
@@ -112,7 +112,7 @@ class TestWrapperState(unittest.TestCase):
         }, 'Test')), '<ol class="list--depth-0"><li class="list-item--depth-0">Test</li></ol>')
 
     def test_str_elts(self):
-        self.assertEqual(str(self.wrapper_state.element_for({
+        self.assertEqual(DOM.render_debug(self.wrapper_state.element_for({
             'key': '5s7g9',
             'text': 'Header',
             'type': 'header-one',

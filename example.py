@@ -8,6 +8,8 @@ import logging
 import re
 from pstats import Stats
 
+from bs4 import BeautifulSoup
+
 # draftjs_exporter provides default configurations and predefined constants for reuse.
 from draftjs_exporter.constants import BLOCK_TYPES, ENTITY_TYPES
 from draftjs_exporter.defaults import BLOCK_MAP, STYLE_MAP
@@ -619,12 +621,17 @@ content_state = {
 pr = cProfile.Profile()
 pr.enable()
 
-html = exporter.render(content_state)
+markup = exporter.render(content_state)
 
 pr.disable()
 p = Stats(pr)
 
-pretty = DOM.pretty_print(html)
+
+def prettify(markup):
+    return re.sub(r'</?(body|html|head)>', '', BeautifulSoup(markup, 'html5lib').prettify()).strip()
+
+
+pretty = prettify(markup)
 
 # Display in console.
 print(pretty)
@@ -656,7 +663,7 @@ with codecs.open('example.html', 'w', 'utf-8') as file:
     {html}
 </body>
 </html>
-""".format(styles=styles, html=html))
+""".format(styles=styles, html=markup))
 
 # Output to a Markdown file to showcase the output in GitHub (and see changes in git).
 with codecs.open('docs/example.md', 'w', 'utf-8') as file:
@@ -666,4 +673,4 @@ with codecs.open('docs/example.md', 'w', 'utf-8') as file:
 -----
 {html}
 -----
-""".format(html=html))
+""".format(html=pretty))

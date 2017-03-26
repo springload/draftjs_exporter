@@ -74,7 +74,7 @@ class TestImage(unittest.TestCase):
             'src': 'http://example.com/example.png',
             'width': 320,
             'height': 580,
-        })), '<img height="580" src="http://example.com/example.png" width="320"/>')
+        })), '<img height="580" src="http://example.com/example.png" width="320">')
 
 
 class TestLink(unittest.TestCase):

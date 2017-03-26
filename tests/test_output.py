@@ -294,7 +294,7 @@ class TestOutput(unittest.TestCase):
                     'data': {},
                 }
             ]
-        }), '<ul class="steps"><li>test <a href="http://example.com"><code>className</code> to <code>class</code></a>).</li></ul><hr/>')
+        }), '<ul class="steps"><li>test <a href="http://example.com"><code>className</code> to <code>class</code></a>).</li></ul><hr>')
 
     def test_render_with_wrapping(self):
         self.assertEqual(self.exporter.render({
@@ -348,7 +348,7 @@ class TestOutput(unittest.TestCase):
                 BLOCK_TYPES.UNORDERED_LIST_ITEM: {
                     'element': 'li',
                     'wrapper': 'ul',
-                    'wrapper_props': {'disabled': True},
+                    'wrapper_props': {'data-test': True},
                 },
             }),
         }).render({
@@ -363,7 +363,7 @@ class TestOutput(unittest.TestCase):
                     'entityRanges': []
                 },
             ],
-        }), '<ul disabled="True"><li>item1</li></ul>')
+        }), '<ul data-test="true"><li>item1</li></ul>')
 
     def test_render_with_boolean_attribute_false(self):
         self.assertEqual(HTML({
@@ -371,7 +371,7 @@ class TestOutput(unittest.TestCase):
                 BLOCK_TYPES.UNORDERED_LIST_ITEM: {
                     'element': 'li',
                     'wrapper': 'ul',
-                    'wrapper_props': {'disabled': False},
+                    'wrapper_props': {'data-test': False},
                 },
             }),
         }).render({
@@ -386,7 +386,7 @@ class TestOutput(unittest.TestCase):
                     'entityRanges': []
                 },
             ]
-        }), '<ul disabled="False"><li>item1</li></ul>')
+        }), '<ul data-test="false"><li>item1</li></ul>')
 
     def test_render_with_none_attribute(self):
         self.assertEqual(HTML({
@@ -394,7 +394,7 @@ class TestOutput(unittest.TestCase):
                 BLOCK_TYPES.UNORDERED_LIST_ITEM: {
                     'element': 'li',
                     'wrapper': 'ul',
-                    'wrapper_props': {'disabled': None},
+                    'wrapper_props': {'data-test': None},
                 },
             }),
         }).render({
@@ -551,7 +551,7 @@ class TestOutput(unittest.TestCase):
                     ],
                 },
             ]
-        }), '<ul class="steps"><li>item1</li><li>item2</li></ul><hr/>')
+        }), '<ul class="steps"><li>item1</li><li>item2</li></ul><hr>')
 
     def test_render_with_wrapping_reset(self):
         self.assertEqual(self.exporter.render({
@@ -1138,7 +1138,7 @@ class TestOutput(unittest.TestCase):
                     'entityRanges': []
                 }
             ]
-        }), '<p><em>some</em> paragraph text<br/>split in half</p>')
+        }), '<p><em>some</em> paragraph text<br>split in half</p>')
 
     def test_render_with_many_line_breaks(self):
         self.assertEqual(self.exporter.render({
@@ -1159,7 +1159,7 @@ class TestOutput(unittest.TestCase):
                     'entityRanges': []
                 }
             ]
-        }), '<p><br/><em>some</em> paragraph text<br/>split in half<br/></p>')
+        }), '<p><br><em>some</em> paragraph text<br>split in half<br></p>')
 
     def test_render_with_entity_and_decorators(self):
         """

@@ -51,7 +51,6 @@ class TestDOM(unittest.TestCase):
         self.assertEqual(len(DOM.get_children(DOM.create_element('span', {}, DOM.create_element('span'), DOM.create_element('span')))), 2)
 
     def test_render(self):
-        self.assertEqual(DOM.render(DOM.create_element('a', {}, DOM.create_element('span', {'className': 'file-info icon-text'}, DOM.create_element('span', {'className': 'icon-text__text'}, 'Test test'), DOM.create_element('svg', {'className': 'icon'}, DOM.create_element('use', {'xlink:href': '#icon-test'}))))), '<a><span class="file-info icon-text"><span class="icon-text__text">Test test</span><svg class="icon"><use xlink:href="#icon-test"></use></svg></span></a>')
-
-    def test_pretty_print(self):
-        self.assertEqual(DOM.pretty_print('<a><span class="file-info icon-text"><span class="icon-text__text">Test test</span><svg class="icon"><use xlink:href="#icon-test"></use></svg></span></a>'), '<a>\n   <span class="file-info icon-text">\n    <span class="icon-text__text">\n     Test test\n    </span>\n    <svg class="icon">\n     <use xlink:href="#icon-test">\n     </use>\n    </svg>\n   </span>\n  </a>')
+        self.assertEqual(DOM.render(
+            DOM.create_element('a', {}, DOM.create_element('span', {'className': 'file-info icon-text'}, DOM.create_element('span', {'className': 'icon-text__text'}, 'Test test'), DOM.create_element('svg', {'className': 'icon'}, DOM.create_element('use', {'xlink:href': '#icon-test'}))))
+        ), '<a><span class="file-info icon-text"><span class="icon-text__text">Test test</span><svg class="icon"><use xlink:href="#icon-test"></use></svg></span></a>')

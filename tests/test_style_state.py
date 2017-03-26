@@ -54,10 +54,10 @@ class TestStyleState(unittest.TestCase):
         self.assertEqual(self.style_state.is_empty(), False)
 
     def test_render_styles_unstyled(self):
-        self.assertEqual(DOM.render_debug(self.style_state.render_styles('Test text')), 'Test text')
+        self.assertEqual(self.style_state.render_styles('Test text'), 'Test text')
 
     def test_render_styles_unicode(self):
-        self.assertEqual(DOM.render_debug(self.style_state.render_styles('🍺')), '🍺')
+        self.assertEqual(self.style_state.render_styles('🍺'), '🍺')
 
     def test_render_styles_styled(self):
         self.style_state.apply(Command('start_inline_style', 0, 'ITALIC'))
