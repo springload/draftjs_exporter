@@ -9,7 +9,7 @@ matrix:
    - env: TOXENV=py35
      python: 3.5
 install:
-- pip install coveralls
+- pip install tox coveralls
 script:
 - make test-ci
 after_success:
