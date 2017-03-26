@@ -6,8 +6,6 @@ import re
 from bs4 import BeautifulSoup
 from .dom_lxml import DOM_LXML
 
-DOM = DOM_LXML
-
 # Python 2/3 unicode compatibility hack.
 # See http://stackoverflow.com/questions/6812031/how-to-make-unicode-string-with-python3
 try:
@@ -21,6 +19,12 @@ _first_cap_re = re.compile(r'(.)([A-Z][a-z]+)')
 _all_cap_re = re.compile('([a-z0-9])([A-Z])')
 
 
+def camel_to_dash(camel_cased_str):
+    sub2 = _first_cap_re.sub(r'\1-\2', camel_cased_str)
+    dashed_case_str = _all_cap_re.sub(r'\1-\2', sub2).lower()
+    return dashed_case_str.replace('--', '-')
+
+
 def Soup(raw_str):
     """
     Wrapper around BeautifulSoup to keep the code DRY.
@@ -32,26 +36,53 @@ def Soup(raw_str):
 soup = Soup('')
 
 
-def create_tag(type_, attributes=None):
+def create_tag(type_, attr=None):
     """
     Wrapper around our HTML building library to facilitate changes.
     """
-    if attributes is None:
-        attributes = {}
+    if not attr:
+        attr = {}
+    else:
+        # Never render children attribute on a raw tag.
+        attr.pop('children', None)
 
-    return soup.new_tag(type_, **attributes)
+        # Never render block attribute on a raw tag.
+        attr.pop('block', None)
+
+        if 'style' in attr and isinstance(attr['style'], dict):
+            rules = ['{0}: {1};'.format(camel_to_dash(s), attr['style'][s]) for s in attr['style'].keys()]
+            attr['style'] = ''.join(sorted(rules))
+
+        # Map props from React/Draft.js to HTML lingo.
+        if 'className' in attr:
+            attr['class'] = attr.pop('className')
+
+        attributes = {}
+        for key in attr:
+            if attr[key] is False:
+                attr[key] = 'false'
+
+            if attr[key] is True:
+                attr[key] = 'true'
+
+            if attr[key] is not None:
+                attributes[key] = unicode(attr[key])
+
+        attr = attributes
+
+    return soup.new_tag(type_, **attr)
 
 
 def create_document_fragment():
-        return create_tag('fragment')
+    return create_tag('fragment')
 
 
 def get_text_content(elt):
-        return elt.string
+    return elt.string
 
 
 def set_text_content(elt, text):
-        elt.append(text)
+    elt.append(text)
 
 
 class DOM_BS(object):
@@ -72,42 +103,20 @@ class DOM_BS(object):
             if props is None:
                 props = {}
 
-            attributes = {}
-
-            # Map props from React/Draft.js to HTML lingo.
-            if 'className' in props:
-                props['class'] = props.pop('className')
-
-            for key in props:
-                prop = props[key]
-
-                if key == 'style' and isinstance(prop, dict):
-                    rules = ['{0}: {1};'.format(DOM_BS.camel_to_dash(style), prop[style]) for style in prop.keys()]
-                    prop = ''.join(sorted(rules))
-
-                # Filter None values.
-                if prop is not None:
-                    attributes[key] = prop
-
             # Class component.
             if inspect.isclass(type_):
-                attributes['children'] = children[0] if len(children) == 1 else children
-                elt = type_().render(attributes)
+                props['children'] = children[0] if len(children) == 1 else children
+                elt = type_().render(props)
             # Object instance component.
             elif callable(getattr(type_, 'render', None)):
-                attributes['children'] = children[0] if len(children) == 1 else children
-                elt = type_.render(attributes)
+                props['children'] = children[0] if len(children) == 1 else children
+                elt = type_.render(props)
             # Functional component.
             elif callable(type_):
-                attributes['children'] = children[0] if len(children) == 1 else children
-                elt = type_(attributes)
+                props['children'] = children[0] if len(children) == 1 else children
+                elt = type_(props)
             else:
-                # Never render those attributes on a raw tag.
-                attributes.pop('children', None)
-                attributes.pop('block', None)
-                attributes.pop('entity', None)
-
-                elt = create_tag(type_, attributes)
+                elt = create_tag(type_, props)
 
                 for child in children:
                     if child:
@@ -115,9 +124,6 @@ class DOM_BS(object):
                             DOM_BS.append_child(elt, child)
                         else:
                             set_text_content(elt, get_text_content(elt) + child if get_text_content(elt) else child)
-
-        if not elt:
-            elt = create_document_fragment()
 
         return elt
 
@@ -127,9 +133,7 @@ class DOM_BS(object):
 
     @staticmethod
     def camel_to_dash(camel_cased_str):
-        sub2 = _first_cap_re.sub(r'\1-\2', camel_cased_str)
-        dashed_case_str = _all_cap_re.sub(r'\1-\2', sub2).lower()
-        return dashed_case_str.replace('--', '-')
+        return camel_to_dash(camel_cased_str)
 
     @staticmethod
     def append_child(elt, child):
@@ -152,3 +156,6 @@ class DOM_BS(object):
     @staticmethod
     def render_debug(elt):
         return re.sub(r'</?(body|html|head)>', '', unicode(elt)).strip()
+
+
+DOM = DOM_BS
