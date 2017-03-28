@@ -12,7 +12,7 @@ from draftjs_exporter.constants import BLOCK_TYPES, ENTITY_TYPES, INLINE_STYLES
 from draftjs_exporter.defaults import BLOCK_MAP, STYLE_MAP
 from draftjs_exporter.html import HTML
 from tests.test_composite_decorators import Hashtag, Linkify
-from tests.test_entities import Image, Link
+from tests.test_entities import HR, Image, Link
 
 fixtures_path = os.path.join(os.path.dirname(__file__), 'test_exports.json')
 fixtures = json.loads(open(fixtures_path, 'r').read())
@@ -21,6 +21,8 @@ exporter = HTML({
     'entity_decorators': {
         ENTITY_TYPES.LINK: Link,
         ENTITY_TYPES.IMAGE: Image,
+        ENTITY_TYPES.HORIZONTAL_RULE: HR,
+        ENTITY_TYPES.EMBED: None,
     },
     'composite_decorators': [
         Linkify,
@@ -34,8 +36,8 @@ exporter = HTML({
         },
     }),
     'style_map': dict(STYLE_MAP, **{
-        INLINE_STYLES.ITALIC: 'em',
-        INLINE_STYLES.BOLD: 'strong',
+        'KBD': 'kbd',
+        'HIGHLIGHT': {'element': 'strong', 'props': {'style': {'textDecoration': 'underline'}}},
     }),
 })
 
