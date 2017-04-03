@@ -235,7 +235,7 @@ Releases
 *  Update the version number in ``draftjs_exporter/__init__.py``, following semver.
 *  ``git release vx.y.z``
 *  ``make publish`` (confirm, and enter your password)
-*  Go to https://pypi.python.org/pypi/draftjs_exporter and check that all is well.
+*  Done!
 
 Documentation
 -------------
