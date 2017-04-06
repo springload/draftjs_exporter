@@ -25,17 +25,16 @@ class HTML:
         self.block_map = config.get('block_map', BLOCK_MAP)
         self.style_map = config.get('style_map', STYLE_MAP)
 
-
     def render(self, content_state):
         """
         Starts the export process on a given piece of content state.
         """
         self.wrapper_state = WrapperState(self.block_map)
         self.document = DOM.create_element()
-        entity_map = content_state['entityMap']
+        entity_map = content_state.get('entityMap', {})
         min_depth = 0
 
-        for block in content_state['blocks']:
+        for block in content_state.get('blocks', []):
             depth = block['depth']
             elt = self.render_block(block, entity_map)
 
