@@ -29,30 +29,30 @@ class HTML:
         """
         Starts the export process on a given piece of content state.
         """
-        self.wrapper_state = WrapperState(self.block_map)
-        self.document = DOM.create_element()
+        wrapper_state = WrapperState(self.block_map)
+        document = DOM.create_element()
         entity_map = content_state.get('entityMap', {})
         min_depth = 0
 
         for block in content_state.get('blocks', []):
             depth = block['depth']
-            elt = self.render_block(block, entity_map)
+            elt = self.render_block(block, entity_map, wrapper_state)
 
             if depth > min_depth:
                 min_depth = depth
 
             # At level 0, the element is added to the document.
             if depth == 0:
-                DOM.append_child(self.document, elt)
+                DOM.append_child(document, elt)
 
         # If there is no block at depth 0, we need to add the wrapper that contains the whole tree to the document.
         # TODO This might not be enough when specific wrappers never reach 0.
-        if min_depth > 0 and self.wrapper_state.stack.length() != 0:
-            DOM.append_child(self.document, self.wrapper_state.stack.tail().elt)
+        if min_depth > 0 and wrapper_state.stack.length() != 0:
+            DOM.append_child(document, wrapper_state.stack.tail().elt)
 
-        return DOM.render(self.document)
+        return DOM.render(document)
 
-    def render_block(self, block, entity_map):
+    def render_block(self, block, entity_map, wrapper_state):
         content = DOM.create_element()
         entity_state = EntityState(self.entity_decorators, entity_map)
         style_state = StyleState(self.style_map)
@@ -75,7 +75,7 @@ class HTML:
                 if styled_node != entity_node:
                     DOM.append_child(content, styled_node)
 
-        return self.wrapper_state.element_for(block, content)
+        return wrapper_state.element_for(block, content)
 
     def build_command_groups(self, block):
         """
