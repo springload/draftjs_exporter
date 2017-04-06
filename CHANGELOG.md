@@ -3,6 +3,12 @@
 > All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [v0.8.1](https://github.com/springload/draftjs_exporter/releases/tag/v0.8.1)
+
+### Fixed
+
+- Fix KeyError when the content state is empty.
+
 ## [v0.8.0](https://github.com/springload/draftjs_exporter/releases/tag/v0.8.0)
 
 ### Added
