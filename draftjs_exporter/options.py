@@ -11,14 +11,15 @@ class Options:
     """
     Facilitates querying data from a config map.
     """
-    def __init__(self, element, props=None, wrapper=None, wrapper_props=None):
+    def __init__(self, type_, element, props=None, wrapper=None, wrapper_props=None):
+        self.type = type_
         self.element = element
         self.props = props if props else {}
         self.wrapper = wrapper
         self.wrapper_props = wrapper_props
 
     def __str__(self):
-        return '<Options {0} {1} {2} {3}>'.format(self.element, self.props, self.wrapper, self.wrapper_props)
+        return '<Options {0} {1} {2} {3} {4}>'.format(self.type, self.element, self.props, self.wrapper, self.wrapper_props)
 
     def __repr__(self):
         return str(self)
@@ -42,9 +43,9 @@ class Options:
             if 'element' not in block:
                 raise ConfigException('Block "%s" does not define an element' % type_)
 
-            opts = Options(**block)
+            opts = Options(type_, **block)
         else:
-            opts = Options(block)
+            opts = Options(type_, block)
 
         return opts
 
@@ -59,8 +60,8 @@ class Options:
             if 'element' not in style:
                 raise ConfigException('Style "%s" does not define an element' % type_)
 
-            opts = Options(**style)
+            opts = Options(type_, **style)
         else:
-            opts = Options(style)
+            opts = Options(type_, style)
 
         return opts
