@@ -46,15 +46,24 @@ class Wrapper:
     when the depth of a block is different than 0, so the DOM elements
     have the appropriate amount of nesting.
     """
-    def __init__(self, depth, elt=None, props=None):
+    def __init__(self, depth, options=None):
         self.depth = depth
-        self.type = elt
-        wrapper_props = dict(props) if props else {}
-        wrapper_props['block'] = {
-            'depth': depth,
-        }
-        self.elt = DOM.create_element(elt, wrapper_props)
-        self.props = props
+
+        if options:
+            self.type = options.wrapper
+            self.props = options.wrapper_props
+
+            wrapper_props = dict(self.props) if self.props else {}
+            wrapper_props['block'] = {
+                'type': options.type,
+                'depth': depth,
+            }
+
+            self.elt = DOM.create_element(self.type, wrapper_props)
+        else:
+            self.type = None
+            self.props = None
+            self.elt = DOM.create_element()
 
     def is_different(self, depth, elt, props):
         return depth > self.depth or elt != self.type or props != self.props
@@ -82,6 +91,7 @@ class WrapperState:
         options = Options.for_block(self.block_map, type_)
         props = dict(options.props)
         props['block'] = {
+            'type': type_,
             'depth': depth,
             'data': data,
         }
@@ -121,7 +131,7 @@ class WrapperState:
             depth_levels = range(self.stack.length(), depth + 1)
 
             for level in depth_levels:
-                new_wrapper = Wrapper(level, options.wrapper, options.wrapper_props)
+                new_wrapper = Wrapper(level, options)
 
                 wrapper_children = DOM.get_children(self.stack.head().elt)
 
@@ -131,8 +141,9 @@ class WrapperState:
                     # to add an intermediary node.
                     props = dict(options.props)
                     props['block'] = {
-                        'data': {},
+                        'type': options.type,
                         'depth': depth,
+                        'data': {},
                     }
                     wrapper_parent = DOM.create_element(options.element, props)
                     DOM.append_child(self.stack.head().elt, wrapper_parent)
@@ -146,4 +157,4 @@ class WrapperState:
         else:
             # Cut the stack to where it now stops, and add new wrapper.
             self.stack.slice(depth)
-            self.stack.append(Wrapper(depth, options.wrapper, options.wrapper_props))
+            self.stack.append(Wrapper(depth, options))
