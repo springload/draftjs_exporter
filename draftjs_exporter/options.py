@@ -1,6 +1,6 @@
 from __future__ import absolute_import, unicode_literals
 
-from draftjs_exporter.constants import BLOCK_TYPES, INLINE_STYLES
+from draftjs_exporter.constants import BLOCK_TYPES, ENTITY_TYPES, INLINE_STYLES
 from draftjs_exporter.error import ExporterException
 
 
@@ -63,3 +63,7 @@ class Options:
     @staticmethod
     def for_style(style_map, type_):
         return Options.for_kind(style_map, type_, INLINE_STYLES.FALLBACK)
+
+    @staticmethod
+    def for_entity(entity_map, type_):
+        return Options.for_kind(entity_map, type_, ENTITY_TYPES.FALLBACK)

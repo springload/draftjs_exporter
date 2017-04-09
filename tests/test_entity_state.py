@@ -63,10 +63,3 @@ class TestEntityState(unittest.TestCase):
     def test_get_entity_details_raises(self):
         with self.assertRaises(EntityException):
             self.entity_state.get_entity_details(1)
-
-    def test_get_entity_decorator(self):
-        self.assertIsInstance(self.entity_state.get_entity_decorator('LINK'), Link)
-
-    def test_get_entity_decorator_raises(self):
-        with self.assertRaises(EntityException):
-            self.entity_state.get_entity_decorator('VIDEO')

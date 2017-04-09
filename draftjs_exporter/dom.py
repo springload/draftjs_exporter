@@ -99,11 +99,10 @@ class DOM(object):
                 elt = type_(attributes)
             else:
 
-                # Never render children attribute on a raw tag.
+                # Never render those attributes on a raw tag.
                 attributes.pop('children', None)
-
-                # Never render block attribute on a raw tag.
                 attributes.pop('block', None)
+                attributes.pop('entity', None)
 
                 elt = create_tag(type_, attributes)
 
