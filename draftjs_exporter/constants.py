@@ -28,9 +28,19 @@ class BLOCK_TYPES:
     PRE = 'pre'
     CODE = 'code-block'
     ATOMIC = 'atomic'
+    # Special type to configure handling of missing components.
+    FALLBACK = 'fallback'
 
 
-ENTITY_TYPES = Enum('LINK', 'DOCUMENT', 'IMAGE', 'EMBED', 'HORIZONTAL_RULE')
+ENTITY_TYPES = Enum(
+    'LINK',
+    'DOCUMENT',
+    'IMAGE',
+    'EMBED',
+    'HORIZONTAL_RULE',
+    # Special type to configure handling of missing components.
+    'FALLBACK',
+)
 
 INLINE_STYLES = Enum(
     'BOLD',
@@ -47,4 +57,6 @@ INLINE_STYLES = Enum(
     'INSERT',
     'DELETE',
     'KEYBOARD',
+    # Special type to configure handling of missing components.
+    'FALLBACK',
 )

@@ -18,6 +18,8 @@ BLOCK_MAP = {
     BLOCK_TYPES.PRE: 'pre',
     BLOCK_TYPES.CODE: lambda props: DOM.create_element('pre', {}, DOM.create_element('code', {}, props['children'])),
     BLOCK_TYPES.ATOMIC: lambda props: props['children'],
+    # Special type to configure handling of missing components.
+    # BLOCK_TYPES.FALLBACK:
 }
 
 # Default style map to extend.
@@ -39,4 +41,6 @@ STYLE_MAP = {
     INLINE_STYLES.INSERT: 'ins',
     INLINE_STYLES.DELETE: 'del',
     INLINE_STYLES.KEYBOARD: 'kbd',
+    # Special type to configure handling of missing components.
+    # INLINE_STYLES.FALLBACK:
 }

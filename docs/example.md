@@ -7,5 +7,5 @@
     return DOM.create_element('blockquote', {
         'cite': block_data.get('cite')
     }, props['children'])
-</code></pre><p>Voilà!</p>
+</code></pre>Discarded block but the content stays.<div>Render as div</div><p>Voilà!</p>
 -----
