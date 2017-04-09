@@ -3,6 +3,19 @@ from __future__ import absolute_import, unicode_literals
 from draftjs_exporter.constants import BLOCK_TYPES, INLINE_STYLES
 from draftjs_exporter.dom import DOM
 
+
+def render_children(props):
+    """
+    Renders the children of a component without any specific
+    markup for the component itself.
+    """
+    return props['children']
+
+
+def CodeBlock(props):
+    return DOM.create_element('pre', {}, DOM.create_element('code', {}, props['children']))
+
+
 # Default block map to extend.
 BLOCK_MAP = {
     BLOCK_TYPES.UNSTYLED: 'p',
@@ -16,10 +29,8 @@ BLOCK_MAP = {
     BLOCK_TYPES.ORDERED_LIST_ITEM: {'element': 'li', 'wrapper': 'ol'},
     BLOCK_TYPES.BLOCKQUOTE: 'blockquote',
     BLOCK_TYPES.PRE: 'pre',
-    BLOCK_TYPES.CODE: lambda props: DOM.create_element('pre', {}, DOM.create_element('code', {}, props['children'])),
-    BLOCK_TYPES.ATOMIC: lambda props: props['children'],
-    # Special type to configure handling of missing components.
-    # BLOCK_TYPES.FALLBACK:
+    BLOCK_TYPES.CODE: CodeBlock,
+    BLOCK_TYPES.ATOMIC: render_children,
 }
 
 # Default style map to extend.
@@ -41,6 +52,4 @@ STYLE_MAP = {
     INLINE_STYLES.INSERT: 'ins',
     INLINE_STYLES.DELETE: 'del',
     INLINE_STYLES.KEYBOARD: 'kbd',
-    # Special type to configure handling of missing components.
-    # INLINE_STYLES.FALLBACK:
 }
