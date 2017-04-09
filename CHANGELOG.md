@@ -3,6 +3,30 @@
 > All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [v0.9.0](https://github.com/springload/draftjs_exporter/releases/tag/v0.9.0)
+
+### Added
+
+- Add configuration options to determine handling of missing blocks #52.
+- Add configuration options to determine handling of missing styles.
+- Add configuration options to determine handling of missing entities.
+- Block components now have access to the block type via `props['block']['type']`.
+- Entity components now have access to the entity type via `props['entity']['type']`.
+- Composite decorators now have access to the current block depth and data via `props['block']['depth']`, `props['block']['data']`.
+- Allow discarding component children by returning `None` in `render`.
+
+### Changed
+
+- For composite decorators, the block type has moved from `props['block_type']` to `props['block']['type']`.
+
+### How to upgrade
+
+```diff
+# Change composite decorators block type access
+- props['block_type']
++ props['block']['type']
+```
+
 ## [v0.8.1](https://github.com/springload/draftjs_exporter/releases/tag/v0.8.1)
 
 ### Fixed
