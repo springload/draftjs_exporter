@@ -24,6 +24,9 @@ class TestOptions(unittest.TestCase):
     def test_for_block_simplest(self):
         self.assertEqual(Options.for_block({'unordered-list-item': 'li'}, 'unordered-list-item'), Options('unordered-list-item', 'li'))
 
+    def test_for_block_uses_fallback(self):
+        self.assertEqual(Options.for_block({'header-one': 'h1', 'fallback': 'div'}, 'header-two'), Options('header-two', 'div'))
+
     def test_for_block_raises_missing_type(self):
         with self.assertRaises(ConfigException):
             Options.for_block({'header-one': 'h1'}, 'header-two')
@@ -44,6 +47,9 @@ class TestOptions(unittest.TestCase):
 
     def test_for_style_simplest(self):
         self.assertEqual(Options.for_style({'ITALIC': 'em'}, 'ITALIC'), Options('ITALIC', 'em'))
+
+    def test_for_style_uses_fallback(self):
+        self.assertEqual(Options.for_style({'BOLD': 'strong', 'FALLBACK': 'span'}, 'CODE'), Options('CODE', 'span'))
 
     def test_for_style_raises_missing_type(self):
         with self.assertRaises(ConfigException):
