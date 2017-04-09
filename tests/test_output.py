@@ -456,7 +456,34 @@ class TestOutput(unittest.TestCase):
             ],
         }), '<h2 class="c-amazing-heading">item1</h2>')
 
-    def test_render_with_token_entity(self):
+    def test_render_with_none_component(self):
+        self.assertEqual(HTML({
+            'block_map': dict(BLOCK_MAP, **{
+                BLOCK_TYPES.UNSTYLED: None,
+            }),
+        }).render({
+            'entityMap': {},
+            'blocks': [
+                {
+                    'key': 'dem12p',
+                    'text': 'header',
+                    'type': 'header-one',
+                    'depth': 0,
+                    'inlineStyleRanges': [],
+                    'entityRanges': []
+                },
+                {
+                    'key': 'dem1p',
+                    'text': 'paragraph',
+                    'type': 'unstyled',
+                    'depth': 0,
+                    'inlineStyleRanges': [],
+                    'entityRanges': []
+                },
+            ],
+        }), '<h1>header</h1>')
+
+    def test_render_with_entity(self):
         self.assertEqual(self.exporter.render({
             'entityMap': {
                 '2': {

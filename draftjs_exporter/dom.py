@@ -114,6 +114,9 @@ class DOM(object):
                         else:
                             set_text_content(elt, get_text_content(elt) + child if get_text_content(elt) else child)
 
+        if not elt:
+            elt = create_document_fragment()
+
         return elt
 
     @staticmethod
