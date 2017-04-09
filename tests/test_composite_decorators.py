@@ -25,7 +25,7 @@ class Linkify:
         url = match.group(2)
         href = protocol + url
 
-        if props['block_type'] == BLOCK_TYPES.CODE:
+        if props['block']['type'] == BLOCK_TYPES.CODE:
             return href
 
         link_props = {
@@ -50,7 +50,7 @@ class Hashtag:
 
     def render(self, props):
         # Do not process matches inside code blocks.
-        if props['block_type'] == BLOCK_TYPES.CODE:
+        if props['block']['type'] == BLOCK_TYPES.CODE:
             return props['children']
 
         return DOM.create_element('span', {'class': 'hashtag'}, props['children'])
@@ -64,7 +64,7 @@ class BR:
 
     def render(self, props):
         # Do not process matches inside code blocks.
-        if props['block_type'] == BLOCK_TYPES.CODE:
+        if props['block']['type'] == BLOCK_TYPES.CODE:
             return props['children']
 
         return DOM.create_element('br')
@@ -78,7 +78,7 @@ class TestLinkify(unittest.TestCase):
         match = next(Linkify.SEARCH_RE.finditer('test https://www.example.com'))
 
         self.assertEqual(DOM.render(DOM.create_element(Linkify, {
-            'block_type': BLOCK_TYPES.UNSTYLED,
+            'block': {'type': BLOCK_TYPES.UNSTYLED},
             'match': match,
         }, match.group(0))), '<a href="https://www.example.com">https://www.example.com</a>')
 
@@ -86,7 +86,7 @@ class TestLinkify(unittest.TestCase):
         match = next(Linkify.SEARCH_RE.finditer('test www.example.com'))
 
         self.assertEqual(DOM.render(DOM.create_element(Linkify, {
-            'block_type': BLOCK_TYPES.UNSTYLED,
+            'block': {'type': BLOCK_TYPES.UNSTYLED},
             'match': match,
         }, match.group(0))), '<a href="http://www.example.com">www.example.com</a>')
 
@@ -94,7 +94,7 @@ class TestLinkify(unittest.TestCase):
         match = next(Linkify.SEARCH_RE.finditer('test https://www.example.com'))
 
         self.assertEqual(DOM.create_element(Linkify, {
-            'block_type': BLOCK_TYPES.CODE,
+            'block': {'type': BLOCK_TYPES.CODE},
             'match': match,
         }, match.group(0)), match.group(0))
 
@@ -102,7 +102,7 @@ class TestLinkify(unittest.TestCase):
         match = next(Linkify.SEARCH_RE.finditer('test https://www.example.com'))
 
         self.assertEqual(DOM.render(DOM.create_element(Linkify(use_new_window=True), {
-            'block_type': BLOCK_TYPES.UNSTYLED,
+            'block': {'type': BLOCK_TYPES.UNSTYLED},
             'match': match,
         }, match.group(0))), '<a href="https://www.example.com" rel="noreferrer noopener" target="_blank">https://www.example.com</a>')
 
@@ -112,10 +112,10 @@ class TestHashtag(unittest.TestCase):
         self.assertIsInstance(Hashtag(), Hashtag)
 
     def test_render(self):
-        self.assertEqual(DOM.render(DOM.create_element(Hashtag, {'block_type': BLOCK_TYPES.UNSTYLED}, '#hashtagtest')), '<span class="hashtag">#hashtagtest</span>')
+        self.assertEqual(DOM.render(DOM.create_element(Hashtag, {'block': {'type': BLOCK_TYPES.UNSTYLED}}, '#hashtagtest')), '<span class="hashtag">#hashtagtest</span>')
 
     def test_render_code_block(self):
-        self.assertEqual(DOM.render(DOM.create_element(Hashtag, {'block_type': BLOCK_TYPES.CODE}, '#hashtagtest')), '#hashtagtest')
+        self.assertEqual(DOM.render(DOM.create_element(Hashtag, {'block': {'type': BLOCK_TYPES.CODE}}, '#hashtagtest')), '#hashtagtest')
 
 
 class TestBR(unittest.TestCase):
@@ -123,21 +123,21 @@ class TestBR(unittest.TestCase):
         self.assertIsInstance(BR(), BR)
 
     def test_render(self):
-        self.assertEqual(DOM.render(DOM.create_element(BR, {'block_type': BLOCK_TYPES.UNSTYLED}, '\n')), '<br/>')
+        self.assertEqual(DOM.render(DOM.create_element(BR, {'block': {'type': BLOCK_TYPES.UNSTYLED}}, '\n')), '<br/>')
 
     def test_render_code_block(self):
-        self.assertEqual(DOM.create_element(BR, {'block_type': BLOCK_TYPES.CODE}, '\n'), '\n')
+        self.assertEqual(DOM.create_element(BR, {'block': {'type': BLOCK_TYPES.CODE}}, '\n'), '\n')
 
 
 class TestCompositeDecorators(unittest.TestCase):
     def test_render_decorators_empty(self):
-        self.assertEqual(DOM.render(render_decorators([], 'test https://www.example.com#hash #hashtagtest', BLOCK_TYPES.UNSTYLED)), 'test https://www.example.com#hash #hashtagtest')
+        self.assertEqual(DOM.render(render_decorators([], 'test https://www.example.com#hash #hashtagtest', {'type': BLOCK_TYPES.UNSTYLED, 'depth': 0})), 'test https://www.example.com#hash #hashtagtest')
 
     def test_render_decorators_single(self):
-        self.assertEqual(DOM.render(render_decorators([Linkify()], 'test https://www.example.com#hash #hashtagtest', BLOCK_TYPES.UNSTYLED)), 'test <a href="https://www.example.com#hash">https://www.example.com#hash</a> #hashtagtest')
+        self.assertEqual(DOM.render(render_decorators([Linkify()], 'test https://www.example.com#hash #hashtagtest', {'type': BLOCK_TYPES.UNSTYLED, 'depth': 0})), 'test <a href="https://www.example.com#hash">https://www.example.com#hash</a> #hashtagtest')
 
     def test_render_decorators_conflicting_order_one(self):
-        self.assertEqual(DOM.render(render_decorators([Linkify(), Hashtag()], 'test https://www.example.com#hash #hashtagtest', BLOCK_TYPES.UNSTYLED)), 'test <a href="https://www.example.com#hash">https://www.example.com#hash</a> <span class="hashtag">#hashtagtest</span>')
+        self.assertEqual(DOM.render(render_decorators([Linkify(), Hashtag()], 'test https://www.example.com#hash #hashtagtest', {'type': BLOCK_TYPES.UNSTYLED, 'depth': 0})), 'test <a href="https://www.example.com#hash">https://www.example.com#hash</a> <span class="hashtag">#hashtagtest</span>')
 
     def test_render_decorators_conflicting_order_two(self):
-        self.assertEqual(DOM.render(render_decorators([Hashtag(), Linkify()], 'test https://www.example.com#hash #hashtagtest', BLOCK_TYPES.UNSTYLED)), 'test https://www.example.com<span class="hashtag">#hash</span> <span class="hashtag">#hashtagtest</span>')
+        self.assertEqual(DOM.render(render_decorators([Hashtag(), Linkify()], 'test https://www.example.com#hash #hashtagtest', {'type': BLOCK_TYPES.UNSTYLED, 'depth': 0})), 'test https://www.example.com<span class="hashtag">#hash</span> <span class="hashtag">#hashtagtest</span>')

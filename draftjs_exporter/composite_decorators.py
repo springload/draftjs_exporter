@@ -21,7 +21,7 @@ def get_decorations(decorators, text):
     return decorations
 
 
-def apply_decorators(decorators, text, block_type):
+def apply_decorators(decorators, text, block):
     decorations = get_decorations(decorators, text)
 
     pointer = 0
@@ -31,7 +31,11 @@ def apply_decorators(decorators, text, block_type):
 
         yield DOM.create_element(decorator, {
             'match': match,
-            'block_type': block_type,
+            'block': {
+                'type': block['type'],
+                'depth': block['depth'],
+                'data': block.get('data', {}),
+            }
         }, match.group(0))
         pointer = end
 
@@ -39,8 +43,8 @@ def apply_decorators(decorators, text, block_type):
         yield text[pointer:]
 
 
-def render_decorators(decorators, text, block_type):
-    decorated_children = list(apply_decorators(decorators, text, block_type))
+def render_decorators(decorators, text, block):
+    decorated_children = list(apply_decorators(decorators, text, block))
 
     if len(decorated_children) == 1:
         decorated_node = decorated_children[0]
