@@ -483,6 +483,33 @@ class TestOutput(unittest.TestCase):
             ],
         }), '<h1>header</h1>')
 
+    def test_render_with_none_return_value(self):
+        self.assertEqual(HTML({
+            'block_map': dict(BLOCK_MAP, **{
+                BLOCK_TYPES.UNSTYLED: lambda props: None,
+            }),
+        }).render({
+            'entityMap': {},
+            'blocks': [
+                {
+                    'key': 'dem12p',
+                    'text': 'header',
+                    'type': 'header-one',
+                    'depth': 0,
+                    'inlineStyleRanges': [],
+                    'entityRanges': []
+                },
+                {
+                    'key': 'dem1p',
+                    'text': 'paragraph',
+                    'type': 'unstyled',
+                    'depth': 0,
+                    'inlineStyleRanges': [],
+                    'entityRanges': []
+                },
+            ],
+        }), '<h1>header</h1>')
+
     def test_render_with_entity(self):
         self.assertEqual(self.exporter.render({
             'entityMap': {
