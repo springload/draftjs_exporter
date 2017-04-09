@@ -47,7 +47,7 @@ class EntityState:
 
         return decorator
 
-    def render_entitities(self, style_node):
+    def render_entities(self, style_node):
 
         if self.completed_entity is not None:
             # self.element_stack.append(style_node)
