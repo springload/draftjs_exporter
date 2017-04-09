@@ -4,6 +4,7 @@ from __future__ import absolute_import, unicode_literals
 
 import codecs
 import cProfile
+import logging
 import re
 from pstats import Stats
 
@@ -71,7 +72,7 @@ class BR:
 
     def render(self, props):
         # Do not process matches inside code blocks.
-        if props['block_type'] == BLOCK_TYPES.CODE:
+        if props['block']['type'] == BLOCK_TYPES.CODE:
             return props['children']
 
         return DOM.create_element('br')
@@ -85,7 +86,7 @@ class Hashtag:
 
     def render(self, props):
         # Do not process matches inside code blocks.
-        if props['block_type'] == BLOCK_TYPES.CODE:
+        if props['block']['type'] == BLOCK_TYPES.CODE:
             return props['children']
 
         return DOM.create_element('span', {'class': 'hashtag'}, props['children'])
@@ -105,7 +106,7 @@ class Linkify:
         url = match.group(2)
         href = protocol + url
 
-        if props['block_type'] == BLOCK_TYPES.CODE:
+        if props['block']['type'] == BLOCK_TYPES.CODE:
             return href
 
         link_props = {
@@ -116,6 +117,24 @@ class Linkify:
             link_props['href'] = 'http://' + href
 
         return DOM.create_element('a', link_props, href)
+
+
+def BlockFallback(props):
+    type_ = props['block']['type']
+
+    if type_ == 'example-discard':
+        logging.warn('Missing config for "%s". Discarding block, keeping content.' % type_)
+        # Directly return the block's children to keep its content.
+        return props['children']
+    elif type_ == 'example-delete':
+        logging.error('Missing config for "%s". Deleting block.' % type_)
+        # Return None to not render anything, removing the whole block.
+        return None
+    else:
+        logging.warn('Missing config for "%s". Using div instead.' % type_)
+        # Provide a fallback.
+        return DOM.create_element('div', {}, props['children'])
+
 
 
 config = {
@@ -138,6 +157,7 @@ config = {
             'element': ListItem,
             'wrapper': OrderedList,
         },
+        BLOCK_TYPES.FALLBACK: BlockFallback
     }),
     # `style_map` defines the HTML representation of inline elements.
     # Extend STYLE_MAP to start with sane defaults, or make your own from scratch.
@@ -540,6 +560,30 @@ content_state = {
         "key": "ed7hu",
         "text": "def Blockquote(props):\n    block_data = props['block']['data']\n    return DOM.create_element('blockquote', {\n        'cite': block_data.get('cite')\n    }, props['children'])\n",
         "type": "code-block",
+        "depth": 0,
+        "inlineStyleRanges": [],
+        "entityRanges": [],
+        "data": {}
+    }, {
+        "key": "2nols",
+        "text": "Discarded block but the content stays.",
+        "type": "example-discard",
+        "depth": 0,
+        "inlineStyleRanges": [],
+        "entityRanges": [],
+        "data": {}
+    }, {
+        "key": "3nols",
+        "text": "Removed block.",
+        "type": "example-delete",
+        "depth": 0,
+        "inlineStyleRanges": [],
+        "entityRanges": [],
+        "data": {}
+    }, {
+        "key": "4nols",
+        "text": "Render as div",
+        "type": "example-fallback",
         "depth": 0,
         "inlineStyleRanges": [],
         "entityRanges": [],

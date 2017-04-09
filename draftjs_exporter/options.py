@@ -1,5 +1,6 @@
 from __future__ import absolute_import, unicode_literals
 
+from draftjs_exporter.constants import BLOCK_TYPES, INLINE_STYLES
 from draftjs_exporter.error import ExporterException
 
 
@@ -9,7 +10,7 @@ class ConfigException(ExporterException):
 
 class Options:
     """
-    Facilitates querying data from a config map.
+    Facilitates querying configuration from a config map.
     """
     def __init__(self, type_, element, props=None, wrapper=None, wrapper_props=None):
         self.type = type_
@@ -31,37 +32,34 @@ class Options:
         return not self == other
 
     @staticmethod
-    def for_block(block_map, type_):
-        if type_ not in block_map:
-            raise ConfigException('Block "%s" does not exist in block_map' % type_)
+    def for_kind(kind_map, type_, fallback_key):
+        """
+        Create an Options object from any mapping.
+        """
+        if type_ not in kind_map:
+            if fallback_key not in kind_map:
+                raise ConfigException('"%s" is not in the config and has no fallback' % type_)
 
-        block = block_map.get(type_)
-
-        if isinstance(block, list):
-            raise ConfigException('Block "%s" uses unsupported list-style config' % type_)
-        elif isinstance(block, dict):
-            if 'element' not in block:
-                raise ConfigException('Block "%s" does not define an element' % type_)
-
-            opts = Options(type_, **block)
+            config = kind_map[fallback_key]
         else:
-            opts = Options(type_, block)
+            config = kind_map[type_]
+
+        if isinstance(config, list):
+            raise ConfigException('"%s" uses unsupported list-style config' % type_)
+        elif isinstance(config, dict):
+            if 'element' not in config:
+                raise ConfigException('"%s" does not define an element' % type_)
+
+            opts = Options(type_, **config)
+        else:
+            opts = Options(type_, config)
 
         return opts
 
     @staticmethod
+    def for_block(block_map, type_):
+        return Options.for_kind(block_map, type_, BLOCK_TYPES.FALLBACK)
+
+    @staticmethod
     def for_style(style_map, type_):
-        if type_ not in style_map:
-            raise ConfigException('Style "%s" does not exist in style_map' % type_)
-
-        style = style_map.get(type_)
-
-        if isinstance(style, dict):
-            if 'element' not in style:
-                raise ConfigException('Style "%s" does not define an element' % type_)
-
-            opts = Options(type_, **style)
-        else:
-            opts = Options(type_, style)
-
-        return opts
+        return Options.for_kind(style_map, type_, INLINE_STYLES.FALLBACK)
