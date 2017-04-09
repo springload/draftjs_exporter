@@ -69,7 +69,7 @@ class HTML:
                 decorated_node = text
 
             styled_node = style_state.render_styles(decorated_node)
-            entity_node = entity_state.render_entitities(styled_node)
+            entity_node = entity_state.render_entities(styled_node)
             if entity_node:
                 DOM.append_child(content, entity_node)
                 if styled_node != entity_node:
