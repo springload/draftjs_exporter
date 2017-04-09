@@ -58,3 +58,23 @@ class TestOptions(unittest.TestCase):
     def test_for_style_raises_missing_element(self):
         with self.assertRaises(ConfigException):
             Options.for_style({'BOLD': {}}, 'BOLD')
+
+    def test_for_entity_full(self):
+        self.assertEqual(Options.for_entity({'HORIZONTAL_RULE': 'hr'}, 'HORIZONTAL_RULE'), Options('HORIZONTAL_RULE', 'hr'))
+
+    def test_for_entity_half(self):
+        self.assertEqual(Options.for_entity({'HORIZONTAL_RULE': 'hr'}, 'HORIZONTAL_RULE'), Options('HORIZONTAL_RULE', 'hr'))
+
+    def test_for_entity_simplest(self):
+        self.assertEqual(Options.for_entity({'HORIZONTAL_RULE': 'hr'}, 'HORIZONTAL_RULE'), Options('HORIZONTAL_RULE', 'hr'))
+
+    def test_for_entity_uses_fallback(self):
+        self.assertEqual(Options.for_entity({'HORIZONTAL_RULE': 'hr', 'FALLBACK': 'div'}, 'TEST'), Options('TEST', 'div'))
+
+    def test_for_entity_raises_missing_type(self):
+        with self.assertRaises(ConfigException):
+            Options.for_entity({'HORIZONTAL_RULE': 'hr'}, 'TEST')
+
+    def test_for_entity_raises_missing_element(self):
+        with self.assertRaises(ConfigException):
+            Options.for_entity({'HORIZONTAL_RULE': {}}, 'HORIZONTAL_RULE')

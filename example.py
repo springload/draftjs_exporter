@@ -136,6 +136,11 @@ def BlockFallback(props):
         return DOM.create_element('div', {}, props['children'])
 
 
+def EntityFallback(props):
+    type_ = props['entity']['type']
+    logging.warn('Missing config for "%s".' % type_)
+    return DOM.create_element('span', {'className': 'missing-entity'}, props['children'])
+
 
 config = {
     # `block_map` is a mapping from Draft.js block types to a definition of their HTML representation.
@@ -175,6 +180,7 @@ config = {
         # Lambdas work too.
         ENTITY_TYPES.HORIZONTAL_RULE: lambda props: DOM.create_element('hr'),
         ENTITY_TYPES.EMBED: None,
+        ENTITY_TYPES.FALLBACK: EntityFallback,
     },
     'composite_decorators': [
         # Use composite decorators to replace text based on a regular expression.
@@ -248,7 +254,14 @@ content_state = {
                 "authorName": "Facebook Developers",
                 "thumbnail": "https://i.ytimg.com/vi/feUYwoLhE_4/hqdefault.jpg"
             }
-        }
+        },
+        "8": {
+            "type": "EXAMPLE_MISSING",
+            "mutability": "MUTABLE",
+            "data": {
+                "url": "http://www.youtube.com/watch?v=feUYwoLhE_4",
+            }
+        },
     },
     "blocks": [{
         "key": "b0ei9",
@@ -586,7 +599,11 @@ content_state = {
         "type": "example-fallback",
         "depth": 0,
         "inlineStyleRanges": [],
-        "entityRanges": [],
+        "entityRanges": [{
+            "offset": 10,
+            "length": 3,
+            "key": 8
+        }],
         "data": {}
     }, {
         "key": "1nols",

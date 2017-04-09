@@ -2,6 +2,7 @@ from __future__ import absolute_import, unicode_literals
 
 from draftjs_exporter.dom import DOM
 from draftjs_exporter.error import ExporterException
+from draftjs_exporter.options import Options
 
 
 class EntityException(ExporterException):
@@ -39,28 +40,22 @@ class EntityState:
 
         return details
 
-    def get_entity_decorator(self, type_):
-        if type_ not in self.entity_decorators:
-            raise EntityException('Decorator "%s" does not exist in entity_decorators' % type_)
-
-        decorator = self.entity_decorators[type_]
-
-        return decorator
-
     def render_entities(self, style_node):
 
         if self.completed_entity is not None:
-            # self.element_stack.append(style_node)
             entity_details = self.get_entity_details(self.completed_entity)
-            decorator = self.get_entity_decorator(entity_details['type'])
+            opts = Options.for_entity(self.entity_decorators, entity_details['type'])
             props = entity_details['data'].copy()
+            props['entity'] = {
+                'type': entity_details['type'],
+            }
 
             nodes = DOM.create_element()
 
             for n in self.element_stack:
                 DOM.append_child(nodes, n)
 
-            elt = DOM.create_element(decorator, props, nodes)
+            elt = DOM.create_element(opts.element, props, nodes)
 
             self.completed_entity = None
             self.element_stack = []
