@@ -8,7 +8,7 @@ from pstats import Stats
 
 import six
 
-from draftjs_exporter.constants import BLOCK_TYPES, ENTITY_TYPES, INLINE_STYLES
+from draftjs_exporter.constants import BLOCK_TYPES, ENTITY_TYPES
 from draftjs_exporter.defaults import BLOCK_MAP, STYLE_MAP
 from draftjs_exporter.html import HTML
 from tests.test_composite_decorators import Hashtag, Linkify
