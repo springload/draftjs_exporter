@@ -3,6 +3,8 @@ from __future__ import absolute_import, unicode_literals
 import inspect
 import re
 
+from draftjs_exporter.error import ConfigException
+
 # Python 2/3 unicode compatibility hack.
 # See http://stackoverflow.com/questions/6812031/how-to-make-unicode-string-with-python3
 try:
@@ -14,7 +16,6 @@ except NameError:
 # BeautifulSoup import and helpers.
 try:
     from bs4 import BeautifulSoup
-
 
     def Soup(raw_str):
         """
@@ -38,7 +39,33 @@ except ImportError:
     pass
 
 
-class DOM_BS(object):
+class DOMEngine(object):
+    @staticmethod
+    def create_tag(type_, attr=None):
+        raise NotImplementedError()
+
+    @staticmethod
+    def parse_html(markup):
+        raise NotImplementedError()
+
+    @staticmethod
+    def append_child(elt, child):
+        raise NotImplementedError()
+
+    @staticmethod
+    def get_children(elt):
+        raise NotImplementedError()
+
+    @staticmethod
+    def render(elt):
+        raise NotImplementedError()
+
+    @staticmethod
+    def render_debug(elt):
+        raise NotImplementedError()
+
+
+class DOM_BS(DOMEngine):
     @staticmethod
     def create_tag(type_, attr=None):
         if not attr:
@@ -67,7 +94,7 @@ class DOM_BS(object):
         return re.sub(r'</?(body|html|head)>', '', unicode(elt)).strip()
 
 
-class DOM_LXML(object):
+class DOM_LXML(DOMEngine):
     """
     Wrapper around our HTML building library to facilitate changes.
     """
@@ -114,6 +141,9 @@ _all_cap_re = re.compile('([a-z0-9])([A-Z])')
 
 
 class DOM(object):
+    BS = 'bs'
+    LXML = 'lxml'
+
     dom = DOM_BS
 
     @staticmethod
@@ -125,9 +155,17 @@ class DOM(object):
     @classmethod
     def use(cls, engine=DOM_BS):
         """
-        Configure the DOM engine.
+        Configure the DOM implementation.
         """
-        cls.dom = engine
+        if engine:
+            if inspect.isclass(engine):
+                cls.dom = engine
+            elif engine.lower() == cls.BS:
+                cls.dom = DOM_BS
+            elif engine.lower() == cls.LXML:
+                cls.dom = DOM_LXML
+            else:
+                raise ConfigException('Invalid DOM engine.')
 
     @classmethod
     def create_element(cls, type_=None, props=None, *children):
