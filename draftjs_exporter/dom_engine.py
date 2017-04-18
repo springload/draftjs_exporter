@@ -79,11 +79,11 @@ class DOM_BS(DOMEngine):
 
     @staticmethod
     def render(elt):
-        return re.sub(r'</?(fragment|body|html|head)>', '', unicode(elt)).strip()
+        return re.sub(r'</?(fragment|body|html|head)>', '', unicode(elt))
 
     @staticmethod
     def render_debug(elt):
-        return re.sub(r'</?(body|html|head)>', '', unicode(elt)).strip()
+        return re.sub(r'</?(body|html|head)>', '', unicode(elt))
 
 
 class DOM_LXML(DOMEngine):
@@ -116,7 +116,7 @@ class DOM_LXML(DOMEngine):
 
     @staticmethod
     def render(elt):
-        return re.sub(r'(</?(fragment)>)', '', etree.tostring(elt, method='html', encoding='unicode'))
+        return re.sub(r'</?fragment>', '', etree.tostring(elt, method='html', encoding='unicode'))
 
     @staticmethod
     def render_debug(elt):
