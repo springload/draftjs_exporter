@@ -190,7 +190,8 @@ config = {
         Hashtag,
         Linkify,
     ],
-    'engine': 'bs'
+    # Specify which DOM backing engine to use.
+    'engine': 'html5lib',
 }
 
 exporter = HTML(config)

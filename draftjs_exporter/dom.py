@@ -3,7 +3,7 @@ from __future__ import absolute_import, unicode_literals
 import inspect
 import re
 
-from draftjs_exporter.dom_engine import DOM_BS, DOM_LXML
+from draftjs_exporter.dom_engine import DOM_HTML5LIB, DOM_LXML
 from draftjs_exporter.error import ConfigException
 
 # Python 2/3 unicode compatibility hack.
@@ -24,10 +24,10 @@ class DOM(object):
     Component building API, abstracting the DOM implementation.
     """
 
-    BS = 'bs'
+    HTML5LIB = 'html5lib'
     LXML = 'lxml'
 
-    dom = DOM_BS
+    dom = DOM_HTML5LIB
 
     @staticmethod
     def camel_to_dash(camel_cased_str):
@@ -36,15 +36,15 @@ class DOM(object):
         return dashed_case_str.replace('--', '-')
 
     @classmethod
-    def use(cls, engine=DOM_BS):
+    def use(cls, engine=DOM_HTML5LIB):
         """
         Choose which DOM implementation to use.
         """
         if engine:
             if inspect.isclass(engine):
                 cls.dom = engine
-            elif engine.lower() == cls.BS:
-                cls.dom = DOM_BS
+            elif engine.lower() == cls.HTML5LIB:
+                cls.dom = DOM_HTML5LIB
             elif engine.lower() == cls.LXML:
                 cls.dom = DOM_LXML
             else:
@@ -65,7 +65,7 @@ class DOM(object):
             props = {}
 
         if not type_:
-            return cls.create_tag('fragment')
+            return cls.dom.create_tag('fragment')
         else:
             if len(children) and isinstance(children[0], (list, tuple)):
                 children = children[0]
@@ -103,16 +103,12 @@ class DOM(object):
                     if props[key] is not None:
                         attributes[key] = unicode(props[key])
 
-                elt = cls.create_tag(type_, attributes)
+                elt = cls.dom.create_tag(type_, attributes)
 
                 for child in children:
                     if child not in (None, ''):
                         cls.append_child(elt, child)
         return elt
-
-    @classmethod
-    def create_tag(cls, type_, props=None):
-        return cls.dom.create_tag(type_, props)
 
     @classmethod
     def parse_html(cls, markup):

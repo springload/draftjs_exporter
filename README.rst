@@ -43,12 +43,12 @@ This exporter takes the Draft.js ContentState data as input, and outputs HTML ba
 
     pip install draftjs_exporter
 
-You will also need to install a backing engine. The exporter supports lxml, and BeautifulSoup + html5lib. lxml is the most performant, but it requires ``libxml2`` and `libxslt`` to be available on your system.
+You will also need to install a backing engine. The exporter supports html5lib via BeautifulSoup, and lxml. lxml is the most performant, but it requires ``libxml2`` and `libxslt`` to be available on your system.
 
 .. code:: sh
 
-    # For BS4 + html5lib,
-    pip install 'beautifulsoup4>=4.4.1,<5' 'html5lib>=0.999,<=1.0b10'
+    # For html5lib,
+    pip install 'html5lib>=0.999,<=1.0b10' 'beautifulsoup4>=4.4.1,<5'
     # For lxml,
     pip install lxml
 
@@ -139,9 +139,14 @@ The exporter output is extensively configurable to cater for varied rich text re
             Hashtag,
             Linkify,
         ],
+        # Specify which DOM backing engine to use.
+        'engine': 'html5lib',
     }
 
 See ``examples.py`` for more details.
+
+Advanced usage
+--------------
 
 Custom components
 ~~~~~~~~~~~~~~~~~
@@ -189,6 +194,35 @@ To produce arbitrary markup with dynamic data, draftjs_exporter comes with an AP
                 DOM.create_element(Icon, {'name': icon}) if icon else None,
                 DOM.create_element('span', {'class': 'icon-text__text'}, text) if icon else text
             )
+
+Custom backing engines
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The exporter supports using custom engines to generate its output via the ``DOM`` API. Here is an example implementation:
+
+.. code:: python
+
+    from draftjs_exporter import DOMEngine
+
+    class DOMListTree(DOMEngine):
+        """
+        Element tree using nested lists.
+        """
+
+        @staticmethod
+        def create_tag(t, attr=None):
+            return [t, attr, []]
+
+        @staticmethod
+        def append_child(elt, child):
+            elt[2].append(child)
+
+        @staticmethod
+        def render(elt):
+            return elt
+
+
+    exporter = HTML({'engine': DOMListTree})
 
 Development
 -----------

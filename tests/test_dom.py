@@ -3,10 +3,37 @@ from __future__ import absolute_import, unicode_literals
 import unittest
 
 from draftjs_exporter.dom import DOM
+from draftjs_exporter.dom_engine import DOM_HTML5LIB, DOM_LXML
+from draftjs_exporter.error import ConfigException
 from tests.test_entities import Icon
 
 
+class DOMTestImpl(object):
+    def __init__(self):
+        pass
+
+
 class TestDOM(unittest.TestCase):
+    def tearDown(self):
+        DOM.use(DOM.HTML5LIB)
+
+    def test_use_custom(self):
+        DOM.use(DOMTestImpl)
+        self.assertEqual(DOM.dom, DOMTestImpl)
+
+    def test_use_lxml(self):
+        DOM.use(DOM.LXML)
+        self.assertEqual(DOM.dom, DOM_LXML)
+
+    def test_use_html5lib(self):
+        DOM.use(DOM.HTML5LIB)
+        self.assertEqual(DOM.dom, DOM_HTML5LIB)
+
+    def test_use_invalid(self):
+        with self.assertRaises(ConfigException):
+            DOM.use('test')
+
+
     def test_create_element(self):
         self.assertEqual(DOM.render_debug(DOM.create_element('p', {'className': 'intro'}, 'Test test')), '<p class="intro">Test test</p>')
 
