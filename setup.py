@@ -13,8 +13,7 @@ except ImportError:
 
 
 install_requires = [
-    'beautifulsoup4>=4.4.1,<5',
-    'html5lib>=0.999,<=0.9999999',
+
 ]
 
 # Testing dependencies
@@ -26,6 +25,10 @@ testing_extras = [
     'coverage>=4.1.0',
     'flake8>=3.2.0',
     'isort>=4.2.5',
+
+    # For BS4 + html5lib support
+    'beautifulsoup4>=4.4.1,<5',
+    'html5lib>=0.999,<=1.0b10',
 
     # For lxml support
     'lxml>=3.6.0',
