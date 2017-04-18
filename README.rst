@@ -43,6 +43,15 @@ This exporter takes the Draft.js ContentState data as input, and outputs HTML ba
 
     pip install draftjs_exporter
 
+You will also need to install a backing engine. The exporter supports lxml, and BeautifulSoup + html5lib. lxml is the most performant, but it requires ``libxml2`` and `libxslt`` to be available on your system.
+
+.. code:: sh
+
+    # For BS4 + html5lib,
+    pip install 'beautifulsoup4>=4.4.1,<5' 'html5lib>=0.999,<=1.0b10'
+    # For lxml,
+    pip install lxml
+
 In your code, create an exporter and use the ``render`` method to create HTML:
 
 .. code:: python
