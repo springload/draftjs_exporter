@@ -65,7 +65,7 @@ class HTML:
                 style_state.apply(command)
 
             # Decorators are not rendered inside entities.
-            if entity_state.has_no_entity() and len(self.composite_decorators) > 0:
+            if text and entity_state.has_no_entity() and len(self.composite_decorators) > 0:
                 decorated_node = render_decorators(self.composite_decorators, text, block)
             else:
                 decorated_node = text
