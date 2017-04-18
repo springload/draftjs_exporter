@@ -190,9 +190,9 @@ config = {
         Hashtag,
         Linkify,
     ],
+    'engine': 'bs'
 }
 
-# DOM.use(engine=DOM_BS)
 exporter = HTML(config)
 
 content_state = {
