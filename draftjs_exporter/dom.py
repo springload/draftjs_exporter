@@ -3,6 +3,7 @@ from __future__ import absolute_import, unicode_literals
 import inspect
 import re
 
+from draftjs_exporter.dom_engine import DOM_BS, DOM_LXML
 from draftjs_exporter.error import ConfigException
 
 # Python 2/3 unicode compatibility hack.
@@ -13,122 +14,16 @@ except NameError:
     def unicode(s):
         return str(s)
 
-# BeautifulSoup import and helpers.
-try:
-    from bs4 import BeautifulSoup
-
-    def Soup(raw_str):
-        """
-        Wrapper around BeautifulSoup to keep the code DRY.
-        """
-        return BeautifulSoup(raw_str, 'html5lib')
-
-    # Cache empty soup so we can create tags in isolation without the performance overhead.
-    soup = Soup('')
-except ImportError:
-    pass
-
-# LXML import and helpers.
-try:
-    from lxml import etree, html
-
-    NSMAP = {
-        'xlink': 'http://www.w3.org/1999/xlink',
-    }
-except ImportError:
-    pass
-
-
-class DOMEngine(object):
-    @staticmethod
-    def create_tag(type_, attr=None):
-        raise NotImplementedError()
-
-    @staticmethod
-    def parse_html(markup):
-        raise NotImplementedError()
-
-    @staticmethod
-    def append_child(elt, child):
-        raise NotImplementedError()
-
-    @staticmethod
-    def render(elt):
-        raise NotImplementedError()
-
-    @staticmethod
-    def render_debug(elt):
-        raise NotImplementedError()
-
-
-class DOM_BS(DOMEngine):
-    @staticmethod
-    def create_tag(type_, attr=None):
-        if not attr:
-            attr = {}
-
-        return soup.new_tag(type_, **attr)
-
-    @staticmethod
-    def parse_html(markup):
-        return Soup(markup)
-
-    @staticmethod
-    def append_child(elt, child):
-        elt.append(child)
-
-    @staticmethod
-    def render(elt):
-        return re.sub(r'</?(fragment|body|html|head)>', '', unicode(elt)).strip()
-
-    @staticmethod
-    def render_debug(elt):
-        return re.sub(r'</?(body|html|head)>', '', unicode(elt)).strip()
-
-
-class DOM_LXML(DOMEngine):
-    """
-    Wrapper around our HTML building library to facilitate changes.
-    """
-    @staticmethod
-    def create_tag(type_, attr=None):
-        nsmap = None
-
-        if attr:
-            if 'xlink:href' in attr:
-                attr['{%s}href' % NSMAP['xlink']] = attr.pop('xlink:href')
-                nsmap = NSMAP
-
-        return etree.Element(type_, attrib=attr, nsmap=nsmap)
-
-    @staticmethod
-    def parse_html(markup):
-        return html.fromstring(markup)
-
-    @staticmethod
-    def append_child(elt, child):
-        if hasattr(child, 'tag'):
-            elt.append(child)
-        else:
-            c = etree.Element('fragment')
-            c.text = child
-            elt.append(c)
-
-    @staticmethod
-    def render(elt):
-        return re.sub(r'(</?(fragment)>|xmlns:xlink="http://www.w3.org/1999/xlink" )', '', etree.tostring(elt, method='html', encoding='unicode'))
-
-    @staticmethod
-    def render_debug(elt):
-        return re.sub(r'(xmlns:xlink="http://www.w3.org/1999/xlink" )', '', etree.tostring(elt, method='html', encoding='unicode'))
-
-
 # https://gist.github.com/yahyaKacem/8170675
 _first_cap_re = re.compile(r'(.)([A-Z][a-z]+)')
 _all_cap_re = re.compile('([a-z0-9])([A-Z])')
 
 
 class DOM(object):
+    """
+    Component building API, abstracting the DOM implementation.
+    """
+
     BS = 'bs'
     LXML = 'lxml'
 
@@ -143,7 +38,7 @@ class DOM(object):
     @classmethod
     def use(cls, engine=DOM_BS):
         """
-        Configure the DOM implementation.
+        Choose which DOM implementation to use.
         """
         if engine:
             if inspect.isclass(engine):
@@ -160,8 +55,8 @@ class DOM(object):
         """
         Signature inspired by React.createElement.
         createElement(
-          string/ReactClass type,
-          [object props],
+          string/Component type,
+          [dict props],
           [children ...]
         )
         https://facebook.github.io/react/docs/top-level-api.html#react.createelement
