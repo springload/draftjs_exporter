@@ -53,10 +53,6 @@ class DOMEngine(object):
         raise NotImplementedError()
 
     @staticmethod
-    def get_children(elt):
-        raise NotImplementedError()
-
-    @staticmethod
     def render(elt):
         raise NotImplementedError()
 
@@ -80,10 +76,6 @@ class DOM_BS(DOMEngine):
     @staticmethod
     def append_child(elt, child):
         elt.append(child)
-
-    @staticmethod
-    def get_children(elt):
-        return list(elt.children)
 
     @staticmethod
     def render(elt):
@@ -121,10 +113,6 @@ class DOM_LXML(DOMEngine):
             c = etree.Element('fragment')
             c.text = child
             elt.append(c)
-
-    @staticmethod
-    def get_children(elt):
-        return elt.getchildren()
 
     @staticmethod
     def render(elt):
@@ -238,10 +226,6 @@ class DOM(object):
     @classmethod
     def append_child(cls, elt, child):
         return cls.dom.append_child(elt, child)
-
-    @classmethod
-    def get_children(cls, elt):
-        return cls.dom.get_children(elt)
 
     @classmethod
     def render(cls, elt):

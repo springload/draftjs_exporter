@@ -47,9 +47,6 @@ class TestDOM(unittest.TestCase):
         DOM.append_child(parent, DOM.create_element('span', {}, 'Test text'))
         self.assertEqual(DOM.render_debug(parent), '<p><span>Test text</span></p>')
 
-    def test_get_children(self):
-        self.assertEqual(len(DOM.get_children(DOM.create_element('span', {}, DOM.create_element('span'), DOM.create_element('span')))), 2)
-
     def test_render_debug(self):
         self.assertEqual(DOM.render_debug(
             DOM.create_element('a', {}, DOM.create_element('span', {'className': 'file-info icon-text'}, DOM.create_element('span', {'className': 'icon-text__text'}, 'Test test'), DOM.create_element('svg', {'className': 'icon'}, DOM.create_element('use', {'xlink:href': '#icon-test'}))))
