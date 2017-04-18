@@ -32,6 +32,7 @@ style_map = {
 
 class TestStyleState(unittest.TestCase):
     def setUp(self):
+        DOM.use(DOM.BS)
         self.style_state = StyleState(style_map)
 
     def test_init(self):

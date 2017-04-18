@@ -32,6 +32,8 @@ def OrderedList(props):
 
 class TestWrapperState(unittest.TestCase):
     def setUp(self):
+        DOM.use(DOM.BS)
+
         self.wrapper_state = WrapperState({
             'header-one': 'h1',
             'unstyled': 'div',
@@ -85,7 +87,7 @@ class TestWrapperState(unittest.TestCase):
             'depth': 0,
             'inlineStyleRanges': [],
             'entityRanges': []
-        }, DOM.create_element('img', {'src': '/example.png'}))), '<img src="/example.png">')
+        }, DOM.create_element('img', {'src': '/example.png'}))), '<img src="/example.png"/>')
 
     def test_element_for_component(self):
         self.assertEqual(DOM.render_debug(self.wrapper_state.element_for({
@@ -126,6 +128,9 @@ class TestWrapperState(unittest.TestCase):
 
 
 class TestBlockquote(unittest.TestCase):
+    def setUp(self):
+        DOM.use(DOM.BS)
+
     def test_render_debug(self):
         self.assertEqual(DOM.render_debug(DOM.create_element(Blockquote, {
             'block': {
@@ -137,6 +142,9 @@ class TestBlockquote(unittest.TestCase):
 
 
 class TestListItem(unittest.TestCase):
+    def setUp(self):
+        DOM.use(DOM.BS)
+
     def test_render_debug(self):
         self.assertEqual(DOM.render_debug(DOM.create_element(ListItem, {
             'block': {
