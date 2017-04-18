@@ -65,6 +65,7 @@ class Wrapper:
             self.props = None
             self.elt = DOM.create_element()
 
+
     def is_different(self, depth, elt, props):
         return depth > self.depth or elt != self.type or props != self.props
 
@@ -107,6 +108,7 @@ class WrapperState:
         if options.wrapper:
             parent = self.get_wrapper_elt(options, depth)
             DOM.append_child(parent, elt)
+            self.stack.stack[-1].last_child = elt
         else:
             # Reset the stack if there is no wrapper.
             self.stack = WrapperStack()
@@ -133,10 +135,8 @@ class WrapperState:
             for level in depth_levels:
                 new_wrapper = Wrapper(level, options)
 
-                wrapper_children = DOM.get_children(self.stack.head().elt)
-
                 # Determine where to append the new wrapper.
-                if len(wrapper_children) == 0:
+                if self.stack.head().last_child is None:
                     # If there is no content in the current wrapper, we need
                     # to add an intermediary node.
                     props = dict(options.props)
@@ -149,7 +149,7 @@ class WrapperState:
                     DOM.append_child(self.stack.head().elt, wrapper_parent)
                 else:
                     # Otherwise we can append at the end of the last child.
-                    wrapper_parent = wrapper_children[-1]
+                    wrapper_parent = self.stack.head().last_child
 
                 DOM.append_child(wrapper_parent, new_wrapper.elt)
 
