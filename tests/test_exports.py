@@ -63,8 +63,8 @@ class TestExportsMeta(type):
 
             return test
 
-        if name == 'TestExportsBS':
-            engine = 'bs'
+        if name == 'TestExportsHTML5LIB':
+            engine = 'html5lib'
         elif name == 'TestExportsLXML':
             engine = 'lxml'
 
@@ -77,20 +77,19 @@ class TestExportsMeta(type):
         return type.__new__(mcs, name, bases, tests)
 
 
-class TestExportsBS(six.with_metaclass(TestExportsMeta, unittest.TestCase)):
+class TestExportsHTML5LIB(six.with_metaclass(TestExportsMeta, unittest.TestCase)):
     @classmethod
     def setUpClass(cls):
         cls.pr = cProfile.Profile()
         cls.pr.enable()
+        print('\nhtml5lib')
 
     @classmethod
     def tearDownClass(cls):
         cls.pr.disable()
-        p = Stats(cls.pr)
-        print('\nBeautifulSoup4 + html5lib')
-        p.strip_dirs().sort_stats('cumulative').print_stats(0)
+        Stats(cls.pr).strip_dirs().sort_stats('cumulative').print_stats(0)
 
-    def test_init(self):
+    def test_init_html5lib(self):
         self.assertIsInstance(exporter, HTML)
 
 
@@ -99,13 +98,12 @@ class TestExportsLXML(six.with_metaclass(TestExportsMeta, unittest.TestCase)):
     def setUpClass(cls):
         cls.pr = cProfile.Profile()
         cls.pr.enable()
+        print('\nlxml')
 
     @classmethod
     def tearDownClass(cls):
         cls.pr.disable()
-        p = Stats(cls.pr)
-        print('\nlxml')
-        p.strip_dirs().sort_stats('cumulative').print_stats(0)
+        Stats(cls.pr).strip_dirs().sort_stats('cumulative').print_stats(0)
 
     def test_init(self):
         self.assertIsInstance(exporter, HTML)

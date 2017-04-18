@@ -42,7 +42,7 @@ config = {
             'props': {'style': {'textDecoration': 'underline'}},
         },
     },
-    'engine': 'bs'
+    'engine': 'html5lib'
 }
 
 

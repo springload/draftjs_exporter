@@ -32,7 +32,7 @@ def OrderedList(props):
 
 class TestWrapperState(unittest.TestCase):
     def setUp(self):
-        DOM.use(DOM.BS)
+        DOM.use(DOM.HTML5LIB)
 
         self.wrapper_state = WrapperState({
             'header-one': 'h1',
@@ -129,7 +129,7 @@ class TestWrapperState(unittest.TestCase):
 
 class TestBlockquote(unittest.TestCase):
     def setUp(self):
-        DOM.use(DOM.BS)
+        DOM.use(DOM.HTML5LIB)
 
     def test_render_debug(self):
         self.assertEqual(DOM.render_debug(DOM.create_element(Blockquote, {
@@ -143,7 +143,7 @@ class TestBlockquote(unittest.TestCase):
 
 class TestListItem(unittest.TestCase):
     def setUp(self):
-        DOM.use(DOM.BS)
+        DOM.use(DOM.HTML5LIB)
 
     def test_render_debug(self):
         self.assertEqual(DOM.render_debug(DOM.create_element(ListItem, {

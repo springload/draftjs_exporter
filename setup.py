@@ -16,25 +16,25 @@ install_requires = [
 
 ]
 
-# Testing dependencies
+# Testing dependencies.
 testing_extras = [
-    # Required for running the tests
+    # Required for running the tests.
     'tox>=2.3.1',
 
-    # For coverage and PEP8 linting
+    # For coverage and PEP8 linting.
     'coverage>=4.1.0',
     'flake8>=3.2.0',
     'isort>=4.2.5',
 
-    # For BS4 + html5lib support
+    # For html5lib via BS4 support.
     'beautifulsoup4>=4.4.1,<5',
     'html5lib>=0.999,<=1.0b10',
 
-    # For lxml support
+    # For lxml support.
     'lxml>=3.6.0',
 ]
 
-# Documentation dependencies
+# Documentation dependencies.
 documentation_extras = [
 
 ]
