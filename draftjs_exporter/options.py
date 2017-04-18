@@ -1,11 +1,7 @@
 from __future__ import absolute_import, unicode_literals
 
 from draftjs_exporter.constants import BLOCK_TYPES, ENTITY_TYPES, INLINE_STYLES
-from draftjs_exporter.error import ExporterException
-
-
-class ConfigException(ExporterException):
-    pass
+from draftjs_exporter.error import ConfigException
 
 
 class Options:
