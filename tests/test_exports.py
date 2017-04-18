@@ -10,12 +10,18 @@ import six
 
 from draftjs_exporter.constants import BLOCK_TYPES, ENTITY_TYPES
 from draftjs_exporter.defaults import BLOCK_MAP, STYLE_MAP
+from draftjs_exporter.dom import DOM
 from draftjs_exporter.html import HTML
-from tests.test_composite_decorators import Hashtag, Linkify
+from tests.test_composite_decorators import BR, Hashtag, Linkify
 from tests.test_entities import HR, Image, Link
 
 fixtures_path = os.path.join(os.path.dirname(__file__), 'test_exports.json')
 fixtures = json.loads(open(fixtures_path, 'r').read())
+
+engines = [
+    'bs',
+    'lxml',
+]
 
 exporter = HTML({
     'entity_decorators': {
@@ -25,6 +31,7 @@ exporter = HTML({
         ENTITY_TYPES.EMBED: None,
     },
     'composite_decorators': [
+        BR,
         Linkify,
         Hashtag,
     ],
@@ -47,21 +54,30 @@ class TestExportsMeta(type):
     Generates test cases dynamically.
     See http://stackoverflow.com/a/20870875/1798491
     """
-    def __new__(mcs, name, bases, dict):
-        def gen_test(export):
+    def __new__(mcs, name, bases, tests):
+        def gen_test(export, engine):
             def test(self):
                 self.maxDiff = None
-                self.assertEqual(exporter.render(export['content_state']), export['output'])
+                DOM.use(engine)
+                self.assertEqual(exporter.render(export['content_state']), export['output'][engine])
+
             return test
 
+        if name == 'TestExportsBS':
+            engine = 'bs'
+        elif name == 'TestExportsLXML':
+            engine = 'lxml'
+
         for export in fixtures:
-            test_name = 'test_export_%s' % export['label'].lower().replace(' ', '_')
-            dict[test_name] = gen_test(export)
+            test_label = export['label'].lower().replace(' ', '_')
+            test_name = 'test_export_{0}_{1}'.format(engine, test_label)
+            tests[test_name] = gen_test(export, engine)
 
-        return type.__new__(mcs, name, bases, dict)
+
+        return type.__new__(mcs, name, bases, tests)
 
 
-class TestExports(six.with_metaclass(TestExportsMeta, unittest.TestCase)):
+class TestExportsBS(six.with_metaclass(TestExportsMeta, unittest.TestCase)):
     @classmethod
     def setUpClass(cls):
         cls.pr = cProfile.Profile()
@@ -71,7 +87,25 @@ class TestExports(six.with_metaclass(TestExportsMeta, unittest.TestCase)):
     def tearDownClass(cls):
         cls.pr.disable()
         p = Stats(cls.pr)
-        p.strip_dirs().sort_stats('cumulative').print_stats(20)
+        print('\nBeautifulSoup4 + html5lib')
+        p.strip_dirs().sort_stats('cumulative').print_stats(0)
+
+    def test_init(self):
+        self.assertIsInstance(exporter, HTML)
+
+
+class TestExportsLXML(six.with_metaclass(TestExportsMeta, unittest.TestCase)):
+    @classmethod
+    def setUpClass(cls):
+        cls.pr = cProfile.Profile()
+        cls.pr.enable()
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.pr.disable()
+        p = Stats(cls.pr)
+        print('\nlxml')
+        p.strip_dirs().sort_stats('cumulative').print_stats(0)
 
     def test_init(self):
         self.assertIsInstance(exporter, HTML)

@@ -42,6 +42,7 @@ config = {
             'props': {'style': {'textDecoration': 'underline'}},
         },
     },
+    'engine': 'bs'
 }
 
 
@@ -294,7 +295,7 @@ class TestOutput(unittest.TestCase):
                     'data': {},
                 }
             ]
-        }), '<ul class="steps"><li>test <a href="http://example.com"><code>className</code> to <code>class</code></a>).</li></ul><hr>')
+        }), '<ul class="steps"><li>test <a href="http://example.com"><code>className</code> to <code>class</code></a>).</li></ul><hr/>')
 
     def test_render_with_wrapping(self):
         self.assertEqual(self.exporter.render({
@@ -551,7 +552,7 @@ class TestOutput(unittest.TestCase):
                     ],
                 },
             ]
-        }), '<ul class="steps"><li>item1</li><li>item2</li></ul><hr>')
+        }), '<ul class="steps"><li>item1</li><li>item2</li></ul><hr/>')
 
     def test_render_with_wrapping_reset(self):
         self.assertEqual(self.exporter.render({
@@ -1138,7 +1139,7 @@ class TestOutput(unittest.TestCase):
                     'entityRanges': []
                 }
             ]
-        }), '<p><em>some</em> paragraph text<br>split in half</p>')
+        }), '<p><em>some</em> paragraph text<br/>split in half</p>')
 
     def test_render_with_many_line_breaks(self):
         self.assertEqual(self.exporter.render({
@@ -1159,7 +1160,7 @@ class TestOutput(unittest.TestCase):
                     'entityRanges': []
                 }
             ]
-        }), '<p><br><em>some</em> paragraph text<br>split in half<br></p>')
+        }), '<p><br/><em>some</em> paragraph text<br/>split in half<br/></p>')
 
     def test_render_with_entity_and_decorators(self):
         """

@@ -2,7 +2,8 @@ from __future__ import absolute_import, unicode_literals
 
 import unittest
 
-from draftjs_exporter.options import ConfigException, Options
+from draftjs_exporter.error import ConfigException
+from draftjs_exporter.options import Options
 
 
 class TestOptions(unittest.TestCase):
