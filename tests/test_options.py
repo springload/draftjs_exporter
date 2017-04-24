@@ -35,10 +35,6 @@ class TestOptions(unittest.TestCase):
         with self.assertRaises(ConfigException):
             Options.for_block({'header-one': {}}, 'header-one')
 
-    def test_for_block_raises_wrong_format(self):
-        with self.assertRaises(ConfigException):
-            Options.for_block({'header-one': []}, 'header-one')
-
     def test_for_style_full(self):
         self.assertEqual(Options.for_style({'ITALIC': 'em'}, 'ITALIC'), Options('ITALIC', 'em'))
 

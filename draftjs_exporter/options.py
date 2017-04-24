@@ -44,9 +44,7 @@ class Options:
         else:
             config = kind_map[type_]
 
-        if isinstance(config, list):
-            raise ConfigException('"%s" uses unsupported list-style config' % type_)
-        elif isinstance(config, dict):
+        if isinstance(config, dict):
             if 'element' not in config:
                 raise ConfigException('"%s" does not define an element' % type_)
 
