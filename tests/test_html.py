@@ -287,6 +287,16 @@ class TestHTML(unittest.TestCase):
             ]
         }), '<h1>Header</h1>')
 
+    def test_render_empty(self):
+        self.assertEqual(self.exporter.render({
+            'entityMap': {},
+            'blocks': [
+            ]
+        }), '')
+
+    def test_render_none(self):
+        self.assertEqual(self.exporter.render(None), '')
+
     def test_render_twice(self):
         """Asserts no state is kept during renders."""
         self.assertEqual(self.exporter.render({
