@@ -164,6 +164,7 @@ config = {
             'element': ListItem,
             'wrapper': OrderedList,
         },
+        # Provide a fallback component (advanced).
         BLOCK_TYPES.FALLBACK: BlockFallback
     }),
     # `style_map` defines the HTML representation of inline elements.
@@ -181,7 +182,9 @@ config = {
         ENTITY_TYPES.LINK: Link(use_new_window=True),
         # Lambdas work too.
         ENTITY_TYPES.HORIZONTAL_RULE: lambda props: DOM.create_element('hr'),
+        # Discard those entities.
         ENTITY_TYPES.EMBED: None,
+        # Provide a fallback component (advanced).
         ENTITY_TYPES.FALLBACK: EntityFallback,
     },
     'composite_decorators': [

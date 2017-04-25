@@ -101,8 +101,10 @@ The exporter output is extensively configurable to cater for varied rich text re
             BLOCK_TYPES.BLOCKQUOTE: Blockquote,
             BLOCK_TYPES.ORDERED_LIST_ITEM: {
                 'element': ListItem,
-                'wrapper': 'ol',
+                'wrapper': OrderedList,
             },
+            # Provide a fallback component (advanced).
+            BLOCK_TYPES.FALLBACK: BlockFallback
         }),
         # `style_map` defines the HTML representation of inline elements.
         # Extend STYLE_MAP to start with sane defaults, or make your own from scratch.
@@ -119,7 +121,10 @@ The exporter output is extensively configurable to cater for varied rich text re
             ENTITY_TYPES.LINK: Link(use_new_window=True),
             # Lambdas work too.
             ENTITY_TYPES.HORIZONTAL_RULE: lambda props: DOM.create_element('hr'),
+            # Discard those entities.
             ENTITY_TYPES.EMBED: None,
+            # Provide a fallback component (advanced).
+            ENTITY_TYPES.FALLBACK: EntityFallback,
         },
         'composite_decorators': [
             # Use composite decorators to replace text based on a regular expression.
@@ -182,6 +187,47 @@ To produce arbitrary markup with dynamic data, draftjs_exporter comes with an AP
             )
 
 Apart from ``create_element``, a ``parse_html`` method is also available. Use it to interface with other HTML generators, like template engines.
+
+See ``examples.py`` in the repository for more details.
+
+Fallback components
+~~~~~~~~~~~~~~~~~~~
+
+When dealing with changes in the content schema, as part of ongoing development or migrations, some content can go stale.
+To solve this, the exporter allows the definition of fallback components for blocks, styles, and entities.
+
+Add the following to the exporter config,
+
+.. code:: python
+
+    config = {
+        'block_map': dict(BLOCK_MAP, **{
+            # Provide a fallback for block types.
+            BLOCK_TYPES.FALLBACK: BlockFallback
+        }),
+    }
+
+This fallback component can now control the exporter behavior when normal components are not found. Here is an example:
+
+.. code:: python
+
+    def BlockFallback(props):
+        type_ = props['block']['type']
+
+        if type_ == 'example-discard':
+            logging.warn('Missing config for "%s". Discarding block, keeping content.' % type_)
+            # Directly return the block's children to keep its content.
+            return props['children']
+        elif type_ == 'example-delete':
+            logging.error('Missing config for "%s". Deleting block.' % type_)
+            # Return None to not render anything, removing the whole block.
+            return None
+        else:
+            logging.warn('Missing config for "%s". Using div instead.' % type_)
+            # Provide a fallback.
+            return DOM.create_element('div', {}, props['children'])
+
+See ``examples.py`` in the repository for more details.
 
 lxml backing engine
 ~~~~~~~~~~~~~~~~~~~
