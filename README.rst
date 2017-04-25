@@ -4,8 +4,6 @@
    :target: https://travis-ci.org/springload/draftjs_exporter
 .. image:: https://coveralls.io/repos/github/springload/draftjs_exporter/badge.svg?branch=master
    :target: https://coveralls.io/github/springload/draftjs_exporter?branch=master
-.. image:: https://codeclimate.com/github/springload/draftjs_exporter/badges/gpa.svg
-   :target: https://codeclimate.com/github/springload/draftjs_exporter
 
 draftjs_exporter 🐍
 ===================
@@ -27,7 +25,7 @@ This project adheres to `Semantic Versioning <http://semver.org/spec/v2.0.0.html
 *  Automatic conversion of entity data to HTML attributes (int & boolean to string, style object to style string).
 *  Nested lists (``<li>`` elements go inside ``<ul>`` or ``<ol>``, with multiple levels).
 *  Output inline styles as inline elements (``<em>``, ``<strong>``, pick and choose, with any attribute).
-*  Overlapping inline style ranges.
+*  Overlapping inline style and entity ranges.
 
 Usage
 -----
