@@ -46,12 +46,11 @@ class HTML:
             if depth > min_depth:
                 min_depth = depth
 
-            # At level 0, the element is added to the document.
+            # At level 0, append the element to the document.
             if depth == 0:
                 DOM.append_child(document, elt)
 
         # If there is no block at depth 0, we need to add the wrapper that contains the whole tree to the document.
-        # TODO This might not be enough when specific wrappers never reach 0.
         if min_depth > 0 and wrapper_state.stack.length() != 0:
             DOM.append_child(document, wrapper_state.stack.tail().elt)
 
