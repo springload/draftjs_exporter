@@ -195,6 +195,7 @@ Fallback components
 
 When dealing with changes in the content schema, as part of ongoing development or migrations, some content can go stale.
 To solve this, the exporter allows the definition of fallback components for blocks, styles, and entities.
+This feature is only used for development at the moment, if you have a use case for this in production we would love to hear from you. Please get in touch!
 
 Add the following to the exporter config,
 
