@@ -90,10 +90,6 @@ class DOM(object):
                     rules = ['{0}: {1};'.format(DOM.camel_to_dash(s), props['style'][s]) for s in props['style'].keys()]
                     props['style'] = ''.join(sorted(rules))
 
-                # Map props from React/Draft.js to HTML lingo.
-                if 'className' in props:
-                    props['class'] = props.pop('className')
-
                 attributes = {}
                 for key in props:
                     if props[key] is False:

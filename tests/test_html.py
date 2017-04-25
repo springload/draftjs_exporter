@@ -11,7 +11,7 @@ config = {
         'header-one': {'element': 'h1'},
         'unordered-list-item': {
             'element': 'li',
-            'wrapper': ['ul', {'className': 'public-DraftStyleDefault-ul'}]
+            'wrapper': ['ul', {'class': 'public-DraftStyleDefault-ul'}]
         },
         'unstyled': {'element': 'div'}
     },

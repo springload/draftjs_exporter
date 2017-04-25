@@ -27,6 +27,7 @@ This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html
 
 - Remove `DOM.get_children` method.
 - Remove `DOM.pretty_print` method.
+- Remove automatic conversion from `className` prop to `class`.
 
 ### Fixed
 
@@ -46,6 +47,9 @@ This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html
 # Move `ConfigException` to `draftjs_exporter.error`.
 - from draftjs_exporter.options import ConfigException
 + from draftjs_exporter.error import ConfigException
+# Remove automatic conversion from `className` prop to `class` attribute.
+- BLOCK_TYPES.BLOCKQUOTE: ['blockquote', {'className': 'c-pullquote'}]
++ BLOCK_TYPES.BLOCKQUOTE: ['blockquote', {'class': 'c-pullquote'}]
 ```
 
 ## [v0.8.1](https://github.com/springload/draftjs_exporter/releases/tag/v0.8.1)
@@ -87,7 +91,7 @@ KEYBOARD = 'kbd'
 
 ### Removed
 
-- Remove array-style block element and wrapper declarations (`['ul']`, `['ul', {'className': 'bullet-list'}]`).
+- Remove array-style block element and wrapper declarations (`['ul']`, `['ul', {'class': 'bullet-list'}]`).
 - Remove `DOM.create_text_node` method.
 
 ### Changed
@@ -113,12 +117,12 @@ KEYBOARD = 'kbd'
 - BLOCK_TYPES.HEADER_TWO: {'element': 'h2'},
 + BLOCK_TYPES.HEADER_TWO: 'h2',
 # Change array-style block declarations:
-- BLOCK_TYPES.BLOCKQUOTE: ['blockquote', {'className': 'c-pullquote'}]
-+ BLOCK_TYPES.BLOCKQUOTE: {'element': 'blockquote', 'props': {'className': 'c-pullquote'}}
+- BLOCK_TYPES.BLOCKQUOTE: ['blockquote', {'class': 'c-pullquote'}]
++ BLOCK_TYPES.BLOCKQUOTE: {'element': 'blockquote', 'props': {'class': 'c-pullquote'}}
 # Change block wrapper declarations:
-- 'wrapper': ['ul', {'className': 'bullet-list'}],
+- 'wrapper': ['ul', {'class': 'bullet-list'}],
 + 'wrapper': 'ul',
-+ 'wrapper_props': {'className': 'bullet-list'},
++ 'wrapper_props': {'class': 'bullet-list'},
 # Change location and name of exceptions:
 - from draftjs_exporter.wrapper_state import BlockException
 + from draftjs_exporter.options import ConfigException
@@ -245,7 +249,7 @@ This release is likely to be a **breaking change**. It is not released as such b
 ### Added
 
 - Support for simpler `wrapper` options definition: `{'unordered-list-item' : { 'element': 'li', 'wrapper': 'ul'}}`
-- Support for options definition for every element, not just wrappers: `{'header-two' : { 'element': ['h2', {'className': 'c-amazing-heading'}]}}`
+- Support for options definition for every element, not just wrappers: `{'header-two' : { 'element': ['h2', {'class': 'c-amazing-heading'}]}}`
 - Support for None in the children of an element in `DOM.create_element`, for conditional rendering like what React does.
 - Support for entity class in `DOM.create_element`.
 
@@ -278,7 +282,7 @@ Last release before switching to BeautifulSoup4 / html5lib. If we ever need to s
 
 ### Added
 
-- Automatic conversion of entity data to HTML attributes (int & boolean to string, `className` to `class`).
+- Automatic conversion of entity data to HTML attributes (int & boolean to string, `class` to `class`).
 - Default, extensible block & inline style maps for common HTML elements.
 - React-like API to create custom entity decorators.
 - DOM API to abstract HTML building code.
