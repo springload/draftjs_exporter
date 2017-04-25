@@ -158,7 +158,7 @@ config = {
             'wrapper': 'ul',
             'wrapper_props': {'className': 'bullet-list'},
         },
-        # Use a component for more flexibility (reading block data or depth).
+        # Use a custom component for more flexibility (reading block data or depth).
         BLOCK_TYPES.BLOCKQUOTE: Blockquote,
         BLOCK_TYPES.ORDERED_LIST_ITEM: {
             'element': ListItem,

@@ -12,12 +12,16 @@ except ImportError:
     from distutils.core import setup
 
 
-install_requires = [
-
+dependencies = [
+    'beautifulsoup4>=4.4.1,<5',
+    'html5lib>=0.999,<=1.0b10',
 ]
 
-# Testing dependencies.
-testing_extras = [
+lxml_dependencies = [
+    'lxml>=3.6.0',
+]
+
+testing_dependencies = [
     # Required for running the tests.
     'tox>=2.3.1',
 
@@ -25,17 +29,9 @@ testing_extras = [
     'coverage>=4.1.0',
     'flake8>=3.2.0',
     'isort>=4.2.5',
+] + lxml_dependencies
 
-    # For html5lib via BS4 support.
-    'beautifulsoup4>=4.4.1,<5',
-    'html5lib>=0.999,<=1.0b10',
-
-    # For lxml support.
-    'lxml>=3.6.0',
-]
-
-# Documentation dependencies.
-documentation_extras = [
+documentation_dependencies = [
 
 ]
 
@@ -68,9 +64,10 @@ setup(
         'Topic :: Software Development :: Libraries :: Python Modules',
         'Topic :: Text Editors :: Word Processors',
     ],
-    install_requires=install_requires,
+    install_requires=dependencies,
     extras_require={
-        'testing': testing_extras,
-        'docs': documentation_extras,
+        'testing': testing_dependencies,
+        'docs': documentation_dependencies,
+        'lxml': lxml_dependencies,
     },
     zip_safe=False)
