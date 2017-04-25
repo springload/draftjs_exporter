@@ -182,10 +182,15 @@
     return DOM.create_element('blockquote', {
         'cite': block_data.get('cite')
     }, props['children'])
-</code></pre>Discarded block but the content stays.
-<div>Render as <span class="missing-entity">div</span></div>
+</code></pre>
+  Discarded block but the content stays.
+  <div>
+   Render as
+   <span class="missing-entity">
+    div
+   </span>
+  </div>
   <p>
    Voilà!
   </p>
-
 -----
