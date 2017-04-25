@@ -3,7 +3,11 @@
 > All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## Unreleased
+## [v1.0.0](https://github.com/springload/draftjs_exporter/releases/tag/v1.0.0)
+
+> This release is functionally identical to the previous one, `v0.9.0`.
+
+The project has reached a high-enough level of stability to be used in production, and breaking changes will now be reflected via major version changes.
 
 ## [v0.9.0](https://github.com/springload/draftjs_exporter/releases/tag/v0.9.0)
 
