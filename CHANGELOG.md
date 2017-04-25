@@ -14,10 +14,24 @@ This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html
 - Entity components now have access to the entity type via `props['entity']['type']`.
 - Composite decorators now have access to the current block depth and data via `props['block']['depth']`, `props['block']['data']`.
 - Allow discarding component children by returning `None` in `render`.
+- Add support for `lxml` as a DOM backing engine, with `pip install draftjs_exporter[lxml]` pip extra.
+- Add support for custom DOM backing engines.
+- Add support for None content state in HTML.render #67.
 
 ### Changed
 
 - For composite decorators, the block type has moved from `props['block_type']` to `props['block']['type']`.
+- Move `ConfigException` to `draftjs_exporter.error`.
+
+### Removed
+
+- Remove `DOM.get_children` method.
+- Remove `DOM.pretty_print` method.
+
+### Fixed
+
+- Stop rendering decorators when there is no text to decorate.
+- Remove extra HTML serialisation steps.
 
 ### How to upgrade
 
@@ -25,6 +39,13 @@ This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html
 # Change composite decorators block type access
 - props['block_type']
 + props['block']['type']
+# Stop using DOM.get_children directly.
+- DOM.get_children()
+# Stop using DOM.pretty_print directly.
+- DOM.pretty_print()
+# Move `ConfigException` to `draftjs_exporter.error`.
+- from draftjs_exporter.options import ConfigException
++ from draftjs_exporter.error import ConfigException
 ```
 
 ## [v0.8.1](https://github.com/springload/draftjs_exporter/releases/tag/v0.8.1)
