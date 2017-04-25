@@ -62,51 +62,62 @@ class DOM(object):
         )
         https://facebook.github.io/react/docs/top-level-api.html#react.createelement
         """
+        # Create an empty document fragment.
+        if not type_:
+            return cls.dom.create_tag('fragment')
+
         if props is None:
             props = {}
 
-        if not type_:
-            return cls.dom.create_tag('fragment')
+        # If the first element of children is a list, we use it as the list.
+        if len(children) and isinstance(children[0], (list, tuple)):
+            children = children[0]
+
+        # The children prop is the first child if there is only one.
+        props['children'] = children[0] if len(children) == 1 else children
+
+        if inspect.isclass(type_):
+            # Class component, not instantiated.
+            elt = type_().render(props)
+        elif callable(getattr(type_, 'render', None)):
+            # Class component, already instantiated.
+            elt = type_.render(props)
+        elif callable(type_):
+            # Function component, via def or lambda.
+            elt = type_(props)
         else:
-            if len(children) and isinstance(children[0], (list, tuple)):
-                children = children[0]
+            # Raw tag, as a string.
+            attributes = {}
 
-            if inspect.isclass(type_):
-                props['children'] = children[0] if len(children) == 1 else children
-                elt = type_().render(props)
-            elif callable(getattr(type_, 'render', None)):
-                props['children'] = children[0] if len(children) == 1 else children
-                elt = type_.render(props)
-            elif callable(type_):
-                props['children'] = children[0] if len(children) == 1 else children
-                elt = type_(props)
-            else:
-                # Never render those attributes on a raw tag.
-                props.pop('children', None)
-                props.pop('block', None)
-                props.pop('entity', None)
+            # Never render those attributes on a raw tag.
+            props.pop('children', None)
+            props.pop('block', None)
+            props.pop('entity', None)
 
-                if 'style' in props and isinstance(props['style'], dict):
-                    rules = ['{0}: {1};'.format(DOM.camel_to_dash(s), props['style'][s]) for s in props['style'].keys()]
-                    props['style'] = ''.join(sorted(rules))
+            # Convert style object to style string, like the DOM would do.
+            if 'style' in props and isinstance(props['style'], dict):
+                rules = ['{0}: {1};'.format(DOM.camel_to_dash(s), props['style'][s]) for s in props['style'].keys()]
+                props['style'] = ''.join(sorted(rules))
 
-                attributes = {}
-                for key in props:
-                    if props[key] is False:
-                        props[key] = 'false'
+            # Convert props to HTML attributes.
+            for key in props:
+                if props[key] is False:
+                    props[key] = 'false'
 
-                    if props[key] is True:
-                        props[key] = 'true'
+                if props[key] is True:
+                    props[key] = 'true'
 
-                    if props[key] is not None:
-                        attributes[key] = unicode(props[key])
+                if props[key] is not None:
+                    attributes[key] = unicode(props[key])
 
-                elt = cls.dom.create_tag(type_, attributes)
+            elt = cls.dom.create_tag(type_, attributes)
 
-                for child in children:
-                    if child not in (None, ''):
-                        cls.append_child(elt, child)
+            # Append the children inside the element.
+            for child in children:
+                if child not in (None, ''):
+                    cls.append_child(elt, child)
 
+        # If elt is "empty", create a fragment anyway to add children.
         if elt in (None, ''):
             elt = cls.dom.create_tag('fragment')
 
