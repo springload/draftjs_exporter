@@ -27,10 +27,13 @@ class HTML:
 
         DOM.use(config.get('engine'))
 
-    def render(self, content_state):
+    def render(self, content_state=None):
         """
         Starts the export process on a given piece of content state.
         """
+        if content_state is None:
+            content_state = {}
+
         wrapper_state = WrapperState(self.block_map)
         document = DOM.create_element()
         entity_map = content_state.get('entityMap', {})
