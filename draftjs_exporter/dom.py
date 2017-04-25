@@ -3,7 +3,7 @@ from __future__ import absolute_import, unicode_literals
 import inspect
 import re
 
-from draftjs_exporter.dom_engine import DOM_HTML5LIB, DOM_LXML
+from draftjs_exporter.engines.html5lib import DOM_HTML5LIB
 from draftjs_exporter.error import ConfigException
 
 # Python 2/3 unicode compatibility hack.
@@ -46,6 +46,7 @@ class DOM(object):
             elif engine.lower() == cls.HTML5LIB:
                 cls.dom = DOM_HTML5LIB
             elif engine.lower() == cls.LXML:
+                from draftjs_exporter.engines.lxml import DOM_LXML
                 cls.dom = DOM_LXML
             else:
                 raise ConfigException('Invalid DOM engine.')

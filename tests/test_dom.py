@@ -3,7 +3,8 @@ from __future__ import absolute_import, unicode_literals
 import unittest
 
 from draftjs_exporter.dom import DOM
-from draftjs_exporter.dom_engine import DOM_HTML5LIB, DOM_LXML
+from draftjs_exporter.engines.html5lib import DOM_HTML5LIB
+from draftjs_exporter.engines.lxml import DOM_LXML
 from draftjs_exporter.error import ConfigException
 from tests.test_entities import Icon
 
