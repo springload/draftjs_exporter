@@ -24,7 +24,7 @@ This project adheres to `Semantic Versioning <http://semver.org/spec/v2.0.0.html
 *  Convert line breaks to ``<br>`` elements.
 *  Define any attribute in the block map – custom class names for elements.
 *  React-like API to create custom components.
-*  Automatic conversion of entity data to HTML attributes (int & boolean to string, ``className`` to ``class``).
+*  Automatic conversion of entity data to HTML attributes (int & boolean to string, style object to style string).
 *  Nested lists (``<li>`` elements go inside ``<ul>`` or ``<ol>``, with multiple levels).
 *  Output inline styles as inline elements (``<em>``, ``<strong>``, pick and choose, with any attribute).
 *  Overlapping inline style ranges.
@@ -92,12 +92,12 @@ The exporter output is extensively configurable to cater for varied rich text re
             # The most basic mapping format, block type to tag name.
             BLOCK_TYPES.HEADER_TWO: 'h2',
             # Use a dict to define props on the block.
-            BLOCK_TYPES.HEADER_THREE: {'element': 'h3', 'props': {'className': 'u-text-center'}},
+            BLOCK_TYPES.HEADER_THREE: {'element': 'h3', 'props': {'class': 'u-text-center'}},
             # Add a wrapper (and wrapper_props) to wrap adjacent blocks.
             BLOCK_TYPES.UNORDERED_LIST_ITEM: {
                 'element': 'li',
                 'wrapper': 'ul',
-                'wrapper_props': {'className': 'bullet-list'},
+                'wrapper_props': {'class': 'bullet-list'},
             },
             # Use a custom component for more flexibility (reading block data or depth).
             BLOCK_TYPES.BLOCKQUOTE: Blockquote,

@@ -39,7 +39,7 @@ exporter = HTML({
         BLOCK_TYPES.UNORDERED_LIST_ITEM: {
             'element': 'li',
             'wrapper': 'ul',
-            'wrapper_props': {'className': 'bullet-list'},
+            'wrapper_props': {'class': 'bullet-list'},
         },
     }),
     'style_map': dict(STYLE_MAP, **{

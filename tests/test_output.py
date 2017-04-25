@@ -26,7 +26,7 @@ config = {
         BLOCK_TYPES.UNORDERED_LIST_ITEM: {
             'element': 'li',
             'wrapper': 'ul',
-            'wrapper_props': {'className': 'steps'},
+            'wrapper_props': {'class': 'steps'},
         },
         'blockquote': {
             'element': Blockquote,
@@ -258,25 +258,25 @@ class TestOutput(unittest.TestCase):
             'blocks': [
                 {
                     'key': 'f4gp0',
-                    'text': 'test className to class).',
+                    'text': 'test style object to style string).',
                     'type': 'unordered-list-item',
                     'depth': 0,
                     'inlineStyleRanges': [
                         {
                             'offset': 5,
-                            'length': 9,
+                            'length': 12,
                             'style': 'CODE',
                         },
                         {
-                            'offset': 18,
-                            'length': 5,
+                            'offset': 21,
+                            'length': 12,
                             'style': 'CODE',
                         }
                     ],
                     'entityRanges': [
                         {
                             'offset': 5,
-                            'length': 18,
+                            'length': 28,
                             'key': 0
                         },
                     ],
@@ -295,7 +295,7 @@ class TestOutput(unittest.TestCase):
                     'data': {},
                 }
             ]
-        }), '<ul class="steps"><li>test <a href="http://example.com"><code>className</code> to <code>class</code></a>).</li></ul><hr/>')
+        }), '<ul class="steps"><li>test <a href="http://example.com"><code>style object</code> to <code>style string</code></a>).</li></ul><hr/>')
 
     def test_render_with_wrapping(self):
         self.assertEqual(self.exporter.render({
@@ -440,7 +440,7 @@ class TestOutput(unittest.TestCase):
             'block_map': dict(BLOCK_MAP, **{
                 BLOCK_TYPES.HEADER_TWO: {
                     'element': 'h2',
-                    'props': {'className': 'c-amazing-heading'},
+                    'props': {'class': 'c-amazing-heading'},
                 },
             })
         }).render({
@@ -1076,7 +1076,7 @@ class TestOutput(unittest.TestCase):
                 BLOCK_TYPES.UNORDERED_LIST_ITEM: {
                     'element': 'li',
                     'wrapper': 'ul',
-                    'wrapper_props': {'className': 'steps'},
+                    'wrapper_props': {'class': 'steps'},
                 },
             })
         }).render({

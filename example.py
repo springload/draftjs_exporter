@@ -141,7 +141,7 @@ def BlockFallback(props):
 def EntityFallback(props):
     type_ = props['entity']['type']
     logging.warn('Missing config for "%s".' % type_)
-    return DOM.create_element('span', {'className': 'missing-entity'}, props['children'])
+    return DOM.create_element('span', {'class': 'missing-entity'}, props['children'])
 
 
 config = {
@@ -151,12 +151,12 @@ config = {
         # The most basic mapping format, block type to tag name.
         BLOCK_TYPES.HEADER_TWO: 'h2',
         # Use a dict to define props on the block.
-        BLOCK_TYPES.HEADER_THREE: {'element': 'h3', 'props': {'className': 'u-text-center'}},
+        BLOCK_TYPES.HEADER_THREE: {'element': 'h3', 'props': {'class': 'u-text-center'}},
         # Add a wrapper (and wrapper_props) to wrap adjacent blocks.
         BLOCK_TYPES.UNORDERED_LIST_ITEM: {
             'element': 'li',
             'wrapper': 'ul',
-            'wrapper_props': {'className': 'bullet-list'},
+            'wrapper_props': {'class': 'bullet-list'},
         },
         # Use a custom component for more flexibility (reading block data or depth).
         BLOCK_TYPES.BLOCKQUOTE: Blockquote,
@@ -347,21 +347,21 @@ content_state = {
         "data": {}
     }, {
         "key": "f4gp0",
-        "text": "Automatic conversion of entity data to HTML attributes (int & boolean to string, className to class).",
+        "text": "Automatic conversion of entity data to HTML attributes (int & boolean to string, style object to style string).",
         "type": "unordered-list-item",
         "depth": 0,
         "inlineStyleRanges": [{
             "offset": 81,
-            "length": 9,
+            "length": 12,
             "style": "CODE"
         }, {
-            "offset": 94,
-            "length": 5,
+            "offset": 97,
+            "length": 12,
             "style": "CODE"
         }],
         "entityRanges": [{
             "offset": 81,
-            "length": 18,
+            "length": 28,
             "key": 3
         }],
         "data": {}

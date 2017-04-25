@@ -23,7 +23,7 @@ style_map = {
     },
     'KBD': {
         'element': 'kbd',
-        'props': {'className': 'o-keyboard-shortcut'}
+        'props': {'class': 'o-keyboard-shortcut'}
     },
     'IMPORTANT': Important,
     'SHOUT': Shout,

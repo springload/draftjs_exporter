@@ -36,7 +36,7 @@ class TestDOM(unittest.TestCase):
 
 
     def test_create_element(self):
-        self.assertEqual(DOM.render_debug(DOM.create_element('p', {'className': 'intro'}, 'Test test')), '<p class="intro">Test test</p>')
+        self.assertEqual(DOM.render_debug(DOM.create_element('p', {'class': 'intro'}, 'Test test')), '<p class="intro">Test test</p>')
 
     def test_create_element_style_dict(self):
         self.assertEqual(DOM.render_debug(DOM.create_element('p', {'style': {'borderColor': 'red', 'textDecoration': 'underline'}}, 'Test test')), '<p style="border-color: red;text-decoration: underline;">Test test</p>')
@@ -48,7 +48,7 @@ class TestDOM(unittest.TestCase):
         self.assertEqual(DOM.render_debug(DOM.create_element()), '<fragment></fragment>')
 
     def test_create_element_nested(self):
-        self.assertEqual(DOM.render_debug(DOM.create_element('a', {}, DOM.create_element('span', {'className': 'file-info icon-text'}, DOM.create_element('span', {'className': 'icon-text__text'}, 'Test test'), DOM.create_element('svg', {'className': 'icon'}, DOM.create_element('use', {'xlink:href': '#icon-test'}))))), '<a><span class="file-info icon-text"><span class="icon-text__text">Test test</span><svg class="icon"><use xlink:href="#icon-test"></use></svg></span></a>')
+        self.assertEqual(DOM.render_debug(DOM.create_element('a', {}, DOM.create_element('span', {'class': 'file-info icon-text'}, DOM.create_element('span', {'class': 'icon-text__text'}, 'Test test'), DOM.create_element('svg', {'class': 'icon'}, DOM.create_element('use', {'xlink:href': '#icon-test'}))))), '<a><span class="file-info icon-text"><span class="icon-text__text">Test test</span><svg class="icon"><use xlink:href="#icon-test"></use></svg></span></a>')
 
     def test_create_element_none(self):
         self.assertEqual(DOM.render_debug(DOM.create_element('a', {}, None, DOM.create_element('span', {}, 'Test test'))), '<a><span>Test test</span></a>')
@@ -77,5 +77,5 @@ class TestDOM(unittest.TestCase):
 
     def test_render_debug(self):
         self.assertEqual(DOM.render_debug(
-            DOM.create_element('a', {}, DOM.create_element('span', {'className': 'file-info icon-text'}, DOM.create_element('span', {'className': 'icon-text__text'}, 'Test test'), DOM.create_element('svg', {'className': 'icon'}, DOM.create_element('use', {'xlink:href': '#icon-test'}))))
+            DOM.create_element('a', {}, DOM.create_element('span', {'class': 'file-info icon-text'}, DOM.create_element('span', {'class': 'icon-text__text'}, 'Test test'), DOM.create_element('svg', {'class': 'icon'}, DOM.create_element('use', {'xlink:href': '#icon-test'}))))
         ), '<a><span class="file-info icon-text"><span class="icon-text__text">Test test</span><svg class="icon"><use xlink:href="#icon-test"></use></svg></span></a>')

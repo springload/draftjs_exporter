@@ -41,11 +41,11 @@
     Automatic conversion of entity data to HTML attributes (int &amp; boolean to string,
     <a href="https://facebook.github.io/react/docs/jsx-in-depth.html" rel="noreferrer noopener" target="_blank">
      <code>
-      className
+      style object
      </code>
      to
      <code>
-      class
+      style string
      </code>
     </a>
     ).
