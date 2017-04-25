@@ -43,15 +43,6 @@ This exporter takes the Draft.js ContentState data as input, and outputs HTML ba
 
     pip install draftjs_exporter
 
-You will also need to install a backing engine. The exporter supports html5lib via BeautifulSoup, and lxml. lxml is the most performant, but it requires ``libxml2`` and `libxslt`` to be available on your system.
-
-.. code:: sh
-
-    # For html5lib,
-    pip install 'html5lib>=0.999,<=1.0b10' 'beautifulsoup4>=4.4.1,<5'
-    # For lxml,
-    pip install lxml
-
 In your code, create an exporter and use the ``render`` method to create HTML:
 
 .. code:: python
@@ -78,8 +69,7 @@ In your code, create an exporter and use the ``render`` method to create HTML:
         }]
     })
 
-    print(DOM.pretty_print(html))
-
+    print(html)
 
 You can also run an example by downloading this repository and then using ``python example.py``, or by using our `online demo <https://draftjs-exporter.herokuapp.com/>`_.
 
@@ -109,7 +99,7 @@ The exporter output is extensively configurable to cater for varied rich text re
                 'wrapper': 'ul',
                 'wrapper_props': {'className': 'bullet-list'},
             },
-            # Use a component for more flexibility (reading block data or depth).
+            # Use a custom component for more flexibility (reading block data or depth).
             BLOCK_TYPES.BLOCKQUOTE: Blockquote,
             BLOCK_TYPES.ORDERED_LIST_ITEM: {
                 'element': ListItem,
@@ -139,11 +129,9 @@ The exporter output is extensively configurable to cater for varied rich text re
             Hashtag,
             Linkify,
         ],
-        # Specify which DOM backing engine to use.
-        'engine': 'html5lib',
     }
 
-See ``examples.py`` for more details.
+See ``examples.py`` in the repository for more details.
 
 Advanced usage
 --------------
@@ -151,7 +139,7 @@ Advanced usage
 Custom components
 ~~~~~~~~~~~~~~~~~
 
-To produce arbitrary markup with dynamic data, draftjs_exporter comes with an API to create rendering components. This API mirrors React's `createElement <https://facebook.github.io/react/docs/top-level-api.html#react.createelement>`_ API (what compiled JSX produces).
+To produce arbitrary markup with dynamic data, draftjs_exporter comes with an API to create rendering components. This API mirrors React's `createElement <https://facebook.github.io/react/docs/top-level-api.html#react.createelement>`_ API (what JSX compiles to).
 
 .. code:: python
 
@@ -195,10 +183,32 @@ To produce arbitrary markup with dynamic data, draftjs_exporter comes with an AP
                 DOM.create_element('span', {'class': 'icon-text__text'}, text) if icon else text
             )
 
-Custom backing engines
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+lxml backing engine
+~~~~~~~~~~~~~~~~~~~
 
-The exporter supports using custom engines to generate its output via the ``DOM`` API. Here is an example implementation:
+By default the exporter uses ``html5lib`` via BeautifulSoup to build DOM tree. ``lxml`` is also supported. lxml is more performant, but it requires ``libxml2`` and `libxslt`` to be available on your system.
+
+.. code:: sh
+
+    # Use the `lxml` extra to install the exporter and its lxml dependencies:
+    pip install draftjs_exporter[lxml]
+
+Add the following to the exporter config:
+
+.. code:: python
+
+    config = {
+        # Specify which DOM backing engine to use.
+        'engine': 'lxml',
+    }
+
+Custom backing engines
+~~~~~~~~~~~~~~~~~~~~~~
+
+The exporter supports using custom engines to generate its output via the ``DOM`` API.
+This feature is only used for development at the moment, if you have a use case for this in production we would love to hear from you. Please get in touch!
+
+Here is an example implementation:
 
 .. code:: python
 
