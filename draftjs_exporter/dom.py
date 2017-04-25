@@ -83,6 +83,7 @@ class DOM(object):
                 # Never render those attributes on a raw tag.
                 props.pop('children', None)
                 props.pop('block', None)
+                props.pop('entity', None)
 
                 if 'style' in props and isinstance(props['style'], dict):
                     rules = ['{0}: {1};'.format(DOM.camel_to_dash(s), props['style'][s]) for s in props['style'].keys()]
@@ -108,6 +109,10 @@ class DOM(object):
                 for child in children:
                     if child not in (None, ''):
                         cls.append_child(elt, child)
+
+        if elt in (None, ''):
+            elt = cls.dom.create_tag('fragment')
+
         return elt
 
     @classmethod

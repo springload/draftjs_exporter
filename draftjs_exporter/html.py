@@ -73,7 +73,7 @@ class HTML:
             styled_node = style_state.render_styles(decorated_node)
             entity_node = entity_state.render_entities(styled_node)
 
-            if entity_node:
+            if entity_node is not None:
                 DOM.append_child(content, entity_node)
                 if styled_node != entity_node:
                     DOM.append_child(content, styled_node)

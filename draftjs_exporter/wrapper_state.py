@@ -48,6 +48,7 @@ class Wrapper:
     """
     def __init__(self, depth, options=None):
         self.depth = depth
+        self.last_child = None
 
         if options:
             self.type = options.wrapper
