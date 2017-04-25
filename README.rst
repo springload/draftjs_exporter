@@ -183,6 +183,8 @@ To produce arbitrary markup with dynamic data, draftjs_exporter comes with an AP
                 DOM.create_element('span', {'class': 'icon-text__text'}, text) if icon else text
             )
 
+Apart from ``create_element``, a ``parse_html`` method is also available. Use it to interface with other HTML generators, like template engines.
+
 lxml backing engine
 ~~~~~~~~~~~~~~~~~~~
 
