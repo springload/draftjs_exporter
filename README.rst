@@ -339,6 +339,8 @@ Releases
 *  Finally, go to GitHub and create a release and a tag for the new version.
 *  Done!
 
+     As a last step, you may want to go update our `Draft.js exporter demo <https://github.com/springload/draftjs_exporter_demo>`_ to this new release to check that all is well in a fully separate project.
+
 Documentation
 -------------
 
