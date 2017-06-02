@@ -28,7 +28,7 @@ testing_dependencies = [
     # For coverage and PEP8 linting.
     'coverage>=4.1.0',
     'flake8>=3.2.0',
-    'isort>=4.2.5',
+    'isort==4.2.5',
 ] + lxml_dependencies
 
 documentation_dependencies = [
