@@ -10,7 +10,14 @@ draftjs_exporter 🐍
 
     Library to convert the Facebook Draft.js editor’s raw ContentState to HTML.
 
-It is developed alongside the `Draftail <https://github.com/springload/draftail/>`_ rich text editor, for integration into `Wagtail <https://wagtail.io/>`_. Check out `wagtaildraftail <https://github.com/springload/wagtaildraftail>`_ and the `online demo <https://draftjs-exporter.herokuapp.com/>`_!
+It is developed alongside the `Draftail <https://github.com/springload/draftail/>`_ rich text editor, for integration into `Wagtail <https://wagtail.io/>`_. Check out `WagtailDraftail <https://github.com/springload/wagtaildraftail>`_ and the `online demo <https://draftjs-exporter.herokuapp.com/>`_!
+
+Why?
+----
+
+`Draft.js <https://draftjs.org/>`_ is a rich text editor framework for React. It differs from other rich text editors because it does not store data as HTML, but rather in its own representation called ContentState. This exporter is useful when the ContentState (serialised as JSON) to HTML conversion has to be done in a Python ecosystem.
+
+The initial use case was to gain more control over the content managed by rich text editors in a Wagtail/Django site, as part of our `WagtailDraftail <https://github.com/springload/wagtaildraftail>`_ project.
 
 Features
 --------
