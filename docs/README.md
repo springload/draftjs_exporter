@@ -88,9 +88,11 @@ and it's not just contentState but contentState + some config
 ## Support
 
 ### Python support
+
 Python versions as defined in `setup.py` classifiers.
 
 #### Which version combinations to include in Travis test matrix?
+
 All supported Python version should be tested.
 
 At the moment, tests are only ran against the latest version of BeautifulSoup `4.x` and the latest version of LXML.
