@@ -240,7 +240,7 @@ See ``examples.py`` in the repository for more details.
 lxml backing engine
 ~~~~~~~~~~~~~~~~~~~
 
-By default the exporter uses ``html5lib`` via BeautifulSoup to build DOM tree. ``lxml`` is also supported. lxml is more performant, but it requires ``libxml2`` and `libxslt`` to be available on your system.
+By default the exporter uses ``html5lib`` via BeautifulSoup to build DOM tree. ``lxml`` is also supported. lxml is more performant, but it requires ``libxml2`` and ``libxslt`` to be available on your system.
 
 .. code:: sh
 
