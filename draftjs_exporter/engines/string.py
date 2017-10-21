@@ -4,13 +4,8 @@ import html
 
 from draftjs_exporter.engines.base import DOMEngine
 
-# Python 2/3 unicode compatibility hack.
-# See http://stackoverflow.com/questions/6812031/how-to-make-unicode-string-with-python3
-try:
-    UNICODE_EXISTS = bool(type(unicode))
-except NameError:
-    def unicode(s):
-        return str(s)
+# TODO This list of self-closing tags is very naive / incomplete.
+SELF_CLOSING_TAGS = ['br', 'img', 'hr']
 
 
 class DOM_STRING(DOMEngine):
@@ -36,47 +31,53 @@ class DOM_STRING(DOMEngine):
             elt['children'].append(child)
 
     @staticmethod
+    def render_attrs(attr):
+        attrs = [' {0}="{1}"'.format(a, html.escape(attr[a])) for a in attr]
+        return ''.join(sorted(attrs))
+
+    @staticmethod
+    def render_children(children):
+        rendered = ''
+        for c in children:
+            if isinstance(c, dict):
+                rendered += DOM_STRING.render(c)
+            else:
+                rendered += html.escape(c)
+
+        return rendered
+
+    @staticmethod
     def render(elt):
-        attrs = ''
+        attr = ''
         if elt['attr']:
-            for a in elt['attr']:
-                attrs += ' {0}="{1}"'.format(a, html.escape(elt['attr'][a]))
+            attr = DOM_STRING.render_attrs(elt['attr'])
 
         children = ''
-        for c in elt['children']:
-            if isinstance(c, dict):
-                children += DOM_STRING.render(c)
-            else:
-                children += html.escape(c)
+        if len(elt['children']) != 0:
+            children = DOM_STRING.render_children(elt['children'])
 
-        # TODO This list of self-closing tags is very naive / incomplete.
-        if elt['type'] in ['br', 'img', 'hr']:
-            rendered = '<{0}{1}/>'.format(elt['type'], attrs)
+        if elt['type'] in SELF_CLOSING_TAGS:
+            rendered = '<{0}{1}/>'.format(elt['type'], attr)
         elif elt['type'] == 'fragment':
             rendered = children
         else:
-            rendered = '<{0}{1}>{2}</{0}>'.format(elt['type'], attrs, children)
+            rendered = '<{0}{1}>{2}</{0}>'.format(elt['type'], attr, children)
 
         return rendered
 
     @staticmethod
     def render_debug(elt):
-        attrs = ''
+        attr = ''
         if elt['attr']:
-            for a in elt['attr']:
-                attrs += ' {0}="{1}"'.format(a, html.escape(elt['attr'][a]))
+            attr = DOM_STRING.render_attrs(elt['attr'])
 
         children = ''
-        for c in elt['children']:
-            if isinstance(c, dict):
-                children += DOM_STRING.render(c)
-            else:
-                children += html.escape(c)
+        if len(elt['children']) != 0:
+            children = DOM_STRING.render_children(elt['children'])
 
-        # TODO This list of self-closing tags is very naive / incomplete.
-        if elt['type'] in ['br', 'img', 'hr']:
-            rendered = '<{0}{1}/>'.format(elt['type'], attrs)
+        if elt['type'] in SELF_CLOSING_TAGS:
+            rendered = '<{0}{1}/>'.format(elt['type'], attr)
         else:
-            rendered = '<{0}{1}>{2}</{0}>'.format(elt['type'], attrs, children)
+            rendered = '<{0}{1}>{2}</{0}>'.format(elt['type'], attr, children)
 
         return rendered
