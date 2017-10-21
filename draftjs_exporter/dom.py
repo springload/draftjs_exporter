@@ -26,6 +26,7 @@ class DOM(object):
 
     HTML5LIB = 'html5lib'
     LXML = 'lxml'
+    STRING = 'string'
 
     dom = DOM_HTML5LIB
 
@@ -48,6 +49,9 @@ class DOM(object):
             elif engine.lower() == cls.LXML:
                 from draftjs_exporter.engines.lxml import DOM_LXML
                 cls.dom = DOM_LXML
+            elif engine.lower() == cls.STRING:
+                from draftjs_exporter.engines.string import DOM_STRING
+                cls.dom = DOM_STRING
             else:
                 raise ConfigException('Invalid DOM engine.')
 
