@@ -18,30 +18,33 @@ class DOM_STRING(DOMEngine):
     string concat implementation of the DOM API.
     """
 
-    key = 0
-    rendered_keys = []
-
     @staticmethod
     def create_tag(type_, attr=None):
-        DOM_STRING.key += 1
         return {
-            'key': DOM_STRING.key,
-            'type_': type_,
+            'type': type_,
             'attr': attr,
             'children': [],
         }
 
     @staticmethod
+    def parse_html(markup):
+        return {
+            'type': 'fragment',
+            'attr': None,
+            'children': [markup]
+        }
+
+    @staticmethod
     def append_child(elt, child):
-        elt['children'].append(child)
+        # This check is necessary because the current wrapper_state implementation
+        # has an issue where it inserts elements multiple times.
+        # This must be skipped for text, which can be duplicated.
+        is_existing_ref = isinstance(child, dict) and child in elt['children']
+        if not is_existing_ref:
+            elt['children'].append(child)
 
     @staticmethod
     def render(elt):
-        if elt['key'] in DOM_STRING.rendered_keys:
-            return ''
-        else:
-            DOM_STRING.rendered_keys.append(elt['key'])
-
         attrs = ''
         if elt['attr']:
             for a in elt['attr']:
@@ -54,13 +57,34 @@ class DOM_STRING(DOMEngine):
             else:
                 children += html.escape(c)
 
-        if elt['type_'] in ['br', 'img', 'hr']:
-            return '<{0}{1}/>'.format(elt['type_'], attrs)
-        elif elt['type_'] == 'fragment':
-            return children
+        # TODO This list of self-closing tags is very naive / incomplete.
+        if elt['type'] in ['br', 'img', 'hr']:
+            rendered = '<{0}{1}/>'.format(elt['type'], attrs)
+        elif elt['type'] == 'fragment':
+            rendered = children
         else:
-            return '<{0}{1}>{2}</{0}>'.format(elt['type_'], attrs, children)
+            rendered = '<{0}{1}>{2}</{0}>'.format(elt['type'], attrs, children)
+
+        return rendered
 
     @staticmethod
     def render_debug(elt):
-        return elt
+        attrs = ''
+        if elt['attr']:
+            for a in elt['attr']:
+                attrs += ' {0}="{1}"'.format(a, html.escape(elt['attr'][a]))
+
+        children = ''
+        for c in elt['children']:
+            if isinstance(c, dict):
+                children += DOM_STRING.render(c)
+            else:
+                children += html.escape(c)
+
+        # TODO This list of self-closing tags is very naive / incomplete.
+        if elt['type'] in ['br', 'img', 'hr']:
+            rendered = '<{0}{1}/>'.format(elt['type'], attrs)
+        else:
+            rendered = '<{0}{1}>{2}</{0}>'.format(elt['type'], attrs, children)
+
+        return rendered
