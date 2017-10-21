@@ -3,7 +3,8 @@
         "label": "Plain text",
         "output": {
             "html5lib": "<p>a</p>",
-            "lxml": "<p>a</p>"
+            "lxml": "<p>a</p>",
+            "string": "<p>a</p>"
         },
         "content_state": {
             "entityMap": {},
@@ -24,7 +25,8 @@
         "label": "Single inline style",
         "output": {
             "html5lib": "<p>asd<strong>f</strong></p>",
-            "lxml": "<p>asd<strong>f</strong></p>"
+            "lxml": "<p>asd<strong>f</strong></p>",
+            "string": "<p>asd<strong>f</strong></p>"
         },
         "content_state": {
             "entityMap": {},
@@ -51,7 +53,8 @@
         "label": "Nested inline styles",
         "output": {
             "html5lib": "<p><strong><em>BoldItalic</em></strong></p>",
-            "lxml": "<p><strong><em>BoldItalic</em></strong></p>"
+            "lxml": "<p><strong><em>BoldItalic</em></strong></p>",
+            "string": "<p><strong><em>BoldItalic</em></strong></p>"
         },
         "content_state": {
             "entityMap": {},
@@ -83,7 +86,8 @@
         "label": "Nested inline styles (inverted)",
         "output": {
             "html5lib": "<p><strong><em>ItalicBold</em></strong></p>",
-            "lxml": "<p><strong><em>ItalicBold</em></strong></p>"
+            "lxml": "<p><strong><em>ItalicBold</em></strong></p>",
+            "string": "<p><strong><em>ItalicBold</em></strong></p>"
         },
         "content_state": {
             "entityMap": {},
@@ -115,7 +119,8 @@
         "label": "Adjacent inline styles",
         "output": {
             "html5lib": "<p><em>Bold</em><strong>Italic</strong></p>",
-            "lxml": "<p><em>Bold</em><strong>Italic</strong></p>"
+            "lxml": "<p><em>Bold</em><strong>Italic</strong></p>",
+            "string": "<p><em>Bold</em><strong>Italic</strong></p>"
         },
         "content_state": {
             "entityMap": {},
@@ -147,7 +152,8 @@
         "label": "Style map defaults",
         "output": {
             "html5lib": "<p><strong>0</strong><code>1</code><em>2</em><u>3</u><s>4</s><sup>5</sup><sub>6</sub><mark>7</mark><q>8</q><small>9</small><samp>a</samp><ins>b</ins><del>c</del><kbd>d</kbd>ef</p>",
-            "lxml": "<p><strong>0</strong><code>1</code><em>2</em><u>3</u><s>4</s><sup>5</sup><sub>6</sub><mark>7</mark><q>8</q><small>9</small><samp>a</samp><ins>b</ins><del>c</del><kbd>d</kbd>ef</p>"
+            "lxml": "<p><strong>0</strong><code>1</code><em>2</em><u>3</u><s>4</s><sup>5</sup><sub>6</sub><mark>7</mark><q>8</q><small>9</small><samp>a</samp><ins>b</ins><del>c</del><kbd>d</kbd>ef</p>",
+            "string": "<p><strong>0</strong><code>1</code><em>2</em><u>3</u><s>4</s><sup>5</sup><sub>6</sub><mark>7</mark><q>8</q><small>9</small><samp>a</samp><ins>b</ins><del>c</del><kbd>d</kbd>ef</p>"
         },
         "content_state": {
             "entityMap": {},
@@ -239,7 +245,8 @@
         "label": "Entity",
         "output": {
             "html5lib": "<p><a href=\"/\" title=\"hi\"><em>a</em></a></p>",
-            "lxml": "<p><a href=\"/\" title=\"hi\"><em>a</em></a></p>"
+            "lxml": "<p><a href=\"/\" title=\"hi\"><em>a</em></a></p>",
+            "string": "<p><a href=\"/\" title=\"hi\"><em>a</em></a></p>"
         },
         "content_state": {
             "entityMap": {
@@ -282,7 +289,8 @@
         "label": "Entity with data-*",
         "output": {
             "html5lib": "<p><a data-=\"no\" data-False=\"bad\" data-id=\"42\" data-mutability=\"mutable\" extra=\"foo\" href=\"/\" title=\"hi\"><em>a</em></a></p>",
-            "lxml": "<p><a data-=\"no\" data-False=\"bad\" data-id=\"42\" data-mutability=\"mutable\" extra=\"foo\" href=\"/\" title=\"hi\"><em>a</em></a></p>"
+            "lxml": "<p><a data-=\"no\" data-False=\"bad\" data-id=\"42\" data-mutability=\"mutable\" extra=\"foo\" href=\"/\" title=\"hi\"><em>a</em></a></p>",
+            "string": "<p><a data-=\"no\" data-False=\"bad\" data-id=\"42\" data-mutability=\"mutable\" extra=\"foo\" href=\"/\" title=\"hi\"><em>a</em></a></p>"
         },
         "content_state": {
             "entityMap": {
@@ -329,7 +337,8 @@
         "label": "Entity with inline style",
         "output": {
             "html5lib": "<p><a href=\"/\"><em>a</em></a></p>",
-            "lxml": "<p><a href=\"/\"><em>a</em></a></p>"
+            "lxml": "<p><a href=\"/\"><em>a</em></a></p>",
+            "string": "<p><a href=\"/\"><em>a</em></a></p>"
         },
         "content_state": {
             "entityMap": {
@@ -370,7 +379,8 @@
         "label": "Ordered list",
         "output": {
             "html5lib": "<p>An ordered list:</p><ol><li>One</li><li>Two</li></ol>",
-            "lxml": "<p>An ordered list:</p><ol><li>One</li><li>Two</li></ol>"
+            "lxml": "<p>An ordered list:</p><ol><li>One</li><li>Two</li></ol>",
+            "string": "<p>An ordered list:</p><ol><li>One</li><li>Two</li></ol>"
         },
         "content_state": {
             "entityMap": {},
@@ -407,7 +417,8 @@
         "label": "All plain HTML elements we need",
         "output": {
             "html5lib": "<h2>Title 2</h2><h3>Title 3</h3><h4>Title 4</h4><h5>Title 5</h5><blockquote>Blockquote</blockquote><ul class=\"bullet-list\"><li>List item<ul class=\"bullet-list\"><li>Nested list item</li></ul></li></ul><ol><li>Ordered item <strong>(bold)</strong><ol><li>Nested ordered item <em>(italic)</em></li></ol></li></ol>",
-            "lxml": "<h2>Title 2</h2><h3>Title 3</h3><h4>Title 4</h4><h5>Title 5</h5><blockquote>Blockquote</blockquote><ul class=\"bullet-list\"><li>List item<ul class=\"bullet-list\"><li>Nested list item</li></ul></li></ul><ol><li>Ordered item <strong>(bold)</strong><ol><li>Nested ordered item <em>(italic)</em></li></ol></li></ol>"
+            "lxml": "<h2>Title 2</h2><h3>Title 3</h3><h4>Title 4</h4><h5>Title 5</h5><blockquote>Blockquote</blockquote><ul class=\"bullet-list\"><li>List item<ul class=\"bullet-list\"><li>Nested list item</li></ul></li></ul><ol><li>Ordered item <strong>(bold)</strong><ol><li>Nested ordered item <em>(italic)</em></li></ol></li></ol>",
+            "string": "<h2>Title 2</h2><h3>Title 3</h3><h4>Title 4</h4><h5>Title 5</h5><blockquote>Blockquote</blockquote><ul class=\"bullet-list\"><li>List item<ul class=\"bullet-list\"><li>Nested list item</li></ul></li></ul><ol><li>Ordered item <strong>(bold)</strong><ol><li>Nested ordered item <em>(italic)</em></li></ol></li></ol>"
         },
         "content_state": {
             "entityMap": {},
@@ -429,7 +440,8 @@
         "label": "From https://github.com/icelab/draft-js-ast-exporter/blob/651c807bea12d97dad6f4965ab40481c8f2130dd/test/fixtures/content.js",
         "output": {
             "html5lib": "<h2>DraftJS AST Exporter</h2><p>In your draft-js, <strong>exporting</strong> your <em>content</em>:</p><ol><li>From draft-js internals</li><li>To an abstract syntax tree</li><li>Extensibility.</li></ol><img src=\"http://placekitten.com/500/300\"/>:)<p>Find the project on <a href=\"https://github.com/icelab/draft-js-ast-exporter\">Github</a>.</p>",
-            "lxml": "<h2>DraftJS AST Exporter</h2><p>In your draft-js, <strong>exporting</strong> your <em>content</em>:</p><ol><li>From draft-js internals</li><li>To an abstract syntax tree</li><li>Extensibility.</li></ol><img src=\"http://placekitten.com/500/300\">:)<p>Find the project on <a href=\"https://github.com/icelab/draft-js-ast-exporter\">Github</a>.</p>"
+            "lxml": "<h2>DraftJS AST Exporter</h2><p>In your draft-js, <strong>exporting</strong> your <em>content</em>:</p><ol><li>From draft-js internals</li><li>To an abstract syntax tree</li><li>Extensibility.</li></ol><img src=\"http://placekitten.com/500/300\">:)<p>Find the project on <a href=\"https://github.com/icelab/draft-js-ast-exporter\">Github</a>.</p>",
+            "string": "<h2>DraftJS AST Exporter</h2><p>In your draft-js, <strong>exporting</strong> your <em>content</em>:</p><ol><li>From draft-js internals</li><li>To an abstract syntax tree</li><li>Extensibility.</li></ol><img src=\"http://placekitten.com/500/300\"/>:)<p>Find the project on <a href=\"https://github.com/icelab/draft-js-ast-exporter\">Github</a>.</p>"
         },
         "content_state": {
             "entityMap": {
@@ -539,7 +551,8 @@
         "label": "HTML entities escaping",
         "output": {
             "html5lib": "<p><a href=\"http://www.example.com/?a=1&amp;b=2\">http://www.example.com/?a=1&amp;b=2</a></p>",
-            "lxml": "<p><a href=\"http://www.example.com/?a=1&amp;b=2\">http://www.example.com/?a=1&amp;b=2</a></p>"
+            "lxml": "<p><a href=\"http://www.example.com/?a=1&amp;b=2\">http://www.example.com/?a=1&amp;b=2</a></p>",
+            "string": "<p><a href=\"http://www.example.com/?a=1&amp;b=2\">http://www.example.com/?a=1&amp;b=2</a></p>"
         },
         "content_state": {
             "entityMap": {
@@ -574,7 +587,8 @@
         "label": "Multiple decorators",
         "output": {
             "html5lib": "<p>search <a href=\"http://www.google.com#world\">http://www.google.com#world</a> for the <span class=\"hashtag\">#world</span></p>",
-            "lxml": "<p>search <a href=\"http://www.google.com#world\">http://www.google.com#world</a> for the <span class=\"hashtag\">#world</span></p>"
+            "lxml": "<p>search <a href=\"http://www.google.com#world\">http://www.google.com#world</a> for the <span class=\"hashtag\">#world</span></p>",
+            "string": "<p>search <a href=\"http://www.google.com#world\">http://www.google.com#world</a> for the <span class=\"hashtag\">#world</span></p>"
         },
         "content_state": {
             "entityMap": {},
@@ -595,7 +609,8 @@
         "label": "Big content export",
         "output": {
             "html5lib": "<h2>draftjs_exporter is an HTML exporter for <a href=\"https://github.com/facebook/draft-js\">Draft.js</a> content</h2><blockquote>Try it out by running this file!</blockquote><h3>Features 📝🍸</h3><p>The exporter aims to provide sensible defaults from basic block types and inline styles to HTML, that can easily be customised when required. For more advanced scenarios, an API is provided (mimicking React's <a href=\"https://facebook.github.io/react/docs/top-level-api.html#react.createelement\"><code>createElement</code></a>) to create custom rendering components of arbitrary complexity.</p><hr/><p>Here are some features worth highlighting:</p><ul class=\"bullet-list\"><li>Convert line breaks to <code>&lt;br&gt;</code><br/>elements.</li><li>Automatic conversion of entity data to HTML attributes (int &amp; boolean to string, <a href=\"https://facebook.github.io/react/docs/jsx-in-depth.html\"><code>style object</code> to <code>style string</code></a>).</li><li>Wrapped blocks (<code>&lt;li&gt; </code>elements go inside <code>&lt;ul&gt;</code> or <code>&lt;ol&gt;</code>).<ul class=\"bullet-list\"><li>With arbitrary nesting.<ul class=\"bullet-list\"><li>Common text styles: <strong>Bold</strong>, <em>Italic</em>, <u>Underline</u>, <code>Monospace</code>, <s>Strikethrough.</s> <kbd>cmd + b</kbd></li><li><s>Overlapping </s><strong><s>te</s></strong><strong><em>xt</em></strong><em> styles. </em><strong style=\"text-decoration: underline;\">Custom styles</strong> too!<ul class=\"bullet-list\"><li><span class=\"hashtag\">#hashtag</span> support via <a href=\"https://github.com/springload/draftjs_exporter/pull/17\">#CompositeDecorators</a>.<ul class=\"bullet-list\"><li>Linkify URLs too! <a href=\"http://example.com/\">http://example.com/</a></li></ul></li></ul></li><li>Depth can go back and forth, it works fiiine (1)</li></ul></li><li>Depth can go back and forth, it works fiiine (2)<ul class=\"bullet-list\"><li>Depth can go back and forth, it works fiiine (3)</li></ul></li><li>Depth can go back and forth, it works fiiine (4)</li></ul></li><li>Depth can go back and forth, it works fiiine (5)</li></ul><img alt=\"Test image alt text\" height=\"200\" src=\"https://placekitten.com/g/300/200\" width=\"300\"/><h3>For developers \ud83d\ude80</h3><ol><li>Import the library</li><li>Define your configuration</li><li>Go!<ol><li>Optionally, define your custom components.</li></ol></li></ol><pre><code>def Blockquote(props):\n    block_data = props['block']['data']\n    return DOM.create_element('blockquote', {\n        'cite': block_data.get('cite')\n    }, props['children'])\n</code></pre><p>Voilà!</p>",
-            "lxml": "<h2>draftjs_exporter is an HTML exporter for <a href=\"https://github.com/facebook/draft-js\">Draft.js</a> content</h2><blockquote>Try it out by running this file!</blockquote><h3>Features 📝🍸</h3><p>The exporter aims to provide sensible defaults from basic block types and inline styles to HTML, that can easily be customised when required. For more advanced scenarios, an API is provided (mimicking React's <a href=\"https://facebook.github.io/react/docs/top-level-api.html#react.createelement\"><code>createElement</code></a>) to create custom rendering components of arbitrary complexity.</p><hr><p>Here are some features worth highlighting:</p><ul class=\"bullet-list\"><li>Convert line breaks to <code>&lt;br&gt;</code><br>elements.</li><li>Automatic conversion of entity data to HTML attributes (int &amp; boolean to string, <a href=\"https://facebook.github.io/react/docs/jsx-in-depth.html\"><code>style object</code> to <code>style string</code></a>).</li><li>Wrapped blocks (<code>&lt;li&gt; </code>elements go inside <code>&lt;ul&gt;</code> or <code>&lt;ol&gt;</code>).<ul class=\"bullet-list\"><li>With arbitrary nesting.<ul class=\"bullet-list\"><li>Common text styles: <strong>Bold</strong>, <em>Italic</em>, <u>Underline</u>, <code>Monospace</code>, <s>Strikethrough.</s> <kbd>cmd + b</kbd></li><li><s>Overlapping </s><strong><s>te</s></strong><strong><em>xt</em></strong><em> styles. </em><strong style=\"text-decoration: underline;\">Custom styles</strong> too!<ul class=\"bullet-list\"><li><span class=\"hashtag\">#hashtag</span> support via <a href=\"https://github.com/springload/draftjs_exporter/pull/17\">#CompositeDecorators</a>.<ul class=\"bullet-list\"><li>Linkify URLs too! <a href=\"http://example.com/\">http://example.com/</a></li></ul></li></ul></li><li>Depth can go back and forth, it works fiiine (1)</li></ul></li><li>Depth can go back and forth, it works fiiine (2)<ul class=\"bullet-list\"><li>Depth can go back and forth, it works fiiine (3)</li></ul></li><li>Depth can go back and forth, it works fiiine (4)</li></ul></li><li>Depth can go back and forth, it works fiiine (5)</li></ul><img alt=\"Test image alt text\" height=\"200\" src=\"https://placekitten.com/g/300/200\" width=\"300\"><h3>For developers \ud83d\ude80</h3><ol><li>Import the library</li><li>Define your configuration</li><li>Go!<ol><li>Optionally, define your custom components.</li></ol></li></ol><pre><code>def Blockquote(props):\n    block_data = props['block']['data']\n    return DOM.create_element('blockquote', {\n        'cite': block_data.get('cite')\n    }, props['children'])\n</code></pre><p>Voilà!</p>"
+            "lxml": "<h2>draftjs_exporter is an HTML exporter for <a href=\"https://github.com/facebook/draft-js\">Draft.js</a> content</h2><blockquote>Try it out by running this file!</blockquote><h3>Features 📝🍸</h3><p>The exporter aims to provide sensible defaults from basic block types and inline styles to HTML, that can easily be customised when required. For more advanced scenarios, an API is provided (mimicking React's <a href=\"https://facebook.github.io/react/docs/top-level-api.html#react.createelement\"><code>createElement</code></a>) to create custom rendering components of arbitrary complexity.</p><hr><p>Here are some features worth highlighting:</p><ul class=\"bullet-list\"><li>Convert line breaks to <code>&lt;br&gt;</code><br>elements.</li><li>Automatic conversion of entity data to HTML attributes (int &amp; boolean to string, <a href=\"https://facebook.github.io/react/docs/jsx-in-depth.html\"><code>style object</code> to <code>style string</code></a>).</li><li>Wrapped blocks (<code>&lt;li&gt; </code>elements go inside <code>&lt;ul&gt;</code> or <code>&lt;ol&gt;</code>).<ul class=\"bullet-list\"><li>With arbitrary nesting.<ul class=\"bullet-list\"><li>Common text styles: <strong>Bold</strong>, <em>Italic</em>, <u>Underline</u>, <code>Monospace</code>, <s>Strikethrough.</s> <kbd>cmd + b</kbd></li><li><s>Overlapping </s><strong><s>te</s></strong><strong><em>xt</em></strong><em> styles. </em><strong style=\"text-decoration: underline;\">Custom styles</strong> too!<ul class=\"bullet-list\"><li><span class=\"hashtag\">#hashtag</span> support via <a href=\"https://github.com/springload/draftjs_exporter/pull/17\">#CompositeDecorators</a>.<ul class=\"bullet-list\"><li>Linkify URLs too! <a href=\"http://example.com/\">http://example.com/</a></li></ul></li></ul></li><li>Depth can go back and forth, it works fiiine (1)</li></ul></li><li>Depth can go back and forth, it works fiiine (2)<ul class=\"bullet-list\"><li>Depth can go back and forth, it works fiiine (3)</li></ul></li><li>Depth can go back and forth, it works fiiine (4)</li></ul></li><li>Depth can go back and forth, it works fiiine (5)</li></ul><img alt=\"Test image alt text\" height=\"200\" src=\"https://placekitten.com/g/300/200\" width=\"300\"><h3>For developers \ud83d\ude80</h3><ol><li>Import the library</li><li>Define your configuration</li><li>Go!<ol><li>Optionally, define your custom components.</li></ol></li></ol><pre><code>def Blockquote(props):\n    block_data = props['block']['data']\n    return DOM.create_element('blockquote', {\n        'cite': block_data.get('cite')\n    }, props['children'])\n</code></pre><p>Voilà!</p>",
+            "string": "<h2>draftjs_exporter is an HTML exporter for <a href=\"https://github.com/facebook/draft-js\">Draft.js</a> content</h2><blockquote>Try it out by running this file!</blockquote><h3>Features 📝🍸</h3><p>The exporter aims to provide sensible defaults from basic block types and inline styles to HTML, that can easily be customised when required. For more advanced scenarios, an API is provided (mimicking React&#x27;s <a href=\"https://facebook.github.io/react/docs/top-level-api.html#react.createelement\"><code>createElement</code></a>) to create custom rendering components of arbitrary complexity.</p><hr/><p>Here are some features worth highlighting:</p><ul class=\"bullet-list\"><li>Convert line breaks to <code>&lt;br&gt;</code><br/>elements.</li><li>Automatic conversion of entity data to HTML attributes (int &amp; boolean to string, <a href=\"https://facebook.github.io/react/docs/jsx-in-depth.html\"><code>style object</code> to <code>style string</code></a>).</li><li>Wrapped blocks (<code>&lt;li&gt; </code>elements go inside <code>&lt;ul&gt;</code> or <code>&lt;ol&gt;</code>).<ul class=\"bullet-list\"><li>With arbitrary nesting.<ul class=\"bullet-list\"><li>Common text styles: <strong>Bold</strong>, <em>Italic</em>, <u>Underline</u>, <code>Monospace</code>, <s>Strikethrough.</s> <kbd>cmd + b</kbd></li><li><s>Overlapping </s><strong><s>te</s></strong><strong><em>xt</em></strong><em> styles. </em><strong style=\"text-decoration: underline;\">Custom styles</strong> too!<ul class=\"bullet-list\"><li><span class=\"hashtag\">#hashtag</span> support via <a href=\"https://github.com/springload/draftjs_exporter/pull/17\">#CompositeDecorators</a>.<ul class=\"bullet-list\"><li>Linkify URLs too! <a href=\"http://example.com/\">http://example.com/</a></li></ul></li></ul></li><li>Depth can go back and forth, it works fiiine (1)</li></ul></li><li>Depth can go back and forth, it works fiiine (2)<ul class=\"bullet-list\"><li>Depth can go back and forth, it works fiiine (3)</li></ul></li><li>Depth can go back and forth, it works fiiine (4)</li></ul></li><li>Depth can go back and forth, it works fiiine (5)</li></ul><img alt=\"Test image alt text\" height=\"200\" src=\"https://placekitten.com/g/300/200\" width=\"300\"/><h3>For developers \ud83d\ude80</h3><ol><li>Import the library</li><li>Define your configuration</li><li>Go!<ol><li>Optionally, define your custom components.</li></ol></li></ol><pre><code>def Blockquote(props):\n    block_data = props['block']['data']\n    return DOM.create_element('blockquote', {\n        'cite': block_data.get('cite')\n    }, props['children'])\n</code></pre><p>Voilà!</p>"
         },
         "content_state": {
             "entityMap": {
