@@ -27,14 +27,6 @@ class DOM_STRING(DOMEngine):
         }
 
     @staticmethod
-    def parse_html(markup):
-        return {
-            'type': 'fragment',
-            'attr': None,
-            'children': [markup]
-        }
-
-    @staticmethod
     def append_child(elt, child):
         # This check is necessary because the current wrapper_state implementation
         # has an issue where it inserts elements multiple times.
