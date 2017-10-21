@@ -194,7 +194,7 @@ config = {
         Linkify,
     ],
     # Specify which DOM backing engine to use.
-    'engine': 'html5lib',
+    'engine': 'string',
 }
 
 exporter = HTML(config)
