@@ -18,11 +18,6 @@ from tests.test_entities import HR, Image, Link
 fixtures_path = os.path.join(os.path.dirname(__file__), 'test_exports.json')
 fixtures = json.loads(open(fixtures_path, 'r').read())
 
-engines = [
-    'bs',
-    'lxml',
-]
-
 exporter = HTML({
     'entity_decorators': {
         ENTITY_TYPES.LINK: Link,
@@ -67,6 +62,8 @@ class TestExportsMeta(type):
             engine = 'html5lib'
         elif name == 'TestExportsLXML':
             engine = 'lxml'
+        elif name == 'TestExportsSTRING':
+            engine = 'string'
 
         for export in fixtures:
             test_label = export['label'].lower().replace(' ', '_')
@@ -99,6 +96,22 @@ class TestExportsLXML(six.with_metaclass(TestExportsMeta, unittest.TestCase)):
         cls.pr = cProfile.Profile()
         cls.pr.enable()
         print('\nlxml')
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.pr.disable()
+        Stats(cls.pr).strip_dirs().sort_stats('cumulative').print_stats(0)
+
+    def test_init(self):
+        self.assertIsInstance(exporter, HTML)
+
+
+class TestExportsSTRING(six.with_metaclass(TestExportsMeta, unittest.TestCase)):
+    @classmethod
+    def setUpClass(cls):
+        cls.pr = cProfile.Profile()
+        cls.pr.enable()
+        print('\nstring')
 
     @classmethod
     def tearDownClass(cls):
