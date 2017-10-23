@@ -43,17 +43,17 @@ class TestDOMEnginesDifferences(unittest.TestCase):
         DOM_STRING.append_child(bs_elt, DOM_STRING.create_tag('use', {'xlink:href': 'test'}))
         self.assertEqual(DOM_STRING.render_debug(bs_elt), '<svg><use xlink:href="test"></use></svg>')
 
-    def test_html5lib_single_quotes_escape(self):
+    def test_html5lib_html_escaping(self):
         self.assertEqual(DOM_HTML5LIB.render_debug(DOM_HTML5LIB.create_tag('img', {
-            'alt': 'img\'s alt',
-        })), '<img alt="img\'s alt"/>')
+            'alt': '< " \' < > &',
+        })), '<img alt="&lt; &quot; \' &lt; &gt; &amp;"/>')
 
-    def test_lxml_single_quotes_escape(self):
+    def test_lxml_html_escaping(self):
         self.assertEqual(DOM_LXML.render_debug(DOM_LXML.create_tag('img', {
-            'alt': 'img\'s alt',
-        })), '<img alt="img\'s alt">')
+            'alt': '< " \' < > &',
+        })), '<img alt="&lt; &quot; \' &lt; &gt; &amp;">')
 
-    def test_string_single_quotes_escape(self):
+    def test_string_html_escaping(self):
         self.assertEqual(DOM_STRING.render_debug(DOM_STRING.create_tag('img', {
-            'alt': 'img\'s alt',
-        })), '<img alt="img&#x27;s alt"/>')
+            'alt': '< " \' < > &',
+        })), '<img alt="&lt; &quot; &#x27; &lt; &gt; &amp;"/>')
