@@ -1,8 +1,12 @@
 from __future__ import absolute_import, unicode_literals
 
-import html
-
 from draftjs_exporter.engines.base import DOMEngine
+
+try:
+    # Python 3.2 and above.
+    from html import escape
+except ImportError:
+    from cgi import escape
 
 # http://w3c.github.io/html/single-page.html#void-elements
 # https://github.com/html5lib/html5lib-python/blob/0cae52b2073e3f2220db93a7650901f2200f2a13/html5lib/constants.py#L560
@@ -48,7 +52,7 @@ class DOM_STRING(DOMEngine):
 
     @staticmethod
     def render_attrs(attr):
-        attrs = [' {0}="{1}"'.format(a, html.escape(attr[a])) for a in attr]
+        attrs = [' {0}="{1}"'.format(a, escape(attr[a])) for a in attr]
         return ''.join(sorted(attrs))
 
     @staticmethod
@@ -58,7 +62,7 @@ class DOM_STRING(DOMEngine):
             if isinstance(c, dict):
                 rendered += DOM_STRING.render(c)
             else:
-                rendered += html.escape(c)
+                rendered += escape(c)
 
         return rendered
 
