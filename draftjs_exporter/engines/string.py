@@ -52,7 +52,7 @@ class DOM_STRING(DOMEngine):
 
     @staticmethod
     def render_attrs(attr):
-        attrs = [' {0}="{1}"'.format(a, escape(attr[a])) for a in attr]
+        attrs = [' {0}="{1}"'.format(a, escape(attr[a], quote=True)) for a in attr]
         return ''.join(sorted(attrs))
 
     @staticmethod
@@ -62,7 +62,7 @@ class DOM_STRING(DOMEngine):
             if isinstance(c, dict):
                 rendered += DOM_STRING.render(c)
             else:
-                rendered += escape(c)
+                rendered += escape(c, quote=True)
 
         return rendered
 
