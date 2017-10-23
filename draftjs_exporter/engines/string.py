@@ -4,8 +4,24 @@ import html
 
 from draftjs_exporter.engines.base import DOMEngine
 
-# TODO This list of self-closing tags is very naive / incomplete.
-SELF_CLOSING_TAGS = ['br', 'img', 'hr']
+# http://w3c.github.io/html/single-page.html#void-elements
+# https://github.com/html5lib/html5lib-python/blob/0cae52b2073e3f2220db93a7650901f2200f2a13/html5lib/constants.py#L560
+VOID_ELEMENTS = [
+    'area',
+    'base',
+    'br',
+    'col',
+    'embed',
+    'hr',
+    'img',
+    'input',
+    'link',
+    'meta',
+    'param',
+    'source',
+    'track',
+    'wbr',
+]
 
 
 class DOM_STRING(DOMEngine):
@@ -56,7 +72,7 @@ class DOM_STRING(DOMEngine):
         if len(elt['children']) != 0:
             children = DOM_STRING.render_children(elt['children'])
 
-        if elt['type'] in SELF_CLOSING_TAGS:
+        if elt['type'] in VOID_ELEMENTS:
             rendered = '<{0}{1}/>'.format(elt['type'], attr)
         elif elt['type'] == 'fragment':
             rendered = children
@@ -75,7 +91,7 @@ class DOM_STRING(DOMEngine):
         if len(elt['children']) != 0:
             children = DOM_STRING.render_children(elt['children'])
 
-        if elt['type'] in SELF_CLOSING_TAGS:
+        if elt['type'] in VOID_ELEMENTS:
             rendered = '<{0}{1}/>'.format(elt['type'], attr)
         else:
             rendered = '<{0}{1}>{2}</{0}>'.format(elt['type'], attr, children)
