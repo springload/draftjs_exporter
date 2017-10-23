@@ -8,9 +8,9 @@ try:
 except ImportError:
     import cgi
 
-    def escape(str):
+    def escape(s):
         # Force quote escaping in Python 2.7.
-        return cgi.escape(str, quote=True).replace('\'', '&#x27;')
+        return cgi.escape(s, quote=True).replace('\'', '&#x27;')
 
 # http://w3c.github.io/html/single-page.html#void-elements
 # https://github.com/html5lib/html5lib-python/blob/0cae52b2073e3f2220db93a7650901f2200f2a13/html5lib/constants.py#L560
