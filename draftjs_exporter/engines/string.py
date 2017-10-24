@@ -83,10 +83,11 @@ class DOM_STRING(DOMEngine):
 
         if type_ in VOID_ELEMENTS:
             return '<%s%s/>' % (type_, attr)
-        elif type_ == 'fragment':
+
+        if type_ == 'fragment':
             return children
-        else:
-            return '<%s%s>%s</%s>' % (type_, attr, children, type_)
+
+        return '<%s%s>%s</%s>' % (type_, attr, children, type_)
 
     @staticmethod
     def render_debug(elt):
@@ -101,5 +102,5 @@ class DOM_STRING(DOMEngine):
 
         if type_ in VOID_ELEMENTS:
             return '<%s%s/>' % (type_, attr)
-        else:
-            return '<%s%s>%s</%s>' % (type_, attr, children, type_)
+
+        return '<%s%s>%s</%s>' % (type_, attr, children, type_)
