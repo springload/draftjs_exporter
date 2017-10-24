@@ -14,7 +14,7 @@ except ImportError:
 
 # http://w3c.github.io/html/single-page.html#void-elements
 # https://github.com/html5lib/html5lib-python/blob/0cae52b2073e3f2220db93a7650901f2200f2a13/html5lib/constants.py#L560
-VOID_ELEMENTS = [
+VOID_ELEMENTS = set([
     'area',
     'base',
     'br',
@@ -29,7 +29,7 @@ VOID_ELEMENTS = [
     'source',
     'track',
     'wbr',
-]
+])
 
 
 class DOM_STRING(DOMEngine):
@@ -56,7 +56,7 @@ class DOM_STRING(DOMEngine):
 
     @staticmethod
     def render_attrs(attr):
-        attrs = [' {0}="{1}"'.format(a, escape(attr[a])) for a in attr]
+        attrs = [' %s="%s"' % (a, escape(attr[a])) for a in attr]
         return ''.join(sorted(attrs))
 
     @staticmethod
@@ -72,6 +72,7 @@ class DOM_STRING(DOMEngine):
 
     @staticmethod
     def render(elt):
+        type_ = elt['type']
         attr = ''
         if elt['attr']:
             attr = DOM_STRING.render_attrs(elt['attr'])
@@ -80,17 +81,16 @@ class DOM_STRING(DOMEngine):
         if len(elt['children']) != 0:
             children = DOM_STRING.render_children(elt['children'])
 
-        if elt['type'] in VOID_ELEMENTS:
-            rendered = '<{0}{1}/>'.format(elt['type'], attr)
-        elif elt['type'] == 'fragment':
-            rendered = children
+        if type_ in VOID_ELEMENTS:
+            return '<%s%s/>' % (type_, attr)
+        elif type_ == 'fragment':
+            return children
         else:
-            rendered = '<{0}{1}>{2}</{0}>'.format(elt['type'], attr, children)
-
-        return rendered
+            return '<%s%s>%s</%s>' % (type_, attr, children, type_)
 
     @staticmethod
     def render_debug(elt):
+        type_ = elt['type']
         attr = ''
         if elt['attr']:
             attr = DOM_STRING.render_attrs(elt['attr'])
@@ -99,9 +99,7 @@ class DOM_STRING(DOMEngine):
         if len(elt['children']) != 0:
             children = DOM_STRING.render_children(elt['children'])
 
-        if elt['type'] in VOID_ELEMENTS:
-            rendered = '<{0}{1}/>'.format(elt['type'], attr)
+        if type_ in VOID_ELEMENTS:
+            return '<%s%s/>' % (type_, attr)
         else:
-            rendered = '<{0}{1}>{2}</{0}>'.format(elt['type'], attr, children)
-
-        return rendered
+            return '<%s%s>%s</%s>' % (type_, attr, children, type_)
