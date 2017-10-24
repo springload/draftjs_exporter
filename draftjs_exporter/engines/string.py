@@ -32,7 +32,7 @@ VOID_ELEMENTS = set([
 ])
 
 
-class DOM_STRING(DOMEngine):
+class DOMString(DOMEngine):
     """
     string concat implementation of the DOM API.
     """
@@ -64,7 +64,7 @@ class DOM_STRING(DOMEngine):
         rendered = ''
         for c in children:
             if isinstance(c, dict):
-                rendered += DOM_STRING.render(c)
+                rendered += DOMString.render(c)
             else:
                 rendered += escape(c)
 
@@ -75,11 +75,11 @@ class DOM_STRING(DOMEngine):
         type_ = elt['type']
         attr = ''
         if elt['attr']:
-            attr = DOM_STRING.render_attrs(elt['attr'])
+            attr = DOMString.render_attrs(elt['attr'])
 
         children = ''
         if elt['children']:
-            children = DOM_STRING.render_children(elt['children'])
+            children = DOMString.render_children(elt['children'])
 
         if type_ in VOID_ELEMENTS:
             return '<%s%s/>' % (type_, attr)
@@ -94,11 +94,11 @@ class DOM_STRING(DOMEngine):
         type_ = elt['type']
         attr = ''
         if elt['attr']:
-            attr = DOM_STRING.render_attrs(elt['attr'])
+            attr = DOMString.render_attrs(elt['attr'])
 
         children = ''
         if elt['children']:
-            children = DOM_STRING.render_children(elt['children'])
+            children = DOMString.render_children(elt['children'])
 
         if type_ in VOID_ELEMENTS:
             return '<%s%s/>' % (type_, attr)

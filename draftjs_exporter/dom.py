@@ -50,8 +50,8 @@ class DOM(object):
                 from draftjs_exporter.engines.lxml import DOM_LXML
                 cls.dom = DOM_LXML
             elif engine.lower() == cls.STRING:
-                from draftjs_exporter.engines.string import DOM_STRING
-                cls.dom = DOM_STRING
+                from draftjs_exporter.engines.string import DOMString
+                cls.dom = DOMString
             else:
                 raise ConfigException('Invalid DOM engine.')
 
