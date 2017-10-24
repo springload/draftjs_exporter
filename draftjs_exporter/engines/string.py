@@ -78,7 +78,7 @@ class DOM_STRING(DOMEngine):
             attr = DOM_STRING.render_attrs(elt['attr'])
 
         children = ''
-        if len(elt['children']) != 0:
+        if elt['children']:
             children = DOM_STRING.render_children(elt['children'])
 
         if type_ in VOID_ELEMENTS:
@@ -96,7 +96,7 @@ class DOM_STRING(DOMEngine):
             attr = DOM_STRING.render_attrs(elt['attr'])
 
         children = ''
-        if len(elt['children']) != 0:
+        if elt['children']:
             children = DOM_STRING.render_children(elt['children'])
 
         if type_ in VOID_ELEMENTS:
