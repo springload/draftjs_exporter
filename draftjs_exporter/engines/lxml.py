@@ -13,6 +13,8 @@ NSMAP = {
     'xlink': 'http://www.w3.org/1999/xlink',
 }
 
+RENDER_RE = re.compile(r'</?fragment>')
+
 
 class DOM_LXML(DOMEngine):
     """
@@ -44,7 +46,7 @@ class DOM_LXML(DOMEngine):
 
     @staticmethod
     def render(elt):
-        return re.sub(r'</?fragment>', '', etree.tostring(elt, method='html', encoding='unicode'))
+        return RENDER_RE.sub('', etree.tostring(elt, method='html', encoding='unicode'))
 
     @staticmethod
     def render_debug(elt):

@@ -20,6 +20,9 @@ except NameError:
     def unicode(s):
         return str(s)
 
+RENDER_RE = re.compile(r'</?(fragment|body|html|head)>')
+RENDER_DEBUG_RE = re.compile(r'</?(body|html|head)>')
+
 
 class DOM_HTML5LIB(DOMEngine):
     """
@@ -43,8 +46,8 @@ class DOM_HTML5LIB(DOMEngine):
 
     @staticmethod
     def render(elt):
-        return re.sub(r'</?(fragment|body|html|head)>', '', unicode(elt))
+        return RENDER_RE.sub('', unicode(elt))
 
     @staticmethod
     def render_debug(elt):
-        return re.sub(r'</?(body|html|head)>', '', unicode(elt))
+        return RENDER_DEBUG_RE.sub('', unicode(elt))
