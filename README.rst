@@ -339,6 +339,7 @@ Commands
     make test-coverage   # Run the tests while generating test coverage data.
     make test-ci         # Continuous integration test suite.
     make dev             # Restarts the example whenever a file changes.
+    make benchmark       # Runs a one-off performance (speed, memory) benchmark.
     make clean-pyc       # Remove Python file artifacts.
     make publish         # Publishes a new version to pypi.
 
