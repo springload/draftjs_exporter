@@ -61,14 +61,7 @@ class DOMString(DOMEngine):
 
     @staticmethod
     def render_children(children):
-        rendered = ''
-        for c in children:
-            if isinstance(c, dict):
-                rendered += DOMString.render(c)
-            else:
-                rendered += escape(c)
-
-        return rendered
+        return ''.join([DOMString.render(c) if isinstance(c, dict) else escape(c) for c in children])
 
     @staticmethod
     def render(elt):
