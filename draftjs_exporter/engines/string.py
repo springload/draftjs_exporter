@@ -34,7 +34,7 @@ VOID_ELEMENTS = {
 
 class DOMString(DOMEngine):
     """
-    string concat implementation of the DOM API.
+    String concatenation implementation of the DOM API.
     """
 
     @staticmethod
@@ -43,6 +43,19 @@ class DOMString(DOMEngine):
             'type': type_,
             'attr': attr,
             'children': [],
+        }
+
+    @staticmethod
+    def parse_html(markup):
+        """
+        Allows inserting arbitrary HTML into the exporter output.
+        Treats the HTML as if it had been escaped and was safe already.
+        """
+        return {
+            'type': 'escaped_html',
+            'attr': None,
+            'children': None,
+            'markup': markup,
         }
 
     @staticmethod
@@ -74,6 +87,9 @@ class DOMString(DOMEngine):
         if type_ in VOID_ELEMENTS:
             return '<%s%s/>' % (type_, attr)
 
+        if type_ == 'escaped_html':
+            return elt['markup']
+
         return '<%s%s>%s</%s>' % (type_, attr, children, type_)
 
     @staticmethod
@@ -84,5 +100,8 @@ class DOMString(DOMEngine):
 
         if type_ in VOID_ELEMENTS:
             return '<%s%s/>' % (type_, attr)
+
+        if type_ == 'escaped_html':
+            return elt['markup']
 
         return '<%s%s>%s</%s>' % (type_, attr, children, type_)
