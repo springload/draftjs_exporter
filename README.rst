@@ -237,10 +237,23 @@ This fallback component can now control the exporter behavior when normal compon
 
 See ``examples.py`` in the repository for more details.
 
-lxml backing engine
-~~~~~~~~~~~~~~~~~~~
+Alternative backing engines
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-By default the exporter uses ``html5lib`` via BeautifulSoup to build DOM tree. ``lxml`` is also supported. lxml is more performant, but it requires ``libxml2`` and ``libxslt`` to be available on your system.
+By default the exporter uses ``html5lib`` via BeautifulSoup to build the DOM tree. There are two alternative backing engines: ``string`` and ``lxml``.
+
+The ``string`` engine is the fastest, and does not have any dependencies. Its only drawback is that the ``parse_html`` method does not escape/sanitise HTML like that of other engines.
+
+To use it, add the following to the exporter config:
+
+.. code:: python
+
+    config = {
+        # Specify which DOM backing engine to use.
+        'engine': 'string',
+    }
+
+``lxml`` is also supported. It requires ``libxml2`` and ``libxslt`` to be available on your system.
 
 .. code:: sh
 
