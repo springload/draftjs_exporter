@@ -28,7 +28,7 @@ dev: ## Restarts the example whenever a file changes.
 	nodemon -q -e py -w tests -w draftjs_exporter -w example.py  -x "clear && python example.py || true"
 
 benchmark: ## Runs a one-off performance (speed, memory) benchmark.
-	clear && python benchmark.py
+	python benchmark.py
 
 clean-pyc: ## Remove Python file artifacts.
 	find . -name '*.pyc' -exec rm -f {} +
