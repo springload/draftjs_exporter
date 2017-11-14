@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Fail on first line that fails.
+set -e
+
 # Check if this is the initial commit
 if git rev-parse --verify HEAD >/dev/null 2>&1
 then
@@ -13,16 +16,12 @@ if ! git diff-index --check --cached $against
 then
     echo "Aborting commit due to whitespace errors."
     exit 1
-else
-    # Fail on first line that fails.
-    set -e
+fi
 
-    NEW_FILES=$(git --no-pager diff --name-only --cached --diff-filter=d)
-    PY_FILES=$(echo "$NEW_FILES" | { grep .py || true; })
+NEW_FILES=$(git --no-pager diff --name-only --cached --diff-filter=ACM)
+PY_FILES=$(echo "$NEW_FILES" | { grep .py || true; })
 
-    if [ -n "$PY_FILES" ];
-    then
-        make test-ci
-    fi
-    exit 0
+if [ -n "$PY_FILES" ];
+then
+    make test-ci
 fi
