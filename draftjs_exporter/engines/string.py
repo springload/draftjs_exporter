@@ -66,10 +66,7 @@ class DOMString(DOMEngine):
     def render(elt):
         type_ = elt['type']
         attr = DOMString.render_attrs(elt['attr']) if elt['attr'] else ''
-
-        children = ''
-        if elt['children']:
-            children = DOMString.render_children(elt['children'])
+        children = DOMString.render_children(elt['children']) if elt['children'] else ''
 
         if type_ == 'fragment':
             return children
@@ -82,13 +79,8 @@ class DOMString(DOMEngine):
     @staticmethod
     def render_debug(elt):
         type_ = elt['type']
-        attr = ''
-        if elt['attr']:
-            attr = DOMString.render_attrs(elt['attr'])
-
-        children = ''
-        if elt['children']:
-            children = DOMString.render_children(elt['children'])
+        attr = DOMString.render_attrs(elt['attr']) if elt['attr'] else ''
+        children = DOMString.render_children(elt['children']) if elt['children'] else ''
 
         if type_ in VOID_ELEMENTS:
             return '<%s%s/>' % (type_, attr)
