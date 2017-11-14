@@ -25,6 +25,11 @@ testing_dependencies = [
     # Required for running the tests.
     'tox>=2.3.1',
 
+    # Benchmark dependencies.
+    'markov_draftjs==0.1.1',
+    'memory-profiler==0.47',
+    'psutil==5.4.1',
+
     # For coverage and PEP8 linting.
     'coverage>=4.1.0',
     'flake8>=3.2.0',
