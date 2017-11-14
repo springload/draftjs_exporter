@@ -74,11 +74,11 @@ class DOMString(DOMEngine):
         if elt['children']:
             children = DOMString.render_children(elt['children'])
 
-        if type_ in VOID_ELEMENTS:
-            return '<%s%s/>' % (type_, attr)
-
         if type_ == 'fragment':
             return children
+
+        if type_ in VOID_ELEMENTS:
+            return '<%s%s/>' % (type_, attr)
 
         return '<%s%s>%s</%s>' % (type_, attr, children, type_)
 
