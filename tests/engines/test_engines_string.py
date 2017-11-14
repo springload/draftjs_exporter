@@ -14,8 +14,7 @@ class TestDOMString(unittest.TestCase):
         self.assertEqual(DOMString.render_debug(DOMString.create_tag('p')), '<p></p>')
 
     def test_parse_html(self):
-        with self.assertRaises(NotImplementedError):
-            DOMString.parse_html('<p>Test text</p>')
+        self.assertEqual(DOMString.render(DOMString.parse_html('<p><span>Test text</span></p>')), '<p><span>Test text</span></p>')
 
     def test_append_child(self):
         parent = DOMString.create_tag('p')
