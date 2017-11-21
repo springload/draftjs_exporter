@@ -3,8 +3,8 @@ from __future__ import absolute_import, unicode_literals
 import inspect
 import re
 
-from draftjs_exporter.engines.html5lib import DOM_HTML5LIB
 from draftjs_exporter.error import ConfigException
+from draftjs_exporter.utils.module_loading import import_string
 
 # Python 2/3 unicode compatibility hack.
 # See http://stackoverflow.com/questions/6812031/how-to-make-unicode-string-with-python3
@@ -28,7 +28,7 @@ class DOM(object):
     LXML = 'lxml'
     STRING = 'string'
 
-    dom = DOM_HTML5LIB
+    dom = import_string('draftjs_exporter.engines.html5lib.DOM_HTML5LIB')
 
     @staticmethod
     def camel_to_dash(camel_cased_str):
@@ -37,7 +37,7 @@ class DOM(object):
         return dashed_case_str.replace('--', '-')
 
     @classmethod
-    def use(cls, engine=DOM_HTML5LIB):
+    def use(cls, engine=HTML5LIB):
         """
         Choose which DOM implementation to use.
         """
@@ -45,15 +45,16 @@ class DOM(object):
             if inspect.isclass(engine):
                 cls.dom = engine
             elif engine.lower() == cls.HTML5LIB:
-                cls.dom = DOM_HTML5LIB
+                cls.dom = import_string('draftjs_exporter.engines.html5lib.DOM_HTML5LIB')
             elif engine.lower() == cls.LXML:
-                from draftjs_exporter.engines.lxml import DOM_LXML
-                cls.dom = DOM_LXML
+                cls.dom = import_string('draftjs_exporter.engines.lxml.DOM_LXML')
             elif engine.lower() == cls.STRING:
-                from draftjs_exporter.engines.string import DOMString
-                cls.dom = DOMString
+                cls.dom = import_string('draftjs_exporter.engines.string.DOMString')
             else:
-                raise ConfigException('Invalid DOM engine.')
+                try:
+                    cls.dom = import_string(engine)
+                except ImportError:
+                    raise ConfigException('Invalid DOM engine.')
 
     @classmethod
     def create_element(cls, type_=None, props=None, *children):
