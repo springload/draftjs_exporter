@@ -91,7 +91,7 @@ p.strip_dirs().sort_stats('cumulative').print_stats(0)
 print('Measuring memory consumption')
 
 
-@profile
+@profile(precision=6)
 def memory_consumption_run():
     exporter = HTML(config)
 
