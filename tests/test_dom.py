@@ -22,6 +22,10 @@ class TestDOM(unittest.TestCase):
         DOM.use(DOMTestImpl)
         self.assertEqual(DOM.dom, DOMTestImpl)
 
+    def test_use_custom_string(self):
+        DOM.use('tests.test_dom.DOMTestImpl')
+        self.assertEqual(DOM.dom, DOMTestImpl)
+
     def test_use_lxml(self):
         DOM.use(DOM.LXML)
         self.assertEqual(DOM.dom, DOM_LXML)
