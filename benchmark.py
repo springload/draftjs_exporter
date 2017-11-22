@@ -74,7 +74,8 @@ content_states = get_content_sample()
 
 BENCHMARK_RUNS = int(os.environ.get('BENCHMARK_RUNS', 1))
 
-print('Exporting %s ContentStates %s times' % (len(content_states), BENCHMARK_RUNS))
+print('Exporting %s ContentStates %s times' %
+      (len(content_states), BENCHMARK_RUNS))
 
 pr = cProfile.Profile()
 pr.enable()
@@ -86,7 +87,7 @@ for i in range(0, BENCHMARK_RUNS):
 pr.disable()
 p = Stats(pr)
 
-p.strip_dirs().sort_stats('cumulative').print_stats(0)
+p.strip_dirs().sort_stats('cumulative').print_stats(10)
 
 print('Measuring memory consumption')
 
