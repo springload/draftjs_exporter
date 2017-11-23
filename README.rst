@@ -22,7 +22,7 @@ The initial use case was to gain more control over the content managed by rich t
 Features
 --------
 
-This project adheres to `Semantic Versioning <http://semver.org/spec/v2.0.0.html>`_, and measures performance and `code coverage <https://coveralls.io/github/springload/draftjs_exporter>`_.
+This project adheres to `Semantic Versioning <http://semver.org/spec/v2.0.0.html>`_, and `measures performance <http://blog.thib.me/python-memory-profiling-for-the-draft-js-exporter/>`_ and `code coverage <https://coveralls.io/github/springload/draftjs_exporter>`_.
 
 *  Extensive configuration of the generated HTML.
 *  Default, extensible block & inline style maps for common HTML elements.
