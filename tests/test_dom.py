@@ -18,10 +18,6 @@ class TestDOM(unittest.TestCase):
         DOM.use(DOM.HTML5LIB)
 
     def test_use_custom(self):
-        DOM.use(DOMTestImpl)
-        self.assertEqual(DOM.dom, DOMTestImpl)
-
-    def test_use_custom_string(self):
         DOM.use('tests.test_dom.DOMTestImpl')
         self.assertEqual(DOM.dom, DOMTestImpl)
 

@@ -40,10 +40,7 @@ class DOM(object):
         """
         Choose which DOM implementation to use.
         """
-        if inspect.isclass(engine):
-            cls.dom = engine
-        else:
-            cls.dom = import_string(engine)
+        cls.dom = import_string(engine)
 
     @classmethod
     def create_element(cls, type_=None, props=None, *children):
