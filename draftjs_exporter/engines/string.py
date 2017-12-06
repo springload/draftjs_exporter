@@ -32,6 +32,14 @@ VOID_ELEMENTS = {
 }
 
 
+class Elt(object):
+    def __init__(self, type_, attr, children, markup):
+        self.type = type_
+        self.attr = attr
+        self.children = children
+        self.markup = markup
+
+
 class DOMString(DOMEngine):
     """
     String concatenation implementation of the DOM API.
@@ -39,11 +47,7 @@ class DOMString(DOMEngine):
 
     @staticmethod
     def create_tag(type_, attr=None):
-        return {
-            'type': type_,
-            'attr': attr,
-            'children': [],
-        }
+        return Elt(type_, attr, [], None)
 
     @staticmethod
     def parse_html(markup):
@@ -51,21 +55,16 @@ class DOMString(DOMEngine):
         Allows inserting arbitrary HTML into the exporter output.
         Treats the HTML as if it had been escaped and was safe already.
         """
-        return {
-            'type': 'escaped_html',
-            'attr': None,
-            'children': None,
-            'markup': markup,
-        }
+        return Elt('escaped_html', None, None, markup)
 
     @staticmethod
     def append_child(elt, child):
         # This check is necessary because the current wrapper_state implementation
         # has an issue where it inserts elements multiple times.
         # This must be skipped for text, which can be duplicated.
-        is_existing_ref = isinstance(child, dict) and child in elt['children']
+        is_existing_ref = isinstance(child, Elt) and child in elt.children
         if not is_existing_ref:
-            elt['children'].append(child)
+            elt.children.append(child)
 
     @staticmethod
     def render_attrs(attr):
@@ -73,13 +72,13 @@ class DOMString(DOMEngine):
 
     @staticmethod
     def render_children(children):
-        return ''.join([DOMString.render(c) if isinstance(c, dict) else escape(c) for c in children])
+        return ''.join([DOMString.render(c) if isinstance(c, Elt) else escape(c) for c in children])
 
     @staticmethod
     def render(elt):
-        type_ = elt['type']
-        attr = DOMString.render_attrs(elt['attr']) if elt['attr'] else ''
-        children = DOMString.render_children(elt['children']) if elt['children'] else ''
+        type_ = elt.type
+        attr = DOMString.render_attrs(elt.attr) if elt.attr else ''
+        children = DOMString.render_children(elt.children) if elt.children else ''
 
         if type_ == 'fragment':
             return children
@@ -88,20 +87,20 @@ class DOMString(DOMEngine):
             return '<%s%s/>' % (type_, attr)
 
         if type_ == 'escaped_html':
-            return elt['markup']
+            return elt.markup
 
         return '<%s%s>%s</%s>' % (type_, attr, children, type_)
 
     @staticmethod
     def render_debug(elt):
-        type_ = elt['type']
-        attr = DOMString.render_attrs(elt['attr']) if elt['attr'] else ''
-        children = DOMString.render_children(elt['children']) if elt['children'] else ''
+        type_ = elt.type
+        attr = DOMString.render_attrs(elt.attr) if elt.attr else ''
+        children = DOMString.render_children(elt.children) if elt.children else ''
 
         if type_ in VOID_ELEMENTS:
             return '<%s%s/>' % (type_, attr)
 
         if type_ == 'escaped_html':
-            return elt['markup']
+            return elt.markup
 
         return '<%s%s>%s</%s>' % (type_, attr, children, type_)
