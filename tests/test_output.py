@@ -43,6 +43,7 @@ config = {
             'props': {'style': {'textDecoration': 'underline'}},
         },
     },
+    'engine': DOM.HTML5LIB
 }
 
 
@@ -50,11 +51,6 @@ class TestOutput(unittest.TestCase):
     """
     Test cases related to specific features of the HTML builder.
     """
-
-    @classmethod
-    def setUpClass(cls):
-        # Initialise a default engine for the test suites.
-        DOM.use(DOM.HTML5LIB)
 
     def setUp(self):
         self.maxDiff = None
