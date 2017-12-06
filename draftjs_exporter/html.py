@@ -25,7 +25,7 @@ class HTML:
         self.block_map = config.get('block_map', BLOCK_MAP)
         self.style_map = config.get('style_map', STYLE_MAP)
 
-        DOM.use(config.get('engine'))
+        DOM.use(config.get('engine', DOM.HTML5LIB))
 
     def render(self, content_state=None):
         """

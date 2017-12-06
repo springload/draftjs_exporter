@@ -36,7 +36,7 @@ class DOM(object):
         return dashed_case_str.replace('--', '-')
 
     @classmethod
-    def use(cls, engine=HTML5LIB):
+    def use(cls, engine):
         """
         Choose which DOM implementation to use.
         """
