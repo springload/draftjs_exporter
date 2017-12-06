@@ -78,8 +78,7 @@ content_states = get_content_sample()
 
 BENCHMARK_RUNS = int(os.environ.get('BENCHMARK_RUNS', 1))
 
-print('Exporting %s ContentStates %s times' %
-      (len(content_states), BENCHMARK_RUNS))
+print('Exporting %s ContentStates %s times' % (len(content_states), BENCHMARK_RUNS))
 
 pr = cProfile.Profile()
 pr.enable()
