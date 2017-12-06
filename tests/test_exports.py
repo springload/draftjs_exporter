@@ -50,26 +50,20 @@ class TestExportsMeta(type):
     See http://stackoverflow.com/a/20870875/1798491
     """
     def __new__(mcs, name, bases, tests):
-        def gen_test(export, engine):
+        def gen_test(content, html):
             def test(self):
-                self.maxDiff = None
-                DOM.use(engine)
-                self.assertEqual(exporter.render(export['content_state']), export['output'][engine])
+                self.assertEqual(exporter.render(content), html)
 
             return test
 
-        if name == 'TestExportsHTML5LIB':
-            engine = 'html5lib'
-        elif name == 'TestExportsLXML':
-            engine = 'lxml'
-        elif name == 'TestExportsSTRING':
-            engine = 'string'
+        engine = name.replace('TestExports', '').lower()
 
         for export in fixtures:
             test_label = export['label'].lower().replace(' ', '_')
             test_name = 'test_export_{0}_{1}'.format(engine, test_label)
-            tests[test_name] = gen_test(export, engine)
-
+            content = export['content_state']
+            html = export['output'][engine]
+            tests[test_name] = gen_test(content, html)
 
         return type.__new__(mcs, name, bases, tests)
 
@@ -77,6 +71,7 @@ class TestExportsMeta(type):
 class TestExportsHTML5LIB(six.with_metaclass(TestExportsMeta, unittest.TestCase)):
     @classmethod
     def setUpClass(cls):
+        DOM.use(DOM.HTML5LIB)
         cls.pr = cProfile.Profile()
         cls.pr.enable()
         print('\nhtml5lib')
@@ -86,13 +81,11 @@ class TestExportsHTML5LIB(six.with_metaclass(TestExportsMeta, unittest.TestCase)
         cls.pr.disable()
         Stats(cls.pr).strip_dirs().sort_stats('cumulative').print_stats(0)
 
-    def test_init_html5lib(self):
-        self.assertIsInstance(exporter, HTML)
-
 
 class TestExportsLXML(six.with_metaclass(TestExportsMeta, unittest.TestCase)):
     @classmethod
     def setUpClass(cls):
+        DOM.use(DOM.LXML)
         cls.pr = cProfile.Profile()
         cls.pr.enable()
         print('\nlxml')
@@ -102,13 +95,11 @@ class TestExportsLXML(six.with_metaclass(TestExportsMeta, unittest.TestCase)):
         cls.pr.disable()
         Stats(cls.pr).strip_dirs().sort_stats('cumulative').print_stats(0)
 
-    def test_init(self):
-        self.assertIsInstance(exporter, HTML)
-
 
 class TestExportsSTRING(six.with_metaclass(TestExportsMeta, unittest.TestCase)):
     @classmethod
     def setUpClass(cls):
+        DOM.use(DOM.STRING)
         cls.pr = cProfile.Profile()
         cls.pr.enable()
         print('\nstring')
@@ -117,9 +108,6 @@ class TestExportsSTRING(six.with_metaclass(TestExportsMeta, unittest.TestCase)):
     def tearDownClass(cls):
         cls.pr.disable()
         Stats(cls.pr).strip_dirs().sort_stats('cumulative').print_stats(0)
-
-    def test_init(self):
-        self.assertIsInstance(exporter, HTML)
 
 
 if __name__ == "__main__":

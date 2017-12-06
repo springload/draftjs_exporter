@@ -5,6 +5,7 @@ import unittest
 
 from draftjs_exporter.constants import BLOCK_TYPES, ENTITY_TYPES, INLINE_STYLES
 from draftjs_exporter.defaults import BLOCK_MAP
+from draftjs_exporter.dom import DOM
 from draftjs_exporter.entity_state import EntityException
 from draftjs_exporter.html import HTML
 from tests.test_composite_decorators import BR_DECORATOR, HASHTAG_DECORATOR, LINKIFY_DECORATOR
@@ -42,7 +43,6 @@ config = {
             'props': {'style': {'textDecoration': 'underline'}},
         },
     },
-    'engine': 'html5lib'
 }
 
 
@@ -50,6 +50,12 @@ class TestOutput(unittest.TestCase):
     """
     Test cases related to specific features of the HTML builder.
     """
+
+    @classmethod
+    def setUpClass(cls):
+        # Initialise a default engine for the test suites.
+        DOM.use(DOM.HTML5LIB)
+
     def setUp(self):
         self.maxDiff = None
         self.exporter = HTML(config)
