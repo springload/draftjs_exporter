@@ -28,7 +28,7 @@ class DOM(object):
     LXML = 'lxml'
     STRING = 'string'
 
-    dom = import_string('draftjs_exporter.engines.html5lib.DOM_HTML5LIB')
+    dom = None
 
     @staticmethod
     def camel_to_dash(camel_cased_str):
@@ -45,11 +45,14 @@ class DOM(object):
             if inspect.isclass(engine):
                 cls.dom = engine
             elif engine.lower() == cls.HTML5LIB:
-                cls.dom = import_string('draftjs_exporter.engines.html5lib.DOM_HTML5LIB')
+                cls.dom = import_string(
+                    'draftjs_exporter.engines.html5lib.DOM_HTML5LIB')
             elif engine.lower() == cls.LXML:
-                cls.dom = import_string('draftjs_exporter.engines.lxml.DOM_LXML')
+                cls.dom = import_string(
+                    'draftjs_exporter.engines.lxml.DOM_LXML')
             elif engine.lower() == cls.STRING:
-                cls.dom = import_string('draftjs_exporter.engines.string.DOMString')
+                cls.dom = import_string(
+                    'draftjs_exporter.engines.string.DOMString')
             else:
                 try:
                     cls.dom = import_string(engine)
@@ -95,7 +98,8 @@ class DOM(object):
 
             # Convert style object to style string, like the DOM would do.
             if 'style' in props and isinstance(props['style'], dict):
-                rules = ['{0}: {1};'.format(DOM.camel_to_dash(s), props['style'][s]) for s in props['style'].keys()]
+                rules = ['{0}: {1};'.format(DOM.camel_to_dash(
+                    s), props['style'][s]) for s in props['style'].keys()]
                 props['style'] = ''.join(sorted(rules))
 
             # Convert props to HTML attributes.
