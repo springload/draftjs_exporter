@@ -108,8 +108,7 @@ def block_fallback(props):
     type_ = props['block']['type']
 
     if type_ == 'example-discard':
-        logging.warn(
-            'Missing config for "%s". Discarding block, keeping content.' % type_)
+        logging.warn('Missing config for "%s". Discarding block, keeping content.' % type_)
         # Directly return the block's children to keep its content.
         return props['children']
     elif type_ == 'example-delete':
