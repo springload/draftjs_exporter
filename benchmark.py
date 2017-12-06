@@ -69,7 +69,7 @@ config = {
             'component': br,
         }
     ],
-    'engine': 'string',
+    'engine': DOM.STRING,
 }
 
 exporter = HTML(config)

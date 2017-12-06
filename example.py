@@ -108,7 +108,8 @@ def block_fallback(props):
     type_ = props['block']['type']
 
     if type_ == 'example-discard':
-        logging.warn('Missing config for "%s". Discarding block, keeping content.' % type_)
+        logging.warn(
+            'Missing config for "%s". Discarding block, keeping content.' % type_)
         # Directly return the block's children to keep its content.
         return props['children']
     elif type_ == 'example-delete':
@@ -186,7 +187,7 @@ if __name__ == '__main__':
             },
         ],
         # Specify which DOM backing engine to use.
-        'engine': 'string',
+        'engine': DOM.STRING,
     }
 
     exporter = HTML(config)
@@ -623,10 +624,8 @@ if __name__ == '__main__':
     pr.disable()
     p = Stats(pr)
 
-
     def prettify(markup):
         return re.sub(r'</?(body|html|head)>', '', BeautifulSoup(markup, 'html5lib').prettify()).strip()
-
 
     pretty = prettify(markup)
 

@@ -24,9 +24,9 @@ class DOM(object):
     Component building API, abstracting the DOM implementation.
     """
 
-    HTML5LIB = 'html5lib'
-    LXML = 'lxml'
-    STRING = 'string'
+    HTML5LIB = 'draftjs_exporter.engines.html5lib.DOM_HTML5LIB'
+    LXML = 'draftjs_exporter.engines.lxml.DOM_LXML'
+    STRING = 'draftjs_exporter.engines.string.DOMString'
 
     dom = None
 
@@ -44,15 +44,6 @@ class DOM(object):
         if engine:
             if inspect.isclass(engine):
                 cls.dom = engine
-            elif engine.lower() == cls.HTML5LIB:
-                cls.dom = import_string(
-                    'draftjs_exporter.engines.html5lib.DOM_HTML5LIB')
-            elif engine.lower() == cls.LXML:
-                cls.dom = import_string(
-                    'draftjs_exporter.engines.lxml.DOM_LXML')
-            elif engine.lower() == cls.STRING:
-                cls.dom = import_string(
-                    'draftjs_exporter.engines.string.DOMString')
             else:
                 try:
                     cls.dom = import_string(engine)
