@@ -1000,5 +1000,35 @@
                 "data": {}
             }]
         }
+    },
+
+    {
+        "label": "Same content multiple times",
+        "output": {
+            "html5lib": "<p>a</p><p>a</p>",
+            "lxml": "<p>a</p><p>a</p>",
+            "string": "<p>a</p><p>a</p>"
+        },
+        "content_state": {
+            "entityMap": {},
+            "blocks": [
+                {
+                    "key": "99n0j",
+                    "text": "a",
+                    "type": "unstyled",
+                    "depth": 0,
+                    "inlineStyleRanges": [],
+                    "entityRanges": []
+                },
+                {
+                    "key": "19n0j",
+                    "text": "a",
+                    "type": "unstyled",
+                    "depth": 0,
+                    "inlineStyleRanges": [],
+                    "entityRanges": []
+                }
+            ]
+        }
     }
 ]

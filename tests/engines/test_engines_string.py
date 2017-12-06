@@ -21,6 +21,18 @@ class TestDOMString(unittest.TestCase):
         DOMString.append_child(parent, DOMString.create_tag('span', {}))
         self.assertEqual(DOMString.render_debug(parent), '<p><span></span></p>')
 
+    def test_append_child_identical_text(self):
+        parent = DOMString.create_tag('p')
+        DOMString.append_child(parent, 'test')
+        DOMString.append_child(parent, 'test')
+        self.assertEqual(DOMString.render_debug(parent), '<p>testtest</p>')
+
+    def test_append_child_identical_elements(self):
+        parent = DOMString.create_tag('p')
+        DOMString.append_child(parent, DOMString.create_tag('br'))
+        DOMString.append_child(parent, DOMString.create_tag('br'))
+        self.assertEqual(DOMString.render_debug(parent), '<p><br/><br/></p>')
+
     def test_render_attrs(self):
         self.assertEqual(DOMString.render_attrs({
             'src': 'src.png',
