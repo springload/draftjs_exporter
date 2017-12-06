@@ -5,7 +5,6 @@ import unittest
 from draftjs_exporter.dom import DOM
 from draftjs_exporter.engines.html5lib import DOM_HTML5LIB
 from draftjs_exporter.engines.lxml import DOM_LXML
-from draftjs_exporter.error import ConfigException
 from tests.test_entities import icon
 
 
@@ -35,7 +34,7 @@ class TestDOM(unittest.TestCase):
         self.assertEqual(DOM.dom, DOM_HTML5LIB)
 
     def test_use_invalid(self):
-        with self.assertRaises(ConfigException):
+        with self.assertRaises(ImportError):
             DOM.use('test')
 
 
