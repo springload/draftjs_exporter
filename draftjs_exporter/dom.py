@@ -3,7 +3,6 @@ from __future__ import absolute_import, unicode_literals
 import inspect
 import re
 
-from draftjs_exporter.error import ConfigException
 from draftjs_exporter.utils.module_loading import import_string
 
 # Python 2/3 unicode compatibility hack.
@@ -45,10 +44,7 @@ class DOM(object):
             if inspect.isclass(engine):
                 cls.dom = engine
             else:
-                try:
-                    cls.dom = import_string(engine)
-                except ImportError:
-                    raise ConfigException('Invalid DOM engine.')
+                cls.dom = import_string(engine)
 
     @classmethod
     def create_element(cls, type_=None, props=None, *children):
