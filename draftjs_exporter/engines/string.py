@@ -33,11 +33,20 @@ VOID_ELEMENTS = {
 
 
 class Elt(object):
-    def __init__(self, type_, attr, children, markup):
+    """
+    An DOM element that the string engine manipulates.
+    This class doesn't do much, but the exporter relies on
+    comparing elements by reference so it's useful nonetheless.
+    """
+    def __init__(self, type_, attr, markup=None):
         self.type = type_
         self.attr = attr
-        self.children = children
+        self.children = []
         self.markup = markup
+
+    @staticmethod
+    def from_html(markup):
+        return Elt('escaped_html', None, markup)
 
 
 class DOMString(DOMEngine):
@@ -47,7 +56,7 @@ class DOMString(DOMEngine):
 
     @staticmethod
     def create_tag(type_, attr=None):
-        return Elt(type_, attr, [], None)
+        return Elt(type_, attr)
 
     @staticmethod
     def parse_html(markup):
@@ -55,7 +64,7 @@ class DOMString(DOMEngine):
         Allows inserting arbitrary HTML into the exporter output.
         Treats the HTML as if it had been escaped and was safe already.
         """
-        return Elt('escaped_html', None, None, markup)
+        return Elt.from_html(markup)
 
     @staticmethod
     def append_child(elt, child):
