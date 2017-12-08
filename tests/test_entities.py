@@ -13,14 +13,13 @@ def HR(props):
     return DOM.create_element('hr')
 
 
-class Link:
-    def render(self, props):
-        attributes = {}
-        for key in props:
-            attr = key if key != 'url' else 'href'
-            attributes[attr] = props[key]
+def Link(props):
+    attributes = {}
+    for key in props:
+        attr = key if key != 'url' else 'href'
+        attributes[attr] = props[key]
 
-        return DOM.create_element('a', attributes, props['children'])
+    return DOM.create_element('a', attributes, props['children'])
 
 
 def Image(props):
@@ -32,27 +31,22 @@ def Image(props):
     })
 
 
-class Icon:
-    def __init__(self, icon_class='icon'):
-        self.icon_class = icon_class
-
-    def render(self, props):
-        href = '#icon-%s' % props.get('name', '')
-        return DOM.create_element('svg', {'class': self.icon_class}, DOM.create_element('use', {'xlink:href': href}))
+def Icon(props):
+    href = '#icon-%s' % props.get('name', '')
+    return DOM.create_element('svg', {'class': 'icon'}, DOM.create_element('use', {'xlink:href': href}))
 
 
-class Button:
-    def render(self, props):
-        href = props.get('href', '#')
-        icon = props.get('icon', None)
-        text = props.get('text', '')
+def Button(props):
+    href = props.get('href', '#')
+    icon = props.get('icon', None)
+    text = props.get('text', '')
 
-        return DOM.create_element(
-            'a',
-            {'class': 'icon-text' if icon else None, 'href': href},
-            DOM.create_element(Icon, {'name': icon}) if icon else None,
-            DOM.create_element('span', {'class': 'icon-text__text'}, text) if icon else text
-        )
+    return DOM.create_element(
+        'a',
+        {'class': 'icon-text' if icon else None, 'href': href},
+        DOM.create_element(Icon, {'name': icon}) if icon else None,
+        DOM.create_element('span', {'class': 'icon-text__text'}, text) if icon else text
+    )
 
 
 class TestNull(unittest.TestCase):
@@ -63,9 +57,6 @@ class TestNull(unittest.TestCase):
 class TestIcon(unittest.TestCase):
     def test_render(self):
         self.assertEqual(DOM.render(DOM.create_element(Icon, {'name': 'rocket'})), '<svg class="icon"><use xlink:href="#icon-rocket"></use></svg>')
-
-    def test_render_configured(self):
-        self.assertEqual(DOM.render(DOM.create_element(Icon(icon_class='i'), {'name': 'rocket'})), '<svg class="i"><use xlink:href="#icon-rocket"></use></svg>')
 
 
 class TestImage(unittest.TestCase):
