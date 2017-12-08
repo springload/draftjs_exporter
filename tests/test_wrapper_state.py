@@ -4,30 +4,7 @@ import unittest
 
 from draftjs_exporter.dom import DOM
 from draftjs_exporter.wrapper_state import WrapperState
-
-
-def Blockquote(props):
-    block_data = props['block']['data']
-
-    return DOM.create_element('blockquote', {
-        'cite': block_data.get('cite')
-    }, props['children'])
-
-
-def ListItem(props):
-    depth = props['block']['depth']
-
-    return DOM.create_element('li', {
-        'class': 'list-item--depth-{0}'.format(depth)
-    }, props['children'])
-
-
-def OrderedList(props):
-    depth = props['block']['depth']
-
-    return DOM.create_element('ol', {
-        'class': 'list--depth-{0}'.format(depth)
-    }, props['children'])
+from example import blockquote, list_item, ordered_list
 
 
 class TestWrapperState(unittest.TestCase):
@@ -39,10 +16,10 @@ class TestWrapperState(unittest.TestCase):
             'unstyled': 'div',
             'atomic': lambda props: props['children'],
             'ignore': None,
-            'blockquote': Blockquote,
+            'blockquote': blockquote,
             'ordered-list-item': {
-                'element': ListItem,
-                'wrapper': OrderedList
+                'element': list_item,
+                'wrapper': ordered_list
             },
         })
 
@@ -132,7 +109,7 @@ class TestBlockquote(unittest.TestCase):
         DOM.use(DOM.HTML5LIB)
 
     def test_render_debug(self):
-        self.assertEqual(DOM.render_debug(DOM.create_element(Blockquote, {
+        self.assertEqual(DOM.render_debug(DOM.create_element(blockquote, {
             'block': {
                 'data': {
                     'cite': 'http://example.com/',
@@ -146,7 +123,7 @@ class TestListItem(unittest.TestCase):
         DOM.use(DOM.HTML5LIB)
 
     def test_render_debug(self):
-        self.assertEqual(DOM.render_debug(DOM.create_element(ListItem, {
+        self.assertEqual(DOM.render_debug(DOM.create_element(list_item, {
             'block': {
                 'depth': 5,
             },

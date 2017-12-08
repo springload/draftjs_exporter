@@ -17,7 +17,7 @@ from draftjs_exporter.dom import DOM
 from draftjs_exporter.html import HTML
 
 
-def Blockquote(props):
+def blockquote(props):
     block_data = props['block']['data']
 
     return DOM.create_element('blockquote', {
@@ -25,7 +25,7 @@ def Blockquote(props):
     }, props['children'])
 
 
-def ListItem(props):
+def list_item(props):
     depth = props['block']['depth']
 
     return DOM.create_element('li', {
@@ -33,7 +33,7 @@ def ListItem(props):
     }, props['children'])
 
 
-def OrderedList(props):
+def ordered_list(props):
     depth = props['block']['depth']
 
     return DOM.create_element('ol', {
@@ -41,7 +41,7 @@ def OrderedList(props):
     }, props['children'])
 
 
-def Image(props):
+def image(props):
     return DOM.create_element('img', {
         'src': props.get('src'),
         'width': props.get('width'),
@@ -50,13 +50,13 @@ def Image(props):
     })
 
 
-def Link(props):
+def link(props):
     return DOM.create_element('a', {
         'href': props['url']
     }, props['children'])
 
 
-def BR(props):
+def br(props):
     """
     Replace line breaks (\n) with br tags.
     """
@@ -67,7 +67,7 @@ def BR(props):
     return DOM.create_element('br')
 
 
-def Hashtag(props):
+def hashtag(props):
     """
     Wrap hashtags in spans with a specific class.
     """
@@ -82,7 +82,7 @@ def Hashtag(props):
 LINKIFY_RE = re.compile(r'(http://|https://|www\.)([a-zA-Z0-9\.\-%/\?&_=\+#:~!,\'\*\^$]+)')
 
 
-def Linkify(props):
+def linkify(props):
     """
     Wrap plain URLs with link tags.
     """
@@ -104,7 +104,7 @@ def Linkify(props):
     return DOM.create_element('a', link_props, href)
 
 
-def BlockFallback(props):
+def block_fallback(props):
     type_ = props['block']['type']
 
     if type_ == 'example-discard':
@@ -121,7 +121,7 @@ def BlockFallback(props):
         return DOM.create_element('div', {}, props['children'])
 
 
-def EntityFallback(props):
+def entity_fallback(props):
     type_ = props['entity']['type']
     logging.warn('Missing config for "%s".' % type_)
     return DOM.create_element('span', {'class': 'missing-entity'}, props['children'])
@@ -143,13 +143,13 @@ if __name__ == '__main__':
                 'wrapper_props': {'class': 'bullet-list'},
             },
             # Use a custom component for more flexibility (reading block data or depth).
-            BLOCK_TYPES.BLOCKQUOTE: Blockquote,
+            BLOCK_TYPES.BLOCKQUOTE: blockquote,
             BLOCK_TYPES.ORDERED_LIST_ITEM: {
-                'element': ListItem,
-                'wrapper': OrderedList,
+                'element': list_item,
+                'wrapper': ordered_list,
             },
             # Provide a fallback component (advanced).
-            BLOCK_TYPES.FALLBACK: BlockFallback
+            BLOCK_TYPES.FALLBACK: block_fallback
         }),
         # `style_map` defines the HTML representation of inline elements.
         # Extend STYLE_MAP to start with sane defaults, or make your own from scratch.
@@ -161,28 +161,28 @@ if __name__ == '__main__':
         }),
         'entity_decorators': {
             # Map entities to components so they can be rendered with their data.
-            ENTITY_TYPES.IMAGE: Image,
-            ENTITY_TYPES.LINK: Link,
+            ENTITY_TYPES.IMAGE: image,
+            ENTITY_TYPES.LINK: link,
             # Lambdas work too.
             ENTITY_TYPES.HORIZONTAL_RULE: lambda props: DOM.create_element('hr'),
             # Discard those entities.
             ENTITY_TYPES.EMBED: None,
             # Provide a fallback component (advanced).
-            ENTITY_TYPES.FALLBACK: EntityFallback,
+            ENTITY_TYPES.FALLBACK: entity_fallback,
         },
         'composite_decorators': [
             # Use composite decorators to replace text based on a regular expression.
             {
                 'strategy': re.compile(r'\n'),
-                'component': BR,
+                'component': br,
             },
             {
                 'strategy': re.compile(r'#\w+'),
-                'component': Hashtag,
+                'component': hashtag,
             },
             {
                 'strategy': LINKIFY_RE,
-                'component': Linkify,
+                'component': linkify,
             },
         ],
         # Specify which DOM backing engine to use.
@@ -570,7 +570,7 @@ if __name__ == '__main__':
             "data": {}
         }, {
             "key": "ed7hu",
-            "text": "def Blockquote(props):\n    block_data = props['block']['data']\n    return DOM.create_element('blockquote', {\n        'cite': block_data.get('cite')\n    }, props['children'])\n",
+            "text": "def blockquote(props):\n    block_data = props['block']['data']\n    return DOM.create_element('blockquote', {\n        'cite': block_data.get('cite')\n    }, props['children'])\n",
             "type": "code-block",
             "depth": 0,
             "inlineStyleRanges": [],

@@ -13,16 +13,16 @@ from draftjs_exporter.defaults import BLOCK_MAP, STYLE_MAP
 from draftjs_exporter.dom import DOM
 from draftjs_exporter.html import HTML
 from tests.test_composite_decorators import BR_DECORATOR, HASHTAG_DECORATOR, LINKIFY_DECORATOR
-from tests.test_entities import HR, Image, Link
+from tests.test_entities import hr, image, link
 
 fixtures_path = os.path.join(os.path.dirname(__file__), 'test_exports.json')
 fixtures = json.loads(open(fixtures_path, 'r').read())
 
 exporter = HTML({
     'entity_decorators': {
-        ENTITY_TYPES.LINK: Link,
-        ENTITY_TYPES.IMAGE: Image,
-        ENTITY_TYPES.HORIZONTAL_RULE: HR,
+        ENTITY_TYPES.LINK: link,
+        ENTITY_TYPES.HORIZONTAL_RULE: hr,
+        ENTITY_TYPES.IMAGE: image,
         ENTITY_TYPES.EMBED: None,
     },
     'composite_decorators': [

@@ -4,10 +4,10 @@ import unittest
 
 from draftjs_exporter.command import Command
 from draftjs_exporter.entity_state import EntityException, EntityState
-from tests.test_entities import Link
+from tests.test_entities import link
 
 entity_decorators = {
-    'LINK': Link
+    'LINK': link
 }
 
 entity_map = {

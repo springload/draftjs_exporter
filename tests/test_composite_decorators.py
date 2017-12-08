@@ -6,21 +6,21 @@ import unittest
 from draftjs_exporter.composite_decorators import render_decorators
 from draftjs_exporter.constants import BLOCK_TYPES
 from draftjs_exporter.dom import DOM
-from example import BR, LINKIFY_RE, Hashtag, Linkify
+from example import LINKIFY_RE, br, hashtag, linkify
 
 BR_DECORATOR = {
     'strategy': re.compile(r'\n'),
-    'component': BR,
+    'component': br,
 }
 
 HASHTAG_DECORATOR = {
     'strategy': re.compile(r'#\w+'),
-    'component': Hashtag,
+    'component': hashtag,
 }
 
 LINKIFY_DECORATOR = {
     'strategy': LINKIFY_RE,
-    'component': Linkify,
+    'component': linkify,
 }
 
 
