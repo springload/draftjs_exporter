@@ -80,13 +80,7 @@ class DOM(object):
         # The children prop is the first child if there is only one.
         props['children'] = children[0] if len(children) == 1 else children
 
-        if inspect.isclass(type_):
-            # Class component, not instantiated.
-            elt = type_().render(props)
-        elif callable(getattr(type_, 'render', None)):
-            # Class component, already instantiated.
-            elt = type_.render(props)
-        elif callable(type_):
+        if callable(type_):
             # Function component, via def or lambda.
             elt = type_(props)
         else:
