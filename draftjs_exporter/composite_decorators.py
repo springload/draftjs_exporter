@@ -9,7 +9,7 @@ def get_decorations(decorators, text):
     decorations = []
 
     for decorator in decorators:
-        for match in decorator.SEARCH_RE.finditer(text):
+        for match in decorator['strategy'].finditer(text):
             begin, end = match.span()
             if not any(occupied.get(i) for i in range(begin, end)):
                 for i in range(begin, end):
@@ -29,7 +29,7 @@ def apply_decorators(decorators, text, block):
         if pointer < begin:
             yield text[pointer:begin]
 
-        yield DOM.create_element(decorator, {
+        yield DOM.create_element(decorator['component'], {
             'match': match,
             'block': {
                 'type': block['type'],

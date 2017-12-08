@@ -7,7 +7,7 @@ from draftjs_exporter.constants import BLOCK_TYPES, ENTITY_TYPES, INLINE_STYLES
 from draftjs_exporter.defaults import BLOCK_MAP
 from draftjs_exporter.entity_state import EntityException
 from draftjs_exporter.html import HTML
-from tests.test_composite_decorators import BR, Hashtag, Linkify
+from tests.test_composite_decorators import BR_DECORATOR, HASHTAG_DECORATOR, LINKIFY_DECORATOR
 from tests.test_entities import HR, Image, Link
 from tests.test_wrapper_state import Blockquote
 
@@ -18,9 +18,9 @@ config = {
         ENTITY_TYPES.IMAGE: Image
     },
     'composite_decorators': [
-        Linkify,
-        Hashtag,
-        BR,
+        LINKIFY_DECORATOR,
+        HASHTAG_DECORATOR,
+        BR_DECORATOR,
     ],
     'block_map': dict(BLOCK_MAP, **{
         BLOCK_TYPES.UNORDERED_LIST_ITEM: {
@@ -924,7 +924,7 @@ class TestOutput(unittest.TestCase):
     def test_render_with_big_content(self):
         self.assertEqual(HTML({
             'entity_decorators': {
-                'LINK': Link()
+                'LINK': Link
             },
             'block_map': {
                 'header-two': {'element': 'h2'},
