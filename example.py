@@ -56,59 +56,52 @@ def Link(props):
     }, props['children'])
 
 
-class BR:
+def BR(props):
     """
     Replace line breaks (\n) with br tags.
     """
-    SEARCH_RE = re.compile(r'\n')
+    # Do not process matches inside code blocks.
+    if props['block']['type'] == BLOCK_TYPES.CODE:
+        return props['children']
 
-    def render(self, props):
-        # Do not process matches inside code blocks.
-        if props['block']['type'] == BLOCK_TYPES.CODE:
-            return props['children']
-
-        return DOM.create_element('br')
+    return DOM.create_element('br')
 
 
-class Hashtag:
+def Hashtag(props):
     """
     Wrap hashtags in spans with a specific class.
     """
-    SEARCH_RE = re.compile(r'#\w+')
+    # Do not process matches inside code blocks.
+    if props['block']['type'] == BLOCK_TYPES.CODE:
+        return props['children']
 
-    def render(self, props):
-        # Do not process matches inside code blocks.
-        if props['block']['type'] == BLOCK_TYPES.CODE:
-            return props['children']
-
-        return DOM.create_element('span', {'class': 'hashtag'}, props['children'])
+    return DOM.create_element('span', {'class': 'hashtag'}, props['children'])
 
 
-class Linkify:
+# See http://pythex.org/?regex=(http%3A%2F%2F%7Chttps%3A%2F%2F%7Cwww%5C.)(%5Ba-zA-Z0-9%5C.%5C-%25%2F%5C%3F%26_%3D%5C%2B%23%3A~!%2C%5C%27%5C*%5C%5E%24%5D%2B)&test_string=search%20http%3A%2F%2Fa.us%20or%20https%3A%2F%2Fyahoo.com%20or%20www.google.com%20for%20%23github%20and%20%23facebook&ignorecase=0&multiline=0&dotall=0&verbose=0
+LINKIFY_RE = re.compile(r'(http://|https://|www\.)([a-zA-Z0-9\.\-%/\?&_=\+#:~!,\'\*\^$]+)')
+
+
+def Linkify(props):
     """
     Wrap plain URLs with link tags.
-    See http://pythex.org/?regex=(http%3A%2F%2F%7Chttps%3A%2F%2F%7Cwww%5C.)(%5Ba-zA-Z0-9%5C.%5C-%25%2F%5C%3F%26_%3D%5C%2B%23%3A~!%2C%5C%27%5C*%5C%5E%24%5D%2B)&test_string=search%20http%3A%2F%2Fa.us%20or%20https%3A%2F%2Fyahoo.com%20or%20www.google.com%20for%20%23github%20and%20%23facebook&ignorecase=0&multiline=0&dotall=0&verbose=0
-    for an example.
     """
-    SEARCH_RE = re.compile(r'(http://|https://|www\.)([a-zA-Z0-9\.\-%/\?&_=\+#:~!,\'\*\^$]+)')
+    match = props['match']
+    protocol = match.group(1)
+    url = match.group(2)
+    href = protocol + url
 
-    def render(self, props):
-        match = props['match']
-        protocol = match.group(1)
-        url = match.group(2)
-        href = protocol + url
+    if props['block']['type'] == BLOCK_TYPES.CODE:
+        return href
 
-        if props['block']['type'] == BLOCK_TYPES.CODE:
-            return href
+    link_props = {
+        'href': href,
+    }
 
-        link_props = {
-            'href': href,
-        }
+    if href.startswith('www'):
+        link_props['href'] = 'http://' + href
 
-        if href.startswith('www'):
-            link_props['href'] = 'http://' + href
-
-        return DOM.create_element('a', link_props, href)
+    return DOM.create_element('a', link_props, href)
 
 
 def BlockFallback(props):
@@ -179,9 +172,18 @@ if __name__ == '__main__':
         },
         'composite_decorators': [
             # Use composite decorators to replace text based on a regular expression.
-            BR,
-            Hashtag,
-            Linkify,
+            {
+                'strategy': re.compile(r'\n'),
+                'component': BR,
+            },
+            {
+                'strategy': re.compile(r'#\w+'),
+                'component': Hashtag,
+            },
+            {
+                'strategy': LINKIFY_RE,
+                'component': Linkify,
+            },
         ],
         # Specify which DOM backing engine to use.
         'engine': 'string',

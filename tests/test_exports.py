@@ -12,7 +12,7 @@ from draftjs_exporter.constants import BLOCK_TYPES, ENTITY_TYPES
 from draftjs_exporter.defaults import BLOCK_MAP, STYLE_MAP
 from draftjs_exporter.dom import DOM
 from draftjs_exporter.html import HTML
-from tests.test_composite_decorators import BR, Hashtag, Linkify
+from tests.test_composite_decorators import BR_DECORATOR, HASHTAG_DECORATOR, LINKIFY_DECORATOR
 from tests.test_entities import HR, Image, Link
 
 fixtures_path = os.path.join(os.path.dirname(__file__), 'test_exports.json')
@@ -26,9 +26,9 @@ exporter = HTML({
         ENTITY_TYPES.EMBED: None,
     },
     'composite_decorators': [
-        BR,
-        Linkify,
-        Hashtag,
+        BR_DECORATOR,
+        LINKIFY_DECORATOR,
+        HASHTAG_DECORATOR,
     ],
     'block_map': dict(BLOCK_MAP, **{
         BLOCK_TYPES.UNORDERED_LIST_ITEM: {

@@ -135,13 +135,22 @@ The exporter output is extensively configurable to cater for varied rich text re
         },
         'composite_decorators': [
             # Use composite decorators to replace text based on a regular expression.
-            BR,
-            Hashtag,
-            Linkify,
+            {
+                'strategy': re.compile(r'\n'),
+                'component': BR,
+            },
+            {
+                'strategy': re.compile(r'#\w+'),
+                'component': Hashtag,
+            },
+            {
+                'strategy': LINKIFY_RE,
+                'component': Linkify,
+            },
         ],
     }
 
-See ``examples.py`` in the repository for more details.
+See `examples.py <https://github.com/springload/draftjs_exporter/blob/master/example.py>`_ for more details.
 
 Advanced usage
 --------------

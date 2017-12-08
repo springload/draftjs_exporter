@@ -56,9 +56,6 @@ class TestDOM(unittest.TestCase):
     def test_create_element_entity(self):
         self.assertEqual(DOM.render_debug(DOM.create_element(Icon, {'name': 'rocket'})), '<svg class="icon"><use xlink:href="#icon-rocket"></use></svg>')
 
-    def test_create_element_entity_configured(self):
-        self.assertEqual(DOM.render_debug(DOM.create_element(Icon(icon_class='i'), {'name': 'rocket'})), '<svg class="i"><use xlink:href="#icon-rocket"></use></svg>')
-
     def test_parse_html(self):
         self.assertEqual(DOM.render_debug(DOM.parse_html('<p><span>Test text</span></p>')), '<p><span>Test text</span></p>')
 

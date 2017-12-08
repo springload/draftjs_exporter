@@ -5,6 +5,7 @@ from __future__ import absolute_import, unicode_literals
 import cProfile
 import logging
 import os
+import re
 from pstats import Stats
 from memory_profiler import profile
 
@@ -63,7 +64,10 @@ config = {
         ENTITY_TYPES.FALLBACK: EntityFallback,
     },
     'composite_decorators': [
-        BR,
+        {
+            'strategy': re.compile(r'\n'),
+            'component': BR,
+        }
     ],
     'engine': 'string',
 }
