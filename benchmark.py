@@ -16,23 +16,23 @@ from draftjs_exporter.html import HTML
 
 from markov_draftjs import get_content_sample
 
-from example import ListItem, OrderedList, Image, BR, EntityFallback
+from example import list_item, ordered_list, image, br, entity_fallback
 
 
-def Document(props):
+def document(props):
     return DOM.create_element('a', {
         'title': props.get('label'),
         'href': '/documents/%s' % props.get('id'),
     }, props['children'])
 
 
-def Link(props):
+def link(props):
     return DOM.create_element('a', {
         'href': props['url'],
     }, props['children'])
 
 
-def BlockFallback(props):
+def block_fallback(props):
     type_ = props['block']['type']
 
     logging.warn('Missing config for "%s".' % type_)
@@ -49,24 +49,24 @@ config = {
             'wrapper_props': {'class': 'bullet-list'},
         },
         BLOCK_TYPES.ORDERED_LIST_ITEM: {
-            'element': ListItem,
-            'wrapper': OrderedList,
+            'element': list_item,
+            'wrapper': ordered_list,
         },
-        BLOCK_TYPES.FALLBACK: BlockFallback
+        BLOCK_TYPES.FALLBACK: block_fallback
     }),
     'style_map': STYLE_MAP,
     'entity_decorators': {
-        ENTITY_TYPES.IMAGE: Image,
-        ENTITY_TYPES.LINK: Link,
-        ENTITY_TYPES.DOCUMENT: Document,
+        ENTITY_TYPES.IMAGE: image,
+        ENTITY_TYPES.LINK: link,
+        ENTITY_TYPES.DOCUMENT: document,
         ENTITY_TYPES.HORIZONTAL_RULE: lambda props: DOM.create_element('hr'),
         ENTITY_TYPES.EMBED: None,
-        ENTITY_TYPES.FALLBACK: EntityFallback,
+        ENTITY_TYPES.FALLBACK: entity_fallback,
     },
     'composite_decorators': [
         {
             'strategy': re.compile(r'\n'),
-            'component': BR,
+            'component': br,
         }
     ],
     'engine': 'string',

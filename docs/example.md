@@ -177,7 +177,7 @@
     </ol>
    </li>
   </ol>
-  <pre><code>def Blockquote(props):
+  <pre><code>def blockquote(props):
     block_data = props['block']['data']
     return DOM.create_element('blockquote', {
         'cite': block_data.get('cite')

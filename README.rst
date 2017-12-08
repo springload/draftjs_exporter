@@ -105,13 +105,13 @@ The exporter output is extensively configurable to cater for varied rich text re
                 'wrapper_props': {'class': 'bullet-list'},
             },
             # Use a custom component for more flexibility (reading block data or depth).
-            BLOCK_TYPES.BLOCKQUOTE: Blockquote,
+            BLOCK_TYPES.BLOCKQUOTE: blockquote,
             BLOCK_TYPES.ORDERED_LIST_ITEM: {
-                'element': ListItem,
-                'wrapper': OrderedList,
+                'element': list_item,
+                'wrapper': ordered_list,
             },
             # Provide a fallback component (advanced).
-            BLOCK_TYPES.FALLBACK: BlockFallback
+            BLOCK_TYPES.FALLBACK: block_fallback
         }),
         # `style_map` defines the HTML representation of inline elements.
         # Extend STYLE_MAP to start with sane defaults, or make your own from scratch.
@@ -123,29 +123,28 @@ The exporter output is extensively configurable to cater for varied rich text re
         }),
         'entity_decorators': {
             # Map entities to components so they can be rendered with their data.
-            ENTITY_TYPES.IMAGE: Image,
-            # Components can be defined as classes to receive extra parameters.
-            ENTITY_TYPES.LINK: Link(use_new_window=True),
+            ENTITY_TYPES.IMAGE: image,
+            ENTITY_TYPES.LINK: link
             # Lambdas work too.
             ENTITY_TYPES.HORIZONTAL_RULE: lambda props: DOM.create_element('hr'),
             # Discard those entities.
             ENTITY_TYPES.EMBED: None,
             # Provide a fallback component (advanced).
-            ENTITY_TYPES.FALLBACK: EntityFallback,
+            ENTITY_TYPES.FALLBACK: entity_fallback,
         },
         'composite_decorators': [
             # Use composite decorators to replace text based on a regular expression.
             {
                 'strategy': re.compile(r'\n'),
-                'component': BR,
+                'component': br,
             },
             {
                 'strategy': re.compile(r'#\w+'),
-                'component': Hashtag,
+                'component': hashtag,
             },
             {
                 'strategy': LINKIFY_RE,
-                'component': Linkify,
+                'component': linkify,
             },
         ],
     }
@@ -158,7 +157,7 @@ Advanced usage
 Custom components
 ~~~~~~~~~~~~~~~~~
 
-To produce arbitrary markup with dynamic data, draftjs_exporter comes with an API to create rendering components. This API mirrors React's `createElement <https://facebook.github.io/react/docs/top-level-api.html#react.createelement>`_ API (what JSX compiles to).
+To generate arbitrary markup with dynamic data, draftjs_exporter comes with an API to create rendering components. This API mirrors React's `createElement <https://facebook.github.io/react/docs/top-level-api.html#react.createelement>`_ API (what JSX compiles to).
 
 .. code:: python
 
@@ -167,7 +166,7 @@ To produce arbitrary markup with dynamic data, draftjs_exporter comes with an AP
 
 
     # Components are simple functions that take `props` as parameter and return DOM elements.
-    def Image(props):
+    def image(props):
         # This component creates an image element, with the relevant attributes.
         return DOM.create_element('img', {
             'src': props.get('src'),
@@ -177,7 +176,7 @@ To produce arbitrary markup with dynamic data, draftjs_exporter comes with an AP
         })
 
 
-    def Blockquote(props):
+    def blockquote(props):
         # This component uses block data to render a blockquote.
         block_data = props['block']['data']
 
@@ -187,19 +186,19 @@ To produce arbitrary markup with dynamic data, draftjs_exporter comes with an AP
         }, props['children'])
 
 
-    def Button(props):
+    def button(props):
         href = props.get('href', '#')
-        icon = props.get('icon', None)
+        icon_name = props.get('icon', None)
         text = props.get('text', '')
 
         return DOM.create_element('a', {
-                'class': 'icon-text' if icon else None,
+                'class': 'icon-text' if icon_name else None,
                 'href': href,
             },
             # There can be as many `children` as required.
             # It is also possible to reuse other components and render them instead of HTML tags.
-            DOM.create_element(Icon, {'name': icon}) if icon else None,
-            DOM.create_element('span', {'class': 'icon-text'}, text) if icon else text
+            DOM.create_element(icon, {'name': icon_name}) if icon_name else None,
+            DOM.create_element('span', {'class': 'icon-text'}, text) if icon_name else text
         )
 
 Apart from ``create_element``, a ``parse_html`` method is also available. Use it to interface with other HTML generators, like template engines.
@@ -220,7 +219,7 @@ Add the following to the exporter config,
     config = {
         'block_map': dict(BLOCK_MAP, **{
             # Provide a fallback for block types.
-            BLOCK_TYPES.FALLBACK: BlockFallback
+            BLOCK_TYPES.FALLBACK: block_fallback
         }),
     }
 
@@ -228,7 +227,7 @@ This fallback component can now control the exporter behavior when normal compon
 
 .. code:: python
 
-    def BlockFallback(props):
+    def block_fallback(props):
         type_ = props['block']['type']
 
         if type_ == 'example-discard':

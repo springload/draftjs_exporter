@@ -12,7 +12,7 @@ def render_children(props):
     return props['children']
 
 
-def CodeBlock(props):
+def code_block(props):
     return DOM.create_element('pre', {}, DOM.create_element('code', {}, props['children']))
 
 
@@ -29,7 +29,7 @@ BLOCK_MAP = {
     BLOCK_TYPES.ORDERED_LIST_ITEM: {'element': 'li', 'wrapper': 'ol'},
     BLOCK_TYPES.BLOCKQUOTE: 'blockquote',
     BLOCK_TYPES.PRE: 'pre',
-    BLOCK_TYPES.CODE: CodeBlock,
+    BLOCK_TYPES.CODE: code_block,
     BLOCK_TYPES.ATOMIC: render_children,
 }
 

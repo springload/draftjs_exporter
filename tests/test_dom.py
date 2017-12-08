@@ -6,7 +6,7 @@ from draftjs_exporter.dom import DOM
 from draftjs_exporter.engines.html5lib import DOM_HTML5LIB
 from draftjs_exporter.engines.lxml import DOM_LXML
 from draftjs_exporter.error import ConfigException
-from tests.test_entities import Icon
+from tests.test_entities import icon
 
 
 class DOMTestImpl(object):
@@ -54,7 +54,7 @@ class TestDOM(unittest.TestCase):
         self.assertEqual(DOM.render_debug(DOM.create_element('a', {}, None, DOM.create_element('span', {}, 'Test test'))), '<a><span>Test test</span></a>')
 
     def test_create_element_entity(self):
-        self.assertEqual(DOM.render_debug(DOM.create_element(Icon, {'name': 'rocket'})), '<svg class="icon"><use xlink:href="#icon-rocket"></use></svg>')
+        self.assertEqual(DOM.render_debug(DOM.create_element(icon, {'name': 'rocket'})), '<svg class="icon"><use xlink:href="#icon-rocket"></use></svg>')
 
     def test_parse_html(self):
         self.assertEqual(DOM.render_debug(DOM.parse_html('<p><span>Test text</span></p>')), '<p><span>Test text</span></p>')

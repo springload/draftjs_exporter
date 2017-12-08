@@ -8,14 +8,14 @@ from draftjs_exporter.defaults import BLOCK_MAP
 from draftjs_exporter.entity_state import EntityException
 from draftjs_exporter.html import HTML
 from tests.test_composite_decorators import BR_DECORATOR, HASHTAG_DECORATOR, LINKIFY_DECORATOR
-from tests.test_entities import HR, Image, Link
-from tests.test_wrapper_state import Blockquote
+from tests.test_entities import hr, image, link
+from tests.test_wrapper_state import blockquote
 
 config = {
     'entity_decorators': {
-        ENTITY_TYPES.LINK: Link,
-        ENTITY_TYPES.HORIZONTAL_RULE: HR,
-        ENTITY_TYPES.IMAGE: Image
+        ENTITY_TYPES.LINK: link,
+        ENTITY_TYPES.HORIZONTAL_RULE: hr,
+        ENTITY_TYPES.IMAGE: image
     },
     'composite_decorators': [
         LINKIFY_DECORATOR,
@@ -29,7 +29,7 @@ config = {
             'wrapper_props': {'class': 'steps'},
         },
         'blockquote': {
-            'element': Blockquote,
+            'element': blockquote,
             'wrapper': 'div',
         },
     }),
@@ -924,7 +924,7 @@ class TestOutput(unittest.TestCase):
     def test_render_with_big_content(self):
         self.assertEqual(HTML({
             'entity_decorators': {
-                'LINK': Link
+                'LINK': link
             },
             'block_map': {
                 'header-two': {'element': 'h2'},
