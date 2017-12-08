@@ -7,7 +7,7 @@ from draftjs_exporter.entity_state import EntityException, EntityState
 from tests.test_entities import Link
 
 entity_decorators = {
-    'LINK': Link()
+    'LINK': Link
 }
 
 entity_map = {

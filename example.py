@@ -50,20 +50,10 @@ def Image(props):
     })
 
 
-class Link:
-    def __init__(self, use_new_window=False):
-        self.use_new_window = use_new_window
-
-    def render(self, props):
-        link_props = {
-            'href': props['url'],
-        }
-
-        if self.use_new_window:
-            link_props['target'] = '_blank'
-            link_props['rel'] = 'noreferrer noopener'
-
-        return DOM.create_element('a', link_props, props['children'])
+def Link(props):
+    return DOM.create_element('a', {
+        'href': props['url']
+    }, props['children'])
 
 
 class BR:
@@ -179,8 +169,7 @@ if __name__ == '__main__':
         'entity_decorators': {
             # Map entities to components so they can be rendered with their data.
             ENTITY_TYPES.IMAGE: Image,
-            # Components can be defined as classes to receive extra parameters.
-            ENTITY_TYPES.LINK: Link(use_new_window=True),
+            ENTITY_TYPES.LINK: Link,
             # Lambdas work too.
             ENTITY_TYPES.HORIZONTAL_RULE: lambda props: DOM.create_element('hr'),
             # Discard those entities.

@@ -4,7 +4,7 @@
 -----
 <h2>
    draftjs_exporter is an HTML exporter for
-   <a href="https://github.com/facebook/draft-js" rel="noreferrer noopener" target="_blank">
+   <a href="https://github.com/facebook/draft-js">
     Draft.js
    </a>
    content
@@ -17,7 +17,7 @@
   </h3>
   <p>
    The exporter aims to provide sensible defaults from basic block types and inline styles to HTML, that can easily be customised when required. For more advanced scenarios, an API is provided (mimicking React's
-   <a href="https://facebook.github.io/react/docs/top-level-api.html#react.createelement" rel="noreferrer noopener" target="_blank">
+   <a href="https://facebook.github.io/react/docs/top-level-api.html#react.createelement">
     <code>
      createElement
     </code>
@@ -39,7 +39,7 @@
    </li>
    <li>
     Automatic conversion of entity data to HTML attributes (int &amp; boolean to string,
-    <a href="https://facebook.github.io/react/docs/jsx-in-depth.html" rel="noreferrer noopener" target="_blank">
+    <a href="https://facebook.github.io/react/docs/jsx-in-depth.html">
      <code>
       style object
      </code>
@@ -120,7 +120,7 @@
            #hashtag
           </span>
           support via
-          <a href="https://github.com/springload/draftjs_exporter/pull/17" rel="noreferrer noopener" target="_blank">
+          <a href="https://github.com/springload/draftjs_exporter/pull/17">
            #CompositeDecorators
           </a>
           .

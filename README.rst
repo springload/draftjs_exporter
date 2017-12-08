@@ -178,20 +178,20 @@ To produce arbitrary markup with dynamic data, draftjs_exporter comes with an AP
         }, props['children'])
 
 
-    class Button:
-        def render(self, props):
-            href = props.get('href', '#')
-            icon = props.get('icon', None)
-            text = props.get('text', '')
+    def Button(props):
+        href = props.get('href', '#')
+        icon = props.get('icon', None)
+        text = props.get('text', '')
 
+        return DOM.create_element('a', {
+                'class': 'icon-text' if icon else None,
+                'href': href,
+            },
             # There can be as many `children` as required.
             # It is also possible to reuse other components and render them instead of HTML tags.
-            return DOM.create_element(
-                'a',
-                {'class': 'icon-text' if icon else None, 'href': href},
-                DOM.create_element(Icon, {'name': icon}) if icon else None,
-                DOM.create_element('span', {'class': 'icon-text__text'}, text) if icon else text
-            )
+            DOM.create_element(Icon, {'name': icon}) if icon else None,
+            DOM.create_element('span', {'class': 'icon-text'}, text) if icon else text
+        )
 
 Apart from ``create_element``, a ``parse_html`` method is also available. Use it to interface with other HTML generators, like template engines.
 
