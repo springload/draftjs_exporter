@@ -248,33 +248,22 @@ See ``examples.py`` in the repository for more details.
 Alternative backing engines
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-By default the exporter uses ``html5lib`` via BeautifulSoup to build the DOM tree. There are two alternative backing engines: ``string`` and ``lxml``.
+By default, the exporter uses a dependency-free engine called ``string`` to build the DOM tree. There are two alternative backing engines: ``html5lib`` (via BeautifulSoup) and ``lxml``.
 
-The ``string`` engine is the fastest, and does not have any dependencies. Its only drawback is that the ``parse_html`` method does not escape/sanitise HTML like that of other engines.
+The ``string`` engine is the fastest, and does not have any dependencies. Its only drawback is that the ``parse_html`` method does not escape/sanitise HTML like that of other engines. It is also more recent, so hasn't been as battle-tested as the other ones.
 
-To use it, add the following to the exporter config:
+*  For ``html5lib``, do ``pip install draftjs_exporter[html5lib]``.
+*  For ``lxml``, do ``pip install draftjs_exporter[lxml]``. It also requires ``libxml2`` and ``libxslt`` to be available on your system.
 
-.. code:: python
-
-    config = {
-        # Specify which DOM backing engine to use.
-        'engine': 'string',
-    }
-
-``lxml`` is also supported. It requires ``libxml2`` and ``libxslt`` to be available on your system.
-
-.. code:: sh
-
-    # Use the `lxml` extra to install the exporter and its lxml dependencies:
-    pip install draftjs_exporter[lxml]
-
-Add the following to the exporter config:
+Then, use the ``engine`` attribute of the exporter config:
 
 .. code:: python
 
     config = {
         # Specify which DOM backing engine to use.
-        'engine': 'lxml',
+        'engine': DOM.HTML5LIB,
+        # Or for lxml:
+        'engine': DOM.LXML,
     }
 
 Custom backing engines
@@ -307,7 +296,10 @@ Here is an example implementation:
             return elt
 
 
-    exporter = HTML({'engine': DOMListTree})
+    exporter = HTML({
+        # Use the dotted module syntax to point to the DOMEngine implementation.
+        'engine': 'myproject.example.DOMListTree'
+    })
 
 Development
 -----------
