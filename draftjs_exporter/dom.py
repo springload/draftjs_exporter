@@ -1,6 +1,5 @@
 from __future__ import absolute_import, unicode_literals
 
-import inspect
 import re
 
 from draftjs_exporter.utils.module_loading import import_string
