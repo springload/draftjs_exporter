@@ -11,8 +11,9 @@ try:
 except ImportError:
     from distutils.core import setup
 
+dependencies = []
 
-dependencies = [
+html5lib_dependencies = [
     'beautifulsoup4>=4.4.1,<5',
     'html5lib>=0.999,<=1.0b10',
 ]
@@ -34,7 +35,7 @@ testing_dependencies = [
     'coverage>=4.1.0',
     'flake8>=3.2.0',
     'isort==4.2.5',
-] + lxml_dependencies
+] + html5lib_dependencies + lxml_dependencies
 
 documentation_dependencies = [
 
@@ -78,5 +79,6 @@ setup(
         'testing': testing_dependencies,
         'docs': documentation_dependencies,
         'lxml': lxml_dependencies,
+        'html5lib': html5lib_dependencies,
     },
     zip_safe=False)
