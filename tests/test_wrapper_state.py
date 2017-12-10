@@ -9,7 +9,7 @@ from example import blockquote, list_item, ordered_list
 
 class TestWrapperState(unittest.TestCase):
     def setUp(self):
-        DOM.use(DOM.HTML5LIB)
+        DOM.use(DOM.STRING)
 
         self.wrapper_state = WrapperState({
             'header-one': 'h1',
@@ -106,7 +106,7 @@ class TestWrapperState(unittest.TestCase):
 
 class TestBlockquote(unittest.TestCase):
     def setUp(self):
-        DOM.use(DOM.HTML5LIB)
+        DOM.use(DOM.STRING)
 
     def test_render_debug(self):
         self.assertEqual(DOM.render_debug(DOM.create_element(blockquote, {
@@ -120,7 +120,7 @@ class TestBlockquote(unittest.TestCase):
 
 class TestListItem(unittest.TestCase):
     def setUp(self):
-        DOM.use(DOM.HTML5LIB)
+        DOM.use(DOM.STRING)
 
     def test_render_debug(self):
         self.assertEqual(DOM.render_debug(DOM.create_element(list_item, {

@@ -43,7 +43,7 @@ config = {
             'props': {'style': {'textDecoration': 'underline'}},
         },
     },
-    'engine': DOM.HTML5LIB
+    'engine': DOM.STRING,
 }
 
 

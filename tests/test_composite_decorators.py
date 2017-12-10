@@ -55,7 +55,7 @@ class TestHashtag(unittest.TestCase):
         self.assertEqual(DOM.render(DOM.create_element(HASHTAG_DECORATOR['component'], {'block': {'type': BLOCK_TYPES.UNSTYLED}}, '#hashtagtest')), '<span class="hashtag">#hashtagtest</span>')
 
     def test_render_code_block(self):
-        self.assertEqual(DOM.render(DOM.create_element(HASHTAG_DECORATOR['component'], {'block': {'type': BLOCK_TYPES.CODE}}, '#hashtagtest')), '#hashtagtest')
+        self.assertEqual(DOM.create_element(HASHTAG_DECORATOR['component'], {'block': {'type': BLOCK_TYPES.CODE}}, '#hashtagtest'), '#hashtagtest')
 
 
 class TestBR(unittest.TestCase):
@@ -68,7 +68,7 @@ class TestBR(unittest.TestCase):
 
 class TestCompositeDecorators(unittest.TestCase):
     def test_render_decorators_empty(self):
-        self.assertEqual(DOM.render(render_decorators([], 'test https://www.example.com#hash #hashtagtest', {'type': BLOCK_TYPES.UNSTYLED, 'depth': 0})), 'test https://www.example.com#hash #hashtagtest')
+        self.assertEqual(render_decorators([], 'test https://www.example.com#hash #hashtagtest', {'type': BLOCK_TYPES.UNSTYLED, 'depth': 0}), 'test https://www.example.com#hash #hashtagtest')
 
     def test_render_decorators_single(self):
         self.assertEqual(DOM.render(render_decorators([LINKIFY_DECORATOR], 'test https://www.example.com#hash #hashtagtest', {'type': BLOCK_TYPES.UNSTYLED, 'depth': 0})), 'test <a href="https://www.example.com#hash">https://www.example.com#hash</a> #hashtagtest')
