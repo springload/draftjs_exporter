@@ -5,17 +5,17 @@
 .. image:: https://coveralls.io/repos/github/springload/draftjs_exporter/badge.svg?branch=master
    :target: https://coveralls.io/github/springload/draftjs_exporter?branch=master
 
-draftjs_exporter 🐍
-===================
+Draft.js exporter 🐍
+====================
 
-    Library to convert the Facebook Draft.js editor’s raw ContentState to HTML.
+    Library to convert rich text from Draft.js raw ContentState to HTML.
 
 It is developed alongside the `Draftail <https://github.com/springload/draftail/>`_ rich text editor, for integration into `Wagtail <https://wagtail.io/>`_. Check out `WagtailDraftail <https://github.com/springload/wagtaildraftail>`_ and the `online demo <https://draftjs-exporter.herokuapp.com/>`_!
 
 Why?
 ----
 
-`Draft.js <https://draftjs.org/>`_ is a rich text editor framework for React. It differs from other rich text editors because it does not store data as HTML, but rather in its own representation called ContentState. This exporter is useful when the ContentState (serialised as JSON) to HTML conversion has to be done in a Python ecosystem.
+`Draft.js <https://draftjs.org/>`_ is a rich text editor framework for React. It differs from other rich text editors because it does not store data as HTML, but rather in its own representation called ContentState. This exporter is useful when the ContentState to HTML conversion has to be done in a Python ecosystem.
 
 The initial use case was to gain more control over the content managed by rich text editors in a Wagtail/Django site, as part of our `WagtailDraftail <https://github.com/springload/wagtaildraftail>`_ project.
 
@@ -157,7 +157,7 @@ Advanced usage
 Custom components
 ~~~~~~~~~~~~~~~~~
 
-To generate arbitrary markup with dynamic data, draftjs_exporter comes with an API to create rendering components. This API mirrors React's `createElement <https://facebook.github.io/react/docs/top-level-api.html#react.createelement>`_ API (what JSX compiles to).
+To generate arbitrary markup with dynamic data, the exporter comes with an API to create rendering components. This API mirrors React's `createElement <https://facebook.github.io/react/docs/top-level-api.html#react.createelement>`_ API (what JSX compiles to).
 
 .. code:: python
 
@@ -365,4 +365,11 @@ Releases
 Documentation
 -------------
 
-    See the `docs <https://github.com/springload/draftjs_exporter/docs/>`_ folder.
+    See the `docs <https://github.com/springload/draftjs_exporter/tree/master/docs>`_ folder.
+
+Credits
+-------
+
+This project is made possible by the work of `Springload <https://github.com/springload>`_, a New Zealand digital agency, and. The *beautiful* demo site is the work of `@thibaudcolas <https://github.com/thibaudcolas>`_.
+
+View the full list of `contributors <https://github.com/springload/draftail/graphs/contributors>`_. `MIT <https://github.com/springload/draftjs_exporter/blob/master/LICENSE>`_ licensed.
