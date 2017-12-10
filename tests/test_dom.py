@@ -5,6 +5,7 @@ import unittest
 from draftjs_exporter.dom import DOM
 from draftjs_exporter.engines.html5lib import DOM_HTML5LIB
 from draftjs_exporter.engines.lxml import DOM_LXML
+from draftjs_exporter.engines.string import DOMString
 from tests.test_entities import icon
 
 
@@ -28,6 +29,10 @@ class TestDOM(unittest.TestCase):
     def test_use_html5lib(self):
         DOM.use(DOM.HTML5LIB)
         self.assertEqual(DOM.dom, DOM_HTML5LIB)
+
+    def test_use_string(self):
+        DOM.use(DOM.STRING)
+        self.assertEqual(DOM.dom, DOMString)
 
     def test_use_invalid(self):
         with self.assertRaises(ImportError):

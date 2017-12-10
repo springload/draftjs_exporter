@@ -3,6 +3,8 @@ from __future__ import absolute_import, unicode_literals
 import unittest
 
 from draftjs_exporter.command import Command
+from draftjs_exporter.dom import DOM
+from draftjs_exporter.engines.string import DOMString
 from draftjs_exporter.html import HTML
 
 config = {
@@ -28,6 +30,10 @@ class TestHTML(unittest.TestCase):
 
     def test_init(self):
         self.assertIsInstance(self.exporter, HTML)
+
+    def test_init_dom_engine_default(self):
+        HTML()
+        self.assertEqual(DOM.dom, DOMString)
 
     def test_render_block_exists(self):
         self.assertTrue('render_block' in dir(self.exporter))
