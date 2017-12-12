@@ -47,7 +47,7 @@ with open('README.rst', 'r', 'utf-8') as f:
 setup(
     name='draftjs_exporter',
     version=__version__,
-    description='Library to convert the Facebook Draft.js editor\'s raw ContentState to HTML',
+    description='Library to convert rich text from Draft.js raw ContentState to HTML',
     author='Springload',
     author_email='hello@springload.co.nz',
     url='https://github.com/springload/draftjs_exporter',
@@ -76,9 +76,11 @@ setup(
     ],
     install_requires=dependencies,
     extras_require={
-        'testing': testing_dependencies,
-        'docs': documentation_dependencies,
+        # Special extra installs for the built-in DOM engines.
         'lxml': lxml_dependencies,
         'html5lib': html5lib_dependencies,
+        # Development extras.
+        'testing': testing_dependencies,
+        'docs': documentation_dependencies,
     },
     zip_safe=False)
