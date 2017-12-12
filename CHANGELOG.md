@@ -22,6 +22,7 @@ This release contains breaking changes that will require updating the exporter's
 
 * Calls to `DOM.use` must use a valid engine, there is no default value anymore.
 * Stop supporting passing an engine class directly in the `engine` option, or to `DOM.use`.
+* Stop including tests in published package.
 
 ### Fixed
 
