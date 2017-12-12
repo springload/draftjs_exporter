@@ -4,6 +4,154 @@
 
 ## Unreleased
 
+## [v2.0.0](https://github.com/springload/draftjs_exporter/releases/tag/v2.0.0)
+
+This release contains breaking changes that will require updating the exporter's configurations. **Be sure to check out the "how to upgrade" section below.**
+
+### Changed
+
+* Change default DOM engine to `DOMString` ([#79](https://github.com/springload/draftjs_exporter/issues/79), [#85](https://github.com/springload/draftjs_exporter/pull/85)).
+* Add extra install for html5lib ([#79](https://github.com/springload/draftjs_exporter/issues/79), [#85](https://github.com/springload/draftjs_exporter/pull/85)).
+* Remove support for class-based decorators ([#73](https://github.com/springload/draftjs_exporter/issues/73), [#84](https://github.com/springload/draftjs_exporter/pull/84)).
+* Switch composite decorators to dict format like that of Draft.js, with `strategy` and `component` attributes.
+* Use dotted-path loading for custom engines ([#64](https://github.com/springload/draftjs_exporter/issues/64), [#81](https://github.com/springload/draftjs_exporter/pull/81)).
+* Use dotted-path loading for built-in engines.
+* Raise `ImportError` when loading an engine fails, not `ConfigException`.
+
+### Removed
+
+* Calls to `DOM.use` must use a valid engine, there is no default value anymore.
+* Stop supporting passing an engine class directly in the `engine` option, or to `DOM.use`.
+
+### Fixed
+
+* Stop loading html5lib engine on every use, even if unused ([#80](https://github.com/springload/draftjs_exporter/issues/80)).
+
+### How to upgrade
+
+#### New default engine
+
+The specificities of the new engine are described in the [documentation](https://github.com/springload/draftjs_exporter#alternative-backing-engines). To start using the new default,
+
+1. Remove the `engine` property from the exporter configuration, or do `'engine': DOM.STRING,`.
+2. You can also remove the `html5lib` and `beautifulsoup4` dependencies from your project if they aren't used anywhere else.
+
+To keep using the previous default, html5lib:
+
+1. Set the `engine` property to `'engine': DOM.HTML5LIB,`.
+2. Make sure you install the exporter with `pip install draftjs_exporter[html5lib]`.
+
+#### Decorator component definitions
+
+Decorator components now require the function syntax (see the relevant [documentation](https://github.com/springload/draftjs_exporter#custom-components)).
+
+```python
+# Before:
+class OrderedList:
+    def render(self, props):
+        depth = props['block']['depth']
+
+        return DOM.create_element('ol', {
+            'class': 'list--depth-{0}'.format(depth)
+        }, props['children'])
+# After:
+def ordered_list(props):
+    depth = props['block']['depth']
+
+    return DOM.create_element('ol', {
+        'class': 'list--depth-{0}'.format(depth)
+    }, props['children'])
+```
+
+If you were relying on the configuration capabilities of the class API, switch to composing components instead:
+
+```python
+# Before:
+class Link:
+    def __init__(self, use_new_window=False):
+        self.use_new_window = use_new_window
+
+    def render(self, props):
+        link_props = {
+            'href': props['url'],
+        }
+
+        if self.use_new_window:
+            link_props['target'] = '_blank'
+            link_props['rel'] = 'noreferrer noopener'
+
+        return DOM.create_element('a', link_props, props['children'])
+
+# In the config:
+    ENTITY_TYPES.LINK: Link(use_new_window=True)
+
+# After:
+def link(props):
+    return DOM.create_element('a', props, props['children'])
+
+def same_window_link(props):
+    return DOM.create_element(link, {
+        'href': props['url'],
+    }, props['children'])
+})
+
+def new_window_link(props):
+    return DOM.create_element(link, {
+        'href': props['url'],
+        'target': '_blank',
+        'rel': 'noreferrer noopener',
+    }, props['children'])
+})
+```
+
+The composite decorators API now looks closer to that of other decorators, and to Draft.js:
+
+```python
+# Before:
+class BR:
+    SEARCH_RE = re.compile(r'\n')
+
+    def render(self, props):
+        if props['block']['type'] == BLOCK_TYPES.CODE:
+            return props['children']
+
+        return DOM.create_element('br')
+
+
+'composite_decorators': [
+    BR,
+]
+# After:
+
+def br(props):
+    if props['block']['type'] == BLOCK_TYPES.CODE:
+        return props['children']
+
+    return DOM.create_element('br')
+
+# In the config:
+'composite_decorators': [
+    {
+        'strategy': re.compile(r'\n'),
+        'component': br,
+    },
+],
+```
+
+#### Engine configuration
+
+```diff
+# The `engine` field in the exporter config now has to be a dotted path string pointing to a valid engine.
+- 'engine': 'html5lib',
++ 'engine': 'draftjs_exporter.engines.html5lib.DOM_HTML5LIB',
+# Or, using the shorthand.
++ 'engine': DOM.HTML5LIB,
+
+# It's not possible either to directly provide an engine implementation - use a dotted path instead.
+- DOM.use(DOMTestImpl)
++ DOM.use('tests.test_dom.DOMTestImpl')
+```
+
 ## [v1.1.1](https://github.com/springload/draftjs_exporter/releases/tag/v1.1.1)
 
 ### Fixed
