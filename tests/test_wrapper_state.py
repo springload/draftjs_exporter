@@ -21,10 +21,27 @@ class TestWrapperState(unittest.TestCase):
                 'element': list_item,
                 'wrapper': ordered_list
             },
-        })
+        }, [])
 
     def test_init(self):
         self.assertIsInstance(self.wrapper_state, WrapperState)
+
+    def test_element_for_data(self):
+        blocks = [
+            {
+                'key': '5s7g9',
+                'text': 'test',
+                'type': 'unstyled',
+                'depth': 0,
+                'inlineStyleRanges': [],
+                'entityRanges': [],
+            },
+        ]
+
+        def unstyled(props):
+            self.assertEqual(props['blocks'], blocks)
+
+        WrapperState({'unstyled': unstyled}, blocks).element_for(blocks[0], 'test')
 
     def test_element_for_simple_content(self):
         self.assertEqual(DOM.render_debug(self.wrapper_state.element_for({

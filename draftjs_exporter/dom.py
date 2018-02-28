@@ -76,6 +76,7 @@ class DOM(object):
             # Never render those attributes on a raw tag.
             props.pop('children', None)
             props.pop('block', None)
+            props.pop('blocks', None)
             props.pop('entity', None)
 
             # Convert style object to style string, like the DOM would do.

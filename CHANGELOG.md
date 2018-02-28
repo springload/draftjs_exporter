@@ -4,6 +4,10 @@
 
 ## Unreleased
 
+### Added
+
+* Give block rendering components access to the whole `blocks` list.
+
 ### Changed
 
 * Performance improvements for text-only (no inline styles, no entities) blocks.

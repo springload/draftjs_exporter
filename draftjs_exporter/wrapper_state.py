@@ -79,8 +79,9 @@ class WrapperState:
     It adds a wrapper element around elements, if required.
     """
 
-    def __init__(self, block_map):
+    def __init__(self, block_map, blocks):
         self.block_map = block_map
+        self.blocks = blocks
         self.stack = WrapperStack()
 
     def __str__(self):
@@ -97,6 +98,7 @@ class WrapperState:
             'depth': depth,
             'data': data,
         }
+        props['blocks'] = self.blocks
 
         # Make an element from the options specified in the block map.
         elt = DOM.create_element(options.element, props, block_content)
@@ -146,6 +148,8 @@ class WrapperState:
                         'depth': depth,
                         'data': {},
                     }
+                    props['blocks'] = self.blocks
+
                     wrapper_parent = DOM.create_element(options.element, props)
                     DOM.append_child(self.stack.head().elt, wrapper_parent)
                 else:

@@ -34,12 +34,13 @@ class HTML:
         if content_state is None:
             content_state = {}
 
-        wrapper_state = WrapperState(self.block_map)
+        blocks = content_state.get('blocks', [])
+        wrapper_state = WrapperState(self.block_map, blocks)
         document = DOM.create_element()
         entity_map = content_state.get('entityMap', {})
         min_depth = 0
 
-        for block in content_state.get('blocks', []):
+        for block in blocks:
             depth = block['depth']
             elt = self.render_block(block, entity_map, wrapper_state)
 
