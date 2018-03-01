@@ -2,7 +2,8 @@
 
 from __future__ import absolute_import, unicode_literals
 
-from codecs import open
+import io
+import re
 
 from draftjs_exporter import __version__
 
@@ -41,20 +42,59 @@ documentation_dependencies = [
 
 ]
 
-with open('README.rst', 'r', 'utf-8') as f:
-    readme = f.read()
+RE_MD_CODE_BLOCK = re.compile(
+    r'```(?P<language>\w+)?\n(?P<lines>.*?)```', re.S)
+RE_LINK = re.compile(r'\[(?P<text>.*?)\]\((?P<url>.*?)\)')
+RE_IMAGE = re.compile(r'\!\[(?P<text>.*?)\]\((?P<url>.*?)\)')
+RE_TITLE = re.compile(r'^(?P<level>#+)\s*(?P<title>.*)$', re.M)
+RE_CODE = re.compile(r'``([^<>]*?)``')
+
+RST_TITLE_LEVELS = ['=', '-', '~']
+
+
+def md2pypi(filename):
+    '''
+    Load .md (markdown) file and sanitize it for PyPI.
+    '''
+    content = io.open(filename).read()
+
+    for match in RE_MD_CODE_BLOCK.finditer(content):
+        rst_block = '\n'.join(
+            ['.. code-block:: {language}'.format(**match.groupdict()), ''] +
+            ['    {0}'.format(l) for l in match.group('lines').split('\n')] +
+            ['']
+        )
+        content = content.replace(match.group(0), rst_block)
+
+    for match in RE_IMAGE.finditer(content):
+        content = content.replace(match.group(0), match.group(1))
+
+    content = RE_LINK.sub('`\g<text> <\g<url>>`_', content)
+    content = RE_CODE.sub('``\g<1>``', content)
+
+    for match in RE_TITLE.finditer(content):
+        level = len(match.group('level')) - 1
+        underchar = RST_TITLE_LEVELS[level]
+        title = match.group('title')
+        underline = underchar * len(title)
+
+        full_title = '\n'.join((title, underline))
+        content = content.replace(match.group(0), full_title)
+
+    return content
+
 
 setup(
     name='draftjs_exporter',
     version=__version__,
     description='Library to convert rich text from Draft.js raw ContentState to HTML',
+    long_description=md2pypi('README.md'),
     author='Springload',
     author_email='hello@springload.co.nz',
     url='https://github.com/springload/draftjs_exporter',
     packages=find_packages(),
     include_package_data=True,
     license='MIT',
-    long_description=readme,
     classifiers=[
         'Environment :: Web Environment',
         'Intended Audience :: Developers',

@@ -164,6 +164,7 @@ if __name__ == '__main__':
             'KBD': 'kbd',
             # The `style` prop can be defined as a dict, that will automatically be converted to a string.
             'HIGHLIGHT': {'element': 'strong', 'props': {'style': {'textDecoration': 'underline'}}},
+            # Provide a fallback component (advanced).
             INLINE_STYLES.FALLBACK: style_fallback,
         }),
         'entity_decorators': {
