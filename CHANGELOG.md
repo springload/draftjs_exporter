@@ -4,11 +4,13 @@
 
 ## Unreleased
 
+## [v2.1.0](https://github.com/springload/draftjs_exporter/releases/tag/v2.1.0)
+
 ### Added
 
-* Give block rendering components access to the current `block`, when the component is rendered for a block, and the `blocks` list.
-* Give text decorators renderers access to the current `block` and `blocks` list.
-* Give style rendering components access to the current `block`, `blocks` list, and current style type as `inline_style_range.style` ([#87](https://github.com/springload/draftjs_exporter/issues/87)).
+* Give block rendering components access to the current `block`, when the component is rendered for a block, and the `blocks` list ([#90](https://github.com/springload/draftjs_exporter/pull/90)).
+* Give text decorators renderers access to the current `block` and `blocks` list ([#90](https://github.com/springload/draftjs_exporter/pull/90)).
+* Give style rendering components access to the current `block`, `blocks` list, and current style type as `inline_style_range.style` ([#87](https://github.com/springload/draftjs_exporter/issues/87), [#90](https://github.com/springload/draftjs_exporter/pull/90)).
 
 ### Changed
 
