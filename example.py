@@ -11,7 +11,7 @@ from pstats import Stats
 from bs4 import BeautifulSoup
 
 # draftjs_exporter provides default configurations and predefined constants for reuse.
-from draftjs_exporter.constants import BLOCK_TYPES, ENTITY_TYPES
+from draftjs_exporter.constants import BLOCK_TYPES, ENTITY_TYPES, INLINE_STYLES
 from draftjs_exporter.defaults import BLOCK_MAP, STYLE_MAP
 from draftjs_exporter.dom import DOM
 from draftjs_exporter.html import HTML
@@ -127,6 +127,12 @@ def entity_fallback(props):
     return DOM.create_element('span', {'class': 'missing-entity'}, props['children'])
 
 
+def style_fallback(props):
+    type_ = props['inline_style_range']['style']
+    logging.warn('Missing config for "%s". Deleting style.' % type_)
+    return props['children']
+
+
 if __name__ == '__main__':
     config = {
         # `block_map` is a mapping from Draft.js block types to a definition of their HTML representation.
@@ -158,6 +164,7 @@ if __name__ == '__main__':
             'KBD': 'kbd',
             # The `style` prop can be defined as a dict, that will automatically be converted to a string.
             'HIGHLIGHT': {'element': 'strong', 'props': {'style': {'textDecoration': 'underline'}}},
+            INLINE_STYLES.FALLBACK: style_fallback,
         }),
         'entity_decorators': {
             # Map entities to components so they can be rendered with their data.
@@ -565,7 +572,11 @@ if __name__ == '__main__':
             "text": "Optionally, define your custom components.",
             "type": "ordered-list-item",
             "depth": 1,
-            "inlineStyleRanges": [],
+            "inlineStyleRanges": [{
+                "offset": 0,
+                "length": 10,
+                "style": "EXAMPLE_DISCARD"
+            }],
             "entityRanges": [],
             "data": {}
         }, {
