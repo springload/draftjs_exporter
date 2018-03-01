@@ -23,12 +23,18 @@ class StyleState:
     def is_empty(self):
         return not self.styles
 
-    def render_styles(self, text_node):
-        node = text_node
+    def render_styles(self, decorated_node, block, blocks):
+        node = decorated_node
         if not self.is_empty():
             # Nest the tags.
-            for s in sorted(self.styles, reverse=True):
-                opt = Options.for_style(self.style_map, s)
-                node = DOM.create_element(opt.element, opt.props, node)
+            for style in sorted(self.styles, reverse=True):
+                opt = Options.for_style(self.style_map, style)
+                props = dict(opt.props)
+                props['block'] = block
+                props['blocks'] = blocks
+                props['inline_style_range'] = {
+                    'style': style,
+                }
+                node = DOM.create_element(opt.element, props, node)
 
         return node
