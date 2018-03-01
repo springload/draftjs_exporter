@@ -4,6 +4,10 @@
 
 ## Unreleased
 
+### Changed
+
+* Performance improvements for text-only (no inline styles, no entities) blocks.
+
 ## [v2.0.0](https://github.com/springload/draftjs_exporter/releases/tag/v2.0.0)
 
 This release contains breaking changes that will require updating the exporter's configurations. **Be sure to check out the "how to upgrade" section below.**

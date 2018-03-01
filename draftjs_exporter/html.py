@@ -58,27 +58,37 @@ class HTML:
 
     def render_block(self, block, entity_map, wrapper_state):
         content = DOM.create_element()
-        entity_state = EntityState(self.entity_decorators, entity_map)
-        style_state = StyleState(self.style_map)
 
-        for (text, commands) in self.build_command_groups(block):
-            for command in commands:
-                entity_state.apply(command)
-                style_state.apply(command)
+        if block['inlineStyleRanges'] or block['entityRanges']:
+            entity_state = EntityState(self.entity_decorators, entity_map)
+            style_state = StyleState(self.style_map)
 
-            # Decorators are not rendered inside entities.
-            if text and entity_state.has_no_entity() and len(self.composite_decorators) > 0:
-                decorated_node = render_decorators(self.composite_decorators, text, block)
+            for (text, commands) in self.build_command_groups(block):
+                for command in commands:
+                    entity_state.apply(command)
+                    style_state.apply(command)
+
+                # Decorators are not rendered inside entities.
+                if text and entity_state.has_no_entity() and len(self.composite_decorators) > 0:
+                    decorated_node = render_decorators(self.composite_decorators, text, block)
+                else:
+                    decorated_node = text
+
+                styled_node = style_state.render_styles(decorated_node)
+                entity_node = entity_state.render_entities(styled_node)
+
+                if entity_node is not None:
+                    DOM.append_child(content, entity_node)
+                    if styled_node != entity_node:
+                        DOM.append_child(content, styled_node)
+        # Fast track for blocks which do not contain styles nor entities, which is very common.
+        else:
+            if len(self.composite_decorators) > 0:
+                decorated_node = render_decorators(self.composite_decorators, block['text'], block)
             else:
-                decorated_node = text
+                decorated_node = block['text']
 
-            styled_node = style_state.render_styles(decorated_node)
-            entity_node = entity_state.render_entities(styled_node)
-
-            if entity_node is not None:
-                DOM.append_child(content, entity_node)
-                if styled_node != entity_node:
-                    DOM.append_child(content, styled_node)
+            DOM.append_child(content, decorated_node)
 
         return wrapper_state.element_for(block, content)
 
