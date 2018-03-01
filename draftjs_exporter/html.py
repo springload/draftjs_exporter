@@ -71,7 +71,7 @@ class HTML:
 
                 # Decorators are not rendered inside entities.
                 if text and entity_state.has_no_entity() and len(self.composite_decorators) > 0:
-                    decorated_node = render_decorators(self.composite_decorators, text, block)
+                    decorated_node = render_decorators(self.composite_decorators, text, block, wrapper_state.blocks)
                 else:
                     decorated_node = text
 
@@ -85,7 +85,7 @@ class HTML:
         # Fast track for blocks which do not contain styles nor entities, which is very common.
         else:
             if len(self.composite_decorators) > 0:
-                decorated_node = render_decorators(self.composite_decorators, block['text'], block)
+                decorated_node = render_decorators(self.composite_decorators, block['text'], block, wrapper_state.blocks)
             else:
                 decorated_node = block['text']
 
