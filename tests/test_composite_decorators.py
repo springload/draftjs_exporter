@@ -78,3 +78,27 @@ class TestCompositeDecorators(unittest.TestCase):
 
     def test_render_decorators_conflicting_order_two(self):
         self.assertEqual(DOM.render(render_decorators([HASHTAG_DECORATOR, LINKIFY_DECORATOR], 'test https://www.example.com#hash #hashtagtest', {'type': BLOCK_TYPES.UNSTYLED, 'depth': 0})), 'test https://www.example.com<span class="hashtag">#hash</span> <span class="hashtag">#hashtagtest</span>')
+
+    def test_render_decorators_data(self):
+        blocks = [
+            {
+                'key': '5s7g9',
+                'text': 'test',
+                'type': 'unstyled',
+                'depth': 0,
+                'inlineStyleRanges': [],
+                'entityRanges': [],
+            },
+        ]
+
+        def component(props):
+            # self.assertEqual(props['blocks'], blocks)
+            self.assertEqual(props['block'], blocks[0])
+            return None
+
+        render_decorators([
+            {
+                'strategy': LINKIFY_RE,
+                'component': component,
+            },
+        ], 'test https://www.example.com#hash #hashtagtest', blocks[0])

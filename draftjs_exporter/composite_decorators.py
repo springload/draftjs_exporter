@@ -31,11 +31,7 @@ def apply_decorators(decorators, text, block):
 
         yield DOM.create_element(decorator['component'], {
             'match': match,
-            'block': {
-                'type': block['type'],
-                'depth': block['depth'],
-                'data': block.get('data', {}),
-            }
+            'block': block,
         }, match.group(0))
         pointer = end
 
