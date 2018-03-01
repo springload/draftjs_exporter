@@ -8,7 +8,8 @@
 
 * Give block rendering components access to the whole `blocks` list.
 * Give block rendering components access to the whole `block`, when the component is rendered for a block.
-* Give text decorators access to the whole `block` when rendering decorations.
+* Give text decorators renders to the whole `blocks` list.
+* Give text decorators renderers access to the whole `block`.
 
 ### Changed
 
