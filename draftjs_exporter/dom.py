@@ -78,6 +78,7 @@ class DOM(object):
             props.pop('block', None)
             props.pop('blocks', None)
             props.pop('entity', None)
+            props.pop('inline_style_range', None)
 
             # Convert style object to style string, like the DOM would do.
             if 'style' in props and isinstance(props['style'], dict):
