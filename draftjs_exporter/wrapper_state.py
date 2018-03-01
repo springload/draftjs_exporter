@@ -90,14 +90,9 @@ class WrapperState:
     def element_for(self, block, block_content):
         type_ = block['type']
         depth = block['depth']
-        data = block.get('data', {})
         options = Options.for_block(self.block_map, type_)
         props = dict(options.props)
-        props['block'] = {
-            'type': type_,
-            'depth': depth,
-            'data': data,
-        }
+        props['block'] = block
         props['blocks'] = self.blocks
 
         # Make an element from the options specified in the block map.

@@ -40,6 +40,7 @@ class TestWrapperState(unittest.TestCase):
 
         def unstyled(props):
             self.assertEqual(props['blocks'], blocks)
+            self.assertEqual(props['block'], blocks[0])
 
         WrapperState({'unstyled': unstyled}, blocks).element_for(blocks[0], 'test')
 

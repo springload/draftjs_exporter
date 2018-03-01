@@ -7,6 +7,7 @@
 ### Added
 
 * Give block rendering components access to the whole `blocks` list.
+* Give block rendering components access to the whole `block`, when the component is rendered for a block.
 
 ### Changed
 
