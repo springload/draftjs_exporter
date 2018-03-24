@@ -14,7 +14,7 @@
 
 ### Changed
 
-* Performance improvements for text-only (no inline styles, no entities) blocks.
+* Performance improvements for text-only (no inline styles, no entities) blocks ([#89](https://github.com/springload/draftjs_exporter/pull/89)).
 
 ## [v2.0.0](https://github.com/springload/draftjs_exporter/releases/tag/v2.0.0)
 
