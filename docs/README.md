@@ -91,9 +91,9 @@ Python versions as defined in `setup.py` classifiers.
 
 #### Which version combinations to include in Travis test matrix?
 
-All supported Python version should be tested.
+All supported Python versions should be tested.
 
-At the moment, tests are only ran against the latest version of BeautifulSoup `4.x` and the latest version of LXML.
+Each version should be tested with the lower and upper bounds of supported version ranges for all dependencies.
 
 ## Troubleshooting
 
