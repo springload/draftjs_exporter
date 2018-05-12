@@ -36,4 +36,4 @@ clean-pyc: ## Remove Python file artifacts.
 	find . -name '*~' -exec rm -f {} +
 
 publish: ## Publishes a new version to pypi.
-	rm dist/* && python setup.py sdist && twine upload dist/* && echo 'Success! Go to https://pypi.python.org/pypi/draftjs_exporter and check that all is well.'
+	rm dist/* && python setup.py sdist && twine upload dist/* && echo 'Success! Go to https://pypi.org/project/draftjs_exporter/ and check that all is well.'
