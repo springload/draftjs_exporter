@@ -2,15 +2,13 @@
 
 > Library to convert rich text from Draft.js raw ContentState to HTML.
 
-It is developed alongside the [Draftail](https://github.com/springload/draftail/) rich text editor, for [Wagtail](https://wagtail.io/). Check out the [online demo](https://draftjs-exporter.herokuapp.com/), and our [introductory blog post](https://wagtail.io/blog/rethinking-rich-text-pipelines-with-draft-js/)
+It is developed alongside the [Draftail](https://github.com/springload/draftail/) rich text editor, for [Wagtail](https://github.com/wagtail/wagtail). Check out the [online demo](https://draftail-playground.herokuapp.com/), and our [introductory blog post](https://wagtail.io/blog/rethinking-rich-text-pipelines-with-draft-js/)
 
 ## Why
 
 [Draft.js](https://draftjs.org/) is a rich text editor framework for React. Its approach is different from most rich text editors because it does not store data as HTML, but rather in its own representation called ContentState. This exporter is useful when the ContentState to HTML conversion has to be done in a Python ecosystem.
 
-The initial use case was to gain more control over the content managed by rich text editors in a Wagtail/Django site, as part of our [WagtailDraftail](https://github.com/springload/wagtaildraftail) project.
-
-If you want to read the full story, have a look at our blog post: [Rethinking rich text pipelines with Draft.js](https://wagtail.io/blog/rethinking-rich-text-pipelines-with-draft-js/).
+The initial use case was to gain more control over the content managed by rich text editors in a Wagtail/Django site. If you want to read the full story, have a look at our blog post: [Rethinking rich text pipelines with Draft.js](https://wagtail.io/blog/rethinking-rich-text-pipelines-with-draft-js/).
 
 ## Features
 
@@ -70,7 +68,7 @@ html = exporter.render({
 print(html)
 ```
 
-You can also run an example by downloading this repository and then using `python example.py`, or by using our [online demo](https://draftjs-exporter.herokuapp.com/).
+You can also run an example by downloading this repository and then using `python example.py`, or by using our [online demo](https://draftail-playground.herokuapp.com/).
 
 ### Configuration
 
@@ -302,4 +300,4 @@ If you just want to set up the project on your own computer, the contribution gu
 
 This project is made possible by the work of [Springload](https://github.com/springload), a New Zealand digital agency, and. The _beautiful_ demo site is the work of [@thibaudcolas](https://github.com/thibaudcolas).
 
-View the full list of [contributors](https://github.com/springload/draftail/graphs/contributors). [MIT](https://github.com/springload/draftjs_exporter/blob/master/LICENSE) licensed.
+View the full list of [contributors](https://github.com/springload/draftjs_exporter/graphs/contributors). [MIT](https://github.com/springload/draftjs_exporter/blob/master/LICENSE) licensed.
