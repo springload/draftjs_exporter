@@ -20,7 +20,7 @@ html5lib_dependencies = [
 ]
 
 lxml_dependencies = [
-    'lxml>=3.6.0',
+    'lxml>=3.6.0,<5',
 ]
 
 testing_dependencies = [
