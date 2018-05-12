@@ -59,10 +59,10 @@ class TestDOMEnginesDifferences(unittest.TestCase):
         })), '<img alt="&lt; &quot; &#x27; &lt; &gt; &amp;"/>')
 
     def test_html5lib_html_parsing(self):
-        self.assertEqual(DOM_HTML5LIB.render_debug(DOM_HTML5LIB.parse_html('<p>Invalid < " > &</p>')), '<p>Invalid &lt; " &gt; &amp;</p>')
+        self.assertEqual(DOM_HTML5LIB.render_debug(DOM_HTML5LIB.parse_html('<p>Invalid > " &</p>')), '<p>Invalid &gt; " &amp;</p>')
 
     def test_lxml_html_parsing(self):
-        self.assertEqual(DOM_LXML.render_debug(DOM_LXML.parse_html('<p>Invalid < " > &</p>')), '<p>Invalid &lt; " &gt; &amp;</p>')
+        self.assertEqual(DOM_LXML.render_debug(DOM_LXML.parse_html('<p>Invalid > " &</p>')), '<p>Invalid &gt; " &amp;</p>')
 
     def test_string_html_parsing(self):
-        self.assertEqual(DOMString.render_debug(DOMString.parse_html('<p>Invalid < " > &</p>')), '<p>Invalid < " > &</p>')
+        self.assertEqual(DOMString.render_debug(DOMString.parse_html('<p>Invalid > " &</p>')), '<p>Invalid > " &</p>')
