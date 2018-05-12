@@ -16,7 +16,7 @@ dependencies = []
 
 html5lib_dependencies = [
     'beautifulsoup4>=4.4.1,<5',
-    'html5lib>=0.999,<=1.0b10',
+    'html5lib>=0.999,<=1.0.1',
 ]
 
 lxml_dependencies = [
