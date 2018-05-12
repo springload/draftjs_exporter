@@ -2,15 +2,9 @@
 
 from __future__ import absolute_import, unicode_literals
 
-import io
-import re
-
 from draftjs_exporter import __version__
 
-try:
-    from setuptools import setup, find_packages
-except ImportError:
-    from distutils.core import setup
+from setuptools import find_packages, setup
 
 dependencies = {
     # Keep this in sync with the dependencies in tox.ini.
@@ -40,53 +34,15 @@ dependencies['testing'] = [
     'isort==4.2.5',
 ] + dependencies['html5lib'] + dependencies['lxml']
 
-RE_MD_CODE_BLOCK = re.compile(
-    r'```(?P<language>\w+)?\n(?P<lines>.*?)```', re.S)
-RE_LINK = re.compile(r'\[(?P<text>.*?)\]\((?P<url>.*?)\)')
-RE_IMAGE = re.compile(r'\!\[(?P<text>.*?)\]\((?P<url>.*?)\)')
-RE_TITLE = re.compile(r'^(?P<level>#+)\s*(?P<title>.*)$', re.M)
-RE_CODE = re.compile(r'``([^<>]*?)``')
-
-RST_TITLE_LEVELS = ['=', '-', '~']
-
-
-def md2pypi(filename):
-    '''
-    Load .md (markdown) file and sanitize it for PyPI.
-    '''
-    content = io.open(filename).read()
-
-    for match in RE_MD_CODE_BLOCK.finditer(content):
-        rst_block = '\n'.join(
-            ['.. code-block:: {language}'.format(**match.groupdict()), ''] +
-            ['    {0}'.format(l) for l in match.group('lines').split('\n')] +
-            ['']
-        )
-        content = content.replace(match.group(0), rst_block)
-
-    for match in RE_IMAGE.finditer(content):
-        content = content.replace(match.group(0), match.group(1))
-
-    content = RE_LINK.sub('`\g<text> <\g<url>>`_', content)
-    content = RE_CODE.sub('``\g<1>``', content)
-
-    for match in RE_TITLE.finditer(content):
-        level = len(match.group('level')) - 1
-        underchar = RST_TITLE_LEVELS[level]
-        title = match.group('title')
-        underline = underchar * len(title)
-
-        full_title = '\n'.join((title, underline))
-        content = content.replace(match.group(0), full_title)
-
-    return content
-
+with open('README.md') as f:
+    long_description = f.read()
 
 setup(
     name='draftjs_exporter',
     version=__version__,
     description='Library to convert rich text from Draft.js raw ContentState to HTML',
-    long_description=md2pypi('README.md'),
+    long_description=long_description,
+    long_description_content_type='text/markdown',
     author='Springload',
     author_email='hello@springload.co.nz',
     url='https://github.com/springload/draftjs_exporter',
