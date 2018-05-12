@@ -1,5 +1,4 @@
-draftjs_exporter documentation
-==============================
+# Documentation
 
 > This project started as a Python port of the [draftjs_exporter](https://github.com/ignitionworks/draftjs_exporter) ruby library.
 
@@ -99,12 +98,12 @@ Each version should be tested with the lower and upper bounds of supported versi
 
 ### Install
 
-```
-$ pip install draftjs_exporter
-[...]
-*********************************************************************************
-Could not find function xmlCheckVersion in library libxml2. Is libxml2 installed?
-*********************************************************************************
+```sh
+pip install draftjs_exporter
+# [...]
+# *********************************************************************************
+# Could not find function xmlCheckVersion in library libxml2. Is libxml2 installed?
+#*********************************************************************************
 ```
 
 Solution: see http://stackoverflow.com/a/6504860/1798491
