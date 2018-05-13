@@ -4,6 +4,8 @@
 
 ## Unreleased
 
+## [v2.1.1](https://github.com/springload/draftjs_exporter/releases/tag/v2.1.1)
+
 ### Changed
 
 * Add upper bound to lxml dependency, now defined as `lxml>=3.6.0,<5` ([#75](https://github.com/springload/draftjs_exporter/issues/75)).
