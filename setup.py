@@ -12,18 +12,20 @@ try:
 except ImportError:
     from distutils.core import setup
 
-dependencies = []
+dependencies = {
+    # Keep this in sync with the dependencies in tox.ini.
+    'lxml': [
+        'lxml>=3.6.0,<5',
+    ],
+    'html5lib': [
+        'beautifulsoup4>=4.4.1,<5',
+        'html5lib>=0.999,<=1.0.1',
+    ],
+    'docs': [],
+}
 
-html5lib_dependencies = [
-    'beautifulsoup4>=4.4.1,<5',
-    'html5lib>=0.999,<=1.0.1',
-]
-
-lxml_dependencies = [
-    'lxml>=3.6.0,<5',
-]
-
-testing_dependencies = [
+# Development extras.
+dependencies['testing'] = [
     # Required for running the tests.
     'tox>=2.3.1',
 
@@ -36,11 +38,7 @@ testing_dependencies = [
     'coverage>=4.1.0',
     'flake8>=3.2.0',
     'isort==4.2.5',
-] + html5lib_dependencies + lxml_dependencies
-
-documentation_dependencies = [
-
-]
+] + dependencies['html5lib'] + dependencies['lxml']
 
 RE_MD_CODE_BLOCK = re.compile(
     r'```(?P<language>\w+)?\n(?P<lines>.*?)```', re.S)
@@ -114,13 +112,7 @@ setup(
         'Topic :: Software Development :: Libraries :: Python Modules',
         'Topic :: Text Editors :: Word Processors',
     ],
-    install_requires=dependencies,
-    extras_require={
-        # Special extra installs for the built-in DOM engines.
-        'lxml': lxml_dependencies,
-        'html5lib': html5lib_dependencies,
-        # Development extras.
-        'testing': testing_dependencies,
-        'docs': documentation_dependencies,
-    },
-    zip_safe=False)
+    install_requires=[],
+    extras_require=dependencies,
+    zip_safe=False,
+)
