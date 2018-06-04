@@ -2,6 +2,8 @@
 
 from __future__ import absolute_import, unicode_literals
 
+import io
+
 from draftjs_exporter import __version__
 
 from setuptools import find_packages, setup
@@ -34,8 +36,7 @@ dependencies['testing'] = [
     'isort==4.2.5',
 ] + dependencies['html5lib'] + dependencies['lxml']
 
-with open('README.md') as f:
-    long_description = f.read()
+long_description = io.open('README.md', encoding='utf-8').read()
 
 setup(
     name='draftjs_exporter',
