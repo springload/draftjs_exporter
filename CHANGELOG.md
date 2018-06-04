@@ -4,6 +4,12 @@
 
 ## Unreleased
 
+## [v2.1.2](https://github.com/springload/draftjs_exporter/releases/tag/v2.1.2)
+
+### Changed
+
+*  Use io.open with utf-8 encoding in setup.py. Fix [#98](https://github.com/springload/draftjs_exporter/issues/98) ([#99](https://github.com/springload/draftjs_exporter/pull/99))
+
 ## [v2.1.1](https://github.com/springload/draftjs_exporter/releases/tag/v2.1.1)
 
 ### Changed
