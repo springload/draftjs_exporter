@@ -14,7 +14,8 @@
 
 ### Changed
 
-* Add upper bound to lxml dependency, now defined as `lxml>=3.6.0,<5` ([#75](https://github.com/springload/draftjs_exporter/issues/75)).
+* Increase lower bound of lxml dependency to v4.2.0 to guarantee Python 3.7 support ([#88](https://github.com/springload/draftjs_exporter/pull/88)).
+* Add upper bound to lxml dependency, now defined as `lxml>=4.2.0,<5` ([#75](https://github.com/springload/draftjs_exporter/issues/75)).
 * Update html5lib upper bound, now defined as `html5lib>=0.999,<=1.0.1`.
 
 ## [v2.1.0](https://github.com/springload/draftjs_exporter/releases/tag/v2.1.0)

@@ -11,7 +11,7 @@ from setuptools import find_packages, setup
 dependencies = {
     # Keep this in sync with the dependencies in tox.ini.
     'lxml': [
-        'lxml>=3.6.0,<5',
+        'lxml>=4.2.0,<5',
     ],
     'html5lib': [
         'beautifulsoup4>=4.4.1,<5',
