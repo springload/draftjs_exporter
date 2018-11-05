@@ -36,7 +36,8 @@ dependencies['testing'] = [
     'isort==4.2.5',
 ] + dependencies['html5lib'] + dependencies['lxml']
 
-long_description = io.open('README.md', encoding='utf-8').read()
+with io.open('README.md', encoding='utf-8') as readme_file:
+    long_description = readme_file.read()
 
 setup(
     name='draftjs_exporter',
