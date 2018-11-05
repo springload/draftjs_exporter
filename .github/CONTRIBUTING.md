@@ -46,7 +46,9 @@ make test-ci         # Continuous integration test suite.
 make dev             # Restarts the example whenever a file changes.
 make benchmark       # Runs a one-off performance (speed, memory) benchmark.
 make clean-pyc       # Remove Python file artifacts.
+make sdist           # Builds package version
 make publish         # Publishes a new version to pypi.
+make publish-test    # Publishes a new version to test pypi.
 ```
 
 ### Debugging
@@ -60,6 +62,7 @@ make publish         # Publishes a new version to pypi.
 * Update the [CHANGELOG](https://github.com/springload/draftjs_exporter/CHANGELOG.md).
 * Update the version number in `draftjs_exporter/__init__.py`, following semver.
 * Make a PR and squash merge it.
+* Back on master with the PR merged, use `make publish-test` (confirm, and enter your password, confirm everything good on test.pypi.org).
 * Back on master with the PR merged, use `make publish` (confirm, and enter your password).
 * Finally, go to GitHub and create a release and a tag for the new version.
 * Done!
