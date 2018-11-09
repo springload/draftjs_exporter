@@ -2,13 +2,13 @@
 
 > Library to convert rich text from Draft.js raw ContentState to HTML.
 
-It is developed alongside the [Draftail](https://github.com/springload/draftail/) rich text editor, for [Wagtail](https://github.com/wagtail/wagtail). Check out the [online demo](https://draftail-playground.herokuapp.com/), and our [introductory blog post](https://wagtail.io/blog/rethinking-rich-text-pipelines-with-draft-js/)
+It is developed alongside the [Draftail](https://www.draftail.org/) rich text editor, for [Wagtail](https://github.com/wagtail/wagtail). Check out the [online demo](http://playground.draftail.org/), and our [introductory blog post](https://www.draftail.org/blog/2018/03/13/rethinking-rich-text-pipelines-with-draft-js)
 
 ## Why
 
-[Draft.js](https://draftjs.org/) is a rich text editor framework for React. Its approach is different from most rich text editors because it does not store data as HTML, but rather in its own representation called ContentState. This exporter is useful when the ContentState to HTML conversion has to be done in a Python ecosystem.
+[Draft.js](https://draftjs.org/) is a rich text editor framework for [React](https://reactjs.org/). Its approach is different from most rich text editors because it does not store data as HTML, but rather in its own representation called ContentState. This exporter is useful when the ContentState to HTML conversion has to be done in a Python ecosystem.
 
-The initial use case was to gain more control over the content managed by rich text editors in a Wagtail/Django site. If you want to read the full story, have a look at our blog post: [Rethinking rich text pipelines with Draft.js](https://wagtail.io/blog/rethinking-rich-text-pipelines-with-draft-js/).
+The initial use case was to gain more control over the content managed by rich text editors in a Wagtail/Django site. If you want to read the full story, have a look at our blog post: [Rethinking rich text pipelines with Draft.js](https://www.draftail.org/blog/2018/03/13/rethinking-rich-text-pipelines-with-draft-js).
 
 ## Features
 
@@ -26,11 +26,7 @@ This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html
 
 ## Usage
 
-Draft.js stores data in a JSON representation based on blocks,
-representing lines of content in the editor, annotated with entities and
-styles to represent rich text. For more information, [this
-article](https://medium.com/@rajaraodv/how-draft-js-represents-rich-text-data-eeabb5f25cf2)
-covers the concepts further.
+Draft.js stores data in a JSON representation based on blocks, representing lines of content in the editor, annotated with entities and styles to represent rich text. For more information, [this article](https://medium.com/@rajaraodv/how-draft-js-represents-rich-text-data-eeabb5f25cf2) covers the concepts further.
 
 ### Getting started
 
@@ -68,7 +64,7 @@ html = exporter.render({
 print(html)
 ```
 
-You can also run an example by downloading this repository and then using `python example.py`, or by using our [online demo](https://draftail-playground.herokuapp.com/).
+You can also run an example by downloading this repository and then using `python example.py`, or by using our [online Draft.js demo](http://playground.draftail.org/).
 
 ### Configuration
 
@@ -148,7 +144,7 @@ See [examples.py](https://github.com/springload/draftjs_exporter/blob/master/exa
 
 ### Custom components
 
-To generate arbitrary markup with dynamic data, the exporter comes with an API to create rendering components. This API mirrors React's [createElement](https://facebook.github.io/react/docs/top-level-api.html#react.createelement) API (what JSX compiles to).
+To generate arbitrary markup with dynamic data, the exporter comes with an API to create rendering components. This API mirrors React’s [createElement](https://facebook.github.io/react/docs/top-level-api.html#react.createelement) API (what JSX compiles to).
 
 ```python
 # All of the API is available from a single `DOM` namespace
