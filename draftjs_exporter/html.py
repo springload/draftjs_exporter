@@ -22,6 +22,7 @@ class HTML:
 
         self.entity_decorators = config.get('entity_decorators', {})
         self.composite_decorators = config.get('composite_decorators', [])
+        self.has_decorators = len(self.composite_decorators) > 0
         self.block_map = config.get('block_map', BLOCK_MAP)
         self.style_map = config.get('style_map', STYLE_MAP)
 
@@ -69,7 +70,7 @@ class HTML:
                     style_state.apply(command)
 
                 # Decorators are not rendered inside entities.
-                if text and entity_state.has_no_entity() and len(self.composite_decorators) > 0:
+                if entity_state.has_no_entity() and self.has_decorators:
                     decorated_node = render_decorators(self.composite_decorators, text, block, wrapper_state.blocks)
                 else:
                     decorated_node = text
@@ -85,7 +86,7 @@ class HTML:
                         DOM.append_child(content, styled_node)
         # Fast track for blocks which do not contain styles nor entities, which is very common.
         else:
-            if len(self.composite_decorators) > 0:
+            if self.has_decorators:
                 content = render_decorators(self.composite_decorators, block['text'], block, wrapper_state.blocks)
             else:
                 content = block['text']
