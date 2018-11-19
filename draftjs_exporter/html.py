@@ -58,9 +58,8 @@ class HTML:
         return DOM.render(document)
 
     def render_block(self, block, entity_map, wrapper_state):
-        content = DOM.create_element()
-
         if block['inlineStyleRanges'] or block['entityRanges']:
+            content = DOM.create_element()
             entity_state = EntityState(self.entity_decorators, entity_map)
             style_state = StyleState(self.style_map)
 
@@ -87,11 +86,9 @@ class HTML:
         # Fast track for blocks which do not contain styles nor entities, which is very common.
         else:
             if len(self.composite_decorators) > 0:
-                decorated_node = render_decorators(self.composite_decorators, block['text'], block, wrapper_state.blocks)
+                content = render_decorators(self.composite_decorators, block['text'], block, wrapper_state.blocks)
             else:
-                decorated_node = block['text']
-
-            DOM.append_child(content, decorated_node)
+                content = block['text']
 
         return wrapper_state.element_for(block, content)
 
