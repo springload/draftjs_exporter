@@ -85,11 +85,10 @@ class HTML:
                     if styled_node != entity_node and entity_state.has_no_entity():
                         DOM.append_child(content, styled_node)
         # Fast track for blocks which do not contain styles nor entities, which is very common.
+        elif self.has_decorators:
+            content = render_decorators(self.composite_decorators, block['text'], block, wrapper_state.blocks)
         else:
-            if self.has_decorators:
-                content = render_decorators(self.composite_decorators, block['text'], block, wrapper_state.blocks)
-            else:
-                content = block['text']
+            content = block['text']
 
         return wrapper_state.element_for(block, content)
 
