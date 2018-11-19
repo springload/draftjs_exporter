@@ -44,7 +44,7 @@ class EntityState:
         return details
 
     def render_entities(self, style_node):
-
+        # We have a complete (start, stop) entity to render.
         if self.completed_entity is not None:
             entity_details = self.get_entity_details(self.completed_entity)
             opts = Options.for_entity(self.entity_decorators, entity_details['type'])
@@ -58,17 +58,17 @@ class EntityState:
             for n in self.element_stack:
                 DOM.append_child(nodes, n)
 
-            elt = DOM.create_element(opts.element, props, nodes)
-
             self.completed_entity = None
             self.element_stack = []
 
+            # Is there still another entity? (adjacent) if so add the current style_node for it.
             if self.has_entity():
                 self.element_stack.append(style_node)
-        elif self.has_no_entity():
-            elt = style_node
-        else:
-            self.element_stack.append(style_node)
-            elt = None
 
-        return elt
+            return DOM.create_element(opts.element, props, nodes)
+
+        if self.has_entity():
+            self.element_stack.append(style_node)
+            return None
+
+        return style_node
