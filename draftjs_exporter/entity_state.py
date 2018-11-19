@@ -29,6 +29,9 @@ class EntityState:
 
             self.completed_entity = self.entity_stack.pop()
 
+    def has_entity(self):
+        return self.entity_stack
+
     def has_no_entity(self):
         return not self.entity_stack
 
@@ -59,6 +62,9 @@ class EntityState:
 
             self.completed_entity = None
             self.element_stack = []
+
+            if self.has_entity():
+                self.element_stack.append(style_node)
         elif self.has_no_entity():
             elt = style_node
         else:
