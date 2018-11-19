@@ -71,7 +71,7 @@ class DOMString(DOMEngine):
         # This check is necessary because the current wrapper_state implementation
         # has an issue where it inserts elements multiple times.
         # This must be skipped for text, which can be duplicated.
-        is_existing_ref = isinstance(child, Elt) and child in elt.children
+        is_existing_ref = child in elt.children and isinstance(child, Elt)
         if not is_existing_ref:
             elt.children.append(child)
 
