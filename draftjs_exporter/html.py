@@ -80,7 +80,9 @@ class HTML:
 
                 if entity_node is not None:
                     DOM.append_child(content, entity_node)
-                    if styled_node != entity_node:
+
+                    # Check whether there actually are two different nodes, confirming we are not inserting an upcoming entity.
+                    if styled_node != entity_node and entity_state.has_no_entity():
                         DOM.append_child(content, styled_node)
         # Fast track for blocks which do not contain styles nor entities, which is very common.
         else:
