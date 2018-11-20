@@ -2,7 +2,7 @@
 
 > Library to convert rich text from Draft.js raw ContentState to HTML.
 
-It is developed alongside the [Draftail](https://www.draftail.org/) rich text editor, for [Wagtail](https://github.com/wagtail/wagtail). Check out the [online demo](http://playground.draftail.org/), and our [introductory blog post](https://www.draftail.org/blog/2018/03/13/rethinking-rich-text-pipelines-with-draft-js)
+It is developed alongside the [Draftail](https://www.draftail.org/) rich text editor, for [Wagtail](https://github.com/wagtail/wagtail). Check out the [online demo](http://playground.draftail.org/), and our [introductory blog post](https://www.draftail.org/blog/2018/03/13/rethinking-rich-text-pipelines-with-draft-js).
 
 ## Why
 
