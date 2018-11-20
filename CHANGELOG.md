@@ -4,6 +4,16 @@
 
 ## Unreleased
 
+## [v2.1.5](https://github.com/springload/draftjs_exporter/releases/tag/v2.1.5)
+
+### Changed
+
+* Minor performance improvements (8% speed-up, 20% lower memory consumption) ([#108](https://github.com/springload/draftjs_exporter/pull/108))
+
+### Fixed
+
+* Fix export bug with adjacent entities - the exporter moved their contents outside of the entities' markup ([#106](https://github.com/springload/draftjs_exporter/pull/106), [#107](https://github.com/springload/draftjs_exporter/pull/107)). Thanks to [@ericpai](https://github.com/ericpai) for reporting this.
+
 ## [v2.1.4](https://github.com/springload/draftjs_exporter/releases/tag/v2.1.4)
 
 ### Changed
