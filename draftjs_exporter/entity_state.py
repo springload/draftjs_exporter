@@ -53,10 +53,13 @@ class EntityState:
                 'type': entity_details['type'],
             }
 
-            nodes = DOM.create_element()
+            if len(self.element_stack) == 1:
+                children = self.element_stack[0]
+            else:
+                children = DOM.create_element()
 
-            for n in self.element_stack:
-                DOM.append_child(nodes, n)
+                for n in self.element_stack:
+                    DOM.append_child(children, n)
 
             self.completed_entity = None
             self.element_stack = []
@@ -65,7 +68,7 @@ class EntityState:
             if self.has_entity():
                 self.element_stack.append(style_node)
 
-            return DOM.create_element(opts.element, props, nodes)
+            return DOM.create_element(opts.element, props, children)
 
         if self.has_entity():
             self.element_stack.append(style_node)
