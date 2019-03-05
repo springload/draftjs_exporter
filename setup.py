@@ -48,7 +48,7 @@ setup(
     author='Springload',
     author_email='hello@springload.co.nz',
     url='https://github.com/springload/draftjs_exporter',
-    packages=find_packages(exclude=[tests*]),
+    packages=find_packages(exclude=['tests*']),
     include_package_data=True,
     license='MIT',
     classifiers=[
