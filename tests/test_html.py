@@ -293,6 +293,21 @@ class TestHTML(unittest.TestCase):
             ]
         }), '<h1>Header</h1>')
 
+    def test_render_no_depth(self):
+        """Assume a depth of 0 if it's not specified."""
+        self.assertEqual(self.exporter.render({
+            'entityMap': {},
+            'blocks': [
+                {
+                    'key': '5s7g9',
+                    'text': 'Header',
+                    'type': 'header-one',
+                    'inlineStyleRanges': [],
+                    'entityRanges': []
+                },
+            ]
+        }), '<h1>Header</h1>')
+
     def test_render_empty(self):
         self.assertEqual(self.exporter.render({
             'entityMap': {},
