@@ -89,7 +89,7 @@ class WrapperState:
 
     def element_for(self, block, block_content):
         type_ = block['type']
-        depth = block['depth']
+        depth = block.get('depth', 0)
         options = Options.for_block(self.block_map, type_)
         props = dict(options.props)
         props['block'] = block

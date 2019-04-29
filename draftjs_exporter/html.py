@@ -42,7 +42,7 @@ class HTML:
         min_depth = 0
 
         for block in blocks:
-            depth = block['depth']
+            depth = block.get('depth', 0)
             elt = self.render_block(block, entity_map, wrapper_state)
 
             if depth > min_depth:

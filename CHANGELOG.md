@@ -9,6 +9,7 @@
 ### Changed
 
 * Minor performance improvements (8% speed-up, 20% lower memory consumption) ([#108](https://github.com/springload/draftjs_exporter/pull/108))
+* Assume default block depth of 0 ([#110](https://github.com/springload/draftjs_exporter/pull/110))
 
 ### Fixed
 
