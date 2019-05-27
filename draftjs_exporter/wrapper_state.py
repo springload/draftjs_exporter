@@ -88,8 +88,8 @@ class WrapperState:
         return '<WrapperState: %s>' % self.stack
 
     def element_for(self, block, block_content):
-        type_ = block['type']
-        depth = block.get('depth', 0)
+        type_ = block['type'] if 'type' in block else 'unstyled'
+        depth = block['depth'] if 'depth' in block else 0
         options = Options.for_block(self.block_map, type_)
         props = dict(options.props)
         props['block'] = block

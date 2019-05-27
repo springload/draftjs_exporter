@@ -15,7 +15,7 @@ config = {
             'element': 'li',
             'wrapper': ['ul', {'class': 'public-DraftStyleDefault-ul'}]
         },
-        'unstyled': {'element': 'div'}
+        'unstyled': {'element': 'p'}
     },
     'style_map': {
         'ITALIC': {'element': 'em'},
@@ -293,20 +293,15 @@ class TestHTML(unittest.TestCase):
             ]
         }), '<h1>Header</h1>')
 
-    def test_render_no_depth(self):
-        """Assume a depth of 0 if it's not specified."""
+    def test_render_block_defaults(self):
         self.assertEqual(self.exporter.render({
             'entityMap': {},
             'blocks': [
                 {
-                    'key': '5s7g9',
-                    'text': 'Header',
-                    'type': 'header-one',
-                    'inlineStyleRanges': [],
-                    'entityRanges': []
+                    'text': 'Paragraph',
                 },
             ]
-        }), '<h1>Header</h1>')
+        }), '<p>Paragraph</p>')
 
     def test_render_empty(self):
         self.assertEqual(self.exporter.render({
