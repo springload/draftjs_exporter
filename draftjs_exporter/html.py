@@ -42,7 +42,8 @@ class HTML:
         min_depth = 0
 
         for block in blocks:
-            depth = block.get('depth', 0)
+            # Assume a depth of 0 if it's not specified, like Draft.js would.
+            depth = block['depth'] if 'depth' in block else 0
             elt = self.render_block(block, entity_map, wrapper_state)
 
             if depth > min_depth:
@@ -59,7 +60,7 @@ class HTML:
         return DOM.render(document)
 
     def render_block(self, block, entity_map, wrapper_state):
-        if block['inlineStyleRanges'] or block['entityRanges']:
+        if 'inlineStyleRanges' in block and block['inlineStyleRanges'] or 'entityRanges' in block and block['entityRanges']:
             content = DOM.create_element()
             entity_state = EntityState(self.entity_decorators, entity_map)
             style_state = StyleState(self.style_map)

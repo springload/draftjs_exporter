@@ -329,13 +329,7 @@ if __name__ == '__main__':
             }],
             "data": {}
         }, {
-            "key": "9fr0j",
             "text": "Here are some features worth highlighting:",
-            "type": "unstyled",
-            "depth": 0,
-            "inlineStyleRanges": [],
-            "entityRanges": [],
-            "data": {}
         }, {
             "key": "2mhgt",
             "text": "Convert line breaks to <br>\nelements.",
