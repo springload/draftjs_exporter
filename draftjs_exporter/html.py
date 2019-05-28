@@ -100,7 +100,7 @@ class HTML:
         """
         text = block['text']
 
-        commands = sorted(self.build_commands(block))
+        commands = self.build_commands(block)
         grouped = groupby(commands, Command.key)
         listed = list(groupby(commands, Command.key))
         sliced = []
@@ -111,7 +111,7 @@ class HTML:
                 stop_index = listed[i + 1][0]
                 sliced.append((text[start_index:stop_index], list(commands)))
             else:
-                sliced.append((text[start_index:start_index], list(commands)))
+                sliced.append(('', list(commands)))
             i += 1
 
         return sliced
@@ -123,11 +123,10 @@ class HTML:
         - Multiple pairs for styles.
         - Multiple pairs for entities.
         """
-        text_commands = Command.start_stop('text', 0, len(block['text']))
         style_commands = self.build_style_commands(block)
         entity_commands = self.build_entity_commands(block)
 
-        return text_commands + style_commands + entity_commands
+        return [Command('start_text', 0)] + sorted(style_commands + entity_commands) + [Command('stop_text', len(block['text']))]
 
     def build_style_commands(self, block):
         ranges = block['inlineStyleRanges']

@@ -7,6 +7,7 @@
 ### Changed
 
 * Assume same block defaults as Draft.js would when attributes are missing: depth = 0, type = unstyled, no entities, no styles ([#110](https://github.com/springload/draftjs_exporter/pull/110)).
+* Minor performance improvements for text-only blocks ([#111](https://github.com/springload/draftjs_exporter/pull/111)).
 
 ## [v2.1.5](https://github.com/springload/draftjs_exporter/releases/tag/v2.1.5)
 
@@ -404,7 +405,7 @@ KEYBOARD = 'kbd'
 
 ### Added
 
-* Add support for decorators thanks to @su27 (#16, #17).
+* Add support for decorators thanks to [@su27](https://github.com/su27) (#16, #17).
 * Add support for configurable decorators and entities.
 * Add support for decorators and entities in function form.
 
@@ -420,7 +421,7 @@ KEYBOARD = 'kbd'
 
 ### Added
 
-* Add profiling tooling thanks to @su27 (#31).
+* Add profiling tooling thanks to [@su27](https://github.com/su27) (#31).
 * Add more common entity types in constants (#34).
 
 ### Fixed

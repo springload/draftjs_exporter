@@ -193,15 +193,15 @@ class TestHTML(unittest.TestCase):
             ]
         })), str([
             Command('start_text', 0),
-            Command('stop_text', 19),
             Command('start_inline_style', 0, 'ITALIC'),
+            Command('start_entity', 0, 1),
             Command('stop_inline_style', 4, 'ITALIC'),
+            Command('stop_entity', 4, 1),
+            Command('start_entity', 5, 0),
             Command('start_inline_style', 9, 'BOLD'),
             Command('stop_inline_style', 12, 'BOLD'),
-            Command('start_entity', 5, 0),
             Command('stop_entity', 14, 0),
-            Command('start_entity', 0, 1),
-            Command('stop_entity', 4, 1),
+            Command('stop_text', 19),
         ]))
 
     def test_build_command_groups_empty(self):
