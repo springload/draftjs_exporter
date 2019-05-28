@@ -9,7 +9,7 @@
 ### Changed
 
 * Assume same block defaults as Draft.js would when attributes are missing: depth = 0, type = unstyled, no entities, no styles ([#110](https://github.com/springload/draftjs_exporter/pull/110), thanks to [@tpict](https://github.com/tpict)).
-* Minor performance improvements for text-only blocks ([#111](https://github.com/springload/draftjs_exporter/pull/111)).
+* Minor performance improvements for text-only blocks ([#112](https://github.com/springload/draftjs_exporter/pull/112)).
 
 ## [v2.1.5](https://github.com/springload/draftjs_exporter/releases/tag/v2.1.5)
 
