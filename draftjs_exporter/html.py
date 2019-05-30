@@ -42,7 +42,8 @@ class HTML:
         min_depth = 0
 
         for block in blocks:
-            depth = block['depth']
+            # Assume a depth of 0 if it's not specified, like Draft.js would.
+            depth = block['depth'] if 'depth' in block else 0
             elt = self.render_block(block, entity_map, wrapper_state)
 
             if depth > min_depth:
@@ -59,7 +60,7 @@ class HTML:
         return DOM.render(document)
 
     def render_block(self, block, entity_map, wrapper_state):
-        if block['inlineStyleRanges'] or block['entityRanges']:
+        if 'inlineStyleRanges' in block and block['inlineStyleRanges'] or 'entityRanges' in block and block['entityRanges']:
             content = DOM.create_element()
             entity_state = EntityState(self.entity_decorators, entity_map)
             style_state = StyleState(self.style_map)
@@ -99,7 +100,7 @@ class HTML:
         """
         text = block['text']
 
-        commands = sorted(self.build_commands(block))
+        commands = self.build_commands(block)
         grouped = groupby(commands, Command.key)
         listed = list(groupby(commands, Command.key))
         sliced = []
@@ -110,7 +111,7 @@ class HTML:
                 stop_index = listed[i + 1][0]
                 sliced.append((text[start_index:stop_index], list(commands)))
             else:
-                sliced.append((text[start_index:start_index], list(commands)))
+                sliced.append(('', list(commands)))
             i += 1
 
         return sliced
@@ -122,11 +123,10 @@ class HTML:
         - Multiple pairs for styles.
         - Multiple pairs for entities.
         """
-        text_commands = Command.start_stop('text', 0, len(block['text']))
         style_commands = self.build_style_commands(block)
         entity_commands = self.build_entity_commands(block)
 
-        return text_commands + style_commands + entity_commands
+        return [Command('start_text', 0)] + sorted(style_commands + entity_commands) + [Command('stop_text', len(block['text']))]
 
     def build_style_commands(self, block):
         ranges = block['inlineStyleRanges']
