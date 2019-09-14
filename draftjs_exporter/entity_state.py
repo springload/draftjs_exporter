@@ -10,6 +10,8 @@ class EntityException(ExporterException):
 
 
 class EntityState:
+    __slots__ = ('entity_decorators', 'entity_map', 'entity_stack', 'completed_entity', 'element_stack')
+
     def __init__(self, entity_decorators, entity_map):
         self.entity_decorators = entity_decorators
         self.entity_map = entity_map

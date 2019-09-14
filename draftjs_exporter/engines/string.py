@@ -38,6 +38,8 @@ class Elt(object):
     This class doesn't do much, but the exporter relies on
     comparing elements by reference so it's useful nonetheless.
     """
+    __slots__ = ('type', 'attr', 'children', 'markup')
+
     def __init__(self, type_, attr, markup=None):
         self.type = type_
         self.attr = attr
