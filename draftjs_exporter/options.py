@@ -8,6 +8,9 @@ class Options:
     """
     Facilitates querying configuration from a config map.
     """
+    __slots__ = ('type', 'element', 'props', 'wrapper', 'wrapper_props')
+
+
     def __init__(self, type_, element, props=None, wrapper=None, wrapper_props=None):
         self.type = type_
         self.element = element
@@ -22,7 +25,10 @@ class Options:
         return str(self)
 
     def __eq__(self, other):
-        return self.__dict__ == other.__dict__
+        """
+        Equality used in test code only, not to be relied on for the exporter.
+        """
+        return str(self) == str(other)
 
     def __ne__(self, other):
         return not self == other

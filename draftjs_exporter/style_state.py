@@ -10,6 +10,8 @@ class StyleState:
     Receives inline_style commands, and generates the element's `style`
     attribute from those.
     """
+    __slots__ = ('styles', 'style_map')
+
     def __init__(self, style_map):
         self.styles = []
         self.style_map = style_map

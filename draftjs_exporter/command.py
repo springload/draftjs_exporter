@@ -7,6 +7,8 @@ class Command:
     on a block for it to be converted into an arbitrary number
     of HTML nodes.
     """
+    __slots__ = ('name', 'index', 'data')
+
     def __init__(self, name, index, data=''):
         self.name = name
         self.index = index

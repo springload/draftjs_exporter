@@ -10,6 +10,8 @@ class WrapperStack:
     The bottom of the stack contains the elements closest to the page body.
     The top of the stack contains the most nested nodes.
     """
+    __slots__ = ('stack')
+
     def __init__(self):
         self.stack = []
 
@@ -46,6 +48,8 @@ class Wrapper:
     when the depth of a block is different than 0, so the DOM elements
     have the appropriate amount of nesting.
     """
+    __slots__ = ('depth', 'last_child', 'type', 'props', 'elt')
+
     def __init__(self, depth, options=None):
         self.depth = depth
         self.last_child = None
@@ -78,6 +82,7 @@ class WrapperState:
     It sets elements with the right tag, text content, and props.
     It adds a wrapper element around elements, if required.
     """
+    __slots__ = ('block_map', 'blocks', 'stack')
 
     def __init__(self, block_map, blocks):
         self.block_map = block_map

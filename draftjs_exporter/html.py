@@ -16,6 +16,8 @@ class HTML:
     Entry point of the exporter. Combines entity, wrapper and style state
     to generate the right HTML nodes.
     """
+    __slots__ = ('entity_decorators', 'composite_decorators', 'has_decorators', 'block_map', 'style_map')
+
     def __init__(self, config=None):
         if config is None:
             config = {}
