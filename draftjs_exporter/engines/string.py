@@ -14,7 +14,7 @@ except ImportError:
 
 # http://w3c.github.io/html/single-page.html#void-elements
 # https://github.com/html5lib/html5lib-python/blob/0cae52b2073e3f2220db93a7650901f2200f2a13/html5lib/constants.py#L560
-VOID_ELEMENTS = {
+VOID_ELEMENTS = (
     'area',
     'base',
     'br',
@@ -29,7 +29,7 @@ VOID_ELEMENTS = {
     'source',
     'track',
     'wbr',
-}
+)
 
 
 class Elt(object):

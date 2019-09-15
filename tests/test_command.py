@@ -25,10 +25,10 @@ class TestCommand(unittest.TestCase):
         self.assertEqual(Command.key(self.command), 5)
 
     def test_start_stop(self):
-        self.assertEqual(str(Command.start_stop('abracadabra', 0, 5, 'shazam')), str([
+        self.assertEqual(str(Command.start_stop('abracadabra', 0, 5, 'shazam')), str((
             Command('start_abracadabra', 0, 'shazam'),
             Command('stop_abracadabra', 5, 'shazam'),
-        ]))
+        )))
 
     def test_from_ranges_empty(self):
         self.assertEqual(str(Command.from_ranges([], 'abracadabra', 'style')), str([]))

@@ -32,10 +32,10 @@ class Command:
         """
         Builds a pair of start/stop commands with the same data.
         """
-        return [
+        return (
             Command('start_%s' % name, start, data),
             Command('stop_%s' % name, stop, data),
-        ]
+        )
 
     @staticmethod
     def from_ranges(ranges, name, data_key, start_key='offset', length_key='length'):
