@@ -114,7 +114,8 @@ class WrapperState:
             self.stack.stack[-1].last_child = elt
         else:
             # Reset the stack if there is no wrapper.
-            self.stack = WrapperStack()
+            if self.stack.length() > 0:
+                self.stack = WrapperStack()
             parent = elt
 
         return parent
