@@ -1050,7 +1050,7 @@ class TestOutput(unittest.TestCase):
             'style_map': {
                 INLINE_STYLES.ITALIC: {'element': 'em'},
                 INLINE_STYLES.BOLD: {'element': 'strong'},
-                'HIGHLIGHT': {'element': 'strong', 'textDecoration': 'underline'},
+                'HIGHLIGHT': {'element': 'strong', 'props': {'style': {'textDecoration': 'underline'}}},
             },
         }).render({
             'entityMap': {},
