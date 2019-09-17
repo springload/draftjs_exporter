@@ -33,6 +33,9 @@ class Options:
     def __ne__(self, other):
         return not self == other
 
+    def __hash__(self):
+        return hash(str(self))
+
     @staticmethod
     def create(kind_map, type_, fallback_key):
         """

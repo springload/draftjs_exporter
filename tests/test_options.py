@@ -16,6 +16,9 @@ class TestOptions(unittest.TestCase):
     def test_not_eq(self):
         self.assertNotEqual(Options('unordered-list-item', 'li'), Options('unordered-list-item', 'p'))
 
+    def test_hash(self):
+        self.assertEqual(hash(Options('unordered-list-item', 'li')), hash(Options('unordered-list-item', 'li')))
+
     def test_create_full(self):
         self.assertEqual(Options.create({'unordered-list-item': 'li'}, 'unordered-list-item', 'fallback'), Options('unordered-list-item', 'li'))
 
