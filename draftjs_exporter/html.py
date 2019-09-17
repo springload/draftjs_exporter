@@ -130,7 +130,7 @@ class HTML:
         style_commands = self.build_style_commands(block)
         entity_commands = self.build_entity_commands(block)
 
-        return [Command('start_text', 0)] + sorted(style_commands + entity_commands) + [Command('stop_text', len(block['text']))]
+        return [Command('start_text', 0)] + sorted(style_commands + entity_commands, key=Command.key) + [Command('stop_text', len(block['text']))]
 
     def build_style_commands(self, block):
         ranges = block['inlineStyleRanges']

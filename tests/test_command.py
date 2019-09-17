@@ -15,12 +15,6 @@ class TestCommand(unittest.TestCase):
     def test_str(self):
         self.assertEqual(str(self.command), '<Command abracadabra 5 shazam>')
 
-    def test_lt_true(self):
-        self.assertTrue(self.command.__lt__(Command('a', 10, 's')))
-
-    def test_lt_false(self):
-        self.assertFalse(self.command.__lt__(Command('a', 0, 's')))
-
     def test_key(self):
         self.assertEqual(Command.key(self.command), 5)
 
