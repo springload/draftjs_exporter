@@ -27,14 +27,14 @@ class Options:
     def __eq__(self, other):
         """
         Equality used in test code only, not to be relied on for the exporter.
-        """
+    """
         return str(self) == str(other)
 
     def __ne__(self, other):
         return not self == other
 
     @staticmethod
-    def for_kind(kind_map, type_, fallback_key):
+    def create(kind_map, type_, fallback_key):
         """
         Create an Options object from any mapping.
         """
@@ -57,13 +57,31 @@ class Options:
         return opts
 
     @staticmethod
-    def for_block(block_map, type_):
-        return Options.for_kind(block_map, type_, BLOCK_TYPES.FALLBACK)
+    def map(kind_map, fallback_key):
+        options = {}
+        for type_ in kind_map:
+            options[type_] = Options.create(kind_map, type_, fallback_key)
+
+        return options
 
     @staticmethod
-    def for_style(style_map, type_):
-        return Options.for_kind(style_map, type_, INLINE_STYLES.FALLBACK)
+    def map_blocks(block_map):
+        return Options.map(block_map, BLOCK_TYPES.FALLBACK)
 
     @staticmethod
-    def for_entity(entity_map, type_):
-        return Options.for_kind(entity_map, type_, ENTITY_TYPES.FALLBACK)
+    def map_styles(style_map):
+        return Options.map(style_map, INLINE_STYLES.FALLBACK)
+
+    @staticmethod
+    def map_entities(entity_map):
+        return Options.map(entity_map, ENTITY_TYPES.FALLBACK)
+
+    @staticmethod
+    def get(options, type_, fallback_key):
+        try:
+            return options[type_]
+        except KeyError:
+            try:
+                return options[fallback_key]
+            except KeyError:
+                raise ConfigException('"%s" is not in the config and has no fallback' % type_)

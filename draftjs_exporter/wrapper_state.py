@@ -1,5 +1,6 @@
 from __future__ import absolute_import, unicode_literals
 
+from draftjs_exporter.constants import BLOCK_TYPES
 from draftjs_exporter.dom import DOM
 from draftjs_exporter.options import Options
 
@@ -82,10 +83,10 @@ class WrapperState:
     It sets elements with the right tag, text content, and props.
     It adds a wrapper element around elements, if required.
     """
-    __slots__ = ('block_map', 'blocks', 'stack')
+    __slots__ = ('block_options', 'blocks', 'stack')
 
-    def __init__(self, block_map, blocks):
-        self.block_map = block_map
+    def __init__(self, block_options, blocks):
+        self.block_options = block_options
         self.blocks = blocks
         self.stack = WrapperStack()
 
@@ -95,7 +96,7 @@ class WrapperState:
     def element_for(self, block, block_content):
         type_ = block['type'] if 'type' in block else 'unstyled'
         depth = block['depth'] if 'depth' in block else 0
-        options = Options.for_block(self.block_map, type_)
+        options = Options.get(self.block_options, type_, BLOCK_TYPES.FALLBACK)
         props = dict(options.props)
         props['block'] = block
         props['blocks'] = self.blocks

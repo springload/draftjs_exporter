@@ -3,6 +3,7 @@ from __future__ import absolute_import, unicode_literals
 import unittest
 
 from draftjs_exporter.dom import DOM
+from draftjs_exporter.options import Options
 from draftjs_exporter.wrapper_state import WrapperState
 from example import blockquote, list_item, ordered_list
 
@@ -11,7 +12,7 @@ class TestWrapperState(unittest.TestCase):
     def setUp(self):
         DOM.use(DOM.STRING)
 
-        self.wrapper_state = WrapperState({
+        self.wrapper_state = WrapperState(Options.map_blocks({
             'header-one': 'h1',
             'unstyled': 'div',
             'atomic': lambda props: props['children'],
@@ -21,7 +22,7 @@ class TestWrapperState(unittest.TestCase):
                 'element': list_item,
                 'wrapper': ordered_list
             },
-        }, [])
+        }), [])
 
     def test_init(self):
         self.assertIsInstance(self.wrapper_state, WrapperState)
@@ -42,7 +43,7 @@ class TestWrapperState(unittest.TestCase):
             self.assertEqual(props['blocks'], blocks)
             self.assertEqual(props['block'], blocks[0])
 
-        WrapperState({'unstyled': unstyled}, blocks).element_for(blocks[0], 'test')
+        WrapperState(Options.map_blocks({'unstyled': unstyled}), blocks).element_for(blocks[0], 'test')
 
     def test_element_for_simple_content(self):
         self.assertEqual(DOM.render_debug(self.wrapper_state.element_for({

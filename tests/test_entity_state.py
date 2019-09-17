@@ -4,6 +4,7 @@ import unittest
 
 from draftjs_exporter.command import Command
 from draftjs_exporter.entity_state import EntityException, EntityState
+from draftjs_exporter.options import Options
 from tests.test_entities import link
 
 entity_decorators = {
@@ -23,7 +24,7 @@ entity_map = {
 
 class TestEntityState(unittest.TestCase):
     def setUp(self):
-        self.entity_state = EntityState(entity_decorators, entity_map)
+        self.entity_state = EntityState(Options.map_entities(entity_decorators), entity_map)
 
     def test_init(self):
         self.assertIsInstance(self.entity_state, EntityState)
