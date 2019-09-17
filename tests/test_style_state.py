@@ -5,6 +5,7 @@ import unittest
 
 from draftjs_exporter.command import Command
 from draftjs_exporter.dom import DOM
+from draftjs_exporter.options import Options
 from draftjs_exporter.style_state import StyleState
 
 Important = lambda props: DOM.create_element('strong', {'style': {'color': 'red'}}, props['children'])
@@ -33,7 +34,7 @@ style_map = {
 class TestStyleState(unittest.TestCase):
     def setUp(self):
         DOM.use(DOM.STRING)
-        self.style_state = StyleState(style_map)
+        self.style_state = StyleState(Options.map_styles(style_map))
 
     def test_init(self):
         self.assertIsInstance(self.style_state, StyleState)
@@ -112,9 +113,9 @@ class TestStyleState(unittest.TestCase):
             self.assertEqual(props['inline_style_range']['style'], 'ITALIC')
             return None
 
-        style_state = StyleState({
+        style_state = StyleState(Options.map_styles({
             'ITALIC': component,
-        })
+        }))
 
         style_state.apply(Command('start_inline_style', 0, 'ITALIC'))
         style_state.render_styles('Test text', blocks[0], blocks)

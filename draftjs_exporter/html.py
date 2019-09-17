@@ -7,6 +7,7 @@ from draftjs_exporter.composite_decorators import render_decorators
 from draftjs_exporter.defaults import BLOCK_MAP, STYLE_MAP
 from draftjs_exporter.dom import DOM
 from draftjs_exporter.entity_state import EntityState
+from draftjs_exporter.options import Options
 from draftjs_exporter.style_state import StyleState
 from draftjs_exporter.wrapper_state import WrapperState
 
@@ -16,17 +17,18 @@ class HTML:
     Entry point of the exporter. Combines entity, wrapper and style state
     to generate the right HTML nodes.
     """
-    __slots__ = ('entity_decorators', 'composite_decorators', 'has_decorators', 'block_map', 'style_map')
+    __slots__ = ('composite_decorators', 'has_decorators', 'entity_options', 'block_options', 'style_options')
 
     def __init__(self, config=None):
         if config is None:
             config = {}
 
-        self.entity_decorators = config.get('entity_decorators', {})
         self.composite_decorators = config.get('composite_decorators', [])
         self.has_decorators = len(self.composite_decorators) > 0
-        self.block_map = config.get('block_map', BLOCK_MAP)
-        self.style_map = config.get('style_map', STYLE_MAP)
+
+        self.entity_options = Options.map_entities(config.get('entity_decorators', {}))
+        self.block_options = Options.map_blocks(config.get('block_map', BLOCK_MAP))
+        self.style_options = Options.map_styles(config.get('style_map', STYLE_MAP))
 
         DOM.use(config.get('engine', DOM.STRING))
 
@@ -38,7 +40,7 @@ class HTML:
             content_state = {}
 
         blocks = content_state.get('blocks', [])
-        wrapper_state = WrapperState(self.block_map, blocks)
+        wrapper_state = WrapperState(self.block_options, blocks)
         document = DOM.create_element()
         entity_map = content_state.get('entityMap', {})
         min_depth = 0
@@ -64,8 +66,8 @@ class HTML:
     def render_block(self, block, entity_map, wrapper_state):
         if 'inlineStyleRanges' in block and block['inlineStyleRanges'] or 'entityRanges' in block and block['entityRanges']:
             content = DOM.create_element()
-            entity_state = EntityState(self.entity_decorators, entity_map)
-            style_state = StyleState(self.style_map)
+            entity_state = EntityState(self.entity_options, entity_map)
+            style_state = StyleState(self.style_options)
 
             for (text, commands) in self.build_command_groups(block):
                 for command in commands:

@@ -16,62 +16,55 @@ class TestOptions(unittest.TestCase):
     def test_not_eq(self):
         self.assertNotEqual(Options('unordered-list-item', 'li'), Options('unordered-list-item', 'p'))
 
-    def test_for_block_full(self):
-        self.assertEqual(Options.for_block({'unordered-list-item': 'li'}, 'unordered-list-item'), Options('unordered-list-item', 'li'))
+    def test_create_full(self):
+        self.assertEqual(Options.create({'unordered-list-item': 'li'}, 'unordered-list-item', 'fallback'), Options('unordered-list-item', 'li'))
 
-    def test_for_block_half(self):
-        self.assertEqual(Options.for_block({'unordered-list-item': 'li'}, 'unordered-list-item'), Options('unordered-list-item', 'li'))
+    def test_create_half(self):
+        self.assertEqual(Options.create({'unordered-list-item': 'li'}, 'unordered-list-item', 'fallback'), Options('unordered-list-item', 'li'))
 
-    def test_for_block_simplest(self):
-        self.assertEqual(Options.for_block({'unordered-list-item': 'li'}, 'unordered-list-item'), Options('unordered-list-item', 'li'))
+    def test_create_simplest(self):
+        self.assertEqual(Options.create({'unordered-list-item': 'li'}, 'unordered-list-item', 'fallback'), Options('unordered-list-item', 'li'))
 
-    def test_for_block_uses_fallback(self):
-        self.assertEqual(Options.for_block({'header-one': 'h1', 'fallback': 'div'}, 'header-two'), Options('header-two', 'div'))
+    def test_create_uses_fallback(self):
+        self.assertEqual(Options.create({'header-one': 'h1', 'fallback': 'div'}, 'header-two', 'fallback'), Options('header-two', 'div'))
 
-    def test_for_block_raises_missing_type(self):
+    def test_create_raises_missing_type(self):
         with self.assertRaises(ConfigException):
-            Options.for_block({'header-one': 'h1'}, 'header-two')
+            Options.create({'header-one': 'h1'}, 'header-two', 'fallback')
 
-    def test_for_block_raises_missing_element(self):
+    def test_create_raises_missing_element(self):
         with self.assertRaises(ConfigException):
-            Options.for_block({'header-one': {}}, 'header-one')
+            Options.create({'header-one': {}}, 'header-one', 'fallback')
 
-    def test_for_style_full(self):
-        self.assertEqual(Options.for_style({'ITALIC': 'em'}, 'ITALIC'), Options('ITALIC', 'em'))
+    def test_map_works(self):
+        self.assertEqual(Options.map({
+            'BOLD': 'strong',
+            'HIGHLIGHT': {
+                'element': 'strong',
+                'props': {'style': {'textDecoration': 'underline'}},
+            },
+        }, 'FALLBACK'), {
+            'BOLD': Options('BOLD', 'strong'),
+            'HIGHLIGHT': Options('HIGHLIGHT', 'strong', props={'style': {'textDecoration': 'underline'}}),
+        })
 
-    def test_for_style_half(self):
-        self.assertEqual(Options.for_style({'ITALIC': 'em'}, 'ITALIC'), Options('ITALIC', 'em'))
+    def test_get_works(self):
+        self.assertEqual(Options.get(Options.map({
+            'BOLD': 'strong',
+            'HIGHLIGHT': {
+                'element': 'strong',
+                'props': {'style': {'textDecoration': 'underline'}},
+            },
+        }, 'FALLBACK'), 'BOLD', 'FALLBACK'), Options('BOLD', 'strong'))
 
-    def test_for_style_simplest(self):
-        self.assertEqual(Options.for_style({'ITALIC': 'em'}, 'ITALIC'), Options('ITALIC', 'em'))
-
-    def test_for_style_uses_fallback(self):
-        self.assertEqual(Options.for_style({'BOLD': 'strong', 'FALLBACK': 'span'}, 'CODE'), Options('CODE', 'span'))
-
-    def test_for_style_raises_missing_type(self):
+    def test_get_raises_exception(self):
         with self.assertRaises(ConfigException):
-            Options.for_style({'BOLD': 'strong'}, 'CODE')
+            self.assertEqual(Options.get(Options.map({
+                'BOLD': 'strong',
+            }, 'FALLBACK'), 'ITALIC', 'FALLBACK'), Options('BOLD', 'strong'))
 
-    def test_for_style_raises_missing_element(self):
-        with self.assertRaises(ConfigException):
-            Options.for_style({'BOLD': {}}, 'BOLD')
-
-    def test_for_entity_full(self):
-        self.assertEqual(Options.for_entity({'HORIZONTAL_RULE': 'hr'}, 'HORIZONTAL_RULE'), Options('HORIZONTAL_RULE', 'hr'))
-
-    def test_for_entity_half(self):
-        self.assertEqual(Options.for_entity({'HORIZONTAL_RULE': 'hr'}, 'HORIZONTAL_RULE'), Options('HORIZONTAL_RULE', 'hr'))
-
-    def test_for_entity_simplest(self):
-        self.assertEqual(Options.for_entity({'HORIZONTAL_RULE': 'hr'}, 'HORIZONTAL_RULE'), Options('HORIZONTAL_RULE', 'hr'))
-
-    def test_for_entity_uses_fallback(self):
-        self.assertEqual(Options.for_entity({'HORIZONTAL_RULE': 'hr', 'FALLBACK': 'div'}, 'TEST'), Options('TEST', 'div'))
-
-    def test_for_entity_raises_missing_type(self):
-        with self.assertRaises(ConfigException):
-            Options.for_entity({'HORIZONTAL_RULE': 'hr'}, 'TEST')
-
-    def test_for_entity_raises_missing_element(self):
-        with self.assertRaises(ConfigException):
-            Options.for_entity({'HORIZONTAL_RULE': {}}, 'HORIZONTAL_RULE')
+    def test_get_uses_fallback(self):
+        self.assertEqual(Options.get(Options.map({
+            'BOLD': 'strong',
+            'FALLBACK': 'span',
+        }, 'FALLBACK'), 'ITALIC', 'FALLBACK'), Options('FALLBACK', 'span'))

@@ -1,5 +1,6 @@
 from __future__ import absolute_import, unicode_literals
 
+from draftjs_exporter.constants import ENTITY_TYPES
 from draftjs_exporter.dom import DOM
 from draftjs_exporter.error import ExporterException
 from draftjs_exporter.options import Options
@@ -10,10 +11,10 @@ class EntityException(ExporterException):
 
 
 class EntityState:
-    __slots__ = ('entity_decorators', 'entity_map', 'entity_stack', 'completed_entity', 'element_stack')
+    __slots__ = ('entity_options', 'entity_map', 'entity_stack', 'completed_entity', 'element_stack')
 
-    def __init__(self, entity_decorators, entity_map):
-        self.entity_decorators = entity_decorators
+    def __init__(self, entity_options, entity_map):
+        self.entity_options = entity_options
         self.entity_map = entity_map
 
         self.entity_stack = []
@@ -49,7 +50,7 @@ class EntityState:
         # We have a complete (start, stop) entity to render.
         if self.completed_entity is not None:
             entity_details = self.get_entity_details(self.completed_entity)
-            opts = Options.for_entity(self.entity_decorators, entity_details['type'])
+            options = Options.get(self.entity_options, entity_details['type'], ENTITY_TYPES.FALLBACK)
             props = entity_details['data'].copy()
             props['entity'] = {
                 'type': entity_details['type'],
@@ -70,7 +71,7 @@ class EntityState:
             if self.has_entity():
                 self.element_stack.append(style_node)
 
-            return DOM.create_element(opts.element, props, children)
+            return DOM.create_element(options.element, props, children)
 
         if self.has_entity():
             self.element_stack.append(style_node)
