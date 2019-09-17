@@ -4,7 +4,7 @@ from draftjs_exporter.constants import BLOCK_TYPES, ENTITY_TYPES, INLINE_STYLES
 from draftjs_exporter.error import ConfigException
 
 
-class Options:
+class Options(object):
     """
     Facilitates querying configuration from a config map.
     """

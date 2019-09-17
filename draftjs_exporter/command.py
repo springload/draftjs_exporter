@@ -1,7 +1,7 @@
 from __future__ import absolute_import, unicode_literals
 
 
-class Command:
+class Command(object):
     """
     A Command represents an operation that has to be executed
     on a block for it to be converted into an arbitrary number

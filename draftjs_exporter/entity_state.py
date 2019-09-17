@@ -10,7 +10,7 @@ class EntityException(ExporterException):
     pass
 
 
-class EntityState:
+class EntityState(object):
     __slots__ = ('entity_options', 'entity_map', 'entity_stack', 'completed_entity', 'element_stack')
 
     def __init__(self, entity_options, entity_map):
