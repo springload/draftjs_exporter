@@ -12,7 +12,7 @@ from draftjs_exporter.style_state import StyleState
 from draftjs_exporter.wrapper_state import WrapperState
 
 
-class HTML:
+class HTML(object):
     """
     Entry point of the exporter. Combines entity, wrapper and style state
     to generate the right HTML nodes.
