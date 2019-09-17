@@ -20,9 +20,6 @@ class Command:
     def __repr__(self):
         return str(self)
 
-    def __lt__(self, other):
-        return self.index < other.index
-
     @staticmethod
     def key(command):
         return command.index
