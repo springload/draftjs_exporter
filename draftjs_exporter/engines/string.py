@@ -69,7 +69,9 @@ class DOMString(DOMEngine):
 
     @staticmethod
     def render_attrs(attr):
-        return ''.join(sorted([' %s="%s"' % (k, escape(v)) for k, v in attr.items()]))
+        attrs = [' %s="%s"' % (k, escape(v)) for k, v in attr.items()]
+        attrs.sort()
+        return ''.join(attrs)
 
     @staticmethod
     def render_children(children):

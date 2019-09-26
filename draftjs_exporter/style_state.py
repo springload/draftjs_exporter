@@ -27,8 +27,11 @@ class StyleState(object):
     def render_styles(self, decorated_node, block, blocks):
         node = decorated_node
         if not self.is_empty():
+            # This will mutate self.styles, but it’s going to be reset after rendering anyway.
+            self.styles.sort(reverse=True)
+
             # Nest the tags.
-            for style in sorted(self.styles, reverse=True):
+            for style in self.styles:
                 options = Options.get(self.style_options, style, INLINE_STYLES.FALLBACK)
                 props = dict(options.props)
                 props['block'] = block

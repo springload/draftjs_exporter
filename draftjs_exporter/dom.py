@@ -72,8 +72,9 @@ class DOM(object):
 
             # Convert style object to style string, like the DOM would do.
             if 'style' in props and isinstance(props['style'], dict):
-                rules = ['{0}: {1};'.format(DOM.camel_to_dash(s), props['style'][s]) for s in props['style'].keys()]
-                props['style'] = ''.join(sorted(rules))
+                rules = ['{0}: {1};'.format(DOM.camel_to_dash(s), v) for s, v in props['style'].items()]
+                rules.sort()
+                props['style'] = ''.join(rules)
 
             # Convert props to HTML attributes.
             for key in props:
