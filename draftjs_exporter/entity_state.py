@@ -1,5 +1,3 @@
-from __future__ import absolute_import, unicode_literals
-
 from draftjs_exporter.constants import ENTITY_TYPES
 from draftjs_exporter.dom import DOM
 from draftjs_exporter.error import ExporterException

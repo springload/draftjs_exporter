@@ -1,5 +1,3 @@
-from __future__ import absolute_import, unicode_literals
-
 from draftjs_exporter.constants import BLOCK_TYPES, INLINE_STYLES
 from draftjs_exporter.dom import DOM
 

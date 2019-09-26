@@ -1,5 +1,3 @@
-from __future__ import absolute_import, unicode_literals
-
 from operator import itemgetter
 from draftjs_exporter.dom import DOM
 

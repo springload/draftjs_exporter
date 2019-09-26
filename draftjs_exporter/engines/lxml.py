@@ -1,5 +1,3 @@
-from __future__ import absolute_import, unicode_literals
-
 import re
 
 from draftjs_exporter.engines.base import DOMEngine

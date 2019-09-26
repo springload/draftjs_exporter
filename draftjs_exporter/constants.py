@@ -1,6 +1,3 @@
-from __future__ import absolute_import, unicode_literals
-
-
 # http://stackoverflow.com/a/22723724/1798491
 class Enum(object):
     __slots__ = ('elements')
