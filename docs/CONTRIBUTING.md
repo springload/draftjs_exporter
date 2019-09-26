@@ -25,8 +25,9 @@ make init
 pyenv install --skip-existing 3.5.1
 pyenv install --skip-existing 3.6.3
 pyenv install --skip-existing 3.7.0
+pyenv install --skip-existing 3.8-dev
 # Make required Python versions available globally.
-pyenv global system 3.5.1 3.6.3 3.7.0
+pyenv global system 3.5.1 3.6.3 3.7.0 3.8-dev
 ```
 
 ### Commands
