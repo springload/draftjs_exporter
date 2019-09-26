@@ -3,10 +3,6 @@ language: python
 cache: pip
 matrix:
   include:
-  - env: TOXENV=py27-lower_bound_deps
-    python: 2.7
-  - env: TOXENV=py34-lower_bound_deps
-    python: 3.4
   - env: TOXENV=py35-lower_bound_deps
     python: 3.5
   - env: TOXENV=py36-lower_bound_deps
@@ -15,10 +11,6 @@ matrix:
     python: 3.7
     sudo: required
     dist: xenial
-  - env: TOXENV=py27-upper_bound_deps
-    python: 2.7
-  - env: TOXENV=py34-upper_bound_deps
-    python: 3.4
   - env: TOXENV=py35-upper_bound_deps
     python: 3.5
   - env: TOXENV=py36-upper_bound_deps
