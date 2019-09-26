@@ -1,5 +1,3 @@
-from __future__ import absolute_import, unicode_literals
-
 import unittest
 
 from draftjs_exporter.defaults import BLOCK_MAP, STYLE_MAP, code_block, render_children
