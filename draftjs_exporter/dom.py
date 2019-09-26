@@ -2,14 +2,6 @@ import re
 
 from draftjs_exporter.utils.module_loading import import_string
 
-# Python 2/3 unicode compatibility hack.
-# See http://stackoverflow.com/questions/6812031/how-to-make-unicode-string-with-python3
-try:
-    UNICODE_EXISTS = bool(type(unicode))
-except NameError:
-    def unicode(s):
-        return str(s)
-
 # https://gist.github.com/yahyaKacem/8170675
 _first_cap_re = re.compile(r'(.)([A-Z][a-z]+)')
 _all_cap_re = re.compile('([a-z0-9])([A-Z])')
@@ -92,7 +84,7 @@ class DOM(object):
                     props[key] = 'true'
 
                 if props[key] is not None:
-                    attributes[key] = unicode(props[key])
+                    attributes[key] = str(props[key])
 
             elt = cls.dom.create_tag(type_, attributes)
 
