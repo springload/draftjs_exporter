@@ -10,14 +10,6 @@ try:
 except ImportError:
     pass
 
-# Python 2/3 unicode compatibility hack.
-# See http://stackoverflow.com/questions/6812031/how-to-make-unicode-string-with-python3
-try:
-    UNICODE_EXISTS = bool(type(unicode))
-except NameError:
-    def unicode(s):
-        return str(s)
-
 RENDER_RE = re.compile(r'</?(fragment|body|html|head)>')
 RENDER_DEBUG_RE = re.compile(r'</?(body|html|head)>')
 
@@ -44,8 +36,8 @@ class DOM_HTML5LIB(DOMEngine):
 
     @staticmethod
     def render(elt):
-        return RENDER_RE.sub('', unicode(elt))
+        return RENDER_RE.sub('', str(elt))
 
     @staticmethod
     def render_debug(elt):
-        return RENDER_DEBUG_RE.sub('', unicode(elt))
+        return RENDER_DEBUG_RE.sub('', str(elt))
