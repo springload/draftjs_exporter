@@ -15,9 +15,6 @@ class TestCommand(unittest.TestCase):
     def test_str(self):
         self.assertEqual(str(self.command), '<Command abracadabra 5 shazam>')
 
-    def test_key(self):
-        self.assertEqual(Command.key(self.command), 5)
-
     def test_start_stop(self):
         self.assertEqual(str(Command.start_stop('abracadabra', 0, 5, 'shazam')), str((
             Command('start_abracadabra', 0, 'shazam'),
