@@ -4,6 +4,8 @@
 
 ## Unreleased
 
+## [v2.1.7](https://github.com/springload/draftjs_exporter/releases/tag/v2.1.7)
+
 ### Changed
 
 * Minor performance improvements (10% speed-up, 30% lower memory consumption) by adding Python [`__slots__`](https://stackoverflow.com/questions/472000/usage-of-slots) and implementing other optimisations.
