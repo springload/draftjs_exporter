@@ -1,4 +1,7 @@
-# Draft.js exporter [![PyPI](https://img.shields.io/pypi/v/draftjs_exporter.svg)](https://pypi.org/project/draftjs_exporter/) [![Travis](https://travis-ci.org/springload/draftjs_exporter.svg?branch=master)](https://travis-ci.org/springload/draftjs_exporter) [![Coveralls](https://coveralls.io/repos/github/springload/draftjs_exporter/badge.svg?branch=master)](https://coveralls.io/github/springload/draftjs_exporter?branch=master)
+# Draft.js exporter
+
+[![PyPI](https://img.shields.io/pypi/v/draftjs_exporter.svg)](https://pypi.org/project/draftjs_exporter/) [![Travis](https://travis-ci.org/springload/draftjs_exporter.svg?branch=master)](https://travis-ci.org/springload/draftjs_exporter) [![Coveralls](https://coveralls.io/repos/github/springload/draftjs_exporter/badge.svg?branch=master)](https://coveralls.io/github/springload/draftjs_exporter?branch=master) [![Total alerts](https://img.shields.io/lgtm/alerts/g/springload/draftjs_exporter.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/springload/draftjs_exporter/alerts/) [![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/springload/draftjs_exporter.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/springload/draftjs_exporter/context:python)
+
 
 > Library to convert rich text from Draft.js raw ContentState to HTML.
 
