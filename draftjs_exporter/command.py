@@ -21,10 +21,6 @@ class Command(object):
         return str(self)
 
     @staticmethod
-    def key(command):
-        return command.index
-
-    @staticmethod
     def start_stop(name, start, stop, data=''):
         """
         Builds a pair of start/stop commands with the same data.

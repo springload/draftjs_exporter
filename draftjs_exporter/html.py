@@ -1,6 +1,7 @@
 from __future__ import absolute_import, unicode_literals
 
 from itertools import groupby
+from operator import attrgetter
 
 from draftjs_exporter.command import Command
 from draftjs_exporter.composite_decorators import render_decorators
@@ -105,8 +106,8 @@ class HTML(object):
         text = block['text']
 
         commands = self.build_commands(block)
-        grouped = groupby(commands, Command.key)
-        listed = list(groupby(commands, Command.key))
+        grouped = groupby(commands, attrgetter('index'))
+        listed = list(groupby(commands, attrgetter('index')))
         sliced = []
 
         i = 0
@@ -130,7 +131,7 @@ class HTML(object):
         style_commands = self.build_style_commands(block)
         entity_commands = self.build_entity_commands(block)
 
-        return [Command('start_text', 0)] + sorted(style_commands + entity_commands, key=Command.key) + [Command('stop_text', len(block['text']))]
+        return [Command('start_text', 0)] + sorted(style_commands + entity_commands, key=attrgetter('index')) + [Command('stop_text', len(block['text']))]
 
     def build_style_commands(self, block):
         ranges = block['inlineStyleRanges']
