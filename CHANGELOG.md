@@ -4,6 +4,20 @@
 
 ## Unreleased
 
+This release contains breaking changes that will require updating the exporter's configurations. **Be sure to check out the "how to upgrade" section below.**
+
+### Changed
+
+* Remove support for Python 2.7 and 3.4 ([#111](https://github.com/springload/draftjs_exporter/issues/111), [#120](https://github.com/springload/draftjs_exporter/pulls)).
+* Tentatively add support for Python 3.8.
+
+### How to upgrade
+
+#### Python 2.7 and 3.4
+
+Do not upgrade to this version if you are using the exporter in Python 2.7 or 3.4. Please keep using [v2.1.7](https://github.com/springload/draftjs_exporter/tree/v2.1.7) of the exporter.
+
+
 ## [v2.1.7](https://github.com/springload/draftjs_exporter/releases/tag/v2.1.7)
 
 ### Changed
