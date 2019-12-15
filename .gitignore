@@ -91,3 +91,4 @@ lib64
 # Your own project's ignores
 # -------------------------------------------------
 example.html
+.mypy_cache

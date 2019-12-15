@@ -15,7 +15,7 @@ The initial use case was to gain more control over the content managed by rich t
 
 ## Features
 
-This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html), and [measures performance](https://thib.me/python-memory-profiling-for-the-draft-js-exporter) and [code coverage](https://coveralls.io/github/springload/draftjs_exporter).
+This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html), and [measures performance](https://thib.me/python-memory-profiling-for-the-draft-js-exporter) and [code coverage](https://coveralls.io/github/springload/draftjs_exporter). Code is checked with [mypy](https://mypy.readthedocs.io/en/latest/index.html).
 
 * Extensive configuration of the generated HTML.
 * Default, extensible block & inline style maps for common HTML elements.
@@ -26,6 +26,7 @@ This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html
 * Nested lists (`<li>` elements go inside `<ul>` or `<ol>`, with multiple levels).
 * Output inline styles as inline elements (`<em>`, `<strong>`, pick and choose, with any attribute).
 * Overlapping inline style and entity ranges.
+* Python 3.5+ type annotations.
 
 ## Usage
 
