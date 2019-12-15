@@ -94,6 +94,10 @@ All supported Python versions should be tested.
 
 Each version should be tested with the lower and upper bounds of supported version ranges for all dependencies.
 
+### Static typing
+
+All exporter code should pass static type checking by [mypy](https://mypy.readthedocs.io/en/latest/index.html), with as strict of a configuration as possible.
+
 ## Troubleshooting
 
 ### Install

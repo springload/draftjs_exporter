@@ -68,6 +68,9 @@ setup(
         'Topic :: Software Development :: Libraries :: Python Modules',
         'Topic :: Text Editors :: Word Processors',
     ],
+    package_data={
+        'draftjs_exporter': ['py.typed'],
+    },
     install_requires=[],
     extras_require=dependencies,
     zip_safe=False,
