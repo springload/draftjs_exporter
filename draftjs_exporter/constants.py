@@ -2,10 +2,10 @@
 class Enum(object):
     __slots__ = ('elements')
 
-    def __init__(self, *elements):
+    def __init__(self, *elements: str):
         self.elements = tuple(elements)
 
-    def __getattr__(self, name):
+    def __getattr__(self, name: str) -> str:
         if name not in self.elements:
             raise AttributeError("'Enum' has no attribute '{}'".format(name))
 
