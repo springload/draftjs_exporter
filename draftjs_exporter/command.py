@@ -1,3 +1,5 @@
+from typing import Dict, List, Optional, Union
+
 
 class Command(object):
     """
@@ -7,7 +9,7 @@ class Command(object):
     """
     __slots__ = ('name', 'index', 'data')
 
-    def __init__(self, name, index, data=''):
+    def __init__(self, name: str, index: int, data: Optional[str] = ''):
         self.name = name
         self.index = index
         self.data = data
@@ -19,7 +21,7 @@ class Command(object):
         return str(self)
 
     @staticmethod
-    def start_stop(name, start, stop, data=''):
+    def start_stop(name: str, start: int, stop: int, data: Optional[str] = ''):
         """
         Builds a pair of start/stop commands with the same data.
         """
@@ -29,7 +31,7 @@ class Command(object):
         )
 
     @staticmethod
-    def from_ranges(ranges, name, data_key, start_key='offset', length_key='length'):
+    def from_ranges(ranges: List[Dict[str, Union[int, str]]], name: str, data_key: str, start_key: Optional[str] = 'offset', length_key: Optional[str] = 'length'):
         """
         Creates a list of commands from a list of ranges. Each range
         is converted to two commands: a start_* and a stop_*.
