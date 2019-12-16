@@ -627,7 +627,7 @@ if __name__ == '__main__':
     pr.disable()
     p = Stats(pr)
 
-    def prettify(markup):
+    def prettify(markup: str) -> str:
         return re.sub(r'</?(body|html|head)>', '', BeautifulSoup(markup, 'html5lib').prettify()).strip()
 
     pretty = prettify(markup)
