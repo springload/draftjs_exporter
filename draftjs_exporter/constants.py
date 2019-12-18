@@ -2,7 +2,7 @@
 class Enum(object):
     __slots__ = ('elements')
 
-    def __init__(self, *elements: str):
+    def __init__(self, *elements: str) -> None:
         self.elements = tuple(elements)
 
     def __getattr__(self, name: str) -> str:
