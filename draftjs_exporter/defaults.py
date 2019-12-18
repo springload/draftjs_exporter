@@ -1,8 +1,10 @@
+from typing import Mapping
+
 from draftjs_exporter.constants import BLOCK_TYPES, INLINE_STYLES
 from draftjs_exporter.dom import DOM
 
 
-def render_children(props):
+def render_children(props: Mapping):
     """
     Renders the children of a component without any specific
     markup for the component itself.
@@ -10,7 +12,7 @@ def render_children(props):
     return props['children']
 
 
-def code_block(props):
+def code_block(props: Mapping):
     return DOM.create_element('pre', {}, DOM.create_element('code', {}, props['children']))
 
 
