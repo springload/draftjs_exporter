@@ -1,13 +1,15 @@
+from typing import Any, Mapping
 import unittest
 
+from draftjs_exporter.constants import Props, Element
 from draftjs_exporter.dom import DOM
 
 
-def hr(props):
+def hr(props: Props) -> Element:
     return DOM.create_element('hr')
 
 
-def link(props):
+def link(props: Props) -> Element:
     attributes = {}
     for key in props:
         attr = key if key != 'url' else 'href'
@@ -16,7 +18,7 @@ def link(props):
     return DOM.create_element('a', attributes, props['children'])
 
 
-def image(props):
+def image(props: Props) -> Element:
     return DOM.create_element('img', {
         'src': props.get('src'),
         'width': props.get('width'),
@@ -25,12 +27,12 @@ def image(props):
     })
 
 
-def icon(props):
+def icon(props: Props) -> Element:
     href = '#icon-%s' % props.get('name', '')
     return DOM.create_element('svg', {'class': 'icon'}, DOM.create_element('use', {'xlink:href': href}))
 
 
-def button(props):
+def button(props: Props) -> Element:
     href = props.get('href', '#')
     icon_name = props.get('icon', None)
     text = props.get('text', '')

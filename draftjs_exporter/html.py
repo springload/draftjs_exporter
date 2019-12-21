@@ -9,6 +9,8 @@ from draftjs_exporter.entity_state import EntityState
 from draftjs_exporter.options import Options
 from draftjs_exporter.style_state import StyleState
 from draftjs_exporter.wrapper_state import WrapperState
+from typing import Any
+from typing import Dict
 
 
 class HTML(object):
@@ -18,7 +20,7 @@ class HTML(object):
     """
     __slots__ = ('composite_decorators', 'has_decorators', 'entity_options', 'block_options', 'style_options')
 
-    def __init__(self, config=None):
+    def __init__(self, config: Dict[str, Any] = None) -> None:
         if config is None:
             config = {}
 

@@ -36,7 +36,7 @@ class Command(object):
         Creates a list of commands from a list of ranges. Each range
         is converted to two commands: a start_* and a stop_*.
         """
-        commands: List['Command'] = []
+        commands = []  # type: List['Command']
         for r in ranges:
             data = r[data_key]
             start = r['offset']
