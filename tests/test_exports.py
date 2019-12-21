@@ -48,7 +48,7 @@ class TestExportsMeta(type):
     See http://stackoverflow.com/a/20870875/1798491
     """
     def __new__(mcs, name, bases, tests):
-        def gen_test(content, html):
+        def gen_test(content: str, html: str):
             def test(self):
                 self.assertEqual(exporter.render(content), html)
 

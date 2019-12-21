@@ -1,7 +1,8 @@
-# -*- coding: utf-8 -*-
+from typing import Any, Mapping
 import unittest
 
 from draftjs_exporter.command import Command
+from draftjs_exporter.constants import Props, Element
 from draftjs_exporter.dom import DOM
 from draftjs_exporter.options import Options
 from draftjs_exporter.style_state import StyleState
@@ -9,7 +10,7 @@ from draftjs_exporter.style_state import StyleState
 Important = lambda props: DOM.create_element('strong', {'style': {'color': 'red'}}, props['children'])
 
 
-def Shout(props):
+def Shout(props: Props) -> Element:
     return DOM.create_element('span', {'style': {'textTransform': 'uppercase'}}, props['children'])
 
 

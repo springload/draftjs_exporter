@@ -5,17 +5,18 @@ import cProfile
 import logging
 import re
 from pstats import Stats
+from typing import Any, Callable, Dict, Optional, Union
 
 from bs4 import BeautifulSoup
 
 # draftjs_exporter provides default configurations and predefined constants for reuse.
-from draftjs_exporter.constants import BLOCK_TYPES, ENTITY_TYPES, INLINE_STYLES
+from draftjs_exporter.constants import BLOCK_TYPES, Element, ENTITY_TYPES, INLINE_STYLES, Props
 from draftjs_exporter.defaults import BLOCK_MAP, STYLE_MAP
 from draftjs_exporter.dom import DOM
 from draftjs_exporter.html import HTML
 
 
-def blockquote(props):
+def blockquote(props: Props) -> Element:
     block_data = props['block']['data']
 
     return DOM.create_element('blockquote', {
@@ -23,7 +24,7 @@ def blockquote(props):
     }, props['children'])
 
 
-def list_item(props):
+def list_item(props: Props) -> Element:
     depth = props['block']['depth']
 
     return DOM.create_element('li', {
@@ -31,7 +32,7 @@ def list_item(props):
     }, props['children'])
 
 
-def ordered_list(props):
+def ordered_list(props: Props) -> Element:
     depth = props['block']['depth']
 
     return DOM.create_element('ol', {
@@ -39,7 +40,7 @@ def ordered_list(props):
     }, props['children'])
 
 
-def image(props):
+def image(props: Props) -> Element:
     return DOM.create_element('img', {
         'src': props.get('src'),
         'width': props.get('width'),
@@ -48,13 +49,13 @@ def image(props):
     })
 
 
-def link(props):
+def link(props: Props) -> Element:
     return DOM.create_element('a', {
         'href': props['url']
     }, props['children'])
 
 
-def br(props):
+def br(props: Props) -> Element:
     """
     Replace line breaks (\n) with br tags.
     """
@@ -65,7 +66,7 @@ def br(props):
     return DOM.create_element('br')
 
 
-def hashtag(props):
+def hashtag(props: Props) -> Element:
     """
     Wrap hashtags in spans with a specific class.
     """
@@ -80,7 +81,7 @@ def hashtag(props):
 LINKIFY_RE = re.compile(r'(http://|https://|www\.)([a-zA-Z0-9\.\-%/\?&_=\+#:~!,\'\*\^$]+)')
 
 
-def linkify(props):
+def linkify(props: Props) -> Element:
     """
     Wrap plain URLs with link tags.
     """
@@ -102,7 +103,7 @@ def linkify(props):
     return DOM.create_element('a', link_props, href)
 
 
-def block_fallback(props):
+def block_fallback(props: Props) -> Element:
     type_ = props['block']['type']
 
     if type_ == 'example-discard':
@@ -119,13 +120,13 @@ def block_fallback(props):
         return DOM.create_element('div', {}, props['children'])
 
 
-def entity_fallback(props):
+def entity_fallback(props: Props) -> Element:
     type_ = props['entity']['type']
     logging.warn('Missing config for "%s".' % type_)
     return DOM.create_element('span', {'class': 'missing-entity'}, props['children'])
 
 
-def style_fallback(props):
+def style_fallback(props: Props) -> Element:
     type_ = props['inline_style_range']['style']
     logging.warn('Missing config for "%s". Deleting style.' % type_)
     return props['children']

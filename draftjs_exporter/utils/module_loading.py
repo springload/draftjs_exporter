@@ -1,7 +1,9 @@
 from importlib import import_module
 
+from draftjs_exporter.engines.base import DOMEngine
 
-def import_string(dotted_path: str) -> type:
+
+def import_string(dotted_path: str) -> DOMEngine:
     """
     Import a dotted module path and return the attribute/class designated by the
     last name in the path. Raise ImportError if the import failed.

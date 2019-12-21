@@ -1,5 +1,9 @@
 import re
 
+from typing import Any, Callable, Mapping, Optional, Union
+
+from draftjs_exporter.constants import Element, Props, RenderableType
+from draftjs_exporter.engines.base import DOMEngine
 from draftjs_exporter.utils.module_loading import import_string
 
 # https://gist.github.com/yahyaKacem/8170675
@@ -16,23 +20,23 @@ class DOM(object):
     LXML = 'draftjs_exporter.engines.lxml.DOM_LXML'
     STRING = 'draftjs_exporter.engines.string.DOMString'
 
-    dom = None
+    dom = None  # type: DOMEngine
 
     @staticmethod
-    def camel_to_dash(camel_cased_str):
+    def camel_to_dash(camel_cased_str: str) -> str:
         sub2 = _first_cap_re.sub(r'\1-\2', camel_cased_str)
         dashed_case_str = _all_cap_re.sub(r'\1-\2', sub2).lower()
         return dashed_case_str.replace('--', '-')
 
     @classmethod
-    def use(cls, engine):
+    def use(cls, engine: str) -> None:
         """
         Choose which DOM implementation to use.
         """
         cls.dom = import_string(engine)
 
     @classmethod
-    def create_element(cls, type_=None, props=None, *children):
+    def create_element(cls, type_: RenderableType = None, props: Props = None, *children: Optional[Element]):
         """
         Signature inspired by React.createElement.
         createElement(
@@ -101,17 +105,17 @@ class DOM(object):
         return elt
 
     @classmethod
-    def parse_html(cls, markup):
+    def parse_html(cls, markup: str) -> Element:
         return cls.dom.parse_html(markup)
 
     @classmethod
-    def append_child(cls, elt, child):
+    def append_child(cls, elt: Element, child: Element) -> Any:
         return cls.dom.append_child(elt, child)
 
     @classmethod
-    def render(cls, elt):
+    def render(cls, elt: Element) -> str:
         return cls.dom.render(elt)
 
     @classmethod
-    def render_debug(cls, elt):
+    def render_debug(cls, elt: Element) -> str:
         return cls.dom.render_debug(elt)
