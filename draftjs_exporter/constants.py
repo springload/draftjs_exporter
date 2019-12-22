@@ -1,4 +1,4 @@
-from typing import Any, Callable, Dict, Mapping, Union
+from typing import Any, Callable, Dict, Union
 
 Element = Any
 Props = Dict[str, Any]

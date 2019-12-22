@@ -1,7 +1,6 @@
-from typing import Any, Mapping
 import unittest
 
-from draftjs_exporter.constants import Props, Element
+from draftjs_exporter.constants import Element, Props
 from draftjs_exporter.dom import DOM
 
 

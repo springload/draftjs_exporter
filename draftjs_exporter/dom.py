@@ -1,6 +1,6 @@
 import re
 
-from typing import Any, Callable, Mapping, Optional, Union
+from typing import Any, Optional
 
 from draftjs_exporter.constants import Element, Props, RenderableType
 from draftjs_exporter.engines.base import DOMEngine
@@ -36,7 +36,7 @@ class DOM(object):
         cls.dom = import_string(engine)
 
     @classmethod
-    def create_element(cls, type_: RenderableType = None, props: Props = None, *children: Optional[Element]):
+    def create_element(cls, type_: RenderableType = None, props: Props = None, *elt_children: Optional[Element]):
         """
         Signature inspired by React.createElement.
         createElement(
@@ -54,8 +54,10 @@ class DOM(object):
             props = {}
 
         # If the first element of children is a list, we use it as the list.
-        if len(children) and isinstance(children[0], (list, tuple)):
-            children = children[0]
+        if len(elt_children) and isinstance(elt_children[0], (list, tuple)):
+            children = elt_children[0]
+        else:
+            children = elt_children
 
         # The children prop is the first child if there is only one.
         props['children'] = children[0] if len(children) == 1 else children

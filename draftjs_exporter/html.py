@@ -1,16 +1,16 @@
 from itertools import groupby
 from operator import attrgetter
+from typing import Any, Dict, List, Mapping, Tuple
 
 from draftjs_exporter.command import Command
 from draftjs_exporter.composite_decorators import render_decorators
+from draftjs_exporter.constants import Element
 from draftjs_exporter.defaults import BLOCK_MAP, STYLE_MAP
 from draftjs_exporter.dom import DOM
-from draftjs_exporter.entity_state import EntityState
+from draftjs_exporter.entity_state import EntityMap, EntityState
 from draftjs_exporter.options import Options
 from draftjs_exporter.style_state import StyleState
 from draftjs_exporter.wrapper_state import WrapperState
-from typing import Any
-from typing import Dict
 
 
 class HTML(object):
@@ -33,7 +33,7 @@ class HTML(object):
 
         DOM.use(config.get('engine', DOM.STRING))
 
-    def render(self, content_state=None):
+    def render(self, content_state: Mapping[str, Any] = None) -> str:
         """
         Starts the export process on a given piece of content state.
         """
@@ -64,7 +64,7 @@ class HTML(object):
 
         return DOM.render(document)
 
-    def render_block(self, block, entity_map, wrapper_state):
+    def render_block(self, block: Mapping[str, Any], entity_map: EntityMap, wrapper_state: WrapperState) -> Element:
         if 'inlineStyleRanges' in block and block['inlineStyleRanges'] or 'entityRanges' in block and block['entityRanges']:
             content = DOM.create_element()
             entity_state = EntityState(self.entity_options, entity_map)
@@ -98,7 +98,7 @@ class HTML(object):
 
         return wrapper_state.element_for(block, content)
 
-    def build_command_groups(self, block):
+    def build_command_groups(self, block: Mapping[str, Any]) -> List[Tuple[str, List[Command]]]:
         """
         Creates block modification commands, grouped by start index,
         with the text to apply them on.
@@ -111,17 +111,17 @@ class HTML(object):
         sliced = []
 
         i = 0
-        for start_index, commands in grouped:
+        for start_index, comms in grouped:
             if i < len(listed) - 1:
                 stop_index = listed[i + 1][0]
-                sliced.append((text[start_index:stop_index], list(commands)))
+                sliced.append((text[start_index:stop_index], list(comms)))
             else:
-                sliced.append(('', list(commands)))
+                sliced.append(('', list(comms)))
             i += 1
 
         return sliced
 
-    def build_commands(self, block):
+    def build_commands(self, block: Mapping[str, Any]) -> List[Command]:
         """
         Build all of the manipulation commands for a given block.
         - One pair to set the text.
@@ -135,10 +135,10 @@ class HTML(object):
 
         return [Command('start_text', 0)] + styles_and_entities + [Command('stop_text', len(block['text']))]
 
-    def build_style_commands(self, block):
+    def build_style_commands(self, block: Mapping[str, Any]) -> List[Command]:
         ranges = block['inlineStyleRanges']
         return Command.from_ranges(ranges, 'inline_style', 'style')
 
-    def build_entity_commands(self, block):
+    def build_entity_commands(self, block: Mapping[str, Any]) -> List[Command]:
         ranges = block['entityRanges']
         return Command.from_ranges(ranges, 'entity', 'key')

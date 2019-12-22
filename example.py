@@ -5,12 +5,11 @@ import cProfile
 import logging
 import re
 from pstats import Stats
-from typing import Any, Callable, Dict, Optional, Union
 
 from bs4 import BeautifulSoup
 
 # draftjs_exporter provides default configurations and predefined constants for reuse.
-from draftjs_exporter.constants import BLOCK_TYPES, Element, ENTITY_TYPES, INLINE_STYLES, Props
+from draftjs_exporter.constants import BLOCK_TYPES, ENTITY_TYPES, INLINE_STYLES, Element, Props
 from draftjs_exporter.defaults import BLOCK_MAP, STYLE_MAP
 from draftjs_exporter.dom import DOM
 from draftjs_exporter.html import HTML

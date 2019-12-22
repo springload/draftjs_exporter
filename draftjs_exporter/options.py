@@ -1,6 +1,7 @@
-from typing import Any, Callable, Dict, Optional, Union
+from typing import Any, Dict, Optional, Union
 
-from draftjs_exporter.constants import BLOCK_TYPES, ENTITY_TYPES, INLINE_STYLES, Props, RenderableType
+from draftjs_exporter.constants import (
+    BLOCK_TYPES, ENTITY_TYPES, INLINE_STYLES, Props, RenderableType)
 from draftjs_exporter.error import ConfigException
 
 ConfigMap = Dict[str, Union[Dict[str, Any], RenderableType]]

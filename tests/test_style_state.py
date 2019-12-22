@@ -1,8 +1,7 @@
-from typing import Any, Mapping
 import unittest
 
 from draftjs_exporter.command import Command
-from draftjs_exporter.constants import Props, Element
+from draftjs_exporter.constants import Element, Props
 from draftjs_exporter.dom import DOM
 from draftjs_exporter.options import Options
 from draftjs_exporter.style_state import StyleState
