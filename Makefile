@@ -11,7 +11,7 @@ init: clean-pyc ## Install dependencies and initialise for development.
 lint: ## Lint the project.
 	flake8 draftjs_exporter tests example.py setup.py
 	isort --check-only --diff --recursive draftjs_exporter tests example.py setup.py
-	MYPYPATH=./stubs mypy draftjs_exporter tests example.py
+	mypy draftjs_exporter tests example.py
 
 test: ## Test the project.
 	python -m unittest discover
