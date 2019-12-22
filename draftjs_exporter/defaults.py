@@ -1,6 +1,4 @@
-from typing import Any, Mapping
-
-from draftjs_exporter.constants import BLOCK_TYPES, Element, INLINE_STYLES, Props
+from draftjs_exporter.constants import BLOCK_TYPES, INLINE_STYLES, Element, Props
 from draftjs_exporter.dom import DOM
 
 
