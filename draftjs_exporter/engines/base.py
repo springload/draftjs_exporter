@@ -1,3 +1,7 @@
+from typing import Any, Dict, Optional
+
+from draftjs_exporter.constants import Element
+
 
 class DOMEngine(object):
     """
@@ -5,14 +9,14 @@ class DOMEngine(object):
     """
 
     @staticmethod
-    def create_tag(type_, attr=None):
+    def create_tag(type_: str, attr: Optional[Dict[str, str]] = None) -> None:
         """
         Creates and returns a tree node of the given type and attributes.
         """
         raise NotImplementedError
 
     @staticmethod
-    def parse_html(markup):
+    def parse_html(markup: str) -> Element:
         """
         Creates nodes based on the input html.
         Note: this method is used in component implementations only, and
@@ -21,21 +25,21 @@ class DOMEngine(object):
         raise NotImplementedError
 
     @staticmethod
-    def append_child(elt, child):
+    def append_child(elt: Element, child: Element) -> Any:
         """
         Appends the given child node in the children of elt.
         """
         raise NotImplementedError
 
     @staticmethod
-    def render(elt):
+    def render(elt: Element) -> str:
         """
         Renders a given element to HTML.
         """
         raise NotImplementedError
 
     @staticmethod
-    def render_debug(elt):
+    def render_debug(elt: Element) -> str:
         """
         Renders a given element to HTML.
         Note: this method is only used for draftjs_exporter's tests, and

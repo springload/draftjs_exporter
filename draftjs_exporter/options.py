@@ -22,22 +22,22 @@ class Options(object):
         self.wrapper = wrapper
         self.wrapper_props = wrapper_props
 
-    def __str__(self):
+    def __str__(self) -> str:
         return '<Options {0} {1} {2} {3} {4}>'.format(self.type, self.element, self.props, self.wrapper, self.wrapper_props)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return str(self)
 
-    def __eq__(self, other):
+    def __eq__(self, other: Any) -> bool:
         """
         Equality used in test code only, not to be relied on for the exporter.
     """
         return str(self) == str(other)
 
-    def __ne__(self, other):
+    def __ne__(self, other: Any) -> bool:
         return not self == other
 
-    def __hash__(self):
+    def __hash__(self) -> int:
         return hash(str(self))
 
     @staticmethod
@@ -84,7 +84,7 @@ class Options(object):
         return Options.map(entity_map, ENTITY_TYPES.FALLBACK)
 
     @staticmethod
-    def get(options: OptionsMap, type_: str, fallback_key: str):
+    def get(options: OptionsMap, type_: str, fallback_key: str) -> 'Options':
         try:
             return options[type_]
         except KeyError:
