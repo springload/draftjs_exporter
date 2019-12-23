@@ -1,6 +1,7 @@
 import re
 
-from draftjs_exporter.engines.base import DOMEngine
+from draftjs_exporter.engines.base import Attr, DOMEngine
+from draftjs_exporter.types import HTML, Tag
 
 try:
     from lxml import etree, html
@@ -19,7 +20,7 @@ class DOM_LXML(DOMEngine):
     lxml implementation of the DOM API.
     """
     @staticmethod
-    def create_tag(type_, attr=None):
+    def create_tag(type_: Tag, attr: Attr = None) -> etree.Element:
         nsmap = None
 
         if attr:
@@ -30,11 +31,11 @@ class DOM_LXML(DOMEngine):
         return etree.Element(type_, attrib=attr, nsmap=nsmap)
 
     @staticmethod
-    def parse_html(markup):
+    def parse_html(markup: HTML) -> etree.Element:
         return html.fromstring(markup)
 
     @staticmethod
-    def append_child(elt, child):
+    def append_child(elt: etree.Element, child: etree.Element) -> None:
         if hasattr(child, 'tag'):
             elt.append(child)
         else:
@@ -43,9 +44,9 @@ class DOM_LXML(DOMEngine):
             elt.append(c)
 
     @staticmethod
-    def render(elt):
+    def render(elt: etree.Element) -> HTML:
         return RENDER_RE.sub('', etree.tostring(elt, method='html', encoding='unicode'))
 
     @staticmethod
-    def render_debug(elt):
+    def render_debug(elt: etree.Element) -> HTML:
         return etree.tostring(elt, method='html', encoding='unicode')

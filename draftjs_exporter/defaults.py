@@ -1,5 +1,6 @@
-from draftjs_exporter.constants import BLOCK_TYPES, INLINE_STYLES, Element, Props
+from draftjs_exporter.constants import BLOCK_TYPES, INLINE_STYLES
 from draftjs_exporter.dom import DOM
+from draftjs_exporter.types import Element, Props
 
 
 def render_children(props: Props) -> Element:

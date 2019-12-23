@@ -1,7 +1,7 @@
 import unittest
 
-from draftjs_exporter.constants import Element, Props
 from draftjs_exporter.dom import DOM
+from draftjs_exporter.types import Element, Props
 
 
 def hr(props: Props) -> Element:

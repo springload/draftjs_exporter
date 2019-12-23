@@ -1,6 +1,7 @@
 import re
 
-from draftjs_exporter.engines.base import DOMEngine
+from draftjs_exporter.engines.base import Attr, DOMEngine
+from draftjs_exporter.types import Element, HTML, Tag
 
 try:
     from bs4 import BeautifulSoup
@@ -20,24 +21,24 @@ class DOM_HTML5LIB(DOMEngine):
     """
 
     @staticmethod
-    def create_tag(type_, attr=None):
+    def create_tag(type_: Tag, attr: Attr = None) -> Element:
         if not attr:
             attr = {}
 
         return soup.new_tag(type_, **attr)
 
     @staticmethod
-    def parse_html(markup):
+    def parse_html(markup: HTML) -> Element:
         return BeautifulSoup(markup, 'html5lib')
 
     @staticmethod
-    def append_child(elt, child):
+    def append_child(elt: Element, child: Element) -> None:
         elt.append(child)
 
     @staticmethod
-    def render(elt):
+    def render(elt: Element) -> HTML:
         return RENDER_RE.sub('', str(elt))
 
     @staticmethod
-    def render_debug(elt):
+    def render_debug(elt: Element) -> HTML:
         return RENDER_DEBUG_RE.sub('', str(elt))

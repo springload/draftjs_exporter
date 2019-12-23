@@ -1,14 +1,11 @@
-from typing import Any, List, Mapping, Optional, Union
+from typing import List, Optional
 
 from draftjs_exporter.command import Command
-from draftjs_exporter.constants import ENTITY_TYPES, Element
+from draftjs_exporter.constants import ENTITY_TYPES
 from draftjs_exporter.dom import DOM
 from draftjs_exporter.error import ExporterException
 from draftjs_exporter.options import Options, OptionsMap
-
-EntityKey = Union[str, int]
-EntityDetails = Mapping[str, Any]
-EntityMap = Mapping[str, EntityDetails]
+from draftjs_exporter.types import Element, EntityDetails, EntityKey, EntityMap
 
 
 class EntityException(ExporterException):

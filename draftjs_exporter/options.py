@@ -1,10 +1,10 @@
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict, Optional
 
-from draftjs_exporter.constants import (
-    BLOCK_TYPES, ENTITY_TYPES, INLINE_STYLES, Props, RenderableType)
+from draftjs_exporter.constants import BLOCK_TYPES, ENTITY_TYPES, INLINE_STYLES
 from draftjs_exporter.error import ConfigException
+from draftjs_exporter.types import ConfigMap, Props, RenderableType
 
-ConfigMap = Dict[str, Union[Dict[str, Any], RenderableType]]
+# Internal equivalent of a ConfigMap.
 OptionsMap = Dict[str, 'Options']
 
 

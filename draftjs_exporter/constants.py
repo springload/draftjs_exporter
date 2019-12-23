@@ -1,13 +1,3 @@
-from typing import Any, Callable, Dict, Union
-
-Element = Any
-Props = Dict[str, Any]
-
-Tag = str
-Component = Callable[[Props], Element]
-RenderableType = Union[None, str, Component]
-
-
 # http://stackoverflow.com/a/22723724/1798491
 class Enum(object):
     __slots__ = ('elements')

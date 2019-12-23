@@ -1,4 +1,4 @@
-from typing import Any, List, Mapping, Sequence, Tuple
+from typing import Any, List, Mapping, Sequence, Tuple, Union
 
 
 class Command(object):

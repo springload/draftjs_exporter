@@ -1,9 +1,12 @@
 from operator import itemgetter
+from typing import Any, Dict, Generator, List, Sequence, Tuple
+
 from draftjs_exporter.dom import DOM
+from draftjs_exporter.types import Block, CompositeDecorators, Decorator, Element
 
 
-def get_decorations(decorators, text):
-    occupied = {}
+def get_decorations(decorators: CompositeDecorators, text: str) -> List[Tuple[int, int, Any, Decorator]]:
+    occupied = {}  # type: Dict[int, int]
     decorations = []
 
     for decorator in decorators:
@@ -19,7 +22,7 @@ def get_decorations(decorators, text):
     return decorations
 
 
-def apply_decorators(decorators, text, block, blocks):
+def apply_decorators(decorators: CompositeDecorators, text: str, block: Block, blocks: Sequence[Block]) -> Generator[str, None, None]:
     decorations = get_decorations(decorators, text)
 
     pointer = 0
@@ -38,7 +41,7 @@ def apply_decorators(decorators, text, block, blocks):
         yield text[pointer:]
 
 
-def render_decorators(decorators, text, block, blocks):
+def render_decorators(decorators: CompositeDecorators, text: str, block: Block, blocks: Sequence[Block]) -> Element:
     decorated_children = list(apply_decorators(decorators, text, block, blocks))
 
     if len(decorated_children) == 1:
