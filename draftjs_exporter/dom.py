@@ -2,9 +2,9 @@ import re
 
 from typing import Any, Optional
 
-from draftjs_exporter.constants import Element, Props, RenderableType
 from draftjs_exporter.engines.base import DOMEngine
 from draftjs_exporter.utils.module_loading import import_string
+from draftjs_exporter.types import Element, HTML, Props, RenderableType
 
 # https://gist.github.com/yahyaKacem/8170675
 _first_cap_re = re.compile(r'(.)([A-Z][a-z]+)')
@@ -36,7 +36,7 @@ class DOM(object):
         cls.dom = import_string(engine)
 
     @classmethod
-    def create_element(cls, type_: RenderableType = None, props: Props = None, *elt_children: Optional[Element]):
+    def create_element(cls, type_: RenderableType = None, props: Optional[Props] = None, *elt_children: Optional[Element]) -> Element:
         """
         Signature inspired by React.createElement.
         createElement(
@@ -107,7 +107,7 @@ class DOM(object):
         return elt
 
     @classmethod
-    def parse_html(cls, markup: str) -> Element:
+    def parse_html(cls, markup: HTML) -> Element:
         return cls.dom.parse_html(markup)
 
     @classmethod
@@ -115,9 +115,9 @@ class DOM(object):
         return cls.dom.append_child(elt, child)
 
     @classmethod
-    def render(cls, elt: Element) -> str:
+    def render(cls, elt: Element) -> HTML:
         return cls.dom.render(elt)
 
     @classmethod
-    def render_debug(cls, elt: Element) -> str:
+    def render_debug(cls, elt: Element) -> HTML:
         return cls.dom.render_debug(elt)

@@ -1,8 +1,9 @@
-from typing import Any, List, Optional, Sequence, Union
+from typing import List, Optional, Sequence, Union
 
-from draftjs_exporter.constants import BLOCK_TYPES, Element, Props, RenderableType
+from draftjs_exporter.constants import BLOCK_TYPES
 from draftjs_exporter.dom import DOM
 from draftjs_exporter.options import Options, OptionsMap
+from draftjs_exporter.types import Block, Element, Props, RenderableType
 
 
 class Wrapper(object):
@@ -84,7 +85,7 @@ class WrapperState(object):
     """
     __slots__ = ('block_options', 'blocks', 'stack')
 
-    def __init__(self, block_options: OptionsMap, blocks: Sequence[Any]) -> None:
+    def __init__(self, block_options: OptionsMap, blocks: Sequence[Block]) -> None:
         self.block_options = block_options
         self.blocks = blocks
         self.stack = WrapperStack()
@@ -92,7 +93,7 @@ class WrapperState(object):
     def __str__(self) -> str:
         return '<WrapperState: %s>' % self.stack
 
-    def element_for(self, block: Any, block_content: Union[Element, Sequence[Element]]) -> Element:
+    def element_for(self, block: Block, block_content: Union[Element, Sequence[Element]]) -> Element:
         type_ = block['type'] if 'type' in block else 'unstyled'
         depth = block['depth'] if 'depth' in block else 0
         options = Options.get(self.block_options, type_, BLOCK_TYPES.FALLBACK)
@@ -155,7 +156,7 @@ class WrapperState(object):
                     DOM.append_child(self.stack.head().elt, wrapper_parent)
                 else:
                     # Otherwise we can append at the end of the last child.
-                    wrapper_parent = self.stack.head().last_child
+                    wrapper_parent = self.stack.head().last_child  # type: ignore
 
                 DOM.append_child(wrapper_parent, new_wrapper.elt)
 

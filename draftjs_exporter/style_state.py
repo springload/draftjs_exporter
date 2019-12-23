@@ -1,9 +1,10 @@
-from typing import Any, List, Sequence
+from typing import List, Sequence
 
 from draftjs_exporter.command import Command
-from draftjs_exporter.constants import INLINE_STYLES, Element
+from draftjs_exporter.constants import INLINE_STYLES
 from draftjs_exporter.dom import DOM
 from draftjs_exporter.options import Options, OptionsMap
+from draftjs_exporter.types import Block, Element
 
 
 class StyleState(object):
@@ -27,7 +28,7 @@ class StyleState(object):
     def is_empty(self) -> bool:
         return not self.styles
 
-    def render_styles(self, decorated_node: Element, block: Any, blocks: Sequence[Any]) -> Element:
+    def render_styles(self, decorated_node: Element, block: Block, blocks: Sequence[Block]) -> Element:
         node = decorated_node
         if not self.is_empty():
             # This will mutate self.styles, but it’s going to be reset after rendering anyway.
