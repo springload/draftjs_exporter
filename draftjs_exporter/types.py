@@ -29,7 +29,7 @@ ContentState = Mapping[str, Any]
 # Blocks have a predetermined set of keys and values, but let’s be permissive without TypedDict.
 Block = Mapping[str, Any]
 # Entity key is int in blocks, str in Entity map.
-EntityKey = Union[int, str]
+EntityKey = str
 # Entities have fixed keys.
 EntityDetails = Mapping[str, Any]
 EntityMap = Mapping[EntityKey, EntityDetails]

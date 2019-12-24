@@ -36,116 +36,6 @@ class TestHTML(unittest.TestCase):
     def test_render_block_exists(self):
         self.assertTrue('render_block' in dir(self.exporter))
 
-    def test_build_style_commands_empty(self):
-        self.assertEqual(str(self.exporter.build_style_commands({
-            'key': '5s7g9',
-            'text': 'Header',
-            'type': 'header-one',
-            'depth': 0,
-            'inlineStyleRanges': [],
-            'entityRanges': []
-        })), str([]))
-
-    def test_build_style_commands_single(self):
-        self.assertEqual(str(self.exporter.build_style_commands({
-            'key': '5s7g9',
-            'text': 'Header',
-            'type': 'header-one',
-            'depth': 0,
-            'inlineStyleRanges': [
-                {
-                    'offset': 0,
-                    'length': 4,
-                    'style': 'ITALIC'
-                }
-            ],
-            'entityRanges': []
-        })), str([
-            Command('start_inline_style', 0, 'ITALIC'),
-            Command('stop_inline_style', 4, 'ITALIC'),
-        ]))
-
-    def test_build_style_commands_multiple(self):
-        self.assertEqual(str(self.exporter.build_style_commands({
-            'key': '5s7g9',
-            'text': 'Header',
-            'type': 'header-one',
-            'depth': 0,
-            'inlineStyleRanges': [
-                {
-                    'offset': 0,
-                    'length': 4,
-                    'style': 'ITALIC'
-                },
-                {
-                    'offset': 9,
-                    'length': 3,
-                    'style': 'BOLD'
-                }
-            ],
-            'entityRanges': []
-        })), str([
-            Command('start_inline_style', 0, 'ITALIC'),
-            Command('stop_inline_style', 4, 'ITALIC'),
-            Command('start_inline_style', 9, 'BOLD'),
-            Command('stop_inline_style', 12, 'BOLD'),
-        ]))
-
-    def test_build_entity_commands_empty(self):
-        self.assertEqual(str(self.exporter.build_entity_commands({
-            'key': 'dem5p',
-            'text': 'some paragraph text',
-            'type': 'unstyled',
-            'depth': 0,
-            'inlineStyleRanges': [],
-            'entityRanges': []
-        })), str([]))
-
-    def test_build_entity_commands_single(self):
-        self.assertEqual(str(self.exporter.build_entity_commands({
-            'key': 'dem5p',
-            'text': 'some paragraph text',
-            'type': 'unstyled',
-            'depth': 0,
-            'inlineStyleRanges': [],
-            'entityRanges': [
-                {
-                    'offset': 5,
-                    'length': 9,
-                    'key': 0
-                }
-            ]
-        })), str([
-            Command('start_entity', 5, 0),
-            Command('stop_entity', 14, 0),
-        ]))
-
-    def test_build_entity_commands_multiple(self):
-        self.assertEqual(str(self.exporter.build_entity_commands({
-            'key': 'dem5p',
-            'text': 'some paragraph text',
-            'type': 'unstyled',
-            'depth': 0,
-            'inlineStyleRanges': [],
-            'entityRanges': [
-                {
-                    'offset': 5,
-                    'length': 9,
-                    'key': 0
-                },
-                {
-                    'offset': 0,
-                    'length': 4,
-                    'key': 1
-                }
-            ]
-        })), str([
-            Command('start_entity', 5, 0),
-            Command('stop_entity', 14, 0),
-            Command('start_entity', 0, 1),
-            Command('stop_entity', 4, 1),
-        ]))
-
     def test_build_commands_empty(self):
         self.assertEqual(str(self.exporter.build_commands({
             'key': 'dem5p',
@@ -192,13 +82,13 @@ class TestHTML(unittest.TestCase):
         })), str([
             Command('start_text', 0),
             Command('start_inline_style', 0, 'ITALIC'),
-            Command('start_entity', 0, 1),
+            Command('start_entity', 0, '1'),
             Command('stop_inline_style', 4, 'ITALIC'),
-            Command('stop_entity', 4, 1),
-            Command('start_entity', 5, 0),
+            Command('stop_entity', 4, '1'),
+            Command('start_entity', 5, '0'),
             Command('start_inline_style', 9, 'BOLD'),
             Command('stop_inline_style', 12, 'BOLD'),
-            Command('stop_entity', 14, 0),
+            Command('stop_entity', 14, '0'),
             Command('stop_text', 19),
         ]))
 
@@ -253,14 +143,14 @@ class TestHTML(unittest.TestCase):
             ('some', [
                 Command('start_text', 0),
                 Command('start_inline_style', 0, 'ITALIC'),
-                Command('start_entity', 0, 1),
+                Command('start_entity', 0, '1'),
             ]),
             (' ', [
                 Command('stop_inline_style', 4, 'ITALIC'),
-                Command('stop_entity', 4, 1),
+                Command('stop_entity', 4, '1'),
             ]),
             ('para', [
-                Command('start_entity', 5, 0),
+                Command('start_entity', 5, '0'),
             ]),
             ('gra', [
                 Command('start_inline_style', 9, 'BOLD'),
@@ -269,7 +159,7 @@ class TestHTML(unittest.TestCase):
                 Command('stop_inline_style', 12, 'BOLD'),
             ]),
             (' text', [
-                Command('stop_entity', 14, 0),
+                Command('stop_entity', 14, '0'),
             ]),
             ('', [
                 Command('stop_text', 19),
