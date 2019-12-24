@@ -21,8 +21,8 @@ class TestDOMString(unittest.TestCase):
 
     def test_append_child_identical_text(self):
         parent = DOMString.create_tag('p')
-        DOMString.append_child(parent, 'test')
-        DOMString.append_child(parent, 'test')
+        DOMString.append_child(parent, DOMString.parse_html('test'))
+        DOMString.append_child(parent, DOMString.parse_html('test'))
         self.assertEqual(DOMString.render_debug(parent), '<p>testtest</p>')
 
     def test_append_child_identical_elements(self):

@@ -4,7 +4,7 @@ from typing import Any, Optional
 
 from draftjs_exporter.engines.base import DOMEngine
 from draftjs_exporter.utils.module_loading import import_string
-from draftjs_exporter.types import Element, HTML, Props, RenderableType
+from draftjs_exporter.types import HTML, Element, Props, RenderableType
 
 # https://gist.github.com/yahyaKacem/8170675
 _first_cap_re = re.compile(r'(.)([A-Z][a-z]+)')

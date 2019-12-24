@@ -22,7 +22,7 @@ entity_map = {
 
 class TestEntityState(unittest.TestCase):
     def setUp(self):
-        self.entity_state = EntityState(Options.map_entities(entity_decorators), entity_map)
+        self.entity_state = EntityState(Options.map_entities(entity_decorators), entity_map)  # type: ignore
 
     def test_init(self):
         self.assertIsInstance(self.entity_state, EntityState)

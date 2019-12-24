@@ -1,4 +1,5 @@
 import re
+from typing import Optional
 
 from draftjs_exporter.engines.base import Attr, DOMEngine
 from draftjs_exporter.types import HTML, Tag
@@ -20,7 +21,7 @@ class DOM_LXML(DOMEngine):
     lxml implementation of the DOM API.
     """
     @staticmethod
-    def create_tag(type_: Tag, attr: Attr = None) -> etree.Element:
+    def create_tag(type_: Tag, attr: Optional[Attr] = None) -> etree.Element:
         nsmap = None
 
         if attr:

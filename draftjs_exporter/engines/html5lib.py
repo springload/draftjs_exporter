@@ -1,7 +1,8 @@
 import re
+from typing import Optional
 
 from draftjs_exporter.engines.base import Attr, DOMEngine
-from draftjs_exporter.types import Element, HTML, Tag
+from draftjs_exporter.types import HTML, Element, Tag
 
 try:
     from bs4 import BeautifulSoup
@@ -21,7 +22,7 @@ class DOM_HTML5LIB(DOMEngine):
     """
 
     @staticmethod
-    def create_tag(type_: Tag, attr: Attr = None) -> Element:
+    def create_tag(type_: Tag, attr: Optional[Attr] = None) -> Element:
         if not attr:
             attr = {}
 

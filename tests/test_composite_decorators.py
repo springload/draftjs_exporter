@@ -24,25 +24,25 @@ LINKIFY_DECORATOR = {
 
 class TestLinkify(unittest.TestCase):
     def test_render(self):
-        match = next(LINKIFY_DECORATOR['strategy'].finditer('test https://www.example.com'))
+        match = next(LINKIFY_RE.finditer('test https://www.example.com'))
 
-        self.assertEqual(DOM.render(DOM.create_element(LINKIFY_DECORATOR['component'], {
+        self.assertEqual(DOM.render(DOM.create_element(linkify, {
             'block': {'type': BLOCK_TYPES.UNSTYLED},
             'match': match,
         }, match.group(0))), '<a href="https://www.example.com">https://www.example.com</a>')
 
     def test_render_www(self):
-        match = next(LINKIFY_DECORATOR['strategy'].finditer('test www.example.com'))
+        match = next(LINKIFY_RE.finditer('test www.example.com'))
 
-        self.assertEqual(DOM.render(DOM.create_element(LINKIFY_DECORATOR['component'], {
+        self.assertEqual(DOM.render(DOM.create_element(linkify, {
             'block': {'type': BLOCK_TYPES.UNSTYLED},
             'match': match,
         }, match.group(0))), '<a href="http://www.example.com">www.example.com</a>')
 
     def test_render_code_block(self):
-        match = next(LINKIFY_DECORATOR['strategy'].finditer('test https://www.example.com'))
+        match = next(LINKIFY_RE.finditer('test https://www.example.com'))
 
-        self.assertEqual(DOM.create_element(LINKIFY_DECORATOR['component'], {
+        self.assertEqual(DOM.create_element(linkify, {
             'block': {'type': BLOCK_TYPES.CODE},
             'match': match,
         }, match.group(0)), match.group(0))
@@ -50,18 +50,18 @@ class TestLinkify(unittest.TestCase):
 
 class TestHashtag(unittest.TestCase):
     def test_render(self):
-        self.assertEqual(DOM.render(DOM.create_element(HASHTAG_DECORATOR['component'], {'block': {'type': BLOCK_TYPES.UNSTYLED}}, '#hashtagtest')), '<span class="hashtag">#hashtagtest</span>')
+        self.assertEqual(DOM.render(DOM.create_element(hashtag, {'block': {'type': BLOCK_TYPES.UNSTYLED}}, '#hashtagtest')), '<span class="hashtag">#hashtagtest</span>')
 
     def test_render_code_block(self):
-        self.assertEqual(DOM.create_element(HASHTAG_DECORATOR['component'], {'block': {'type': BLOCK_TYPES.CODE}}, '#hashtagtest'), '#hashtagtest')
+        self.assertEqual(DOM.create_element(hashtag, {'block': {'type': BLOCK_TYPES.CODE}}, '#hashtagtest'), '#hashtagtest')
 
 
 class TestBR(unittest.TestCase):
     def test_render(self):
-        self.assertEqual(DOM.render(DOM.create_element(BR_DECORATOR['component'], {'block': {'type': BLOCK_TYPES.UNSTYLED}}, '\n')), '<br/>')
+        self.assertEqual(DOM.render(DOM.create_element(br, {'block': {'type': BLOCK_TYPES.UNSTYLED}}, '\n')), '<br/>')
 
     def test_render_code_block(self):
-        self.assertEqual(DOM.create_element(BR_DECORATOR['component'], {'block': {'type': BLOCK_TYPES.CODE}}, '\n'), '\n')
+        self.assertEqual(DOM.create_element(br, {'block': {'type': BLOCK_TYPES.CODE}}, '\n'), '\n')
 
 
 class TestCompositeDecorators(unittest.TestCase):

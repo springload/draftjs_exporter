@@ -19,7 +19,7 @@ HTML = str
 Config = Dict[str, Any]
 # block_map, style_map, entity_decorators.
 # The dict could be limited to a fixed set of keys, but this would require TypedDict.
-ConfigMap = Dict[str, Union[Dict[str, Any], RenderableType]]
+ConfigMap = Mapping[str, Union[Dict[str, Any], RenderableType]]
 # composite_decorators.
 Decorator = Dict[str, Any]
 CompositeDecorators = List[Decorator]
