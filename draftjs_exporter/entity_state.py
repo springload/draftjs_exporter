@@ -41,7 +41,7 @@ class EntityState(object):
         return not self.entity_stack
 
     def get_entity_details(self, entity_key: EntityKey) -> EntityDetails:
-        details = self.entity_map.get(str(entity_key))
+        details = self.entity_map.get(entity_key)
 
         if details is None:
             raise EntityException('Entity "%s" does not exist in the entityMap' % entity_key)

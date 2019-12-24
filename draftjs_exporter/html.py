@@ -128,17 +128,9 @@ class HTML(object):
         - Multiple pairs for styles.
         - Multiple pairs for entities.
         """
-        style_commands = self.build_style_commands(block)
-        entity_commands = self.build_entity_commands(block)
+        style_commands = Command.from_style_ranges(block)
+        entity_commands = Command.from_entity_ranges(block)
         styles_and_entities = style_commands + entity_commands
         styles_and_entities.sort(key=attrgetter('index'))
 
         return [Command('start_text', 0)] + styles_and_entities + [Command('stop_text', len(block['text']))]
-
-    def build_style_commands(self, block: Block) -> List[Command]:
-        ranges = block['inlineStyleRanges']
-        return Command.from_ranges(ranges, 'inline_style', 'style')
-
-    def build_entity_commands(self, block: Block) -> List[Command]:
-        ranges = block['entityRanges']
-        return Command.from_ranges(ranges, 'entity', 'key')

@@ -13,42 +13,62 @@ class TestCommand(unittest.TestCase):
     def test_str(self):
         self.assertEqual(str(self.command), '<Command abracadabra 5 shazam>')
 
-    def test_start_stop(self):
-        self.assertEqual(str(Command.start_stop('abracadabra', 0, 5, 'shazam')), str((
-            Command('start_abracadabra', 0, 'shazam'),
-            Command('stop_abracadabra', 5, 'shazam'),
-        )))
 
-    def test_from_ranges_empty(self):
-        self.assertEqual(str(Command.from_ranges([], 'abracadabra', 'style')), str([]))
+    def test_from_style_ranges_empty(self):
+        self.assertEqual(str(Command.from_style_ranges({'inlineStyleRanges': []})), str([]))
 
-    def test_from_ranges_single(self):
-        self.assertEqual(str(Command.from_ranges([
-            {
-                'offset': 0,
-                'length': 4,
-                'style': 'shazam'
-            }
-        ], 'abracadabra', 'style')), str([
-            Command('start_abracadabra', 0, 'shazam'),
-            Command('stop_abracadabra', 4, 'shazam'),
+    def test_from_style_ranges_single(self):
+        self.assertEqual(str(Command.from_style_ranges({
+            'inlineStyleRanges': [
+                {
+                    'offset': 0,
+                    'length': 4,
+                    'style': 'shazam',
+                }
+            ]
+        })), str([
+            Command('start_inline_style', 0, 'shazam'),
+            Command('stop_inline_style', 4, 'shazam'),
         ]))
 
-    def test_from_ranges_multiple(self):
-        self.assertEqual(str(Command.from_ranges([
-            {
-                'offset': 0,
-                'length': 4,
-                'style': 'shazam'
-            },
-            {
-                'offset': 9,
-                'length': 3,
-                'style': 'wazzum'
-            }
-        ], 'abracadabra', 'style')), str([
-            Command('start_abracadabra', 0, 'shazam'),
-            Command('stop_abracadabra', 4, 'shazam'),
-            Command('start_abracadabra', 9, 'wazzum'),
-            Command('stop_abracadabra', 12, 'wazzum'),
+    def test_from_style_ranges_multiple(self):
+        self.assertEqual(str(Command.from_style_ranges({
+            'inlineStyleRanges': [
+                {
+                    'offset': 0,
+                    'length': 4,
+                    'style': 'shazam',
+                },
+                {
+                    'offset': 9,
+                    'length': 3,
+                    'style': 'wazzum',
+                },
+            ],
+        })), str([
+            Command('start_inline_style', 0, 'shazam'),
+            Command('stop_inline_style', 4, 'shazam'),
+            Command('start_inline_style', 9, 'wazzum'),
+            Command('stop_inline_style', 12, 'wazzum'),
+        ]))
+
+    def test_from_entity_ranges_multiple(self):
+        self.assertEqual(str(Command.from_entity_ranges({
+            'entityRanges': [
+                {
+                    'offset': 0,
+                    'length': 4,
+                    'key': 3,
+                },
+                {
+                    'offset': 9,
+                    'length': 3,
+                    'key': 10,
+                },
+            ],
+        })), str([
+            Command('start_entity', 0, '3'),
+            Command('stop_entity', 4, '3'),
+            Command('start_entity', 9, '10'),
+            Command('stop_entity', 12, '10'),
         ]))

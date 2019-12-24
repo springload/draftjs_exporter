@@ -50,6 +50,9 @@ class TestExportsMeta(type):
     Generates test cases dynamically.
     See http://stackoverflow.com/a/20870875/1798491
     """
+
+    pr = None  # type: cProfile.Profile
+
     def __new__(mcs, name, bases, tests):
         def gen_test(content: ContentState, html: str) -> Callable[[None], None]:
             def test(self):
