@@ -5,8 +5,6 @@ import unittest
 from pstats import Stats
 from typing import Callable
 
-import six
-
 from draftjs_exporter.constants import BLOCK_TYPES, ENTITY_TYPES
 from draftjs_exporter.defaults import BLOCK_MAP, STYLE_MAP
 from draftjs_exporter.dom import DOM
@@ -72,7 +70,7 @@ class TestExportsMeta(type):
         return type.__new__(mcs, name, bases, tests)
 
 
-class TestExportsHTML5LIB(six.with_metaclass(TestExportsMeta, unittest.TestCase)):
+class TestExportsHTML5LIB(unittest.TestCase, metaclass=TestExportsMeta):
     @classmethod
     def setUpClass(cls):
         DOM.use(DOM.HTML5LIB)
@@ -86,7 +84,7 @@ class TestExportsHTML5LIB(six.with_metaclass(TestExportsMeta, unittest.TestCase)
         Stats(cls.pr).strip_dirs().sort_stats('cumulative').print_stats(0)
 
 
-class TestExportsLXML(six.with_metaclass(TestExportsMeta, unittest.TestCase)):
+class TestExportsLXML(unittest.TestCase, metaclass=TestExportsMeta):
     @classmethod
     def setUpClass(cls):
         DOM.use(DOM.LXML)
@@ -100,7 +98,7 @@ class TestExportsLXML(six.with_metaclass(TestExportsMeta, unittest.TestCase)):
         Stats(cls.pr).strip_dirs().sort_stats('cumulative').print_stats(0)
 
 
-class TestExportsSTRING(six.with_metaclass(TestExportsMeta, unittest.TestCase)):
+class TestExportsSTRING(unittest.TestCase, metaclass=TestExportsMeta):
     @classmethod
     def setUpClass(cls):
         DOM.use(DOM.STRING)
