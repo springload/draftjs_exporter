@@ -1,8 +1,9 @@
-os: linux
-arch: arm64
 dist: bionic
 language: python
-cache: pip
+cache:
+  pip: true
+  directories:
+  - .tox
 matrix:
   include:
   - env: TOXENV=py35-lower_bound_deps
