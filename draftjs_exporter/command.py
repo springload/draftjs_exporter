@@ -1,4 +1,6 @@
-from typing import Any, List, Mapping, Sequence, Tuple, Union
+from typing import Any, List, Mapping, Sequence, Tuple
+
+Data = str
 
 
 class Command(object):
@@ -9,7 +11,7 @@ class Command(object):
     """
     __slots__ = ('name', 'index', 'data')
 
-    def __init__(self, name: str, index: int, data: str = '') -> None:
+    def __init__(self, name: str, index: int, data: Data = '') -> None:
         self.name = name
         self.index = index
         self.data = data
@@ -21,7 +23,7 @@ class Command(object):
         return str(self)
 
     @staticmethod
-    def start_stop(name: str, start: int, stop: int, data: str = '') -> Tuple['Command', 'Command']:
+    def start_stop(name: str, start: int, stop: int, data: Data = '') -> Tuple['Command', 'Command']:
         """
         Builds a pair of start/stop commands with the same data.
         """

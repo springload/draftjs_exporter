@@ -3,6 +3,7 @@ import json
 import os
 import unittest
 from pstats import Stats
+from typing import Callable
 
 import six
 
@@ -10,6 +11,8 @@ from draftjs_exporter.constants import BLOCK_TYPES, ENTITY_TYPES
 from draftjs_exporter.defaults import BLOCK_MAP, STYLE_MAP
 from draftjs_exporter.dom import DOM
 from draftjs_exporter.html import HTML
+from draftjs_exporter.types import ContentState
+
 from tests.test_composite_decorators import BR_DECORATOR, HASHTAG_DECORATOR, LINKIFY_DECORATOR
 from tests.test_entities import hr, image, link
 
@@ -48,7 +51,7 @@ class TestExportsMeta(type):
     See http://stackoverflow.com/a/20870875/1798491
     """
     def __new__(mcs, name, bases, tests):
-        def gen_test(content: str, html: str):
+        def gen_test(content: ContentState, html: str) -> Callable[[None], None]:
             def test(self):
                 self.assertEqual(exporter.render(content), html)
 

@@ -92,7 +92,7 @@ class DOMString(DOMEngine):
             return '<%s%s/>' % (type_, attr)
 
         if type_ == 'escaped_html':
-            return elt.markup
+            return elt.markup  # type: ignore
 
         return '<%s%s>%s</%s>' % (type_, attr, children, type_)
 
@@ -106,6 +106,6 @@ class DOMString(DOMEngine):
             return '<%s%s/>' % (type_, attr)
 
         if type_ == 'escaped_html':
-            return elt.markup
+            return elt.markup  # type: ignore
 
         return '<%s%s>%s</%s>' % (type_, attr, children, type_)
