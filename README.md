@@ -260,8 +260,7 @@ config = {
 
 ### Custom backing engines
 
-The exporter supports using custom engines to generate its output via the `DOM` API.
-This feature is only used for development at the moment, if you have a use case for this in production we would love to hear from you. Please get in touch!
+The exporter supports using custom engines to generate its output via the `DOM` API. This can be useful to implement custom export formats, e.g. [to Markdown (experimental)](https://github.com/thibaudcolas/draftjs_exporter_markdown).
 
 Here is an example implementation:
 
@@ -290,6 +289,26 @@ exporter = HTML({
     # Use the dotted module syntax to point to the DOMEngine implementation.
     'engine': 'myproject.example.DOMListTree'
 })
+```
+
+### Type annotations
+
+The exporter’s codebase is typed with annotations from the Python 3.5+ standard library, checked with mypy. Reusable types are made available:
+
+```python
+from draftjs_exporter.dom import DOM
+from draftjs_exporter.types import Element, Props
+
+
+# Components are simple functions that take `props` as parameter and return DOM elements.
+def image(props: Props) -> Element:
+    # This component creates an image element, with the relevant attributes.
+    return DOM.create_element('img', {
+        'src': props.get('src'),
+        'width': props.get('width'),
+        'height': props.get('height'),
+        'alt': props.get('alt'),
+    })
 ```
 
 ## Contributing
