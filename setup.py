@@ -29,7 +29,7 @@ dependencies['testing'] = [
     'psutil==5.4.1',
 
     # For coverage and PEP8 linting.
-    'coverage>=4.1.0',
+    'coverage==4.5.4',
     'flake8>=3.2.0',
     'isort==4.2.5',
 ] + dependencies['html5lib'] + dependencies['lxml']
