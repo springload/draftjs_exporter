@@ -10,7 +10,7 @@ This release contains breaking changes that will require updating the exporter's
 
 * Remove support for Python 2.7 and 3.4 ([#111](https://github.com/springload/draftjs_exporter/issues/111), [#120](https://github.com/springload/draftjs_exporter/pulls)).
 * Add support for Python 3.8.
-* Small performance improvements by using lists’ mutable .sort() instead of sorted(), which is a bit faster. (±2% faster) ([#120](https://github.com/springload/draftjs_exporter/pulls)).
+* Small performance improvements by using lists mutable .sort() instead of sorted(), which is a bit faster. (about 2% faster) ([#120](https://github.com/springload/draftjs_exporter/pulls)).
 
 ### How to upgrade
 
