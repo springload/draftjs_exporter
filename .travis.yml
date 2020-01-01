@@ -24,7 +24,7 @@ matrix:
   - env: TOXENV=py38-upper_bound_deps
     python: 3.8
 install:
-- pip install tox coveralls
+- pip install tox coveralls==1.10.0
 script:
 - make test-ci
 after_success:
