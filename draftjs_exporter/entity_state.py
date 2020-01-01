@@ -1,11 +1,11 @@
-from typing import List, Optional
+from typing import List, Optional, Sequence
 
 from draftjs_exporter.command import Command
 from draftjs_exporter.constants import ENTITY_TYPES
 from draftjs_exporter.dom import DOM
 from draftjs_exporter.error import ExporterException
 from draftjs_exporter.options import Options, OptionsMap
-from draftjs_exporter.types import Element, EntityDetails, EntityKey, EntityMap
+from draftjs_exporter.types import Block, Element, EntityDetails, EntityKey, EntityMap
 
 
 class EntityException(ExporterException):
@@ -48,7 +48,7 @@ class EntityState(object):
 
         return details
 
-    def render_entities(self, style_node: Element) -> Element:
+    def render_entities(self, style_node: Element, block: Block, blocks: Sequence[Block]) -> Element:
         # We have a complete (start, stop) entity to render.
         if self.completed_entity is not None:
             entity_details = self.get_entity_details(self.completed_entity)
@@ -56,6 +56,12 @@ class EntityState(object):
             props = entity_details['data'].copy()
             props['entity'] = {
                 'type': entity_details['type'],
+                'mutability': entity_details['mutability'] if 'mutability' in entity_details else None,
+                'block': block,
+                'blocks': blocks,
+                'entity_range': {
+                    'key': self.completed_entity,
+                },
             }
 
             if len(self.element_stack) == 1:

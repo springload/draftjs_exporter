@@ -122,7 +122,8 @@ def block_fallback(props: Props) -> Element:
 
 def entity_fallback(props: Props) -> Element:
     type_ = props['entity']['type']
-    logging.warn('Missing config for "%s".' % type_)
+    key = props['entity']['entity_range']['key']
+    logging.warn('Missing config for "%s", key "%s".' % (type_, key))
     return DOM.create_element('span', {'class': 'missing-entity'}, props['children'])
 
 
