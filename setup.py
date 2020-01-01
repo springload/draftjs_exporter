@@ -68,6 +68,7 @@ setup(
         'Topic :: Software Development :: Libraries :: Application Frameworks',
         'Topic :: Software Development :: Libraries :: Python Modules',
         'Topic :: Text Editors :: Word Processors',
+        'Typing :: Typed',
     ],
     package_data={
         'draftjs_exporter': ['py.typed'],
