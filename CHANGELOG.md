@@ -4,19 +4,33 @@
 
 ## Unreleased
 
-This release contains breaking changes that will require updating the exporter's configurations. **Be sure to check out the "how to upgrade" section below.**
+## [v3.0.0](https://github.com/springload/draftjs_exporter/releases/tag/v3.0.0)
+
+This release contains breaking changes. **Be sure to check out the "how to upgrade" section below.**
 
 ### Changed
 
-* Remove support for Python 2.7 and 3.4 ([#111](https://github.com/springload/draftjs_exporter/issues/111), [#120](https://github.com/springload/draftjs_exporter/pulls)).
+* Remove support for Python 2.7 and 3.4 ([#111](https://github.com/springload/draftjs_exporter/issues/111), [#120](https://github.com/springload/draftjs_exporter/pull/120)).
 * Add support for Python 3.8.
-* Small performance improvements by using lists’ mutable .sort() instead of sorted(), which is a bit faster. (±2% faster) ([#120](https://github.com/springload/draftjs_exporter/pulls)).
+* Small performance improvements by using lists’ mutable `.sort()` instead of `sorted()`, which is a bit faster. (±2% faster) ([#120](https://github.com/springload/draftjs_exporter/pull/120)).
+
+### Added
+
+* Add [PEP-484](https://www.python.org/dev/peps/pep-0484/) type annotations for the project’s public APIs ([#101](https://github.com/springload/draftjs_exporter/issues/101), [#123](https://github.com/springload/draftjs_exporter/pull/123)).
+* Add [PEP-561](https://www.python.org/dev/peps/pep-0561/) metadata so the exporter’s type annotations can be read by type checkers ([#101](https://github.com/springload/draftjs_exporter/issues/101), [#123](https://github.com/springload/draftjs_exporter/pull/123)).
+* Give entity rendering components access to the current `block`, `blocks` list, `mutability`, and key as `entity_range.key` ([#91](https://github.com/springload/draftjs_exporter/issues/91), [#124](https://github.com/springload/draftjs_exporter/pull/124)).
 
 ### How to upgrade
 
-#### Python 2.7 and 3.4
+#### Python 2.7 and 3.4 support
 
 Do not upgrade to this version if you are using the exporter in Python 2.7 or 3.4. Please keep using [v2.1.7](https://github.com/springload/draftjs_exporter/tree/v2.1.7) of the exporter.
+
+#### PEP-484 type annotations
+
+If you are using the exporter in a codebase using type annotations and a type checker, there is a chance the annotations added in this release will create conflicts with your project’s annotations – if there are discrepancies between the expected input/output of the exporter, or in the configuration. In this case you may need to update your project’s type annotations or stubs to match the expected types of the exporter’s public API.
+
+If you believe there is a problem with how the public API is typed, please [open a new issue](https://github.com/springload/draftjs_exporter/issues/new/choose).
 
 ## [v2.1.7](https://github.com/springload/draftjs_exporter/releases/tag/v2.1.7)
 
