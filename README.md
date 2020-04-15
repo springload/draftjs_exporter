@@ -319,6 +319,6 @@ If you just want to set up the project on your own computer, the contribution gu
 
 ## Credits
 
-This project is made possible by the work of [Springload](https://github.com/springload), a New Zealand digital agency, and. The _beautiful_ demo site is the work of [@thibaudcolas](https://github.com/thibaudcolas).
+This project is made possible by the work of [Springload](https://github.com/springload), a New Zealand digital agency. The _beautiful_ demo site is the work of [@thibaudcolas](https://github.com/thibaudcolas).
 
 View the full list of [contributors](https://github.com/springload/draftjs_exporter/graphs/contributors). [MIT](https://github.com/springload/draftjs_exporter/blob/master/LICENSE) licensed.
