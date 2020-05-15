@@ -2,9 +2,9 @@
 
 import io
 
-from draftjs_exporter import __version__
-
 from setuptools import find_packages, setup
+
+from draftjs_exporter import __version__
 
 dependencies = {
     # Keep this in sync with the dependencies in tox.ini.
@@ -27,7 +27,7 @@ dependencies["testing"] = (
         "flake8==3.8.1",
         "isort==4.3.21",
         "mypy==0.770",
-        "black==19.10b0",
+        # "black==19.10b0",
     ]
     + dependencies["html5lib"]
     + dependencies["lxml"]

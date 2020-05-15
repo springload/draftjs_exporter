@@ -9,10 +9,10 @@ init: clean-pyc ## Install dependencies and initialise for development.
 	pip install -e '.[testing,docs]' -U
 
 lint: ## Lint the project.
-	black --check **/*.py
-	flake8 draftjs_exporter tests example.py setup.py
-	isort --check-only --diff --recursive draftjs_exporter tests example.py setup.py
-	mypy draftjs_exporter tests example.py
+	# black --check **/*.py
+	flake8 **/*.py
+	isort --check-only --diff --recursive **/*.py
+	mypy **/*.py
 
 format: ## Format project files.
 	isort --recursive *.py **/*.py

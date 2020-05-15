@@ -10,7 +10,6 @@ from draftjs_exporter.defaults import BLOCK_MAP, STYLE_MAP
 from draftjs_exporter.dom import DOM
 from draftjs_exporter.html import HTML
 from draftjs_exporter.types import ContentState
-
 from tests.test_composite_decorators import (
     BR_DECORATOR,
     HASHTAG_DECORATOR,

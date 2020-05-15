@@ -1,5 +1,4 @@
 import re
-
 from typing import Any, Optional
 
 from draftjs_exporter.engines.base import DOMEngine

@@ -5,16 +5,15 @@ import logging
 import os
 import re
 from pstats import Stats
+
+from markov_draftjs import get_content_sample
 from memory_profiler import profile
 
 from draftjs_exporter.constants import BLOCK_TYPES, ENTITY_TYPES
 from draftjs_exporter.defaults import BLOCK_MAP, STYLE_MAP
 from draftjs_exporter.dom import DOM
 from draftjs_exporter.html import HTML
-
-from markov_draftjs import get_content_sample
-
-from example import list_item, ordered_list, image, br, entity_fallback
+from example import br, entity_fallback, image, list_item, ordered_list
 
 
 def document(props):
