@@ -36,6 +36,7 @@ pyenv global system 3.5.1 3.6.3 3.7.0 3.8.0
 make help            # See what commands are available.
 make init            # Install dependencies and initialise for development.
 make lint            # Lint the project.
+make format          # Format project files.
 make test            # Test the project.
 make test-watch      # Restarts the tests whenever a file changes.
 make test-coverage   # Run the tests while generating test coverage data.

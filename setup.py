@@ -33,6 +33,7 @@ dependencies['testing'] = [
     'flake8>=3.2.0',
     'isort==4.2.5',
     'mypy==0.750',
+    'black==19.10b0',
 ] + dependencies['html5lib'] + dependencies['lxml']
 
 with io.open('README.md', encoding='utf-8') as readme_file:
