@@ -17,16 +17,16 @@ dependencies = {
 dependencies["testing"] = (
     [
         # Required for running the tests.
-        "tox>=2.3.1",
+        "tox==3.15.0",
         # Benchmark dependencies.
         "markov_draftjs==0.1.1",
-        "memory-profiler==0.47",
-        "psutil==5.4.1",
+        "memory-profiler==0.57",
+        "psutil==5.7.0",
         # For coverage and PEP8 linting.
-        "coverage==5.0.1",
-        "flake8>=3.2.0",
-        "isort==4.2.5",
-        "mypy==0.750",
+        "coverage==5.1",
+        "flake8==3.8.1",
+        "isort==4.3.21",
+        "mypy==0.770",
         "black==19.10b0",
     ]
     + dependencies["html5lib"]
