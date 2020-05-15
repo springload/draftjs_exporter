@@ -35,12 +35,7 @@ class DOM(object):
         cls.dom = import_string(engine)
 
     @classmethod
-    def create_element(
-        cls,
-        type_: RenderableType = None,
-        props: Optional[Props] = None,
-        *elt_children: Optional[Element],
-    ) -> Element:
+    def create_element(cls, type_: RenderableType = None, props: Optional[Props] = None, *elt_children: Optional[Element]) -> Element:
         """
         Signature inspired by React.createElement.
         createElement(
