@@ -34,8 +34,8 @@ class TestStyleState(unittest.TestCase):
     def setUp(self):
         DOM.use(DOM.STRING)
         self.style_state = StyleState(
-            Options.map_styles(style_map)
-        )  # type: ignore
+            Options.map_styles(style_map)  # type: ignore
+        )
 
     def test_init(self):
         self.assertIsInstance(self.style_state, StyleState)

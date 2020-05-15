@@ -163,7 +163,7 @@ class WrapperState(object):
                     # Otherwise we can append at the end of the last child.
                     wrapper_parent = (
                         self.stack.head().last_child
-                    )  # type: ignore
+                    )
 
                 DOM.append_child(wrapper_parent, new_wrapper.elt)
 
