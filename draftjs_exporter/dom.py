@@ -7,8 +7,8 @@ from draftjs_exporter.types import HTML, Element, Props, RenderableType
 from draftjs_exporter.utils.module_loading import import_string
 
 # https://gist.github.com/yahyaKacem/8170675
-_first_cap_re = re.compile(r'(.)([A-Z][a-z]+)')
-_all_cap_re = re.compile('([a-z0-9])([A-Z])')
+_first_cap_re = re.compile(r"(.)([A-Z][a-z]+)")
+_all_cap_re = re.compile("([a-z0-9])([A-Z])")
 
 
 class DOM(object):
@@ -16,17 +16,17 @@ class DOM(object):
     Component building API, abstracting the DOM implementation.
     """
 
-    HTML5LIB = 'draftjs_exporter.engines.html5lib.DOM_HTML5LIB'
-    LXML = 'draftjs_exporter.engines.lxml.DOM_LXML'
-    STRING = 'draftjs_exporter.engines.string.DOMString'
+    HTML5LIB = "draftjs_exporter.engines.html5lib.DOM_HTML5LIB"
+    LXML = "draftjs_exporter.engines.lxml.DOM_LXML"
+    STRING = "draftjs_exporter.engines.string.DOMString"
 
     dom = None  # type: DOMEngine
 
     @staticmethod
     def camel_to_dash(camel_cased_str: str) -> str:
-        sub2 = _first_cap_re.sub(r'\1-\2', camel_cased_str)
-        dashed_case_str = _all_cap_re.sub(r'\1-\2', sub2).lower()
-        return dashed_case_str.replace('--', '-')
+        sub2 = _first_cap_re.sub(r"\1-\2", camel_cased_str)
+        dashed_case_str = _all_cap_re.sub(r"\1-\2", sub2).lower()
+        return dashed_case_str.replace("--", "-")
 
     @classmethod
     def use(cls, engine: str) -> None:
@@ -36,7 +36,12 @@ class DOM(object):
         cls.dom = import_string(engine)
 
     @classmethod
-    def create_element(cls, type_: RenderableType = None, props: Optional[Props] = None, *elt_children: Optional[Element]) -> Element:
+    def create_element(
+        cls,
+        type_: RenderableType = None,
+        props: Optional[Props] = None,
+        *elt_children: Optional[Element],
+    ) -> Element:
         """
         Signature inspired by React.createElement.
         createElement(
@@ -48,7 +53,7 @@ class DOM(object):
         """
         # Create an empty document fragment.
         if not type_:
-            return cls.dom.create_tag('fragment')
+            return cls.dom.create_tag("fragment")
 
         if props is None:
             props = {}
@@ -60,7 +65,7 @@ class DOM(object):
             children = elt_children
 
         # The children prop is the first child if there is only one.
-        props['children'] = children[0] if len(children) == 1 else children
+        props["children"] = children[0] if len(children) == 1 else children
 
         if callable(type_):
             # Function component, via def or lambda.
@@ -70,25 +75,28 @@ class DOM(object):
             attributes = {}
 
             # Never render those attributes on a raw tag.
-            props.pop('children', None)
-            props.pop('block', None)
-            props.pop('blocks', None)
-            props.pop('entity', None)
-            props.pop('inline_style_range', None)
+            props.pop("children", None)
+            props.pop("block", None)
+            props.pop("blocks", None)
+            props.pop("entity", None)
+            props.pop("inline_style_range", None)
 
             # Convert style object to style string, like the DOM would do.
-            if 'style' in props and isinstance(props['style'], dict):
-                rules = ['{0}: {1};'.format(DOM.camel_to_dash(s), v) for s, v in props['style'].items()]
+            if "style" in props and isinstance(props["style"], dict):
+                rules = [
+                    "{0}: {1};".format(DOM.camel_to_dash(s), v)
+                    for s, v in props["style"].items()
+                ]
                 rules.sort()
-                props['style'] = ''.join(rules)
+                props["style"] = "".join(rules)
 
             # Convert props to HTML attributes.
             for key in props:
                 if props[key] is False:
-                    props[key] = 'false'
+                    props[key] = "false"
 
                 if props[key] is True:
-                    props[key] = 'true'
+                    props[key] = "true"
 
                 if props[key] is not None:
                     attributes[key] = str(props[key])
@@ -97,12 +105,12 @@ class DOM(object):
 
             # Append the children inside the element.
             for child in children:
-                if child not in (None, ''):
+                if child not in (None, ""):
                     cls.append_child(elt, child)
 
         # If elt is "empty", create a fragment anyway to add children.
-        if elt in (None, ''):
-            elt = cls.dom.create_tag('fragment')
+        if elt in (None, ""):
+            elt = cls.dom.create_tag("fragment")
 
         return elt
 

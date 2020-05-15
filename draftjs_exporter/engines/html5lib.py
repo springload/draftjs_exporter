@@ -8,12 +8,12 @@ try:
     from bs4 import BeautifulSoup
 
     # Cache empty soup so we can create tags in isolation without the performance overhead.
-    soup = BeautifulSoup('', 'html5lib')
+    soup = BeautifulSoup("", "html5lib")
 except ImportError:
     pass
 
-RENDER_RE = re.compile(r'</?(fragment|body|html|head)>')
-RENDER_DEBUG_RE = re.compile(r'</?(body|html|head)>')
+RENDER_RE = re.compile(r"</?(fragment|body|html|head)>")
+RENDER_DEBUG_RE = re.compile(r"</?(body|html|head)>")
 
 
 class DOM_HTML5LIB(DOMEngine):
@@ -30,7 +30,7 @@ class DOM_HTML5LIB(DOMEngine):
 
     @staticmethod
     def parse_html(markup: HTML) -> Element:
-        return BeautifulSoup(markup, 'html5lib')
+        return BeautifulSoup(markup, "html5lib")
 
     @staticmethod
     def append_child(elt: Element, child: Element) -> None:
@@ -38,8 +38,8 @@ class DOM_HTML5LIB(DOMEngine):
 
     @staticmethod
     def render(elt: Element) -> HTML:
-        return RENDER_RE.sub('', str(elt))
+        return RENDER_RE.sub("", str(elt))
 
     @staticmethod
     def render_debug(elt: Element) -> HTML:
-        return RENDER_DEBUG_RE.sub('', str(elt))
+        return RENDER_DEBUG_RE.sub("", str(elt))

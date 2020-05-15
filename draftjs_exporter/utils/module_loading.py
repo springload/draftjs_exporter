@@ -11,7 +11,7 @@ def import_string(dotted_path: str) -> Any:
     https://github.com/django/django/blob/f6bd00131e687aedf2719ad31e84b097562ca5f2/django/utils/module_loading.py#L7-L24
     """
     try:
-        module_path, class_name = dotted_path.rsplit('.', 1)
+        module_path, class_name = dotted_path.rsplit(".", 1)
     except ValueError:
         raise ImportError("%s doesn't look like a module path" % dotted_path)
 
@@ -20,6 +20,7 @@ def import_string(dotted_path: str) -> Any:
     try:
         return getattr(module, class_name)
     except AttributeError:
-        raise ImportError('Module "%s" does not define a "%s" attribute/class' % (
-            module_path, class_name)
+        raise ImportError(
+            'Module "%s" does not define a "%s" attribute/class'
+            % (module_path, class_name)
         )

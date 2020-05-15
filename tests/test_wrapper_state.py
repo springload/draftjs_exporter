@@ -10,17 +10,22 @@ class TestWrapperState(unittest.TestCase):
     def setUp(self):
         DOM.use(DOM.STRING)
 
-        self.wrapper_state = WrapperState(Options.map_blocks({
-            'header-one': 'h1',
-            'unstyled': 'div',
-            'atomic': lambda props: props['children'],
-            'ignore': None,
-            'blockquote': blockquote,
-            'ordered-list-item': {
-                'element': list_item,
-                'wrapper': ordered_list
-            },
-        }), [])
+        self.wrapper_state = WrapperState(
+            Options.map_blocks(
+                {
+                    "header-one": "h1",
+                    "unstyled": "div",
+                    "atomic": lambda props: props["children"],
+                    "ignore": None,
+                    "blockquote": blockquote,
+                    "ordered-list-item": {
+                        "element": list_item,
+                        "wrapper": ordered_list,
+                    },
+                }
+            ),
+            [],
+        )
 
     def test_init(self):
         self.assertIsInstance(self.wrapper_state, WrapperState)
@@ -28,97 +33,153 @@ class TestWrapperState(unittest.TestCase):
     def test_element_for_data(self):
         blocks = [
             {
-                'key': '5s7g9',
-                'text': 'test',
-                'type': 'unstyled',
-                'depth': 0,
-                'inlineStyleRanges': [],
-                'entityRanges': [],
-            },
+                "key": "5s7g9",
+                "text": "test",
+                "type": "unstyled",
+                "depth": 0,
+                "inlineStyleRanges": [],
+                "entityRanges": [],
+            }
         ]
 
         def unstyled(props):
-            self.assertEqual(props['blocks'], blocks)
-            self.assertEqual(props['block'], blocks[0])
+            self.assertEqual(props["blocks"], blocks)
+            self.assertEqual(props["block"], blocks[0])
 
-        WrapperState(Options.map_blocks({'unstyled': unstyled}), blocks).element_for(blocks[0], 'test')
+        WrapperState(
+            Options.map_blocks({"unstyled": unstyled}), blocks
+        ).element_for(blocks[0], "test")
 
     def test_element_for_simple_content(self):
-        self.assertEqual(DOM.render_debug(self.wrapper_state.element_for({
-            'key': '5s7g9',
-            'text': 'Header',
-            'type': 'header-one',
-            'depth': 0,
-            'inlineStyleRanges': [],
-            'entityRanges': []
-        }, 'Header')), '<h1>Header</h1>')
+        self.assertEqual(
+            DOM.render_debug(
+                self.wrapper_state.element_for(
+                    {
+                        "key": "5s7g9",
+                        "text": "Header",
+                        "type": "header-one",
+                        "depth": 0,
+                        "inlineStyleRanges": [],
+                        "entityRanges": [],
+                    },
+                    "Header",
+                )
+            ),
+            "<h1>Header</h1>",
+        )
 
     def test_element_for_element_content(self):
-        self.assertEqual(DOM.render_debug(self.wrapper_state.element_for({
-            'key': '5s7g9',
-            'text': 'Paragraph',
-            'type': 'unstyled',
-            'depth': 0,
-            'inlineStyleRanges': [],
-            'entityRanges': []
-        }, DOM.create_element('strong', {}, 'Paragraph'))), '<div><strong>Paragraph</strong></div>')
+        self.assertEqual(
+            DOM.render_debug(
+                self.wrapper_state.element_for(
+                    {
+                        "key": "5s7g9",
+                        "text": "Paragraph",
+                        "type": "unstyled",
+                        "depth": 0,
+                        "inlineStyleRanges": [],
+                        "entityRanges": [],
+                    },
+                    DOM.create_element("strong", {}, "Paragraph"),
+                )
+            ),
+            "<div><strong>Paragraph</strong></div>",
+        )
 
     def test_element_for_dismiss_content(self):
-        self.assertEqual(DOM.render_debug(self.wrapper_state.element_for({
-            'key': '5s7g9',
-            'text': 'Paragraph',
-            'type': 'ignore',
-            'depth': 0,
-            'inlineStyleRanges': [],
-            'entityRanges': []
-        }, DOM.create_element('img', {'src': '/example.png'}))), '<fragment></fragment>')
+        self.assertEqual(
+            DOM.render_debug(
+                self.wrapper_state.element_for(
+                    {
+                        "key": "5s7g9",
+                        "text": "Paragraph",
+                        "type": "ignore",
+                        "depth": 0,
+                        "inlineStyleRanges": [],
+                        "entityRanges": [],
+                    },
+                    DOM.create_element("img", {"src": "/example.png"}),
+                )
+            ),
+            "<fragment></fragment>",
+        )
 
     def test_element_for_no_block(self):
-        self.assertEqual(DOM.render_debug(self.wrapper_state.element_for({
-            'key': '5s7g9',
-            'text': 'Paragraph',
-            'type': 'atomic',
-            'depth': 0,
-            'inlineStyleRanges': [],
-            'entityRanges': []
-        }, DOM.create_element('img', {'src': '/example.png'}))), '<img src="/example.png"/>')
+        self.assertEqual(
+            DOM.render_debug(
+                self.wrapper_state.element_for(
+                    {
+                        "key": "5s7g9",
+                        "text": "Paragraph",
+                        "type": "atomic",
+                        "depth": 0,
+                        "inlineStyleRanges": [],
+                        "entityRanges": [],
+                    },
+                    DOM.create_element("img", {"src": "/example.png"}),
+                )
+            ),
+            '<img src="/example.png"/>',
+        )
 
     def test_element_for_component(self):
-        self.assertEqual(DOM.render_debug(self.wrapper_state.element_for({
-            'key': '5s7g9',
-            'text': 'Paragraph',
-            'type': 'blockquote',
-            'depth': 0,
-            'data': {
-                'cite': 'http://example.com/',
-            },
-            'inlineStyleRanges': [],
-            'entityRanges': []
-        }, 'Test')), '<blockquote cite="http://example.com/">Test</blockquote>')
+        self.assertEqual(
+            DOM.render_debug(
+                self.wrapper_state.element_for(
+                    {
+                        "key": "5s7g9",
+                        "text": "Paragraph",
+                        "type": "blockquote",
+                        "depth": 0,
+                        "data": {"cite": "http://example.com/"},
+                        "inlineStyleRanges": [],
+                        "entityRanges": [],
+                    },
+                    "Test",
+                )
+            ),
+            '<blockquote cite="http://example.com/">Test</blockquote>',
+        )
 
     def test_element_for_component_wrapper(self):
-        self.assertEqual(DOM.render_debug(self.wrapper_state.element_for({
-            'key': '5s7g9',
-            'text': 'Test',
-            'type': 'ordered-list-item',
-            'depth': 0,
-            'data': {},
-            'inlineStyleRanges': [],
-            'entityRanges': []
-        }, 'Test')), '<ol class="list--depth-0"><li class="list-item--depth-0">Test</li></ol>')
+        self.assertEqual(
+            DOM.render_debug(
+                self.wrapper_state.element_for(
+                    {
+                        "key": "5s7g9",
+                        "text": "Test",
+                        "type": "ordered-list-item",
+                        "depth": 0,
+                        "data": {},
+                        "inlineStyleRanges": [],
+                        "entityRanges": [],
+                    },
+                    "Test",
+                )
+            ),
+            '<ol class="list--depth-0"><li class="list-item--depth-0">Test</li></ol>',
+        )
 
     def test_str_elts(self):
-        self.assertEqual(DOM.render_debug(self.wrapper_state.element_for({
-            'key': '5s7g9',
-            'text': 'Header',
-            'type': 'header-one',
-            'depth': 0,
-            'inlineStyleRanges': [],
-            'entityRanges': []
-        }, '')), '<h1></h1>')
+        self.assertEqual(
+            DOM.render_debug(
+                self.wrapper_state.element_for(
+                    {
+                        "key": "5s7g9",
+                        "text": "Header",
+                        "type": "header-one",
+                        "depth": 0,
+                        "inlineStyleRanges": [],
+                        "entityRanges": [],
+                    },
+                    "",
+                )
+            ),
+            "<h1></h1>",
+        )
 
     def test_str(self):
-        self.assertEqual(str(self.wrapper_state), '<WrapperState: []>')
+        self.assertEqual(str(self.wrapper_state), "<WrapperState: []>")
 
 
 class TestBlockquote(unittest.TestCase):
@@ -126,13 +187,16 @@ class TestBlockquote(unittest.TestCase):
         DOM.use(DOM.STRING)
 
     def test_render_debug(self):
-        self.assertEqual(DOM.render_debug(DOM.create_element(blockquote, {
-            'block': {
-                'data': {
-                    'cite': 'http://example.com/',
-                },
-            },
-        }, 'Test')), '<blockquote cite="http://example.com/">Test</blockquote>')
+        self.assertEqual(
+            DOM.render_debug(
+                DOM.create_element(
+                    blockquote,
+                    {"block": {"data": {"cite": "http://example.com/"}}},
+                    "Test",
+                )
+            ),
+            '<blockquote cite="http://example.com/">Test</blockquote>',
+        )
 
 
 class TestListItem(unittest.TestCase):
@@ -140,8 +204,9 @@ class TestListItem(unittest.TestCase):
         DOM.use(DOM.STRING)
 
     def test_render_debug(self):
-        self.assertEqual(DOM.render_debug(DOM.create_element(list_item, {
-            'block': {
-                'depth': 5,
-            },
-        }, 'Test')), '<li class="list-item--depth-5">Test</li>')
+        self.assertEqual(
+            DOM.render_debug(
+                DOM.create_element(list_item, {"block": {"depth": 5}}, "Test")
+            ),
+            '<li class="list-item--depth-5">Test</li>',
+        )

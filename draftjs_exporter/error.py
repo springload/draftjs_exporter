@@ -1,4 +1,3 @@
-
 class ExporterException(Exception):
     pass
 

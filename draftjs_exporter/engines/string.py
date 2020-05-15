@@ -7,20 +7,20 @@ from draftjs_exporter.types import HTML, Tag
 # http://w3c.github.io/html/single-page.html#void-elements
 # https://github.com/html5lib/html5lib-python/blob/0cae52b2073e3f2220db93a7650901f2200f2a13/html5lib/constants.py#L560
 VOID_ELEMENTS = (
-    'area',
-    'base',
-    'br',
-    'col',
-    'embed',
-    'hr',
-    'img',
-    'input',
-    'link',
-    'meta',
-    'param',
-    'source',
-    'track',
-    'wbr',
+    "area",
+    "base",
+    "br",
+    "col",
+    "embed",
+    "hr",
+    "img",
+    "input",
+    "link",
+    "meta",
+    "param",
+    "source",
+    "track",
+    "wbr",
 )
 
 
@@ -30,7 +30,8 @@ class Elt(object):
     This class doesn't do much, but the exporter relies on
     comparing elements by reference so it's useful nonetheless.
     """
-    __slots__ = ('type', 'attr', 'children', 'markup')
+
+    __slots__ = ("type", "attr", "children", "markup")
 
     def __init__(self, type_: Tag, attr: Optional[Attr], markup: HTML = None):
         self.type = type_
@@ -39,8 +40,8 @@ class Elt(object):
         self.markup = markup
 
     @staticmethod
-    def from_html(markup: HTML) -> 'Elt':
-        return Elt('escaped_html', None, markup)
+    def from_html(markup: HTML) -> "Elt":
+        return Elt("escaped_html", None, markup)
 
 
 class DOMString(DOMEngine):
@@ -73,39 +74,48 @@ class DOMString(DOMEngine):
     def render_attrs(attr: Attr) -> str:
         attrs = [' %s="%s"' % (k, escape(v)) for k, v in attr.items()]
         attrs.sort()
-        return ''.join(attrs)
+        return "".join(attrs)
 
     @staticmethod
     def render_children(children: Sequence[Union[HTML, Elt]]) -> HTML:
-        return ''.join([DOMString.render(c) if isinstance(c, Elt) else escape(c) for c in children])
+        return "".join(
+            [
+                DOMString.render(c) if isinstance(c, Elt) else escape(c)
+                for c in children
+            ]
+        )
 
     @staticmethod
     def render(elt: Elt) -> HTML:
         type_ = elt.type
-        attr = DOMString.render_attrs(elt.attr) if elt.attr else ''
-        children = DOMString.render_children(elt.children) if elt.children else ''
+        attr = DOMString.render_attrs(elt.attr) if elt.attr else ""
+        children = (
+            DOMString.render_children(elt.children) if elt.children else ""
+        )
 
-        if type_ == 'fragment':
+        if type_ == "fragment":
             return children
 
         if type_ in VOID_ELEMENTS:
-            return '<%s%s/>' % (type_, attr)
+            return "<%s%s/>" % (type_, attr)
 
-        if type_ == 'escaped_html':
+        if type_ == "escaped_html":
             return elt.markup  # type: ignore
 
-        return '<%s%s>%s</%s>' % (type_, attr, children, type_)
+        return "<%s%s>%s</%s>" % (type_, attr, children, type_)
 
     @staticmethod
     def render_debug(elt: Elt) -> HTML:
         type_ = elt.type
-        attr = DOMString.render_attrs(elt.attr) if elt.attr else ''
-        children = DOMString.render_children(elt.children) if elt.children else ''
+        attr = DOMString.render_attrs(elt.attr) if elt.attr else ""
+        children = (
+            DOMString.render_children(elt.children) if elt.children else ""
+        )
 
         if type_ in VOID_ELEMENTS:
-            return '<%s%s/>' % (type_, attr)
+            return "<%s%s/>" % (type_, attr)
 
-        if type_ == 'escaped_html':
+        if type_ == "escaped_html":
             return elt.markup  # type: ignore
 
-        return '<%s%s>%s</%s>' % (type_, attr, children, type_)
+        return "<%s%s>%s</%s>" % (type_, attr, children, type_)

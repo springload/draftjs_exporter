@@ -2,15 +2,22 @@ from operator import itemgetter
 from typing import Any, Dict, Generator, List, Sequence, Tuple
 
 from draftjs_exporter.dom import DOM
-from draftjs_exporter.types import Block, CompositeDecorators, Decorator, Element
+from draftjs_exporter.types import (
+    Block,
+    CompositeDecorators,
+    Decorator,
+    Element,
+)
 
 
-def get_decorations(decorators: CompositeDecorators, text: str) -> List[Tuple[int, int, Any, Decorator]]:
+def get_decorations(
+    decorators: CompositeDecorators, text: str
+) -> List[Tuple[int, int, Any, Decorator]]:
     occupied = {}  # type: Dict[int, int]
     decorations = []
 
     for decorator in decorators:
-        for match in decorator['strategy'].finditer(text):
+        for match in decorator["strategy"].finditer(text):
             begin, end = match.span()
             if not any(occupied.get(i) for i in range(begin, end)):
                 for i in range(begin, end):
@@ -22,7 +29,12 @@ def get_decorations(decorators: CompositeDecorators, text: str) -> List[Tuple[in
     return decorations
 
 
-def apply_decorators(decorators: CompositeDecorators, text: str, block: Block, blocks: Sequence[Block]) -> Generator[str, None, None]:
+def apply_decorators(
+    decorators: CompositeDecorators,
+    text: str,
+    block: Block,
+    blocks: Sequence[Block],
+) -> Generator[str, None, None]:
     decorations = get_decorations(decorators, text)
 
     pointer = 0
@@ -30,18 +42,23 @@ def apply_decorators(decorators: CompositeDecorators, text: str, block: Block, b
         if pointer < begin:
             yield text[pointer:begin]
 
-        yield DOM.create_element(decorator['component'], {
-            'match': match,
-            'block': block,
-            'blocks': blocks,
-        }, match.group(0))
+        yield DOM.create_element(
+            decorator["component"],
+            {"match": match, "block": block, "blocks": blocks},
+            match.group(0),
+        )
         pointer = end
 
     if pointer < len(text):
         yield text[pointer:]
 
 
-def render_decorators(decorators: CompositeDecorators, text: str, block: Block, blocks: Sequence[Block]) -> Element:
+def render_decorators(
+    decorators: CompositeDecorators,
+    text: str,
+    block: Block,
+    blocks: Sequence[Block],
+) -> Element:
     decorated_children = list(apply_decorators(decorators, text, block, blocks))
 
     if len(decorated_children) == 1:

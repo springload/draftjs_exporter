@@ -9,7 +9,13 @@ from draftjs_exporter.dom import DOM
 from draftjs_exporter.entity_state import EntityState
 from draftjs_exporter.options import Options
 from draftjs_exporter.style_state import StyleState
-from draftjs_exporter.types import Block, Config, ContentState, Element, EntityMap
+from draftjs_exporter.types import (
+    Block,
+    Config,
+    ContentState,
+    Element,
+    EntityMap,
+)
 from draftjs_exporter.wrapper_state import WrapperState
 
 
@@ -18,20 +24,33 @@ class HTML(object):
     Entry point of the exporter. Combines entity, wrapper and style state
     to generate the right HTML nodes.
     """
-    __slots__ = ('composite_decorators', 'has_decorators', 'entity_options', 'block_options', 'style_options')
+
+    __slots__ = (
+        "composite_decorators",
+        "has_decorators",
+        "entity_options",
+        "block_options",
+        "style_options",
+    )
 
     def __init__(self, config: Optional[Config] = None) -> None:
         if config is None:
             config = {}
 
-        self.composite_decorators = config.get('composite_decorators', [])
+        self.composite_decorators = config.get("composite_decorators", [])
         self.has_decorators = len(self.composite_decorators) > 0
 
-        self.entity_options = Options.map_entities(config.get('entity_decorators', {}))
-        self.block_options = Options.map_blocks(config.get('block_map', BLOCK_MAP))
-        self.style_options = Options.map_styles(config.get('style_map', STYLE_MAP))
+        self.entity_options = Options.map_entities(
+            config.get("entity_decorators", {})
+        )
+        self.block_options = Options.map_blocks(
+            config.get("block_map", BLOCK_MAP)
+        )
+        self.style_options = Options.map_styles(
+            config.get("style_map", STYLE_MAP)
+        )
 
-        DOM.use(config.get('engine', DOM.STRING))
+        DOM.use(config.get("engine", DOM.STRING))
 
     def render(self, content_state: Optional[ContentState] = None) -> str:
         """
@@ -40,15 +59,15 @@ class HTML(object):
         if content_state is None:
             content_state = {}
 
-        blocks = content_state.get('blocks', [])
+        blocks = content_state.get("blocks", [])
         wrapper_state = WrapperState(self.block_options, blocks)
         document = DOM.create_element()
-        entity_map = content_state.get('entityMap', {})
+        entity_map = content_state.get("entityMap", {})
         min_depth = 0
 
         for block in blocks:
             # Assume a depth of 0 if it's not specified, like Draft.js would.
-            depth = block['depth'] if 'depth' in block else 0
+            depth = block["depth"] if "depth" in block else 0
             elt = self.render_block(block, entity_map, wrapper_state)
 
             if depth > min_depth:
@@ -64,8 +83,15 @@ class HTML(object):
 
         return DOM.render(document)
 
-    def render_block(self, block: Block, entity_map: EntityMap, wrapper_state: WrapperState) -> Element:
-        if 'inlineStyleRanges' in block and block['inlineStyleRanges'] or 'entityRanges' in block and block['entityRanges']:
+    def render_block(
+        self, block: Block, entity_map: EntityMap, wrapper_state: WrapperState
+    ) -> Element:
+        if (
+            "inlineStyleRanges" in block
+            and block["inlineStyleRanges"]
+            or "entityRanges" in block
+            and block["entityRanges"]
+        ):
             content = DOM.create_element()
             entity_state = EntityState(self.entity_options, entity_map)
             style_state = StyleState(self.style_options)
@@ -77,37 +103,56 @@ class HTML(object):
 
                 # Decorators are not rendered inside entities.
                 if entity_state.has_no_entity() and self.has_decorators:
-                    decorated_node = render_decorators(self.composite_decorators, text, block, wrapper_state.blocks)
+                    decorated_node = render_decorators(
+                        self.composite_decorators,
+                        text,
+                        block,
+                        wrapper_state.blocks,
+                    )
                 else:
                     decorated_node = text
 
-                styled_node = style_state.render_styles(decorated_node, block, wrapper_state.blocks)
-                entity_node = entity_state.render_entities(styled_node, block, wrapper_state.blocks)
+                styled_node = style_state.render_styles(
+                    decorated_node, block, wrapper_state.blocks
+                )
+                entity_node = entity_state.render_entities(
+                    styled_node, block, wrapper_state.blocks
+                )
 
                 if entity_node is not None:
                     DOM.append_child(content, entity_node)
 
                     # Check whether there actually are two different nodes, confirming we are not inserting an upcoming entity.
-                    if styled_node != entity_node and entity_state.has_no_entity():
+                    if (
+                        styled_node != entity_node
+                        and entity_state.has_no_entity()
+                    ):
                         DOM.append_child(content, styled_node)
         # Fast track for blocks which do not contain styles nor entities, which is very common.
         elif self.has_decorators:
-            content = render_decorators(self.composite_decorators, block['text'], block, wrapper_state.blocks)
+            content = render_decorators(
+                self.composite_decorators,
+                block["text"],
+                block,
+                wrapper_state.blocks,
+            )
         else:
-            content = block['text']
+            content = block["text"]
 
         return wrapper_state.element_for(block, content)
 
-    def build_command_groups(self, block: Block) -> List[Tuple[str, List[Command]]]:
+    def build_command_groups(
+        self, block: Block
+    ) -> List[Tuple[str, List[Command]]]:
         """
         Creates block modification commands, grouped by start index,
         with the text to apply them on.
         """
-        text = block['text']
+        text = block["text"]
 
         commands = self.build_commands(block)
-        grouped = groupby(commands, attrgetter('index'))
-        listed = list(groupby(commands, attrgetter('index')))
+        grouped = groupby(commands, attrgetter("index"))
+        listed = list(groupby(commands, attrgetter("index")))
         sliced = []
 
         i = 0
@@ -116,7 +161,7 @@ class HTML(object):
                 stop_index = listed[i + 1][0]
                 sliced.append((text[start_index:stop_index], list(comms)))
             else:
-                sliced.append(('', list(comms)))
+                sliced.append(("", list(comms)))
             i += 1
 
         return sliced
@@ -131,6 +176,10 @@ class HTML(object):
         style_commands = Command.from_style_ranges(block)
         entity_commands = Command.from_entity_ranges(block)
         styles_and_entities = style_commands + entity_commands
-        styles_and_entities.sort(key=attrgetter('index'))
+        styles_and_entities.sort(key=attrgetter("index"))
 
-        return [Command('start_text', 0)] + styles_and_entities + [Command('stop_text', len(block['text']))]
+        return (
+            [Command("start_text", 0)]
+            + styles_and_entities
+            + [Command("stop_text", len(block["text"]))]
+        )

@@ -5,17 +5,24 @@ from draftjs_exporter.error import ConfigException
 from draftjs_exporter.types import ConfigMap, Props, RenderableType
 
 # Internal equivalent of a ConfigMap.
-OptionsMap = Dict[str, 'Options']
+OptionsMap = Dict[str, "Options"]
 
 
 class Options(object):
     """
     Facilitates querying configuration from a config map.
     """
-    __slots__ = ('type', 'element', 'props', 'wrapper', 'wrapper_props')
 
+    __slots__ = ("type", "element", "props", "wrapper", "wrapper_props")
 
-    def __init__(self, type_: str, element: RenderableType, props: Optional[Props] = None, wrapper: RenderableType = None, wrapper_props: Optional[Props] = None) -> None:
+    def __init__(
+        self,
+        type_: str,
+        element: RenderableType,
+        props: Optional[Props] = None,
+        wrapper: RenderableType = None,
+        wrapper_props: Optional[Props] = None,
+    ) -> None:
         self.type = type_
         self.element = element
         self.props = props if props else {}
@@ -23,7 +30,13 @@ class Options(object):
         self.wrapper_props = wrapper_props
 
     def __str__(self) -> str:
-        return '<Options {0} {1} {2} {3} {4}>'.format(self.type, self.element, self.props, self.wrapper, self.wrapper_props)
+        return "<Options {0} {1} {2} {3} {4}>".format(
+            self.type,
+            self.element,
+            self.props,
+            self.wrapper,
+            self.wrapper_props,
+        )
 
     def __repr__(self) -> str:
         return str(self)
@@ -41,20 +54,22 @@ class Options(object):
         return hash(str(self))
 
     @staticmethod
-    def create(kind_map: ConfigMap, type_: str, fallback_key: str) -> 'Options':
+    def create(kind_map: ConfigMap, type_: str, fallback_key: str) -> "Options":
         """
         Create an Options object from any mapping.
         """
         if type_ not in kind_map:
             if fallback_key not in kind_map:
-                raise ConfigException('"%s" is not in the config and has no fallback' % type_)
+                raise ConfigException(
+                    '"%s" is not in the config and has no fallback' % type_
+                )
 
             config = kind_map[fallback_key]
         else:
             config = kind_map[type_]
 
         if isinstance(config, dict):
-            if 'element' not in config:
+            if "element" not in config:
                 raise ConfigException('"%s" does not define an element' % type_)
 
             opts = Options(type_, **config)
@@ -84,11 +99,13 @@ class Options(object):
         return Options.map(entity_map, ENTITY_TYPES.FALLBACK)
 
     @staticmethod
-    def get(options: OptionsMap, type_: str, fallback_key: str) -> 'Options':
+    def get(options: OptionsMap, type_: str, fallback_key: str) -> "Options":
         try:
             return options[type_]
         except KeyError:
             try:
                 return options[fallback_key]
             except KeyError:
-                raise ConfigException('"%s" is not in the config and has no fallback' % type_)
+                raise ConfigException(
+                    '"%s" is not in the config and has no fallback' % type_
+                )
