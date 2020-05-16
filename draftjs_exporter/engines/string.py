@@ -73,7 +73,6 @@ class DOMString(DOMEngine):
     @staticmethod
     def render_attrs(attr: Attr) -> str:
         attrs = [f' {k}="{escape(v)}"' for k, v in attr.items()]
-        attrs.sort()
         return "".join(attrs)
 
     @staticmethod

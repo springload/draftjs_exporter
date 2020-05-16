@@ -46,7 +46,7 @@ class TestDOMString(unittest.TestCase):
     def test_render_attrs(self):
         self.assertEqual(
             DOMString.render_attrs(
-                {"src": "src.png", "alt": "img's alt", "class": "intro"}
+                {"alt": "img's alt", "class": "intro", "src": "src.png"}
             ),
             ' alt="img&#x27;s alt" class="intro" src="src.png"',
         )
