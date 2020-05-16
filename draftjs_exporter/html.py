@@ -87,27 +87,25 @@ class HTML(object):
     def render_block(
         self, block: Block, entity_map: EntityMap, wrapper_state: WrapperState
     ) -> Element:
+        has_styles = "inlineStyleRanges" in block and block["inlineStyleRanges"]
+        has_entities = "entityRanges" in block and block["entityRanges"]
         has_decorators = should_render_decorators(
             self.composite_decorators, block["text"]
         )
 
-        if (
-            "inlineStyleRanges" in block
-            and block["inlineStyleRanges"]
-            or "entityRanges" in block
-            and block["entityRanges"]
-        ):
+        if has_styles or has_entities:
             content = DOM.create_element()
             entity_state = EntityState(self.entity_options, entity_map)
-            style_state = StyleState(self.style_options)
+            style_state = StyleState(self.style_options) if has_styles else None
 
             for (text, commands) in self.build_command_groups(block):
                 for command in commands:
                     entity_state.apply(command)
-                    style_state.apply(command)
+                    if style_state:
+                        style_state.apply(command)
 
                 # Decorators are not rendered inside entities.
-                if entity_state.has_no_entity() and has_decorators:
+                if has_decorators and entity_state.has_no_entity():
                     decorated_node = render_decorators(
                         self.composite_decorators,
                         text,
@@ -117,9 +115,12 @@ class HTML(object):
                 else:
                     decorated_node = text
 
-                styled_node = style_state.render_styles(
-                    decorated_node, block, wrapper_state.blocks
-                )
+                if style_state:
+                    styled_node = style_state.render_styles(
+                        decorated_node, block, wrapper_state.blocks
+                    )
+                else:
+                    styled_node = decorated_node
                 entity_node = entity_state.render_entities(
                     styled_node, block, wrapper_state.blocks
                 )
