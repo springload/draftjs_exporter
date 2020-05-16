@@ -16,7 +16,7 @@
 
 ## Exporter behavior
 
-- HTML attributes are added in alphabetical order.
+- HTML attributes are added in alphabetical order for the `lxml` and `html5` engines, and in the order they are provided as for the default `string` engine.
 - `unstyled` blocks without text render as an empty element.
 - Inline ranges aiming the same offset and length are always rendered in the same order (alphabetical order of the style type - `BOLD`, `CODE`, `ITALIC`).
 - `style` prop is rendered as-is if it is a string, or can also be a dict in which case its properties are converted into a string using `camel_to_dash`.
