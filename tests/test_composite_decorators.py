@@ -1,7 +1,10 @@
 import re
 import unittest
 
-from draftjs_exporter.composite_decorators import render_decorators
+from draftjs_exporter.composite_decorators import (
+    render_decorators,
+    should_render_decorators,
+)
 from draftjs_exporter.constants import BLOCK_TYPES
 from draftjs_exporter.dom import DOM
 from example import LINKIFY_RE, br, hashtag, linkify
@@ -87,6 +90,17 @@ class TestBR(unittest.TestCase):
             ),
             "<br/>",
         )
+        self.assertEqual(
+            DOM.render(
+                render_decorators(
+                    [BR_DECORATOR],
+                    "test \n test",
+                    {"type": BLOCK_TYPES.UNSTYLED, "depth": 0},
+                    [],
+                )
+            ),
+            "test <br/> test",
+        )
 
     def test_render_code_block(self):
         self.assertEqual(
@@ -168,4 +182,32 @@ class TestCompositeDecorators(unittest.TestCase):
             "test https://www.example.com#hash #hashtagtest",
             blocks[0],
             blocks,
+        )
+
+    def test_should_render_decorators_empty(self):
+        self.assertEqual(
+            should_render_decorators([], "test"), False,
+        )
+
+    def test_should_render_decorators_more_than_one(self):
+        self.assertEqual(
+            should_render_decorators(
+                [HASHTAG_DECORATOR, LINKIFY_DECORATOR], "test",
+            ),
+            True,
+        )
+
+    def test_should_render_decorators_single_not_br(self):
+        self.assertEqual(
+            should_render_decorators([HASHTAG_DECORATOR], "test"), True,
+        )
+
+    def test_should_render_decorators_single_br_absent(self):
+        self.assertEqual(
+            should_render_decorators([BR_DECORATOR], "test"), False,
+        )
+
+    def test_should_render_decorators_single_br_present(self):
+        self.assertEqual(
+            should_render_decorators([BR_DECORATOR], "test \n test"), True,
         )

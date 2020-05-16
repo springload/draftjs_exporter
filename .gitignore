@@ -93,3 +93,4 @@ lib64
 example.html
 .mypy_cache
 pip-wheel-metadata
+__pycache__
