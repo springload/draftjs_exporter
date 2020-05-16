@@ -17,42 +17,43 @@ from draftjs_exporter.types import Element, Props
 
 
 def blockquote(props: Props) -> Element:
-    block_data = props['block']['data']
+    block_data = props["block"]["data"]
 
-    return DOM.create_element('blockquote', {
-        'cite': block_data.get('cite')
-    }, props['children'])
+    return DOM.create_element(
+        "blockquote", {"cite": block_data.get("cite")}, props["children"]
+    )
 
 
 def list_item(props: Props) -> Element:
-    depth = props['block']['depth']
+    depth = props["block"]["depth"]
 
-    return DOM.create_element('li', {
-        'class': 'list-item--depth-{0}'.format(depth)
-    }, props['children'])
+    return DOM.create_element(
+        "li", {"class": "list-item--depth-{0}".format(depth)}, props["children"]
+    )
 
 
 def ordered_list(props: Props) -> Element:
-    depth = props['block']['depth']
+    depth = props["block"]["depth"]
 
-    return DOM.create_element('ol', {
-        'class': 'list--depth-{0}'.format(depth)
-    }, props['children'])
+    return DOM.create_element(
+        "ol", {"class": "list--depth-{0}".format(depth)}, props["children"]
+    )
 
 
 def image(props: Props) -> Element:
-    return DOM.create_element('img', {
-        'src': props.get('src'),
-        'width': props.get('width'),
-        'height': props.get('height'),
-        'alt': props.get('alt'),
-    })
+    return DOM.create_element(
+        "img",
+        {
+            "src": props.get("src"),
+            "width": props.get("width"),
+            "height": props.get("height"),
+            "alt": props.get("alt"),
+        },
+    )
 
 
 def link(props: Props) -> Element:
-    return DOM.create_element('a', {
-        'href': props['url']
-    }, props['children'])
+    return DOM.create_element("a", {"href": props["url"]}, props["children"])
 
 
 def br(props: Props) -> Element:
@@ -60,10 +61,10 @@ def br(props: Props) -> Element:
     Replace line breaks (\n) with br tags.
     """
     # Do not process matches inside code blocks.
-    if props['block']['type'] == BLOCK_TYPES.CODE:
-        return props['children']
+    if props["block"]["type"] == BLOCK_TYPES.CODE:
+        return props["children"]
 
-    return DOM.create_element('br')
+    return DOM.create_element("br")
 
 
 def hashtag(props: Props) -> Element:
@@ -71,130 +72,140 @@ def hashtag(props: Props) -> Element:
     Wrap hashtags in spans with a specific class.
     """
     # Do not process matches inside code blocks.
-    if props['block']['type'] == BLOCK_TYPES.CODE:
-        return props['children']
+    if props["block"]["type"] == BLOCK_TYPES.CODE:
+        return props["children"]
 
-    return DOM.create_element('span', {'class': 'hashtag'}, props['children'])
+    return DOM.create_element("span", {"class": "hashtag"}, props["children"])
 
 
 # See http://pythex.org/?regex=(http%3A%2F%2F%7Chttps%3A%2F%2F%7Cwww%5C.)(%5Ba-zA-Z0-9%5C.%5C-%25%2F%5C%3F%26_%3D%5C%2B%23%3A~!%2C%5C%27%5C*%5C%5E%24%5D%2B)&test_string=search%20http%3A%2F%2Fa.us%20or%20https%3A%2F%2Fyahoo.com%20or%20www.google.com%20for%20%23github%20and%20%23facebook&ignorecase=0&multiline=0&dotall=0&verbose=0
-LINKIFY_RE = re.compile(r'(http://|https://|www\.)([a-zA-Z0-9\.\-%/\?&_=\+#:~!,\'\*\^$]+)')
+LINKIFY_RE = re.compile(
+    r"(http://|https://|www\.)([a-zA-Z0-9\.\-%/\?&_=\+#:~!,\'\*\^$]+)"
+)
 
 
 def linkify(props: Props) -> Element:
     """
     Wrap plain URLs with link tags.
     """
-    match = props['match']
+    match = props["match"]
     protocol = match.group(1)
     url = match.group(2)
     href = protocol + url
 
-    if props['block']['type'] == BLOCK_TYPES.CODE:
+    if props["block"]["type"] == BLOCK_TYPES.CODE:
         return href
 
-    link_props = {
-        'href': href,
-    }
+    link_props = {"href": href}
 
-    if href.startswith('www'):
-        link_props['href'] = 'http://' + href
+    if href.startswith("www"):
+        link_props["href"] = "http://" + href
 
-    return DOM.create_element('a', link_props, href)
+    return DOM.create_element("a", link_props, href)
 
 
 def block_fallback(props: Props) -> Element:
-    type_ = props['block']['type']
+    type_ = props["block"]["type"]
 
-    if type_ == 'example-discard':
-        logging.warn('Missing config for "%s". Discarding block, keeping content.' % type_)
+    if type_ == "example-discard":
+        logging.warn(
+            'Missing config for "%s". Discarding block, keeping content.'
+            % type_
+        )
         # Directly return the block's children to keep its content.
-        return props['children']
-    elif type_ == 'example-delete':
+        return props["children"]
+    elif type_ == "example-delete":
         logging.error('Missing config for "%s". Deleting block.' % type_)
         # Return None to not render anything, removing the whole block.
         return None
     else:
         logging.warn('Missing config for "%s". Using div instead.' % type_)
         # Provide a fallback.
-        return DOM.create_element('div', {}, props['children'])
+        return DOM.create_element("div", {}, props["children"])
 
 
 def entity_fallback(props: Props) -> Element:
-    type_ = props['entity']['type']
-    key = props['entity']['entity_range']['key']
+    type_ = props["entity"]["type"]
+    key = props["entity"]["entity_range"]["key"]
     logging.warn('Missing config for "%s", key "%s".' % (type_, key))
-    return DOM.create_element('span', {'class': 'missing-entity'}, props['children'])
+    return DOM.create_element(
+        "span", {"class": "missing-entity"}, props["children"]
+    )
 
 
 def style_fallback(props: Props) -> Element:
-    type_ = props['inline_style_range']['style']
+    type_ = props["inline_style_range"]["style"]
     logging.warn('Missing config for "%s". Deleting style.' % type_)
-    return props['children']
+    return props["children"]
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     config = {
         # `block_map` is a mapping from Draft.js block types to a definition of their HTML representation.
         # Extend BLOCK_MAP to start with sane defaults, or make your own from scratch.
-        'block_map': dict(BLOCK_MAP, **{
-            # The most basic mapping format, block type to tag name.
-            BLOCK_TYPES.HEADER_TWO: 'h2',
-            # Use a dict to define props on the block.
-            BLOCK_TYPES.HEADER_THREE: {'element': 'h3', 'props': {'class': 'u-text-center'}},
-            # Add a wrapper (and wrapper_props) to wrap adjacent blocks.
-            BLOCK_TYPES.UNORDERED_LIST_ITEM: {
-                'element': 'li',
-                'wrapper': 'ul',
-                'wrapper_props': {'class': 'bullet-list'},
+        "block_map": dict(
+            BLOCK_MAP,
+            **{
+                # The most basic mapping format, block type to tag name.
+                BLOCK_TYPES.HEADER_TWO: "h2",
+                # Use a dict to define props on the block.
+                BLOCK_TYPES.HEADER_THREE: {
+                    "element": "h3",
+                    "props": {"class": "u-text-center"},
+                },
+                # Add a wrapper (and wrapper_props) to wrap adjacent blocks.
+                BLOCK_TYPES.UNORDERED_LIST_ITEM: {
+                    "element": "li",
+                    "wrapper": "ul",
+                    "wrapper_props": {"class": "bullet-list"},
+                },
+                # Use a custom component for more flexibility (reading block data or depth).
+                BLOCK_TYPES.BLOCKQUOTE: blockquote,
+                BLOCK_TYPES.ORDERED_LIST_ITEM: {
+                    "element": list_item,
+                    "wrapper": ordered_list,
+                },
+                # Provide a fallback component (advanced).
+                BLOCK_TYPES.FALLBACK: block_fallback,
             },
-            # Use a custom component for more flexibility (reading block data or depth).
-            BLOCK_TYPES.BLOCKQUOTE: blockquote,
-            BLOCK_TYPES.ORDERED_LIST_ITEM: {
-                'element': list_item,
-                'wrapper': ordered_list,
-            },
-            # Provide a fallback component (advanced).
-            BLOCK_TYPES.FALLBACK: block_fallback
-        }),
+        ),
         # `style_map` defines the HTML representation of inline elements.
         # Extend STYLE_MAP to start with sane defaults, or make your own from scratch.
-        'style_map': dict(STYLE_MAP, **{
-            # Use the same mapping format as in the `block_map`.
-            'KBD': 'kbd',
-            # The `style` prop can be defined as a dict, that will automatically be converted to a string.
-            'HIGHLIGHT': {'element': 'strong', 'props': {'style': {'textDecoration': 'underline'}}},
-            # Provide a fallback component (advanced).
-            INLINE_STYLES.FALLBACK: style_fallback,
-        }),
-        'entity_decorators': {
+        "style_map": dict(
+            STYLE_MAP,
+            **{
+                # Use the same mapping format as in the `block_map`.
+                "KBD": "kbd",
+                # The `style` prop can be defined as a dict, that will automatically be converted to a string.
+                "HIGHLIGHT": {
+                    "element": "strong",
+                    "props": {"style": {"textDecoration": "underline"}},
+                },
+                # Provide a fallback component (advanced).
+                INLINE_STYLES.FALLBACK: style_fallback,
+            },
+        ),
+        "entity_decorators": {
             # Map entities to components so they can be rendered with their data.
             ENTITY_TYPES.IMAGE: image,
             ENTITY_TYPES.LINK: link,
             # Lambdas work too.
-            ENTITY_TYPES.HORIZONTAL_RULE: lambda props: DOM.create_element('hr'),
+            ENTITY_TYPES.HORIZONTAL_RULE: lambda props: DOM.create_element(
+                "hr"
+            ),
             # Discard those entities.
             ENTITY_TYPES.EMBED: None,
             # Provide a fallback component (advanced).
             ENTITY_TYPES.FALLBACK: entity_fallback,
         },
-        'composite_decorators': [
+        "composite_decorators": [
             # Use composite decorators to replace text based on a regular expression.
-            {
-                'strategy': re.compile(r'\n'),
-                'component': br,
-            },
-            {
-                'strategy': re.compile(r'#\w+'),
-                'component': hashtag,
-            },
-            {
-                'strategy': LINKIFY_RE,
-                'component': linkify,
-            },
+            {"strategy": re.compile(r"\n"), "component": br},
+            {"strategy": re.compile(r"#\w+"), "component": hashtag},
+            {"strategy": LINKIFY_RE, "component": linkify},
         ],
         # Specify which DOM backing engine to use.
-        'engine': DOM.STRING,
+        "engine": DOM.STRING,
     }
 
     exporter = HTML(config)
@@ -204,35 +215,33 @@ if __name__ == '__main__':
             "0": {
                 "type": "LINK",
                 "mutability": "MUTABLE",
-                "data": {
-                    "url": "https://github.com/facebook/draft-js"
-                }
+                "data": {"url": "https://github.com/facebook/draft-js"},
             },
             "1": {
                 "type": "LINK",
                 "mutability": "MUTABLE",
                 "data": {
                     "url": "https://facebook.github.io/react/docs/top-level-api.html#react.createelement"
-                }
+                },
             },
             "2": {
                 "type": "HORIZONTAL_RULE",
                 "mutability": "IMMUTABLE",
-                "data": {}
+                "data": {},
             },
             "3": {
                 "type": "LINK",
                 "mutability": "MUTABLE",
                 "data": {
                     "url": "https://facebook.github.io/react/docs/jsx-in-depth.html"
-                }
+                },
             },
             "4": {
                 "type": "LINK",
                 "mutability": "MUTABLE",
                 "data": {
                     "url": "https://github.com/springload/draftjs_exporter/pull/17"
-                }
+                },
             },
             "5": {
                 "type": "IMAGE",
@@ -241,15 +250,13 @@ if __name__ == '__main__':
                     "alt": "Test image alt text",
                     "src": "https://placekitten.com/g/300/200",
                     "width": 300,
-                    "height": 200
-                }
+                    "height": 200,
+                },
             },
             "6": {
                 "type": "LINK",
                 "mutability": "MUTABLE",
-                "data": {
-                    "url": "http://embed.ly/"
-                }
+                "data": {"url": "http://embed.ly/"},
             },
             "7": {
                 "type": "EMBED",
@@ -259,366 +266,313 @@ if __name__ == '__main__':
                     "title": "React.js Conf 2016 - Isaac Salier-Hellendag - Rich Text Editing with React",
                     "providerName": "YouTube",
                     "authorName": "Facebook Developers",
-                    "thumbnail": "https://i.ytimg.com/vi/feUYwoLhE_4/hqdefault.jpg"
-                }
+                    "thumbnail": "https://i.ytimg.com/vi/feUYwoLhE_4/hqdefault.jpg",
+                },
             },
             "8": {
                 "type": "EXAMPLE_MISSING",
                 "mutability": "MUTABLE",
-                "data": {
-                    "url": "http://www.youtube.com/watch?v=feUYwoLhE_4",
-                }
+                "data": {"url": "http://www.youtube.com/watch?v=feUYwoLhE_4"},
             },
         },
-        "blocks": [{
-            "key": "b0ei9",
-            "text": "draftjs_exporter is an HTML exporter for Draft.js content",
-            "type": "header-two",
-            "depth": 0,
-            "inlineStyleRanges": [],
-            "entityRanges": [{
-                "offset": 41,
-                "length": 8,
-                "key": 0
-            }],
-            "data": {}
-        }, {
-            "key": "74al",
-            "text": "Try it out by running this file!",
-            "type": "blockquote",
-            "depth": 0,
-            "inlineStyleRanges": [],
-            "entityRanges": [],
-            "data": {
-                "cite": "http://example.com/"
-            }
-        }, {
-            "key": "7htbd",
-            "text": "Features 📝🍸",
-            "type": "header-three",
-            "depth": 0,
-            "inlineStyleRanges": [],
-            "entityRanges": [],
-            "data": {}
-        }, {
-            "key": "32lnv",
-            "text": "The exporter aims to provide sensible defaults from basic block types and inline styles to HTML, that can easily be customised when required. For more advanced scenarios, an API is provided (mimicking React's createElement) to create custom rendering components of arbitrary complexity.",
-            "type": "unstyled",
-            "depth": 0,
-            "inlineStyleRanges": [{
-                "offset": 209,
-                "length": 13,
-                "style": "CODE"
-            }],
-            "entityRanges": [{
-                "offset": 209,
-                "length": 13,
-                "key": 1
-            }],
-            "data": {}
-        }, {
-            "key": "eqjvu",
-            "text": " ",
-            "type": "atomic",
-            "depth": 0,
-            "inlineStyleRanges": [],
-            "entityRanges": [{
-                "offset": 0,
-                "length": 1,
-                "key": 2
-            }],
-            "data": {}
-        }, {
-            "text": "Here are some features worth highlighting:",
-        }, {
-            "key": "2mhgt",
-            "text": "Convert line breaks to <br>\nelements.",
-            "type": "unordered-list-item",
-            "depth": 0,
-            "inlineStyleRanges": [{
-                "offset": 23,
-                "length": 4,
-                "style": "CODE"
-            }],
-            "entityRanges": [],
-            "data": {}
-        }, {
-            "key": "f4gp0",
-            "text": "Automatic conversion of entity data to HTML attributes (int & boolean to string, style object to style string).",
-            "type": "unordered-list-item",
-            "depth": 0,
-            "inlineStyleRanges": [{
-                "offset": 81,
-                "length": 12,
-                "style": "CODE"
-            }, {
-                "offset": 97,
-                "length": 12,
-                "style": "CODE"
-            }],
-            "entityRanges": [{
-                "offset": 81,
-                "length": 28,
-                "key": 3
-            }],
-            "data": {}
-        }, {
-            "key": "3cnm0",
-            "text": "Wrapped blocks (<li> elements go inside <ul> or <ol>).",
-            "type": "unordered-list-item",
-            "depth": 0,
-            "inlineStyleRanges": [{
-                "offset": 16,
-                "length": 5,
-                "style": "CODE"
-            }, {
-                "offset": 40,
-                "length": 4,
-                "style": "CODE"
-            }, {
-                "offset": 48,
-                "length": 4,
-                "style": "CODE"
-            }],
-            "entityRanges": [],
-            "data": {}
-        }, {
-            "key": "h5rn",
-            "text": "With arbitrary nesting.",
-            "type": "unordered-list-item",
-            "depth": 1,
-            "inlineStyleRanges": [],
-            "entityRanges": [],
-            "data": {}
-        }, {
-            "key": "5qfeb",
-            "text": "Common text styles: Bold, Italic, Underline, Monospace, Strikethrough. cmd + b",
-            "type": "unordered-list-item",
-            "depth": 2,
-            "inlineStyleRanges": [{
-                "offset": 20,
-                "length": 4,
-                "style": "BOLD"
-            }, {
-                "offset": 26,
-                "length": 6,
-                "style": "ITALIC"
-            }, {
-                "offset": 34,
-                "length": 9,
-                "style": "UNDERLINE"
-            }, {
-                "offset": 45,
-                "length": 9,
-                "style": "CODE"
-            }, {
-                "offset": 56,
-                "length": 14,
-                "style": "STRIKETHROUGH"
-            }, {
-                "offset": 71,
-                "length": 7,
-                "style": "KBD"
-            }],
-            "entityRanges": [],
-            "data": {}
-        }, {
-            "key": "2ol8n",
-            "text": "Overlapping text styles. Custom styles too!",
-            "type": "unordered-list-item",
-            "depth": 2,
-            "inlineStyleRanges": [{
-                "offset": 0,
-                "length": 14,
-                "style": "STRIKETHROUGH"
-            }, {
-                "offset": 12,
-                "length": 4,
-                "style": "BOLD"
-            }, {
-                "offset": 14,
-                "length": 11,
-                "style": "ITALIC"
-            }, {
-                "offset": 25,
-                "length": 13,
-                "style": "HIGHLIGHT"
-            }],
-            "entityRanges": [],
-            "data": {}
-        }, {
-            "key": "2lno0",
-            "text": "#hashtag support via #CompositeDecorators.",
-            "type": "unordered-list-item",
-            "depth": 3,
-            "inlineStyleRanges": [],
-            "entityRanges": [{
-                "offset": 21,
-                "length": 20,
-                "key": 4
-            }],
-            "data": {}
-        }, {
-            "key": "37n0m",
-            "text": "Linkify URLs too! http://example.com/",
-            "type": "unordered-list-item",
-            "depth": 4,
-            "inlineStyleRanges": [],
-            "entityRanges": [],
-            "data": {}
-        }, {
-            "key": "37n01",
-            "text": "Depth can go back and forth, it works fiiine (1)",
-            "type": "unordered-list-item",
-            "depth": 2,
-            "inlineStyleRanges": [],
-            "entityRanges": [],
-            "data": {}
-        }, {
-            "key": "37n02",
-            "text": "Depth can go back and forth, it works fiiine (2)",
-            "type": "unordered-list-item",
-            "depth": 1,
-            "inlineStyleRanges": [],
-            "entityRanges": [],
-            "data": {}
-        }, {
-            "key": "37n03",
-            "text": "Depth can go back and forth, it works fiiine (3)",
-            "type": "unordered-list-item",
-            "depth": 2,
-            "inlineStyleRanges": [],
-            "entityRanges": [],
-            "data": {}
-        }, {
-            "key": "37n04",
-            "text": "Depth can go back and forth, it works fiiine (4)",
-            "type": "unordered-list-item",
-            "depth": 1,
-            "inlineStyleRanges": [],
-            "entityRanges": [],
-            "data": {}
-        }, {
-            "key": "37n05",
-            "text": "Depth can go back and forth, it works fiiine (5)",
-            "type": "unordered-list-item",
-            "depth": 0,
-            "inlineStyleRanges": [],
-            "entityRanges": [],
-            "data": {}
-        }, {
-            "key": "3tbpg",
-            "text": " ",
-            "type": "atomic",
-            "depth": 0,
-            "inlineStyleRanges": [],
-            "entityRanges": [{
-                "offset": 0,
-                "length": 1,
-                "key": 5
-            }],
-            "data": {}
-        }, {
-            "key": "f7s8c",
-            "text": " ",
-            "type": "atomic",
-            "depth": 0,
-            "inlineStyleRanges": [],
-            "entityRanges": [{
-                "offset": 0,
-                "length": 1,
-                "key": 7
-            }],
-            "data": {}
-        }, {
-            "key": "5t6c9",
-            "text": "For developers 🚀",
-            "type": "header-three",
-            "depth": 0,
-            "inlineStyleRanges": [],
-            "entityRanges": [],
-            "data": {}
-        }, {
-            "key": "2nb2a",
-            "text": "Import the library",
-            "type": "ordered-list-item",
-            "depth": 0,
-            "inlineStyleRanges": [],
-            "entityRanges": [],
-            "data": {}
-        }, {
-            "key": "cfom5",
-            "text": "Define your configuration",
-            "type": "ordered-list-item",
-            "depth": 0,
-            "inlineStyleRanges": [],
-            "entityRanges": [],
-            "data": {}
-        }, {
-            "key": "e2114",
-            "text": "Go!",
-            "type": "ordered-list-item",
-            "depth": 0,
-            "inlineStyleRanges": [],
-            "entityRanges": [],
-            "data": {}
-        }, {
-            "key": "adt4j",
-            "text": "Optionally, define your custom components.",
-            "type": "ordered-list-item",
-            "depth": 1,
-            "inlineStyleRanges": [{
-                "offset": 0,
-                "length": 10,
-                "style": "EXAMPLE_DISCARD"
-            }],
-            "entityRanges": [],
-            "data": {}
-        }, {
-            "key": "ed7hu",
-            "text": "def blockquote(props):\n    block_data = props['block']['data']\n    return DOM.create_element('blockquote', {\n        'cite': block_data.get('cite')\n    }, props['children'])\n",
-            "type": "code-block",
-            "depth": 0,
-            "inlineStyleRanges": [],
-            "entityRanges": [],
-            "data": {}
-        }, {
-            "key": "2nols",
-            "text": "Discarded block but the content stays.",
-            "type": "example-discard",
-            "depth": 0,
-            "inlineStyleRanges": [],
-            "entityRanges": [],
-            "data": {}
-        }, {
-            "key": "3nols",
-            "text": "Removed block.",
-            "type": "example-delete",
-            "depth": 0,
-            "inlineStyleRanges": [],
-            "entityRanges": [],
-            "data": {}
-        }, {
-            "key": "4nols",
-            "text": "Render as div",
-            "type": "example-fallback",
-            "depth": 0,
-            "inlineStyleRanges": [],
-            "entityRanges": [{
-                "offset": 10,
-                "length": 3,
-                "key": 8
-            }],
-            "data": {}
-        }, {
-            "key": "1nols",
-            "text": "Voilà!",
-            "type": "unstyled",
-            "depth": 0,
-            "inlineStyleRanges": [],
-            "entityRanges": [],
-            "data": {}
-        }]
+        "blocks": [
+            {
+                "key": "b0ei9",
+                "text": "draftjs_exporter is an HTML exporter for Draft.js content",
+                "type": "header-two",
+                "depth": 0,
+                "inlineStyleRanges": [],
+                "entityRanges": [{"offset": 41, "length": 8, "key": 0}],
+                "data": {},
+            },
+            {
+                "key": "74al",
+                "text": "Try it out by running this file!",
+                "type": "blockquote",
+                "depth": 0,
+                "inlineStyleRanges": [],
+                "entityRanges": [],
+                "data": {"cite": "http://example.com/"},
+            },
+            {
+                "key": "7htbd",
+                "text": "Features 📝🍸",
+                "type": "header-three",
+                "depth": 0,
+                "inlineStyleRanges": [],
+                "entityRanges": [],
+                "data": {},
+            },
+            {
+                "key": "32lnv",
+                "text": "The exporter aims to provide sensible defaults from basic block types and inline styles to HTML, that can easily be customised when required. For more advanced scenarios, an API is provided (mimicking React's createElement) to create custom rendering components of arbitrary complexity.",
+                "type": "unstyled",
+                "depth": 0,
+                "inlineStyleRanges": [
+                    {"offset": 209, "length": 13, "style": "CODE"}
+                ],
+                "entityRanges": [{"offset": 209, "length": 13, "key": 1}],
+                "data": {},
+            },
+            {
+                "key": "eqjvu",
+                "text": " ",
+                "type": "atomic",
+                "depth": 0,
+                "inlineStyleRanges": [],
+                "entityRanges": [{"offset": 0, "length": 1, "key": 2}],
+                "data": {},
+            },
+            {"text": "Here are some features worth highlighting:"},
+            {
+                "key": "2mhgt",
+                "text": "Convert line breaks to <br>\nelements.",
+                "type": "unordered-list-item",
+                "depth": 0,
+                "inlineStyleRanges": [
+                    {"offset": 23, "length": 4, "style": "CODE"}
+                ],
+                "entityRanges": [],
+                "data": {},
+            },
+            {
+                "key": "f4gp0",
+                "text": "Automatic conversion of entity data to HTML attributes (int & boolean to string, style object to style string).",
+                "type": "unordered-list-item",
+                "depth": 0,
+                "inlineStyleRanges": [
+                    {"offset": 81, "length": 12, "style": "CODE"},
+                    {"offset": 97, "length": 12, "style": "CODE"},
+                ],
+                "entityRanges": [{"offset": 81, "length": 28, "key": 3}],
+                "data": {},
+            },
+            {
+                "key": "3cnm0",
+                "text": "Wrapped blocks (<li> elements go inside <ul> or <ol>).",
+                "type": "unordered-list-item",
+                "depth": 0,
+                "inlineStyleRanges": [
+                    {"offset": 16, "length": 5, "style": "CODE"},
+                    {"offset": 40, "length": 4, "style": "CODE"},
+                    {"offset": 48, "length": 4, "style": "CODE"},
+                ],
+                "entityRanges": [],
+                "data": {},
+            },
+            {
+                "key": "h5rn",
+                "text": "With arbitrary nesting.",
+                "type": "unordered-list-item",
+                "depth": 1,
+                "inlineStyleRanges": [],
+                "entityRanges": [],
+                "data": {},
+            },
+            {
+                "key": "5qfeb",
+                "text": "Common text styles: Bold, Italic, Underline, Monospace, Strikethrough. cmd + b",
+                "type": "unordered-list-item",
+                "depth": 2,
+                "inlineStyleRanges": [
+                    {"offset": 20, "length": 4, "style": "BOLD"},
+                    {"offset": 26, "length": 6, "style": "ITALIC"},
+                    {"offset": 34, "length": 9, "style": "UNDERLINE"},
+                    {"offset": 45, "length": 9, "style": "CODE"},
+                    {"offset": 56, "length": 14, "style": "STRIKETHROUGH"},
+                    {"offset": 71, "length": 7, "style": "KBD"},
+                ],
+                "entityRanges": [],
+                "data": {},
+            },
+            {
+                "key": "2ol8n",
+                "text": "Overlapping text styles. Custom styles too!",
+                "type": "unordered-list-item",
+                "depth": 2,
+                "inlineStyleRanges": [
+                    {"offset": 0, "length": 14, "style": "STRIKETHROUGH"},
+                    {"offset": 12, "length": 4, "style": "BOLD"},
+                    {"offset": 14, "length": 11, "style": "ITALIC"},
+                    {"offset": 25, "length": 13, "style": "HIGHLIGHT"},
+                ],
+                "entityRanges": [],
+                "data": {},
+            },
+            {
+                "key": "2lno0",
+                "text": "#hashtag support via #CompositeDecorators.",
+                "type": "unordered-list-item",
+                "depth": 3,
+                "inlineStyleRanges": [],
+                "entityRanges": [{"offset": 21, "length": 20, "key": 4}],
+                "data": {},
+            },
+            {
+                "key": "37n0m",
+                "text": "Linkify URLs too! http://example.com/",
+                "type": "unordered-list-item",
+                "depth": 4,
+                "inlineStyleRanges": [],
+                "entityRanges": [],
+                "data": {},
+            },
+            {
+                "key": "37n01",
+                "text": "Depth can go back and forth, it works fiiine (1)",
+                "type": "unordered-list-item",
+                "depth": 2,
+                "inlineStyleRanges": [],
+                "entityRanges": [],
+                "data": {},
+            },
+            {
+                "key": "37n02",
+                "text": "Depth can go back and forth, it works fiiine (2)",
+                "type": "unordered-list-item",
+                "depth": 1,
+                "inlineStyleRanges": [],
+                "entityRanges": [],
+                "data": {},
+            },
+            {
+                "key": "37n03",
+                "text": "Depth can go back and forth, it works fiiine (3)",
+                "type": "unordered-list-item",
+                "depth": 2,
+                "inlineStyleRanges": [],
+                "entityRanges": [],
+                "data": {},
+            },
+            {
+                "key": "37n04",
+                "text": "Depth can go back and forth, it works fiiine (4)",
+                "type": "unordered-list-item",
+                "depth": 1,
+                "inlineStyleRanges": [],
+                "entityRanges": [],
+                "data": {},
+            },
+            {
+                "key": "37n05",
+                "text": "Depth can go back and forth, it works fiiine (5)",
+                "type": "unordered-list-item",
+                "depth": 0,
+                "inlineStyleRanges": [],
+                "entityRanges": [],
+                "data": {},
+            },
+            {
+                "key": "3tbpg",
+                "text": " ",
+                "type": "atomic",
+                "depth": 0,
+                "inlineStyleRanges": [],
+                "entityRanges": [{"offset": 0, "length": 1, "key": 5}],
+                "data": {},
+            },
+            {
+                "key": "f7s8c",
+                "text": " ",
+                "type": "atomic",
+                "depth": 0,
+                "inlineStyleRanges": [],
+                "entityRanges": [{"offset": 0, "length": 1, "key": 7}],
+                "data": {},
+            },
+            {
+                "key": "5t6c9",
+                "text": "For developers 🚀",
+                "type": "header-three",
+                "depth": 0,
+                "inlineStyleRanges": [],
+                "entityRanges": [],
+                "data": {},
+            },
+            {
+                "key": "2nb2a",
+                "text": "Import the library",
+                "type": "ordered-list-item",
+                "depth": 0,
+                "inlineStyleRanges": [],
+                "entityRanges": [],
+                "data": {},
+            },
+            {
+                "key": "cfom5",
+                "text": "Define your configuration",
+                "type": "ordered-list-item",
+                "depth": 0,
+                "inlineStyleRanges": [],
+                "entityRanges": [],
+                "data": {},
+            },
+            {
+                "key": "e2114",
+                "text": "Go!",
+                "type": "ordered-list-item",
+                "depth": 0,
+                "inlineStyleRanges": [],
+                "entityRanges": [],
+                "data": {},
+            },
+            {
+                "key": "adt4j",
+                "text": "Optionally, define your custom components.",
+                "type": "ordered-list-item",
+                "depth": 1,
+                "inlineStyleRanges": [
+                    {"offset": 0, "length": 10, "style": "EXAMPLE_DISCARD"}
+                ],
+                "entityRanges": [],
+                "data": {},
+            },
+            {
+                "key": "ed7hu",
+                "text": "def blockquote(props):\n    block_data = props['block']['data']\n    return DOM.create_element('blockquote', {\n        'cite': block_data.get('cite')\n    }, props['children'])\n",
+                "type": "code-block",
+                "depth": 0,
+                "inlineStyleRanges": [],
+                "entityRanges": [],
+                "data": {},
+            },
+            {
+                "key": "2nols",
+                "text": "Discarded block but the content stays.",
+                "type": "example-discard",
+                "depth": 0,
+                "inlineStyleRanges": [],
+                "entityRanges": [],
+                "data": {},
+            },
+            {
+                "key": "3nols",
+                "text": "Removed block.",
+                "type": "example-delete",
+                "depth": 0,
+                "inlineStyleRanges": [],
+                "entityRanges": [],
+                "data": {},
+            },
+            {
+                "key": "4nols",
+                "text": "Render as div",
+                "type": "example-fallback",
+                "depth": 0,
+                "inlineStyleRanges": [],
+                "entityRanges": [{"offset": 10, "length": 3, "key": 8}],
+                "data": {},
+            },
+            {
+                "key": "1nols",
+                "text": "Voilà!",
+                "type": "unstyled",
+                "depth": 0,
+                "inlineStyleRanges": [],
+                "entityRanges": [],
+                "data": {},
+            },
+        ],
     }
 
     pr = cProfile.Profile()
@@ -630,14 +584,18 @@ if __name__ == '__main__':
     p = Stats(pr)
 
     def prettify(markup: str) -> str:
-        return re.sub(r'</?(body|html|head)>', '', BeautifulSoup(markup, 'html5lib').prettify()).strip()
+        return re.sub(
+            r"</?(body|html|head)>",
+            "",
+            BeautifulSoup(markup, "html5lib").prettify(),
+        ).strip()
 
     pretty = prettify(markup)
 
     # Display in console.
     print(pretty)
 
-    p.strip_dirs().sort_stats('cumulative').print_stats(0)
+    p.strip_dirs().sort_stats("cumulative").print_stats(0)
 
     styles = """
     /* Tacit CSS framework https://yegor256.github.io/tacit/ */
@@ -651,8 +609,9 @@ if __name__ == '__main__':
     """
 
     # Output to a styled HTML file for development.
-    with codecs.open('example.html', 'w', 'utf-8') as file:
-        file.write("""
+    with codecs.open("example.html", "w", "utf-8") as file:
+        file.write(
+            """
 <!DOCTYPE html>
 <html>
 <head>
@@ -664,14 +623,21 @@ if __name__ == '__main__':
     {html}
 </body>
 </html>
-""".format(styles=styles, html=markup))
+""".format(
+                styles=styles, html=markup
+            )
+        )
 
     # Output to a Markdown file to showcase the output in GitHub (and see changes in git).
-    with codecs.open('docs/example.md', 'w', 'utf-8') as file:
-        file.write("""
+    with codecs.open("docs/example.md", "w", "utf-8") as file:
+        file.write(
+            """
 # Example output (generated by [`example.py`](../example.py))
 
 -----
 {html}
 -----
-""".format(html=pretty))
+""".format(
+                html=pretty
+            )
+        )

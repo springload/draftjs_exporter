@@ -7,11 +7,11 @@ from draftjs_exporter.engines.base import DOMEngine
 class TestDOMEngine(unittest.TestCase):
     def test_create_tag(self):
         with self.assertRaises(NotImplementedError):
-            DOMEngine.create_tag('tag')
+            DOMEngine.create_tag("tag")
 
     def test_parse_html(self):
         with self.assertRaises(NotImplementedError):
-            DOMEngine.parse_html('html')
+            DOMEngine.parse_html("html")
 
     def test_append_child(self):
         with self.assertRaises(NotImplementedError):

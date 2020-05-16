@@ -12,7 +12,8 @@ class Wrapper(object):
     when the depth of a block is different than 0, so the DOM elements
     have the appropriate amount of nesting.
     """
-    __slots__ = ('depth', 'last_child', 'type', 'props', 'elt')
+
+    __slots__ = ("depth", "last_child", "type", "props", "elt")
 
     def __init__(self, depth: int, options: Optional[Options] = None) -> None:
         self.depth = depth
@@ -23,10 +24,7 @@ class Wrapper(object):
             self.props = options.wrapper_props
 
             wrapper_props = dict(self.props) if self.props else {}
-            wrapper_props['block'] = {
-                'type': options.type,
-                'depth': depth,
-            }
+            wrapper_props["block"] = {"type": options.type, "depth": depth}
 
             self.elt = DOM.create_element(self.type, wrapper_props)
         else:
@@ -34,8 +32,9 @@ class Wrapper(object):
             self.props = None
             self.elt = DOM.create_element()
 
-
-    def is_different(self, depth: int, type_: RenderableType, props: Optional[Props]) -> bool:
+    def is_different(
+        self, depth: int, type_: RenderableType, props: Optional[Props]
+    ) -> bool:
         return depth > self.depth or type_ != self.type or props != self.props
 
 
@@ -45,7 +44,8 @@ class WrapperStack(object):
     The bottom of the stack contains the elements closest to the page body.
     The top of the stack contains the most nested nodes.
     """
-    __slots__ = ('stack')
+
+    __slots__ = "stack"
 
     def __init__(self) -> None:
         self.stack = []  # type: List[Wrapper]
@@ -83,23 +83,28 @@ class WrapperState(object):
     It sets elements with the right tag, text content, and props.
     It adds a wrapper element around elements, if required.
     """
-    __slots__ = ('block_options', 'blocks', 'stack')
 
-    def __init__(self, block_options: OptionsMap, blocks: Sequence[Block]) -> None:
+    __slots__ = ("block_options", "blocks", "stack")
+
+    def __init__(
+        self, block_options: OptionsMap, blocks: Sequence[Block]
+    ) -> None:
         self.block_options = block_options
         self.blocks = blocks
         self.stack = WrapperStack()
 
     def __str__(self) -> str:
-        return '<WrapperState: %s>' % self.stack
+        return "<WrapperState: %s>" % self.stack
 
-    def element_for(self, block: Block, block_content: Union[Element, Sequence[Element]]) -> Element:
-        type_ = block['type'] if 'type' in block else 'unstyled'
-        depth = block['depth'] if 'depth' in block else 0
+    def element_for(
+        self, block: Block, block_content: Union[Element, Sequence[Element]]
+    ) -> Element:
+        type_ = block["type"] if "type" in block else "unstyled"
+        depth = block["depth"] if "depth" in block else 0
         options = Options.get(self.block_options, type_, BLOCK_TYPES.FALLBACK)
         props = dict(options.props)
-        props['block'] = block
-        props['blocks'] = self.blocks
+        props["block"] = block
+        props["blocks"] = self.blocks
 
         # Make an element from the options specified in the block map.
         elt = DOM.create_element(options.element, props, block_content)
@@ -145,18 +150,20 @@ class WrapperState(object):
                     # If there is no content in the current wrapper, we need
                     # to add an intermediary node.
                     props = dict(options.props)
-                    props['block'] = {
-                        'type': options.type,
-                        'depth': depth,
-                        'data': {},
+                    props["block"] = {
+                        "type": options.type,
+                        "depth": depth,
+                        "data": {},
                     }
-                    props['blocks'] = self.blocks
+                    props["blocks"] = self.blocks
 
                     wrapper_parent = DOM.create_element(options.element, props)
                     DOM.append_child(self.stack.head().elt, wrapper_parent)
                 else:
                     # Otherwise we can append at the end of the last child.
-                    wrapper_parent = self.stack.head().last_child  # type: ignore
+                    wrapper_parent = (
+                        self.stack.head().last_child
+                    )
 
                 DOM.append_child(wrapper_parent, new_wrapper.elt)
 

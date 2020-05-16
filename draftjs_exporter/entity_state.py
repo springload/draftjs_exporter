@@ -5,7 +5,13 @@ from draftjs_exporter.constants import ENTITY_TYPES
 from draftjs_exporter.dom import DOM
 from draftjs_exporter.error import ExporterException
 from draftjs_exporter.options import Options, OptionsMap
-from draftjs_exporter.types import Block, Element, EntityDetails, EntityKey, EntityMap
+from draftjs_exporter.types import (
+    Block,
+    Element,
+    EntityDetails,
+    EntityKey,
+    EntityMap,
+)
 
 
 class EntityException(ExporterException):
@@ -13,9 +19,17 @@ class EntityException(ExporterException):
 
 
 class EntityState(object):
-    __slots__ = ('entity_options', 'entity_map', 'entity_stack', 'completed_entity', 'element_stack')
+    __slots__ = (
+        "entity_options",
+        "entity_map",
+        "entity_stack",
+        "completed_entity",
+        "element_stack",
+    )
 
-    def __init__(self, entity_options: OptionsMap, entity_map: EntityMap) -> None:
+    def __init__(
+        self, entity_options: OptionsMap, entity_map: EntityMap
+    ) -> None:
         self.entity_options = entity_options
         self.entity_map = entity_map
 
@@ -24,13 +38,17 @@ class EntityState(object):
         self.element_stack = []  # type: List[Element]
 
     def apply(self, command: Command) -> None:
-        if command.name == 'start_entity':
+        if command.name == "start_entity":
             self.entity_stack.append(command.data)
-        elif command.name == 'stop_entity':
+        elif command.name == "stop_entity":
             expected_entity = self.entity_stack[-1]
 
             if command.data != expected_entity:
-                raise EntityException('Expected {0}, got {1}'.format(expected_entity, command.data))
+                raise EntityException(
+                    "Expected {0}, got {1}".format(
+                        expected_entity, command.data
+                    )
+                )
 
             self.completed_entity = self.entity_stack.pop()
 
@@ -44,24 +62,32 @@ class EntityState(object):
         details = self.entity_map.get(entity_key)
 
         if details is None:
-            raise EntityException('Entity "%s" does not exist in the entityMap' % entity_key)
+            raise EntityException(
+                'Entity "%s" does not exist in the entityMap' % entity_key
+            )
 
         return details
 
-    def render_entities(self, style_node: Element, block: Block, blocks: Sequence[Block]) -> Element:
+    def render_entities(
+        self, style_node: Element, block: Block, blocks: Sequence[Block]
+    ) -> Element:
         # We have a complete (start, stop) entity to render.
         if self.completed_entity is not None:
             entity_details = self.get_entity_details(self.completed_entity)
-            options = Options.get(self.entity_options, entity_details['type'], ENTITY_TYPES.FALLBACK)
-            props = entity_details['data'].copy()
-            props['entity'] = {
-                'type': entity_details['type'],
-                'mutability': entity_details['mutability'] if 'mutability' in entity_details else None,
-                'block': block,
-                'blocks': blocks,
-                'entity_range': {
-                    'key': self.completed_entity,
-                },
+            options = Options.get(
+                self.entity_options,
+                entity_details["type"],
+                ENTITY_TYPES.FALLBACK,
+            )
+            props = entity_details["data"].copy()
+            props["entity"] = {
+                "type": entity_details["type"],
+                "mutability": entity_details["mutability"]
+                if "mutability" in entity_details
+                else None,
+                "block": block,
+                "blocks": blocks,
+                "entity_range": {"key": self.completed_entity},
             }
 
             if len(self.element_stack) == 1:
