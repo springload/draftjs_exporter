@@ -18,7 +18,7 @@ class Command(object):
         self.data = data
 
     def __str__(self) -> str:
-        return "<Command {0} {1} {2}>".format(self.name, self.index, self.data)
+        return f"<Command {self.name} {self.index} {self.data}>"
 
     def __repr__(self) -> str:
         return str(self)

@@ -7,7 +7,7 @@ class Enum(object):
 
     def __getattr__(self, name: str) -> str:
         if name not in self.elements:
-            raise AttributeError("'Enum' has no attribute '{}'".format(name))
+            raise AttributeError(f"'Enum' has no attribute '{name}'")
 
         return name
 

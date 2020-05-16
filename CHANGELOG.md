@@ -151,14 +151,14 @@ class OrderedList:
         depth = props['block']['depth']
 
         return DOM.create_element('ol', {
-            'class': 'list--depth-{0}'.format(depth)
+            'class': f'list--depth-{depth}'
         }, props['children'])
 # After:
 def ordered_list(props):
     depth = props['block']['depth']
 
     return DOM.create_element('ol', {
-        'class': 'list--depth-{0}'.format(depth)
+        'class': f'list--depth-{depth}'
     }, props['children'])
 ```
 

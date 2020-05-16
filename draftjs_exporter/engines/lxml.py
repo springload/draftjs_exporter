@@ -25,7 +25,7 @@ class DOM_LXML(DOMEngine):
 
         if attr:
             if "xlink:href" in attr:
-                attr["{%s}href" % NSMAP["xlink"]] = attr.pop("xlink:href")
+                attr[f"{{{NSMAP['xlink']}}}href"] = attr.pop("xlink:href")
                 nsmap = NSMAP
 
         return etree.Element(type_, attrib=attr, nsmap=nsmap)
