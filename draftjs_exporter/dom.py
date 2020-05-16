@@ -86,7 +86,6 @@ class DOM(object):
                     f"{DOM.camel_to_dash(s)}: {v};"
                     for s, v in props["style"].items()
                 ]
-                rules.sort()
                 props["style"] = "".join(rules)
 
             # Convert props to HTML attributes.
