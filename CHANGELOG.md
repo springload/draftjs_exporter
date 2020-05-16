@@ -4,6 +4,16 @@
 
 ## Unreleased
 
+## [v3.0.1](https://github.com/springload/draftjs_exporter/releases/tag/v3.0.1)
+
+### Added
+
+* Add `Typing :: Typed` trove classifier to the package.
+
+### Changed
+
+* Small performance improvements (1.5x faster) for blocks that do not have inline styles, and configurations that only use `\n -> <br/>` composite decorators. ([#127](https://github.com/springload/draftjs_exporter/pull/127))
+
 ## [v3.0.0](https://github.com/springload/draftjs_exporter/releases/tag/v3.0.0)
 
 This release contains breaking changes. **Be sure to check out the "how to upgrade" section below.**
