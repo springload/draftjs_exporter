@@ -26,7 +26,7 @@ This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html
 * Nested lists (`<li>` elements go inside `<ul>` or `<ol>`, with multiple levels).
 * Output inline styles as inline elements (`<em>`, `<strong>`, pick and choose, with any attribute).
 * Overlapping inline style and entity ranges.
-* Python 3.5+ type annotations.
+* Python 3.6+ type annotations.
 
 ## Usage
 
@@ -40,7 +40,7 @@ This exporter takes the Draft.js ContentState data as input, and outputs HTML ba
 pip install draftjs_exporter
 ```
 
-We support the following Python versions: 3.5, 3.6, 3.7, 3.8. For Python 2.7 and 3.4 support, please use [v2.1.7](https://github.com/springload/draftjs_exporter/tree/v2.1.7) of the exporter.
+We support the following Python versions: 3.6, 3.7, 3.8. For Python 2.7 and 3.4 support, please use [v2.1.7](https://github.com/springload/draftjs_exporter/tree/v2.1.7) of the exporter. For Python 3.5, use [v3.0.1](https://github.com/springload/draftjs_exporter/tree/v3.0.1).
 
 In your code, create an exporter and use the `render` method to create HTML:
 
@@ -293,7 +293,7 @@ exporter = HTML({
 
 ### Type annotations
 
-The exporter’s codebase is typed with annotations from the Python 3.5+ standard library, checked with mypy. Reusable types are made available:
+The exporter’s codebase is typed with annotations from the Python 3.6+ standard library, checked with mypy. Reusable types are made available:
 
 ```python
 from draftjs_exporter.dom import DOM

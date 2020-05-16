@@ -22,12 +22,11 @@ virtualenv .venv
 source ./.venv/bin/activate
 make init
 # Install required Python versions
-pyenv install --skip-existing 3.5.1
 pyenv install --skip-existing 3.6.3
 pyenv install --skip-existing 3.7.0
 pyenv install --skip-existing 3.8.0
 # Make required Python versions available globally.
-pyenv global system 3.5.1 3.6.3 3.7.0 3.8.0
+pyenv global system 3.6.3 3.7.0 3.8.0
 ```
 
 ### Commands
@@ -51,19 +50,19 @@ make publish-test    # Publishes a new version to test pypi.
 
 ### Debugging
 
-* Always run the tests. `npm install -g nodemon`, then `make test-watch`.
-* Use a debugger. `pip install ipdb`, then `import ipdb; ipdb.set_trace()`.
+-   Always run the tests. `npm install -g nodemon`, then `make test-watch`.
+-   Use a debugger. `pip install ipdb`, then `import ipdb; ipdb.set_trace()`.
 
 ### Releases
 
-* Make a new branch for the release of the new version.
-* Update the [CHANGELOG](https://github.com/springload/draftjs_exporter/CHANGELOG.md).
-* Update the version number in `draftjs_exporter/__init__.py`, following semver.
-* Make a PR and squash merge it.
-* Back on master with the PR merged, use `make publish-test` (confirm, and enter your password, confirm everything good on test.pypi.org).
-* Back on master with the PR merged, use `make publish` (confirm, and enter your password).
-* Finally, go to GitHub and create a release and a tag for the new version.
-* Done!
+-   Make a new branch for the release of the new version.
+-   Update the [CHANGELOG](https://github.com/springload/draftjs_exporter/CHANGELOG.md).
+-   Update the version number in `draftjs_exporter/__init__.py`, following semver.
+-   Make a PR and squash merge it.
+-   Back on master with the PR merged, use `make publish-test` (confirm, and enter your password, confirm everything good on test.pypi.org).
+-   Back on master with the PR merged, use `make publish` (confirm, and enter your password).
+-   Finally, go to GitHub and create a release and a tag for the new version.
+-   Done!
 
 > As a last step, you may want to go update the [Draftail Playground](http://playground.draftail.org/) to this new release to check that all is well in a fully separate project.
 
