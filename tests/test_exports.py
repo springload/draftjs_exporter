@@ -78,7 +78,7 @@ class TestExportsMeta(type):
 
         for export in fixtures:
             test_label = export["label"].lower().replace(" ", "_")
-            test_name = "test_export_{0}_{1}".format(engine, test_label)
+            test_name = f"test_export_{engine}_{test_label}"
             content = export["content_state"]
             html = export["output"][engine]
             tests[test_name] = gen_test(content, html)

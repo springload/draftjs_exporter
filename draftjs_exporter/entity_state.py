@@ -45,9 +45,7 @@ class EntityState(object):
 
             if command.data != expected_entity:
                 raise EntityException(
-                    "Expected {0}, got {1}".format(
-                        expected_entity, command.data
-                    )
+                    f"Expected {expected_entity}, got {command.data}"
                 )
 
             self.completed_entity = self.entity_stack.pop()
@@ -63,7 +61,7 @@ class EntityState(object):
 
         if details is None:
             raise EntityException(
-                'Entity "%s" does not exist in the entityMap' % entity_key
+                f'Entity "{entity_key}" does not exist in the entityMap'
             )
 
         return details

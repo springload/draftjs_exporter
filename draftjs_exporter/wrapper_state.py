@@ -94,7 +94,7 @@ class WrapperState(object):
         self.stack = WrapperStack()
 
     def __str__(self) -> str:
-        return "<WrapperState: %s>" % self.stack
+        return f"<WrapperState: {self.stack}>"
 
     def element_for(
         self, block: Block, block_content: Union[Element, Sequence[Element]]

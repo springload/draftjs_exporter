@@ -30,13 +30,7 @@ class Options(object):
         self.wrapper_props = wrapper_props
 
     def __str__(self) -> str:
-        return "<Options {0} {1} {2} {3} {4}>".format(
-            self.type,
-            self.element,
-            self.props,
-            self.wrapper,
-            self.wrapper_props,
-        )
+        return f"<Options {self.type} {self.element} {self.props} {self.wrapper} {self.wrapper_props}>"
 
     def __repr__(self) -> str:
         return str(self)
@@ -61,7 +55,7 @@ class Options(object):
         if type_ not in kind_map:
             if fallback_key not in kind_map:
                 raise ConfigException(
-                    '"%s" is not in the config and has no fallback' % type_
+                    f'"{type_}" is not in the config and has no fallback'
                 )
 
             config = kind_map[fallback_key]
@@ -70,7 +64,7 @@ class Options(object):
 
         if isinstance(config, dict):
             if "element" not in config:
-                raise ConfigException('"%s" does not define an element' % type_)
+                raise ConfigException(f'"{type_}" does not define an element')
 
             opts = Options(type_, **config)
         else:
@@ -107,5 +101,5 @@ class Options(object):
                 return options[fallback_key]
             except KeyError:
                 raise ConfigException(
-                    '"%s" is not in the config and has no fallback' % type_
+                    f'"{type_}" is not in the config and has no fallback'
                 )

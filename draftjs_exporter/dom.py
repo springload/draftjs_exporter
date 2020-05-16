@@ -83,7 +83,7 @@ class DOM(object):
             # Convert style object to style string, like the DOM would do.
             if "style" in props and isinstance(props["style"], dict):
                 rules = [
-                    "{0}: {1};".format(DOM.camel_to_dash(s), v)
+                    f"{DOM.camel_to_dash(s)}: {v};"
                     for s, v in props["style"].items()
                 ]
                 rules.sort()

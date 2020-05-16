@@ -19,10 +19,7 @@ from example import br, entity_fallback, image, list_item, ordered_list
 def document(props):
     return DOM.create_element(
         "a",
-        {
-            "title": props.get("label"),
-            "href": "/documents/%s" % props.get("id"),
-        },
+        {"title": props.get("label"), "href": f"/documents/{props.get('id')}"},
         props["children"],
     )
 
@@ -34,7 +31,7 @@ def link(props):
 def block_fallback(props):
     type_ = props["block"]["type"]
 
-    logging.warn('Missing config for "%s".' % type_)
+    logging.warn(f'Missing config for "{type_}".')
     return DOM.create_element("div", {}, props["children"])
 
 
@@ -78,10 +75,7 @@ content_states = get_content_sample()
 
 BENCHMARK_RUNS = int(os.environ.get("BENCHMARK_RUNS", 1))
 
-print(
-    "Exporting %s ContentStates %s times"
-    % (len(content_states), BENCHMARK_RUNS)
-)
+print(f"Exporting {len(content_states)} ContentStates {BENCHMARK_RUNS} times")
 
 pr = cProfile.Profile()
 pr.enable()

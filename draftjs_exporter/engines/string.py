@@ -72,7 +72,7 @@ class DOMString(DOMEngine):
 
     @staticmethod
     def render_attrs(attr: Attr) -> str:
-        attrs = [' %s="%s"' % (k, escape(v)) for k, v in attr.items()]
+        attrs = [f' {k}="{escape(v)}"' for k, v in attr.items()]
         attrs.sort()
         return "".join(attrs)
 
@@ -97,12 +97,12 @@ class DOMString(DOMEngine):
             return children
 
         if type_ in VOID_ELEMENTS:
-            return "<%s%s/>" % (type_, attr)
+            return f"<{type_}{attr}/>"
 
         if type_ == "escaped_html":
             return elt.markup  # type: ignore
 
-        return "<%s%s>%s</%s>" % (type_, attr, children, type_)
+        return f"<{type_}{attr}>{children}</{type_}>"
 
     @staticmethod
     def render_debug(elt: Elt) -> HTML:
@@ -113,9 +113,9 @@ class DOMString(DOMEngine):
         )
 
         if type_ in VOID_ELEMENTS:
-            return "<%s%s/>" % (type_, attr)
+            return f"<{type_}{attr}/>"
 
         if type_ == "escaped_html":
             return elt.markup  # type: ignore
 
-        return "<%s%s>%s</%s>" % (type_, attr, children, type_)
+        return f"<{type_}{attr}>{children}</{type_}>"

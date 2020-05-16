@@ -30,7 +30,7 @@ def image(props: Props) -> Element:
 
 
 def icon(props: Props) -> Element:
-    href = "#icon-%s" % props.get("name", "")
+    href = f"#icon-{props.get('name', '')}"
     return DOM.create_element(
         "svg",
         {"class": "icon"},
