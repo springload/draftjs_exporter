@@ -63,7 +63,7 @@ class TestExportsMeta(type):
     See http://stackoverflow.com/a/20870875/1798491
     """
 
-    pr = None  # type: cProfile.Profile
+    pr: cProfile.Profile = None  # type: ignore
 
     def __new__(mcs, name, bases, tests):
         def gen_test(

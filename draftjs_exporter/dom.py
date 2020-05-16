@@ -19,7 +19,7 @@ class DOM(object):
     LXML = "draftjs_exporter.engines.lxml.DOM_LXML"
     STRING = "draftjs_exporter.engines.string.DOMString"
 
-    dom = None  # type: DOMEngine
+    dom: DOMEngine = None  # type: ignore
 
     @staticmethod
     def camel_to_dash(camel_cased_str: str) -> str:
@@ -39,7 +39,7 @@ class DOM(object):
         cls,
         type_: RenderableType = None,
         props: Optional[Props] = None,
-        *elt_children: Optional[Element]
+        *elt_children: Optional[Element],
     ) -> Element:
         """
         Signature inspired by React.createElement.

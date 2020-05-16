@@ -17,7 +17,7 @@ br_strategy = re.compile(r"\n")
 def get_decorations(
     decorators: CompositeDecorators, text: str
 ) -> List[Tuple[int, int, Any, Decorator]]:
-    occupied = {}  # type: Dict[int, int]
+    occupied: Dict[int, int] = {}
     decorations = []
 
     for decorator in decorators:

@@ -33,9 +33,9 @@ class EntityState(object):
         self.entity_options = entity_options
         self.entity_map = entity_map
 
-        self.entity_stack = []  # type: List[EntityKey]
-        self.completed_entity = None  # type: Optional[EntityKey]
-        self.element_stack = []  # type: List[Element]
+        self.entity_stack: List[EntityKey] = []
+        self.completed_entity: Optional[EntityKey] = None
+        self.element_stack: List[Element] = []
 
     def apply(self, command: Command) -> None:
         if command.name == "start_entity":
