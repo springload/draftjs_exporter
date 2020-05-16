@@ -1,3 +1,4 @@
+import re
 from operator import itemgetter
 from typing import Any, Dict, Generator, List, Sequence, Tuple
 
@@ -8,6 +9,9 @@ from draftjs_exporter.types import (
     Decorator,
     Element,
 )
+
+br = "\n"
+br_strategy = re.compile(r"\n")
 
 
 def get_decorations(
@@ -69,3 +73,20 @@ def render_decorators(
             DOM.append_child(decorated_node, decorated_child)
 
     return decorated_node
+
+
+def should_render_decorators(
+    decorators: CompositeDecorators, text: str,
+) -> bool:
+    nb_decorators = len(decorators)
+
+    if nb_decorators == 0:
+        return False
+
+    is_skippable_br = (
+        nb_decorators == 1
+        and decorators[0]["strategy"] == br_strategy
+        and not (br in text)
+    )
+
+    return not is_skippable_br

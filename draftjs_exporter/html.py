@@ -3,7 +3,10 @@ from operator import attrgetter
 from typing import List, Optional, Tuple
 
 from draftjs_exporter.command import Command
-from draftjs_exporter.composite_decorators import render_decorators
+from draftjs_exporter.composite_decorators import (
+    render_decorators,
+    should_render_decorators,
+)
 from draftjs_exporter.defaults import BLOCK_MAP, STYLE_MAP
 from draftjs_exporter.dom import DOM
 from draftjs_exporter.entity_state import EntityState
@@ -27,7 +30,6 @@ class HTML(object):
 
     __slots__ = (
         "composite_decorators",
-        "has_decorators",
         "entity_options",
         "block_options",
         "style_options",
@@ -38,7 +40,6 @@ class HTML(object):
             config = {}
 
         self.composite_decorators = config.get("composite_decorators", [])
-        self.has_decorators = len(self.composite_decorators) > 0
 
         self.entity_options = Options.map_entities(
             config.get("entity_decorators", {})
@@ -86,6 +87,10 @@ class HTML(object):
     def render_block(
         self, block: Block, entity_map: EntityMap, wrapper_state: WrapperState
     ) -> Element:
+        has_decorators = should_render_decorators(
+            self.composite_decorators, block["text"]
+        )
+
         if (
             "inlineStyleRanges" in block
             and block["inlineStyleRanges"]
@@ -102,7 +107,7 @@ class HTML(object):
                     style_state.apply(command)
 
                 # Decorators are not rendered inside entities.
-                if entity_state.has_no_entity() and self.has_decorators:
+                if entity_state.has_no_entity() and has_decorators:
                     decorated_node = render_decorators(
                         self.composite_decorators,
                         text,
@@ -129,7 +134,7 @@ class HTML(object):
                     ):
                         DOM.append_child(content, styled_node)
         # Fast track for blocks which do not contain styles nor entities, which is very common.
-        elif self.has_decorators:
+        elif has_decorators:
             content = render_decorators(
                 self.composite_decorators,
                 block["text"],
