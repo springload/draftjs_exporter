@@ -48,7 +48,7 @@ class WrapperStack(object):
     __slots__ = "stack"
 
     def __init__(self) -> None:
-        self.stack = []  # type: List[Wrapper]
+        self.stack: List[Wrapper] = []
 
     def __str__(self) -> str:
         return str(self.stack)

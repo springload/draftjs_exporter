@@ -29,7 +29,7 @@ class Command(object):
         Creates a list of commands from a block’s list of entity ranges.
         Each range is converted to two commands: a start_* and a stop_*.
         """
-        commands = []  # type: List['Command']
+        commands: List["Command"] = []
         for r in block["entityRanges"]:
             # Entity key is an integer in entity ranges, while a string in the entity map.
             data = str(r["key"])
@@ -46,7 +46,7 @@ class Command(object):
         Creates a list of commands from a block’s list of style ranges.
         Each range is converted to two commands: a start_* and a stop_*.
         """
-        commands = []  # type: List['Command']
+        commands: List["Command"] = []
         for r in block["inlineStyleRanges"]:
             data = r["style"]
             start = r["offset"]

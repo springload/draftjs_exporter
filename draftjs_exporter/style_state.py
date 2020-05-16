@@ -17,7 +17,7 @@ class StyleState(object):
     __slots__ = ("styles", "style_options")
 
     def __init__(self, style_options: OptionsMap) -> None:
-        self.styles = []  # type: List[str]
+        self.styles: List[str] = []
         self.style_options = style_options
 
     def apply(self, command: Command) -> None:
