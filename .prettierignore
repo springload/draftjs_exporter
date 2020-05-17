@@ -1,0 +1,8 @@
+node_modules
+.tox
+.venv
+coverage_html_report
+.pytest_cache
+.mypy_cache
+example.html
+example.md

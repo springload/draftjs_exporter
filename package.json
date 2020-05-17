@@ -1,0 +1,14 @@
+{
+  "name": "draftjs_exporter",
+  "version": "0.0.0-dev",
+  "private": true,
+  "description": "Library to convert rich text from Draft.js raw ContentState to HTML",
+  "license": "MIT",
+  "devDependencies": {
+    "prettier": "2.0.5"
+  },
+  "scripts": {
+    "lint": "prettier --check '**/?(.)*.{md,css,scss,js,json,json5,yaml,yml,html}'",
+    "format": "prettier --write '**/?(.)*.{md,css,scss,js,json,json5,yaml,yml,html}'"
+  }
+}
