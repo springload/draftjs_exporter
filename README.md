@@ -2,7 +2,6 @@
 
 [![PyPI](https://img.shields.io/pypi/v/draftjs_exporter.svg)](https://pypi.org/project/draftjs_exporter/) [![PyPI downloads](https://img.shields.io/pypi/dm/draftjs_exporter.svg)](https://pypi.org/project/draftjs_exporter/) [![Travis](https://travis-ci.org/springload/draftjs_exporter.svg?branch=master)](https://travis-ci.org/springload/draftjs_exporter) [![Coveralls](https://coveralls.io/repos/github/springload/draftjs_exporter/badge.svg?branch=master)](https://coveralls.io/github/springload/draftjs_exporter?branch=master) [![Total alerts](https://img.shields.io/lgtm/alerts/g/springload/draftjs_exporter.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/springload/draftjs_exporter/alerts/) [![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/springload/draftjs_exporter.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/springload/draftjs_exporter/context:python)
 
-
 > Library to convert rich text from Draft.js raw ContentState to HTML.
 
 It is developed alongside the [Draftail](https://www.draftail.org/) rich text editor, for [Wagtail](https://github.com/wagtail/wagtail). Check out the [online demo](http://playground.draftail.org/), and our [introductory blog post](https://www.draftail.org/blog/2018/03/13/rethinking-rich-text-pipelines-with-draft-js).
@@ -17,16 +16,16 @@ The initial use case was to gain more control over the content managed by rich t
 
 This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html), and [measures performance](https://thib.me/python-memory-profiling-for-the-draft-js-exporter) and [code coverage](https://coveralls.io/github/springload/draftjs_exporter). Code is checked with [mypy](https://mypy.readthedocs.io/en/latest/index.html).
 
-* Extensive configuration of the generated HTML.
-* Default, extensible block & inline style maps for common HTML elements.
-* Convert line breaks to `<br>` elements.
-* Define any attribute in the block map – custom class names for elements.
-* React-like API to create custom components.
-* Automatic conversion of entity data to HTML attributes (int & boolean to string, style object to style string).
-* Nested lists (`<li>` elements go inside `<ul>` or `<ol>`, with multiple levels).
-* Output inline styles as inline elements (`<em>`, `<strong>`, pick and choose, with any attribute).
-* Overlapping inline style and entity ranges.
-* Python 3.6+ type annotations.
+- Extensive configuration of the generated HTML.
+- Default, extensible block & inline style maps for common HTML elements.
+- Convert line breaks to `<br>` elements.
+- Define any attribute in the block map – custom class names for elements.
+- React-like API to create custom components.
+- Automatic conversion of entity data to HTML attributes (int & boolean to string, style object to style string).
+- Nested lists (`<li>` elements go inside `<ul>` or `<ol>`, with multiple levels).
+- Output inline styles as inline elements (`<em>`, `<strong>`, pick and choose, with any attribute).
+- Overlapping inline style and entity ranges.
+- Python 3.6+ type annotations.
 
 ## Usage
 
@@ -244,8 +243,8 @@ By default, the exporter uses a dependency-free engine called `string` to build 
 
 The `string` engine is the fastest, and does not have any dependencies. Its only drawback is that the `parse_html` method does not escape/sanitise HTML like that of other engines.
 
-* For `html5lib`, do `pip install draftjs_exporter[html5lib]`.
-* For `lxml`, do `pip install draftjs_exporter[lxml]`. It also requires `libxml2` and `libxslt` to be available on your system.
+- For `html5lib`, do `pip install draftjs_exporter[html5lib]`.
+- For `lxml`, do `pip install draftjs_exporter[lxml]`. It also requires `libxml2` and `libxslt` to be available on your system.
 
 Then, use the `engine` attribute of the exporter config:
 
