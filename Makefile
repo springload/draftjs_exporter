@@ -17,6 +17,7 @@ lint: ## Lint the project.
 format: ## Format project files.
 	isort --recursive *.py **/*.py
 	black **/*.py
+	npm run format
 
 test: ## Test the project.
 	python -m unittest discover

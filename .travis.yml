@@ -5,26 +5,31 @@ language: python
 cache:
   pip: true
   directories:
-  - .tox
+    - .tox
 jobs:
   include:
-  - env: TOXENV=py36-lower_bound_deps
-    python: 3.6
-  - env: TOXENV=py37-lower_bound_deps
-    python: 3.7
-  - env: TOXENV=py38-lower_bound_deps
-    python: 3.8
-  - env: TOXENV=py36-upper_bound_deps
-    python: 3.6
-  - env: TOXENV=py37-upper_bound_deps
-    python: 3.7
-  - env: TOXENV=py38-upper_bound_deps
-    python: 3.8
+    - env: TOXENV=py36-lower_bound_deps
+      python: 3.6
+    - env: TOXENV=py37-lower_bound_deps
+      python: 3.7
+    - env: TOXENV=py38-lower_bound_deps
+      python: 3.8
+    - env: TOXENV=py36-upper_bound_deps
+      python: 3.6
+    - env: TOXENV=py37-upper_bound_deps
+      python: 3.7
+    - env: TOXENV=py38-upper_bound_deps
+      python: 3.8
+    - language: node_js
+      install:
+        - npm install --no-optional --no-audit --progress=false
+      script:
+        - npm run lint
 install:
-- pip install tox coveralls==1.10.0
+  - pip install tox coveralls==1.10.0
 script:
-- make test-ci
+  - make test-ci
 after_success:
-- coveralls
+  - coveralls
 notifications:
   email: false
