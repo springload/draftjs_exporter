@@ -10,7 +10,7 @@ Please note that this project is released with a [Contributor Code of Conduct](d
 
 ### Installation
 
-> Requirements: `virtualenv`, `pyenv`
+> Requirements: `virtualenv`, [`pyenv`](https://github.com/pyenv/pyenv), [`nvm`](https://github.com/nvm-sh/nvm)
 
 ```sh
 git clone git@github.com:springload/draftjs_exporter.git

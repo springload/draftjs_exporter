@@ -7,6 +7,8 @@ help: ## See what commands are available.
 init: clean-pyc ## Install dependencies and initialise for development.
 	pip install --upgrade pip setuptools twine
 	pip install -e '.[testing,docs]' -U
+	nvm use
+	npm install
 
 lint: ## Lint the project.
 	black --check **/*.py
