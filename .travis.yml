@@ -22,7 +22,7 @@ jobs:
       env: TOXENV=py38-upper_bound_deps
     - python: 3.8
       install:
-        - pip install -e .
+        - pip install -e '.[testing]'
       script:
         - make lint
         - make benchmark
