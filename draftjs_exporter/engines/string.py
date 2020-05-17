@@ -79,7 +79,9 @@ class DOMString(DOMEngine):
     def render_children(children: Sequence[Union[HTML, Elt]]) -> HTML:
         return "".join(
             [
-                DOMString.render(c) if isinstance(c, Elt) else escape(c)
+                DOMString.render(c)
+                if isinstance(c, Elt)
+                else escape(c, quote=False)
                 for c in children
             ]
         )

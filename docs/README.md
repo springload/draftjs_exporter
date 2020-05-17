@@ -22,7 +22,7 @@
 - `style` prop is rendered as-is if it is a string, or can also be a dict in which case its properties are converted into a string using `camel_to_dash`.
 - Invalid attributes are left for the BeautifulSoup / html5lib parser to handle.
 - HTML escaping is automatically done by BeautifulSoup / html5lib.
-- The string engine escapes single quotes.
+- The string engine escapes `&`, `<`, `>`, and single/double quotes in attributes, but not outside.
 
 ## R&D notes
 
