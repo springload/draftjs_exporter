@@ -58,5 +58,6 @@ fi
 if [ -n "$PY_STAGED" ];
 then
 	black --check $PY_STAGED
+  make lint
   make test-ci
 fi
