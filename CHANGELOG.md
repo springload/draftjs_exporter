@@ -4,6 +4,70 @@
 
 ## Unreleased
 
+## [v4.0.0](https://github.com/springload/draftjs_exporter/releases/tag/v4.0.0)
+
+This release contains breaking changes. **Be sure to check out the "how to upgrade" section below.**
+
+### Removed
+
+- Remove support for Python 3.5 ([#129](https://github.com/springload/draftjs_exporter/pull/129))
+- Remove HTML attributes alphabetical sorting of default string engine ([#129](https://github.com/springload/draftjs_exporter/pull/129))
+- Disable single and double quotes escaping outside of attributes for string engine ([#129](https://github.com/springload/draftjs_exporter/pull/129))
+- Stop sorting inline styles alphabetically ([#129](https://github.com/springload/draftjs_exporter/pull/129))
+
+### How to upgrade
+
+#### Python 3.5 support
+
+Do not upgrade to this version if you are using the exporter in Python 3.5. Please keep using [v3.0.1](https://github.com/springload/draftjs_exporter/tree/v3.0.1) of the exporter.
+
+#### HTML attributes sorting
+
+The default `string` engine no longer sorts attributes alphabetically by name in its output HTML. This makes it possible to control the order as needed, wherever attributes can be specified:
+
+```python
+def image(props):
+    return DOM.create_element('img', {
+        'src': props.get('src'),
+        'width': props.get('width'),
+        'height': props.get('height'),
+        'alt': props.get('alt'),
+    })
+```
+
+If you relied on this behavior, you can either reorder your `props` / `wrapper_props` / `create_element` calls as needed, or subclass the built-in `string` engine and override its `render_attrs` method to add back the `attrs.sort`:
+
+```python
+    @staticmethod
+    def render_attrs(attr: Attr) -> str:
+        attrs = [f' {k}="{escape(v)}"' for k, v in attr.items()]
+        attrs.sort()
+        return "".join(attrs)
+```
+
+### HTML quotes escaping
+
+The default `string` engine no longer escapes single and double quotes in HTML content (it still escapes quotes inside attributes). If you relied on this behavior, subclass the built-in `string` engine and override its `render_children` method to add back `quote=True`:
+
+```python
+    @staticmethod
+    def render_children(children: Sequence[Union[HTML, Elt]]) -> HTML:
+        return "".join(
+            [
+                DOMString.render(c)
+                if isinstance(c, Elt)
+                else escape(c, quote=True)
+                for c in children
+            ]
+        )
+```
+
+### Inline styles sorting
+
+The exporter supports passing the `style` attribute as a dictionary with JS attributes for style properties, and will automatically convert it to a string. The properties are no longer sorted alphabetically – it’s now possible to reorder the dictionary’s keys to change the order.
+
+If you relied on this behavior, either reorder the keys as needed, or pass the `style` as a string (with CSS properties syntax).
+
 ## [v3.0.1](https://github.com/springload/draftjs_exporter/releases/tag/v3.0.1)
 
 ### Added
