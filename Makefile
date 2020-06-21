@@ -5,7 +5,7 @@ help: ## See what commands are available.
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36mmake %-15s\033[0m # %s\n", $$1, $$2}'
 
 init: clean-pyc ## Install dependencies and initialise for development.
-	pip install --upgrade pip setuptools twine
+	pip install --upgrade pip setuptools wheel twine
 	pip install -e '.[testing,docs]' -U
 	nvm use
 	npm install
@@ -46,6 +46,9 @@ clean-pyc: ## Remove Python file artifacts.
 
 sdist: ## Builds package version
 	rm dist/* ; python setup.py sdist
+
+bdist_wheel: ## Builds package version
+	rm dist/* ; python setup.py bdist_wheel
 
 publish: sdist ## Publishes a new version to pypi.
 	twine upload dist/* && echo 'Success! Go to https://pypi.org/project/draftjs_exporter/ and check that all is well.'

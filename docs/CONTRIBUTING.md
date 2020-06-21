@@ -44,6 +44,7 @@ make dev             # Restarts the example whenever a file changes.
 make benchmark       # Runs a one-off performance (speed, memory) benchmark.
 make clean-pyc       # Remove Python file artifacts.
 make sdist           # Builds package version
+make bdist_wheel     # Builds package version wheel.
 make publish         # Publishes a new version to pypi.
 make publish-test    # Publishes a new version to test pypi.
 ```
