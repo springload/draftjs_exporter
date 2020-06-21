@@ -44,14 +44,17 @@ clean-pyc: ## Remove Python file artifacts.
 	find . -name '*.pyo' -exec rm -f {} +
 	find . -name '*~' -exec rm -f {} +
 
-sdist: ## Builds package version
-	rm dist/* ; python setup.py sdist
+clean-dist: ## Clean the dist folder
+	rm dist/*
 
-bdist_wheel: ## Builds package version
-	rm dist/* ; python setup.py bdist_wheel
+sdist: ## Builds package version source distribution
+	python setup.py sdist
 
-publish: sdist ## Publishes a new version to pypi.
+bdist_wheel: ## Builds package version wheel distribution
+	python setup.py bdist_wheel
+
+publish: clean-dist bdist_wheel sdist ## Publishes a new version to pypi.
 	twine upload dist/* && echo 'Success! Go to https://pypi.org/project/draftjs_exporter/ and check that all is well.'
 
-publish-test: sdist ## Publishes a new version to test pypi.
+publish-test: clean-dist bdist_wheel sdist ## Publishes a new version to test pypi.
 	twine upload --repository-url https://test.pypi.org/legacy/ dist/* && echo 'Success! Go to https://test.pypi.org/project/draftjs_exporter/ and check that all is well.'
