@@ -1,4 +1,4 @@
-.PHONY: clean-pyc init help test-ci
+.PHONY: build clean-pyc init help test-ci
 .DEFAULT_GOAL := help
 
 help: ## See what commands are available.
@@ -44,16 +44,11 @@ clean-pyc: ## Remove Python file artifacts.
 	find . -name '*.pyo' -exec rm -f {} +
 	find . -name '*~' -exec rm -f {} +
 
-clean-dist: ## Clean the dist folder
+build: ## Builds package version
 	rm dist/*
+	python setup.py sdist bdist_wheel
 
-sdist: ## Builds package version source distribution
-	python setup.py sdist
-
-bdist_wheel: ## Builds package version wheel distribution
-	python setup.py bdist_wheel
-
-publish: clean-dist bdist_wheel sdist ## Publishes a new version to pypi.
+publish: build ## Publishes a new version to pypi.
 	twine upload dist/* && echo 'Success! Go to https://pypi.org/project/draftjs_exporter/ and check that all is well.'
 
 publish-test: clean-dist bdist_wheel sdist ## Publishes a new version to test pypi.
