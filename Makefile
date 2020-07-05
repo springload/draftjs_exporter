@@ -44,7 +44,7 @@ clean-pyc: ## Remove Python file artifacts.
 	find . -name '*.pyo' -exec rm -f {} +
 	find . -name '*~' -exec rm -f {} +
 
-build: ## Builds package version
+build: ## Builds package for publication.
 	rm dist/*
 	python setup.py sdist bdist_wheel
 
