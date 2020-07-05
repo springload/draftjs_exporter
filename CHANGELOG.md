@@ -4,6 +4,12 @@
 
 ## Unreleased
 
+## [v4.1.0](https://github.com/springload/draftjs_exporter/releases/tag/v4.1.0)
+
+### Added
+
+- Publish the package as a wheel ([#132](https://github.com/springload/draftjs_exporter/issues/132), [#133](https://github.com/springload/draftjs_exporter/pull/133)). Thanks to [Stormheg](https://github.com/Stormheg).
+
 ## [v4.0.0](https://github.com/springload/draftjs_exporter/releases/tag/v4.0.0)
 
 This release contains breaking changes. **Be sure to check out the "how to upgrade" section below.**
