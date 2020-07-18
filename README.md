@@ -1,6 +1,6 @@
 # Draft.js exporter
 
-[![PyPI](https://img.shields.io/pypi/v/draftjs_exporter.svg)](https://pypi.org/project/draftjs_exporter/) [![PyPI downloads](https://img.shields.io/pypi/dm/draftjs_exporter.svg)](https://pypi.org/project/draftjs_exporter/) [![Travis](https://travis-ci.org/springload/draftjs_exporter.svg?branch=master)](https://travis-ci.org/springload/draftjs_exporter) [![Coveralls](https://coveralls.io/repos/github/springload/draftjs_exporter/badge.svg?branch=master)](https://coveralls.io/github/springload/draftjs_exporter?branch=master) [![Total alerts](https://img.shields.io/lgtm/alerts/g/springload/draftjs_exporter.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/springload/draftjs_exporter/alerts/) [![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/springload/draftjs_exporter.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/springload/draftjs_exporter/context:python)
+[![PyPI](https://img.shields.io/pypi/v/draftjs_exporter.svg)](https://pypi.org/project/draftjs_exporter/) [![PyPI downloads](https://img.shields.io/pypi/dm/draftjs_exporter.svg)](https://pypi.org/project/draftjs_exporter/) [![Travis](https://travis-ci.org/springload/draftjs_exporter.svg?branch=main)](https://travis-ci.org/springload/draftjs_exporter) [![Coveralls](https://coveralls.io/repos/github/springload/draftjs_exporter/badge.svg?branch=main)](https://coveralls.io/github/springload/draftjs_exporter?branch=main) [![Total alerts](https://img.shields.io/lgtm/alerts/g/springload/draftjs_exporter.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/springload/draftjs_exporter/alerts/) [![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/springload/draftjs_exporter.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/springload/draftjs_exporter/context:python)
 
 > Library to convert rich text from Draft.js raw ContentState to HTML.
 
@@ -143,7 +143,7 @@ config = {
 }
 ```
 
-See [examples.py](https://github.com/springload/draftjs_exporter/blob/master/example.py) for more details.
+See [examples.py](example.py) for more details.
 
 ## Advanced usage
 
@@ -320,4 +320,4 @@ If you just want to set up the project on your own computer, the contribution gu
 
 This project is made possible by the work of [Springload](https://github.com/springload), a New Zealand digital agency. The _beautiful_ demo site is the work of [@thibaudcolas](https://github.com/thibaudcolas).
 
-View the full list of [contributors](https://github.com/springload/draftjs_exporter/graphs/contributors). [MIT](https://github.com/springload/draftjs_exporter/blob/master/LICENSE) licensed.
+View the full list of [contributors](https://github.com/springload/draftjs_exporter/graphs/contributors). [MIT licensed](LICENSE).

@@ -348,7 +348,7 @@ exporter = HTML({
 })
 ```
 
-The new engine is faster than both `html5lib` and `lxml`, and outputs a functionally identical HTML (see a list of all known engine differences at [`test_engine_differences.py`](https://github.com/springload/draftjs_exporter/blob/master/tests/engines/test_engines_differences.py)). Its only drawback is that when using the `DOM.parse_html()` no safeguards are provided against malformed or unescaped HTML, whereas lxml or html5lib sanitise the input.
+The new engine is faster than both `html5lib` and `lxml`, and outputs a functionally identical HTML (see a list of all known engine differences at [`test_engine_differences.py`](https://github.com/springload/draftjs_exporter/blob/main/tests/engines/test_engines_differences.py)). Its only drawback is that when using the `DOM.parse_html()` no safeguards are provided against malformed or unescaped HTML, whereas lxml or html5lib sanitise the input.
 
 ## [v1.0.0](https://github.com/springload/draftjs_exporter/releases/tag/v1.0.0)
 

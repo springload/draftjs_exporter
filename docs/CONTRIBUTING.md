@@ -59,8 +59,8 @@ make publish-test    # Publishes a new version to test pypi.
 - Update the [CHANGELOG](https://github.com/springload/draftjs_exporter/CHANGELOG.md).
 - Update the version number in `draftjs_exporter/__init__.py`, following semver.
 - Make a PR and squash merge it.
-- Back on master with the PR merged, use `make publish-test` (confirm, and enter your password, confirm everything good on test.pypi.org).
-- Back on master with the PR merged, use `make publish` (confirm, and enter your password).
+- Back on main with the PR merged, use `make publish-test` (confirm, and enter your password, confirm everything good on test.pypi.org).
+- Back on main with the PR merged, use `make publish` (confirm, and enter your password).
 - Finally, go to GitHub and create a release and a tag for the new version.
 - Done!
 
@@ -68,4 +68,4 @@ make publish-test    # Publishes a new version to test pypi.
 
 ## Documentation
 
-> See the [docs](https://github.com/springload/draftjs_exporter/tree/master/docs) folder.
+> See the [docs](https://github.com/springload/draftjs_exporter/tree/main/docs) folder.
