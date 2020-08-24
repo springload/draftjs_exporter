@@ -4,6 +4,13 @@
 
 ## Unreleased
 
+## [v4.1.1](https://github.com/springload/draftjs_exporter/releases/tag/v4.1.1)
+
+### Changed
+
+- Add support for Python 3.9 ([#134](https://github.com/springload/draftjs_exporter/pull/134)).
+- Update html5lib upper bound, now defined as `html5lib>=0.999,<2`, to ensure compatibility with Python 3.10 ([#134](https://github.com/springload/draftjs_exporter/pull/134)).
+
 ## [v4.1.0](https://github.com/springload/draftjs_exporter/releases/tag/v4.1.0)
 
 ### Added
