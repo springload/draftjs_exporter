@@ -9,7 +9,7 @@ from draftjs_exporter import __version__
 dependencies = {
     # Keep this in sync with the dependencies in tox.ini.
     "lxml": ["lxml>=4.2.0,<5"],
-    "html5lib": ["beautifulsoup4>=4.4.1,<5", "html5lib>=0.999,<=1.0.1"],
+    "html5lib": ["beautifulsoup4>=4.4.1,<5", "html5lib>=0.999,<=2"],
     "docs": [],
 }
 
