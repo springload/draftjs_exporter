@@ -108,7 +108,7 @@ def block_fallback(props: Props) -> Element:
     type_ = props["block"]["type"]
 
     if type_ == "example-discard":
-        logging.warn(
+        logging.warning(
             f'Missing config for "{type_}". Discarding block, keeping content.'
         )
         # Directly return the block's children to keep its content.
@@ -118,7 +118,7 @@ def block_fallback(props: Props) -> Element:
         # Return None to not render anything, removing the whole block.
         return None
     else:
-        logging.warn(f'Missing config for "{type_}". Using div instead.')
+        logging.warning(f'Missing config for "{type_}". Using div instead.')
         # Provide a fallback.
         return DOM.create_element("div", {}, props["children"])
 
@@ -126,7 +126,7 @@ def block_fallback(props: Props) -> Element:
 def entity_fallback(props: Props) -> Element:
     type_ = props["entity"]["type"]
     key = props["entity"]["entity_range"]["key"]
-    logging.warn(f'Missing config for "{type_}", key "{key}".')
+    logging.warning(f'Missing config for "{type_}", key "{key}".')
     return DOM.create_element(
         "span", {"class": "missing-entity"}, props["children"]
     )
@@ -134,7 +134,7 @@ def entity_fallback(props: Props) -> Element:
 
 def style_fallback(props: Props) -> Element:
     type_ = props["inline_style_range"]["style"]
-    logging.warn(f'Missing config for "{type_}". Deleting style.')
+    logging.warning(f'Missing config for "{type_}". Deleting style.')
     return props["children"]
 
 
