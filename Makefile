@@ -22,7 +22,7 @@ format: ## Format project files.
 	npm run format
 
 test: ## Test the project.
-	python -m unittest discover
+	python -X dev -W error -m unittest discover
 
 test-watch: ## Restarts the tests whenever a file changes.
 	nodemon -q -e py -w tests -w draftjs_exporter  -x "clear && make test -s || true"
@@ -34,7 +34,7 @@ test-ci: ## Continuous integration test suite.
 	tox
 
 dev: ## Restarts the example whenever a file changes.
-	nodemon -q -e py -w tests -w draftjs_exporter -w example.py  -x "clear && python example.py || true"
+	nodemon -q -e py -w tests -w draftjs_exporter -w example.py  -x "clear && python -X dev -W error example.py || true"
 
 benchmark: ## Runs a one-off performance (speed, memory) benchmark.
 	python benchmark.py
