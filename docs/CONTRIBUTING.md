@@ -22,11 +22,12 @@ virtualenv .venv
 source ./.venv/bin/activate
 make init
 # Install required Python versions
-pyenv install --skip-existing 3.6.3
-pyenv install --skip-existing 3.7.0
-pyenv install --skip-existing 3.8.0
+pyenv install --skip-existing 3.6.11
+pyenv install --skip-existing 3.7.8
+pyenv install --skip-existing 3.8.5
+pyenv install --skip-existing 3.9.0b5
 # Make required Python versions available globally.
-pyenv global system 3.6.3 3.7.0 3.8.0
+pyenv global system 3.6.11 3.7.8 3.8.5 3.9.0b5
 ```
 
 ### Commands
