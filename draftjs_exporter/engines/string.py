@@ -26,7 +26,7 @@ VOID_ELEMENTS = (
 
 class Elt(object):
     """
-    An DOM element that the string engine manipulates.
+    A DOM element that the string engine manipulates.
     This class doesn't do much, but the exporter relies on
     comparing elements by reference so it's useful nonetheless.
     """
