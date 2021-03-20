@@ -1,0 +1,17 @@
+# Required for running the tests.
+tox==3.15.0
+# Benchmark dependencies.
+markov_draftjs==0.1.1
+memory-profiler==0.57
+psutil==5.7.0
+# For coverage and PEP8 linting.
+coverage==5.1
+flake8==3.8.1
+isort==4.3.21
+mypy==0.812
+black==19.10b0
+# HTML builders.
+# Keep this in sync with the dependencies in setup.py, requirements.txt, tox.ini.
+lxml>=4.2.0,<5
+beautifulsoup4>=4.4.1,<5
+html5lib>=0.999,<2

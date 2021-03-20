@@ -6,33 +6,6 @@ from setuptools import find_packages, setup
 
 from draftjs_exporter import __version__
 
-dependencies = {
-    # Keep this in sync with the dependencies in tox.ini.
-    "lxml": ["lxml>=4.2.0,<5"],
-    "html5lib": ["beautifulsoup4>=4.4.1,<5", "html5lib>=0.999,<2"],
-    "docs": [],
-}
-
-# Development extras.
-dependencies["testing"] = (
-    [
-        # Required for running the tests.
-        "tox==3.15.0",
-        # Benchmark dependencies.
-        "markov_draftjs==0.1.1",
-        "memory-profiler==0.57",
-        "psutil==5.7.0",
-        # For coverage and PEP8 linting.
-        "coverage==5.1",
-        "flake8==3.8.1",
-        "isort==4.3.21",
-        "mypy==0.812",
-        "black==19.10b0",
-    ]
-    + dependencies["html5lib"]
-    + dependencies["lxml"]
-)
-
 with io.open("README.md", encoding="utf-8") as readme_file:
     long_description = readme_file.read()
 
@@ -70,6 +43,10 @@ setup(
     ],
     package_data={"draftjs_exporter": ["py.typed"]},
     install_requires=[],
-    extras_require=dependencies,
+    extras_require={
+        # Keep this in sync with the dependencies in setup.py, requirements.txt, tox.ini.
+        "lxml": ["lxml>=4.2.0,<5"],
+        "html5lib": ["beautifulsoup4>=4.4.1,<5", "html5lib>=0.999,<2"],
+    },
     zip_safe=False,
 )

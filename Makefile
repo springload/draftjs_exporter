@@ -6,7 +6,8 @@ help: ## See what commands are available.
 
 init: clean-pyc ## Install dependencies and initialise for development.
 	pip install --upgrade pip setuptools wheel twine
-	pip install -e '.[testing,docs]' -U
+	pip install -e .
+	pip install -r requirements.txt
 	nvm use
 	npm install
 
