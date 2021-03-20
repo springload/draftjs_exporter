@@ -6,10 +6,16 @@ on:
       - "renovate/**"
   pull_request:
 jobs:
-  test_js:
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: "3.9"
+      - run: pip install -r requirements.txt
+      - run: make lint
+      - run: make benchmark
       - id: nvm
         run: echo "##[set-output name=NVMRC;]$(cat .nvmrc)"
       - uses: actions/setup-node@v2-beta
@@ -23,18 +29,8 @@ jobs:
             ${{ runner.os }}-node-
       - run: npm install --no-optional --no-audit --no-fund --progress=false
       - run: npm run lint
-  test_python:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
-        with:
-          python-version: "3.9"
-      - run: pip install -r requirements.txt
-      - run: make lint
-      - run: make benchmark
-  test_python_compat:
-    needs: test_python
+  test_compat:
+    needs: test
     runs-on: ubuntu-latest
     strategy:
       matrix:
