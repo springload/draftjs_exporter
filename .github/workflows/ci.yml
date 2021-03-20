@@ -1,0 +1,71 @@
+name: CI
+on:
+  push:
+    branches:
+      - main
+      - "renovate/**"
+  pull_request:
+jobs:
+  test_js:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - id: nvm
+        run: echo "##[set-output name=NVMRC;]$(cat .nvmrc)"
+      - uses: actions/setup-node@v2-beta
+        with:
+          node-version: "${{ steps.nvm.outputs.NVMRC }}"
+      - uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - run: npm install --no-optional --no-audit --no-fund --progress=false
+      - run: npm run lint
+  test_python:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+      - run: pip install -e '.[testing]' && pip install coveralls==3.0.1
+      - run: make lint
+      - run: make benchmark
+      - run: make test-ci
+        env:
+          TOXENV: py39-upper_bound_deps
+      - run: coveralls || true
+        env:
+          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  test_python_compat:
+    needs: test_python
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - python: '3.6'
+            toxenv: py36-lower_bound_deps
+          - python: '3.6'
+            toxenv: py36-upper_bound_deps
+          - python: '3.7'
+            toxenv: py37-lower_bound_deps
+          - python: '3.7'
+            toxenv: py37-upper_bound_deps
+          - python: '3.8'
+            toxenv: py38-lower_bound_deps
+          - python: '3.8'
+            toxenv: py38-upper_bound_deps
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python }}
+      - run: pip install tox==3.15.0 coveralls==3.0.1
+      - run: make test-ci
+      - run: coveralls || true
+        env:
+          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
