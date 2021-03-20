@@ -33,6 +33,7 @@ jobs:
       - run: pip install -e '.[testing]' && pip install coveralls==3.0.1
       - run: make lint
       - run: make benchmark
+      - run: sudo apt-get install libxml2-dev libxslt-dev
       - run: make test-ci
         env:
           TOXENV: py39-upper_bound_deps
