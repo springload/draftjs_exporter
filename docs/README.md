@@ -88,7 +88,7 @@ and it's not just contentState but contentState + some config
 
 Python versions as defined in `setup.py` classifiers.
 
-#### Which version combinations to include in Travis test matrix?
+#### Which version combinations to include in CI test matrix?
 
 All supported Python versions should be tested.
 
