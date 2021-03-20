@@ -26,7 +26,7 @@ dependencies["testing"] = (
         "coverage==5.1",
         "flake8==3.8.1",
         "isort==4.3.21",
-        "mypy==0.770",
+        "mypy==0.812",
         "black==19.10b0",
     ]
     + dependencies["html5lib"]
