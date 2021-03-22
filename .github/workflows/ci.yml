@@ -57,6 +57,8 @@ jobs:
       - run: pip install tox==3.15.0 coveralls==3.0.1
       - run: sudo apt-get install libxml2-dev libxslt-dev
       - run: make test-ci
+        env:
+          TOXENV: ${{ matrix.toxenv }}
       - run: coveralls || true
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
