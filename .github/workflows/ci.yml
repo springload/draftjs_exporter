@@ -6,7 +6,7 @@ on:
       - "renovate/**"
   pull_request:
 jobs:
-  lint:
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -36,32 +36,27 @@ jobs:
       matrix:
         include:
           - python: "3.6"
-            toxenv1: py36-lower_bound_deps
-            toxenv2: py36-upper_bound_deps
+            toxenv: py36-lower_bound_deps,py36-upper_bound_deps
           - python: "3.7"
-            toxenv1: py37-lower_bound_deps
-            toxenv2: py37-upper_bound_deps
+            toxenv: py37-lower_bound_deps,py37-upper_bound_deps
           - python: "3.8"
-            toxenv1: py38-lower_bound_deps
-            toxenv2: py38-upper_bound_deps
+            toxenv: py38-lower_bound_deps,py38-upper_bound_deps
           - python: "3.9"
-            toxenv1: py39-upper_bound_deps
+            toxenv: py39-upper_bound_deps
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python }}
-      - run: pip install tox==3.15.0 coveralls==3.0.1
+      - run: pip install tox==3.15.0
       - run: sudo apt-get install libxml2-dev libxslt-dev
       - run: make test-ci
         env:
-          TOXENV: ${{ matrix.toxenv1 }}
-      - run: make test-ci
-        if: ${{ matrix.toxenv2 }}
-        env:
-          TOXENV: ${{ matrix.toxenv2 }}
-      - run: coveralls || true
-        if: ${{ matrix.python == "3.9" }}
+          TOXENV: ${{ matrix.toxenv }}
+      - run: |
+          pip install coveralls==3.0.1
+          coveralls || true
+        if: ${{ matrix.python == '3.9' }}
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
