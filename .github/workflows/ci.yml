@@ -43,6 +43,8 @@ jobs:
             toxenv: py38-lower_bound_deps,py38-upper_bound_deps
           - python: "3.9"
             toxenv: py39-lower_bound_deps,py39-upper_bound_deps
+          - python: "3.10.0-alpha.6"
+            toxenv: py310-upper_bound_deps
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
