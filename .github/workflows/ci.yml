@@ -29,6 +29,13 @@ jobs:
             ${{ runner.os }}-node-
       - run: npm install --no-optional --no-audit --no-fund --progress=false
       - run: npm run lint
+      - run: make test-coverage
+      - run: |
+          pip install coveralls==3.0.1
+          coveralls || true
+        env:
+          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   test_compat:
     needs: test
     runs-on: ubuntu-latest
@@ -42,7 +49,7 @@ jobs:
           - python: "3.8"
             toxenv: py38-lower_bound_deps,py38-upper_bound_deps
           - python: "3.9"
-            toxenv: py39-lower_bound_deps,py39-upper_bound_deps
+            toxenv: py39-lower_bound_deps
           - python: "3.10.0-alpha.6"
             toxenv: py310-upper_bound_deps
     steps:
@@ -55,10 +62,3 @@ jobs:
       - run: tox --parallel
         env:
           TOXENV: ${{ matrix.toxenv }}
-      - run: |
-          pip install coveralls==3.0.1
-          coveralls || true
-        if: ${{ matrix.python == '3.9' }}
-        env:
-          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

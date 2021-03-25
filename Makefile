@@ -26,10 +26,10 @@ test: ## Test the project.
 	python -X dev -W error -m unittest discover
 
 test-watch: ## Restarts the tests whenever a file changes.
-	nodemon -q -e py -w tests -w draftjs_exporter  -x "clear && make test -s || true"
+	PYTHONDEVMODE=1 nodemon -q -e py -w tests -w draftjs_exporter  -x "clear && make test -s || true"
 
 test-coverage: ## Run the tests while generating test coverage data.
-	coverage run -m unittest discover && coverage report && coverage html
+	PYTHONDEVMODE=1 coverage run -m unittest discover && coverage report
 
 test-ci: ## Continuous integration test suite.
 	tox
