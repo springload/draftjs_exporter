@@ -4,6 +4,13 @@
 
 ## Unreleased
 
+## [v4.1.2](https://github.com/springload/draftjs_exporter/releases/tag/v4.1.2)
+
+### Changed
+
+- Add tentative support for Python 3.10.
+- Stop using `extras_require` for development-only dependencies.
+
 ## [v4.1.1](https://github.com/springload/draftjs_exporter/releases/tag/v4.1.1)
 
 ### Changed
