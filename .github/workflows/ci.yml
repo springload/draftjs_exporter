@@ -19,7 +19,10 @@ jobs:
           path: .venv
           key: draftjs_exporter-v1-${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
       - if: steps.pip-cache.outputs.cache-hit != 'true'
-        run: pip install -r requirements.txt
+        run: |
+          python -m venv .venv
+          source .venv/bin/activate
+          pip install -r requirements.txt
       - run: |
           source .venv/bin/activate
           make lint
