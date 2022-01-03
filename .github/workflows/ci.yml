@@ -23,12 +23,8 @@ jobs:
           python -m venv .venv
           source .venv/bin/activate
           pip install -r requirements.txt
-      - run: |
-          source .venv/bin/activate
-          make lint
-      - run: |
-          source .venv/bin/activate
-          make benchmark
+      - run: make lint
+      - run: make benchmark
       - uses: actions/setup-node@v2
         with:
           node-version-file: ".nvmrc"
@@ -40,12 +36,8 @@ jobs:
             ${{ runner.os }}-node-
       - run: npm ci
       - run: npm run lint
-      - run: |
-          source .venv/bin/activate
-          make test-coverage
-      - run: |
-          source .venv/bin/activate
-          coveralls
+      - run: make test-coverage
+      - run: coveralls
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
