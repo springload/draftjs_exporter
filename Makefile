@@ -14,11 +14,11 @@ init: clean-pyc ## Install dependencies and initialise for development.
 lint: ## Lint the project.
 	black --check **/*.py
 	flake8 **/*.py
-	isort --check-only --diff --recursive **/*.py
+	isort --check-only --diff **/*.py
 	mypy **/*.py
 
 format: ## Format project files.
-	isort --recursive *.py **/*.py
+	isort **/*.py
 	black **/*.py
 	npm run format
 
