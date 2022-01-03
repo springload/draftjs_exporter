@@ -76,7 +76,8 @@ def render_decorators(
 
 
 def should_render_decorators(
-    decorators: CompositeDecorators, text: str,
+    decorators: CompositeDecorators,
+    text: str,
 ) -> bool:
     nb_decorators = len(decorators)
 

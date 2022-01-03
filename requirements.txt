@@ -9,7 +9,7 @@ coverage==5.1
 flake8==3.8.1
 isort==4.3.21
 mypy==0.812
-black==19.10b0
+black==21.12b0
 # HTML builders.
 # Keep this in sync with the dependencies in setup.py, requirements.txt, tox.ini.
 lxml>=4.2.0,<5

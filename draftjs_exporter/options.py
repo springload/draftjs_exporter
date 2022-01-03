@@ -38,7 +38,7 @@ class Options(object):
     def __eq__(self, other: Any) -> bool:
         """
         Equality used in test code only, not to be relied on for the exporter.
-    """
+        """
         return str(self) == str(other)
 
     def __ne__(self, other: Any) -> bool:

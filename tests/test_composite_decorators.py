@@ -186,28 +186,33 @@ class TestCompositeDecorators(unittest.TestCase):
 
     def test_should_render_decorators_empty(self):
         self.assertEqual(
-            should_render_decorators([], "test"), False,
+            should_render_decorators([], "test"),
+            False,
         )
 
     def test_should_render_decorators_more_than_one(self):
         self.assertEqual(
             should_render_decorators(
-                [HASHTAG_DECORATOR, LINKIFY_DECORATOR], "test",
+                [HASHTAG_DECORATOR, LINKIFY_DECORATOR],
+                "test",
             ),
             True,
         )
 
     def test_should_render_decorators_single_not_br(self):
         self.assertEqual(
-            should_render_decorators([HASHTAG_DECORATOR], "test"), True,
+            should_render_decorators([HASHTAG_DECORATOR], "test"),
+            True,
         )
 
     def test_should_render_decorators_single_br_absent(self):
         self.assertEqual(
-            should_render_decorators([BR_DECORATOR], "test"), False,
+            should_render_decorators([BR_DECORATOR], "test"),
+            False,
         )
 
     def test_should_render_decorators_single_br_present(self):
         self.assertEqual(
-            should_render_decorators([BR_DECORATOR], "test \n test"), True,
+            should_render_decorators([BR_DECORATOR], "test \n test"),
+            True,
         )
