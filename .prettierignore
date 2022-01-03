@@ -1,5 +1,6 @@
 node_modules
 .tox
+venv
 .venv
 coverage_html_report
 .pytest_cache
