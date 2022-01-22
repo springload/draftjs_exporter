@@ -4,6 +4,17 @@
 
 ## Unreleased
 
+### Removed
+
+- Remove support for Python 3.6
+- Add tentative support for Python 3.11.
+
+### How to upgrade
+
+#### Python 3.6 support
+
+Python 3.6 is no longer supported, as it has reached its [end of life](https://www.python.org/dev/peps/pep-0494/). The latest implementation should still work in Python 3.6, however there are no efforts to test with this version.
+
 ## [v4.1.2](https://github.com/springload/draftjs_exporter/releases/tag/v4.1.2)
 
 ### Changed

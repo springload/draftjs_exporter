@@ -56,9 +56,9 @@ jobs:
       matrix:
         include:
           - python: "3.7"
-            toxenv: py37-lower_bound_deps,py37-upper_bound_deps
+            toxenv: py37-lower_bound_deps
           - python: "3.8"
-            toxenv: py38-lower_bound_deps,py38-upper_bound_deps
+            toxenv: py38-upper_bound_deps
           - python: "3.9"
             toxenv: py39-lower_bound_deps
           - python: "3.10"
