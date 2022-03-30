@@ -18,6 +18,7 @@ class DOM:
     HTML5LIB = "draftjs_exporter.engines.html5lib.DOM_HTML5LIB"
     LXML = "draftjs_exporter.engines.lxml.DOM_LXML"
     STRING = "draftjs_exporter.engines.string.DOMString"
+    STRING_COMPAT = "draftjs_exporter.engines.string_compat.DOMStringCompat"
 
     dom: DOMEngine = None  # type: ignore
 

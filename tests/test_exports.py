@@ -115,13 +115,27 @@ class TestExportsLXML(unittest.TestCase, metaclass=TestExportsMeta):
         Stats(cls.pr).strip_dirs().sort_stats("cumulative").print_stats(0)
 
 
-class TestExportsSTRING(unittest.TestCase, metaclass=TestExportsMeta):
+class TestExportsString(unittest.TestCase, metaclass=TestExportsMeta):
     @classmethod
     def setUpClass(cls):
         DOM.use(DOM.STRING)
         cls.pr = cProfile.Profile()
         cls.pr.enable()
         print("\nstring")
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.pr.disable()
+        Stats(cls.pr).strip_dirs().sort_stats("cumulative").print_stats(0)
+
+
+class TestExportsString_Compat(unittest.TestCase, metaclass=TestExportsMeta):
+    @classmethod
+    def setUpClass(cls):
+        DOM.use(DOM.STRING_COMPAT)
+        cls.pr = cProfile.Profile()
+        cls.pr.enable()
+        print("\nstring_compat")
 
     @classmethod
     def tearDownClass(cls):

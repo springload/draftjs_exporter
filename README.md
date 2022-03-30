@@ -239,12 +239,17 @@ See `examples.py` in the repository for more details.
 
 ### Alternative backing engines
 
-By default, the exporter uses a dependency-free engine called `string` to build the DOM tree. There are two alternative backing engines: `html5lib` (via BeautifulSoup) and `lxml`.
+By default, the exporter uses a dependency-free engine called `string` to build the DOM tree. There are alternatives:
+
+- `html5lib` (via BeautifulSoup)
+- `lxml`.
+- `string_compat` (A variant of `string` with no backwards-incompatible changes since its first release).
 
 The `string` engine is the fastest, and does not have any dependencies. Its only drawback is that the `parse_html` method does not escape/sanitise HTML like that of other engines.
 
 - For `html5lib`, do `pip install draftjs_exporter[html5lib]`.
 - For `lxml`, do `pip install draftjs_exporter[lxml]`. It also requires `libxml2` and `libxslt` to be available on your system.
+- There are no additional dependencies for `string_compat`.
 
 Then, use the `engine` attribute of the exporter config:
 
@@ -254,6 +259,8 @@ config = {
     'engine': DOM.HTML5LIB,
     # Or for lxml:
     'engine': DOM.LXML,
+    # Or to use the "maximum stability" string_compat engine:
+    'engine': DOM.STRING_COMPAT,
 }
 ```
 
