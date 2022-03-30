@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import unittest
 
 from draftjs_exporter.engines.lxml import DOM_LXML

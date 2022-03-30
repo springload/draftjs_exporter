@@ -7,7 +7,7 @@ from draftjs_exporter.engines.string import DOMString
 from tests.test_entities import icon
 
 
-class DOMTestImpl(object):
+class DOMTestImpl:
     def __init__(self):
         pass
 

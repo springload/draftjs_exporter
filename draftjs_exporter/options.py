@@ -8,7 +8,7 @@ from draftjs_exporter.types import ConfigMap, Props, RenderableType
 OptionsMap = Dict[str, "Options"]
 
 
-class Options(object):
+class Options:
     """
     Facilitates querying configuration from a config map.
     """

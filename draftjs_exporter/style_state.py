@@ -7,7 +7,7 @@ from draftjs_exporter.options import Options, OptionsMap
 from draftjs_exporter.types import Block, Element
 
 
-class StyleState(object):
+class StyleState:
     """
     Handles the creation of inline styles on elements.
     Receives inline_style commands, and generates the element's `style`

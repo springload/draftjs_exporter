@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 import cProfile
 import logging
 import os

@@ -10,7 +10,7 @@ _first_cap_re = re.compile(r"(.)([A-Z][a-z]+)")
 _all_cap_re = re.compile("([a-z0-9])([A-Z])")
 
 
-class DOM(object):
+class DOM:
     """
     Component building API, abstracting the DOM implementation.
     """

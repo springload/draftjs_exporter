@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import unittest
 
 from draftjs_exporter.constants import BLOCK_TYPES, ENTITY_TYPES, INLINE_STYLES

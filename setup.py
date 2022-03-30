@@ -6,7 +6,7 @@ from setuptools import find_packages, setup
 
 from draftjs_exporter import __version__
 
-with io.open("README.md", encoding="utf-8") as readme_file:
+with open("README.md", encoding="utf-8") as readme_file:
     long_description = readme_file.read()
 
 setup(

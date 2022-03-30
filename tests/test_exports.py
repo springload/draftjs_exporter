@@ -18,7 +18,7 @@ from tests.test_composite_decorators import (
 from tests.test_entities import hr, image, link
 
 fixtures_path = os.path.join(os.path.dirname(__file__), "test_exports.json")
-with open(fixtures_path, "r") as f:
+with open(fixtures_path) as f:
     fixtures = json.loads(f.read())
 
 exporter = HTML(

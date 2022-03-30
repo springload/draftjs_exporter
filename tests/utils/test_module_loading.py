@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import unittest
 
 from draftjs_exporter.utils.module_loading import import_string

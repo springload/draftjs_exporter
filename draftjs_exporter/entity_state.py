@@ -18,7 +18,7 @@ class EntityException(ExporterException):
     pass
 
 
-class EntityState(object):
+class EntityState:
     __slots__ = (
         "entity_options",
         "entity_map",

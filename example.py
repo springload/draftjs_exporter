@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 import codecs
 import cProfile
 import logging

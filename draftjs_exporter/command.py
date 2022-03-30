@@ -3,7 +3,7 @@ from typing import List
 from draftjs_exporter.types import Block
 
 
-class Command(object):
+class Command:
     """
     A Command represents an operation that has to be executed
     on a block for it to be converted into an arbitrary number

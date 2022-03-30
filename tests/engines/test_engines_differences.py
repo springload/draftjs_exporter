@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import unittest
 
 from draftjs_exporter.engines.html5lib import DOM_HTML5LIB

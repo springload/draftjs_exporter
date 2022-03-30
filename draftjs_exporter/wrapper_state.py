@@ -6,7 +6,7 @@ from draftjs_exporter.options import Options, OptionsMap
 from draftjs_exporter.types import Block, Element, Props, RenderableType
 
 
-class Wrapper(object):
+class Wrapper:
     """
     A wrapper is an element that wraps other nodes. It gets created
     when the depth of a block is different than 0, so the DOM elements
@@ -38,7 +38,7 @@ class Wrapper(object):
         return depth > self.depth or type_ != self.type or props != self.props
 
 
-class WrapperStack(object):
+class WrapperStack:
     """
     Stack data structure for element wrappers.
     The bottom of the stack contains the elements closest to the page body.
@@ -77,7 +77,7 @@ class WrapperStack(object):
         return self.stack[0]
 
 
-class WrapperState(object):
+class WrapperState:
     """
     This class does the initial node building for the tree.
     It sets elements with the right tag, text content, and props.

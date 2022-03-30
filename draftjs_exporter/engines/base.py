@@ -5,7 +5,7 @@ from draftjs_exporter.types import HTML, Element, Tag
 Attr = Dict[str, str]
 
 
-class DOMEngine(object):
+class DOMEngine:
     """
     Parent class of all DOM implementations.
     """

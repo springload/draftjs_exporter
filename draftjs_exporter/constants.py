@@ -1,5 +1,5 @@
 # http://stackoverflow.com/a/22723724/1798491
-class Enum(object):
+class Enum:
     __slots__ = "elements"
 
     def __init__(self, *elements: str) -> None:

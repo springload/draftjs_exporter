@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import unittest
 
 from draftjs_exporter.engines.base import DOMEngine
