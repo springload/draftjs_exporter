@@ -1,11 +1,11 @@
 import unittest
 
-from draftjs_exporter.engines.string import DOMString
+from draftjs_exporter.engines.string_compat import DOMStringCompat
 
-S = DOMString
+S = DOMStringCompat
 
 
-class TestDOMString(unittest.TestCase):
+class TestDOMStringCompat(unittest.TestCase):
     def test_create_tag(self):
         self.assertEqual(
             S.render_debug(S.create_tag("p", {"class": "intro"})),
@@ -46,6 +46,18 @@ class TestDOMString(unittest.TestCase):
             ' alt="img&#x27;s alt" class="intro &quot; text" src="src.png"',
         )
 
+    def test_render_attrs_sorting(self):
+        self.assertEqual(
+            S.render_attrs(
+                {
+                    "class": 'intro " text',
+                    "src": "src.png",
+                    "alt": "img's alt",
+                }
+            ),
+            ' alt="img&#x27;s alt" class="intro &quot; text" src="src.png"',
+        )
+
     def test_render_children(self):
         self.assertEqual(
             S.render_children(
@@ -55,7 +67,7 @@ class TestDOMString(unittest.TestCase):
                     'double " quote',
                 ]
             ),
-            'single \' quote<p class="intro"></p>double " quote',
+            'single &#x27; quote<p class="intro"></p>double &quot; quote',
         )
 
     def test_render(self):
