@@ -9,15 +9,15 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v3
         with:
           python-version: "3.10"
-      - uses: actions/cache@v2
+      - uses: actions/cache@v3
         id: pip-cache
         with:
           path: .venv
-          key: draftjs_exporter-v1-${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          key: draftjs_exporter-v3-${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
       - if: steps.pip-cache.outputs.cache-hit != 'true'
         run: |
           python -m venv .venv
@@ -29,15 +29,9 @@ jobs:
       - run: |
           source .venv/bin/activate
           make benchmark
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
           node-version-file: ".nvmrc"
-      - uses: actions/cache@v2
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
       - run: npm ci
       - run: npm run lint
       - run: |
@@ -66,8 +60,8 @@ jobs:
           # - python: "3.11.0-alpha.4"
           #   toxenv: py311-upper_bound_deps
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v3
         with:
           python-version: ${{ matrix.python }}
       - run: pip install tox==3.15.0
