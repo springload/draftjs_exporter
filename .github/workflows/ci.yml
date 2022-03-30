@@ -82,5 +82,5 @@ jobs:
         with:
           python-version: "3.11.0-alpha.6"
       - run: python -X dev -W error example.py
-      - run: pip install build[virtualenv]
-      - run: python -X dev -W error -m build
+      - run: pip install build
+      - run: python -X dev -W error -m build --no-isolation
