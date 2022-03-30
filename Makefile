@@ -5,7 +5,7 @@ help: ## See what commands are available.
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36mmake %-15s\033[0m # %s\n", $$1, $$2}'
 
 init: clean-pyc ## Install dependencies and initialise for development.
-	pip install --upgrade pip setuptools wheel twine
+	pip install --upgrade pip setuptools wheel twine build[virtualenv]
 	pip install -e .
 	pip install -r requirements.txt
 	nvm use
@@ -47,10 +47,7 @@ clean-pyc: ## Remove Python file artifacts.
 
 build: ## Builds package for publication.
 	rm -f dist/*
-	python setup.py sdist bdist_wheel
+	python -X dev -W error -m build
 
-publish: build ## Publishes a new version to pypi.
+publish: build ## Publishes a new version to PyPI.
 	twine upload dist/*
-
-publish-test: clean-dist bdist_wheel sdist ## Publishes a new version to test pypi.
-	twine upload --repository-url https://test.pypi.org/legacy/ dist/*

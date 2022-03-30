@@ -29,6 +29,9 @@ jobs:
       - run: |
           source .venv/bin/activate
           make benchmark
+      - run: |
+          source .venv/bin/activate
+          make build
       - uses: actions/setup-node@v3
         with:
           node-version-file: ".nvmrc"
