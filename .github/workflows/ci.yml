@@ -60,8 +60,8 @@ jobs:
             toxenv: py39-lower_bound_deps
           - python: "3.10"
             toxenv: py310-upper_bound_deps
-          - python: "3.11.0-alpha.6"
-            toxenv: py311-upper_bound_deps
+          # - python: "3.11.0-alpha.6"
+          #   toxenv: py311-upper_bound_deps
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v3
@@ -72,3 +72,15 @@ jobs:
       - run: tox --parallel
         env:
           TOXENV: ${{ matrix.toxenv }}
+  test_experimental:
+    # Ad-hoc job to test experimental support without having to adjust all of our project for compatibility.
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v3
+        with:
+          python-version: "3.11.0-alpha.6"
+      - run: python -X dev -W error example.py
+      - run: pip install build[virtualenv]
+      - run: python -X dev -W error -m build
