@@ -90,7 +90,7 @@ jobs:
         run: |
           python -m venv .venv
           source .venv/bin/activate
-          pip install -r requirements.txt
+          pip install build==0.7.0 beautifulsoup4>=4.4.1,<5 html5lib>=0.999,<2
       - run: |
           source .venv/bin/activate
           python -X dev -W error example.py
