@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from setuptools import find_packages, setup
+from setuptools import find_packages, setup  # type: ignore
 
 from draftjs_exporter import __version__
 
@@ -41,7 +41,6 @@ setup(
         "Typing :: Typed",
     ],
     package_data={"draftjs_exporter": ["py.typed"]},
-    install_requires=[],
     extras_require={
         # Keep this in sync with the dependencies in setup.py, requirements.txt, tox.ini.
         "lxml": ["lxml>=4.2.0,<5"],

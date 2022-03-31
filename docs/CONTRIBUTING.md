@@ -26,9 +26,9 @@ pyenv install --skip-existing 3.7.8
 pyenv install --skip-existing 3.8.5
 pyenv install --skip-existing 3.9.1
 pyenv install --skip-existing 3.10.0
-pyenv install --skip-existing 3.11.0a3
+pyenv install --skip-existing 3.11.0a6
 # Make required Python versions available globally.
-pyenv global system 3.7.8 3.8.5 3.9.1 3.10.0 3.11.0a3
+pyenv global system 3.7.8 3.8.5 3.9.1 3.10.0 3.11.0a6
 ```
 
 ### Commands
@@ -47,7 +47,6 @@ make benchmark       # Runs a one-off performance (speed, memory) benchmark.
 make clean-pyc       # Remove Python file artifacts.
 make build           # Builds package for publication.
 make publish         # Publishes a new version to pypi.
-make publish-test    # Publishes a new version to test pypi.
 ```
 
 ### Debugging
@@ -61,7 +60,6 @@ make publish-test    # Publishes a new version to test pypi.
 - Update the [CHANGELOG](https://github.com/springload/draftjs_exporter/CHANGELOG.md).
 - Update the version number in `draftjs_exporter/__init__.py`, following semver.
 - Make a PR and squash merge it.
-- Back on main with the PR merged, use `make publish-test` (confirm, and enter your password, confirm everything good on test.pypi.org).
 - Back on main with the PR merged, use `make publish` (confirm, and enter your password).
 - Finally, go to GitHub and create a release and a tag for the new version.
 - Done!

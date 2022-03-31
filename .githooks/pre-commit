@@ -58,6 +58,9 @@ fi
 if [ -n "$PY_STAGED" ];
 then
 	black --check $PY_STAGED
-  make lint
+  flake8 $PY_STAGED
+	isort --check-only --diff $PY_STAGED
+	mypy $PY_STAGED
+  make build
   make test-ci
 fi

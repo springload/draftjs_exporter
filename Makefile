@@ -47,10 +47,7 @@ clean-pyc: ## Remove Python file artifacts.
 
 build: ## Builds package for publication.
 	rm -f dist/*
-	python setup.py sdist bdist_wheel
+	python -X dev -W error -m build
 
-publish: build ## Publishes a new version to pypi.
+publish: build ## Publishes a new version to PyPI.
 	twine upload dist/*
-
-publish-test: clean-dist bdist_wheel sdist ## Publishes a new version to test pypi.
-	twine upload --repository-url https://test.pypi.org/legacy/ dist/*
