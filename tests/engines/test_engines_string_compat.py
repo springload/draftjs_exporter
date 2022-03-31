@@ -20,6 +20,11 @@ class TestDOMStringCompat(unittest.TestCase):
             S.render(S.parse_html("<p><span>Test text</span></p>")),
             "<p><span>Test text</span></p>",
         )
+        # There for test coverage only.
+        self.assertEqual(
+            S.render_debug(S.parse_html("<p><span>Test text</span></p>")),
+            "<p><span>Test text</span></p>",
+        )
 
     def test_append_child(self):
         parent = S.create_tag("p")
@@ -80,4 +85,9 @@ class TestDOMStringCompat(unittest.TestCase):
         self.assertEqual(
             S.render_debug(S.create_tag("p", {"class": "intro"})),
             '<p class="intro"></p>',
+        )
+        # There for test coverage only.
+        self.assertEqual(
+            S.render_debug(S.create_tag("img", {"class": "intro"})),
+            '<img class="intro"/>',
         )
