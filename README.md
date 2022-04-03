@@ -39,7 +39,7 @@ This exporter takes the Draft.js ContentState data as input, and outputs HTML ba
 pip install draftjs_exporter
 ```
 
-We support the following Python versions: 3.7, 3.8, 3.9, 3.10. For Python 2.7 and 3.4 support, please use [v2.1.7](https://github.com/springload/draftjs_exporter/tree/v2.1.7) of the exporter. For Python 3.5, use [v3.0.1](https://github.com/springload/draftjs_exporter/tree/v3.0.1). For Python 3.6, use [v4.1.2](https://github.com/springload/draftjs_exporter/tree/v4.1.2).
+We support the following Python versions: 3.7, 3.8, 3.9, 3.10, 3.11. For legacy Python versions, find compatible releases in the [CHANGELOG](https://github.com/springload/draftjs_exporter/blob/main/CHANGELOG.md).
 
 In your code, create an exporter and use the `render` method to create HTML:
 
@@ -259,7 +259,7 @@ config = {
     'engine': DOM.HTML5LIB,
     # Or for lxml:
     'engine': DOM.LXML,
-    # Or to use the "maximum stability" string_compat engine:
+    # Or to use the "maximum output stability" string_compat engine:
     'engine': DOM.STRING_COMPAT,
 }
 ```

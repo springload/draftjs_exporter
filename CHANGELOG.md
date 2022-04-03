@@ -2,11 +2,12 @@
 
 > All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## Unreleased
+## [v5.0.0](https://github.com/springload/draftjs_exporter/releases/tag/v5.0.0)
 
 ### Added
 
 - Add tentative support for Python 3.11.
+- Add new "string_compat" engine for maximum output stability, with identical output to its first release. To use it, set the `engine` property to `'engine': DOM.STRING_COMPAT,` ([#138](https://github.com/springload/draftjs_exporter/pull/138)).
 
 ### Removed
 
