@@ -29,7 +29,7 @@ def link(props):
 def block_fallback(props):
     type_ = props["block"]["type"]
 
-    logging.warn(f'Missing config for "{type_}".')
+    logging.warning(f'Missing config for "{type_}".')
     return DOM.create_element("div", {}, props["children"])
 
 
