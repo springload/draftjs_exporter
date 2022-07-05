@@ -222,7 +222,7 @@ def block_fallback(props):
     type_ = props['block']['type']
 
     if type_ == 'example-discard':
-        logging.warn(f'Missing config for "{type_}". Discarding block, keeping content.')
+        logging.warning(f'Missing config for "{type_}". Discarding block, keeping content.')
         # Directly return the block's children to keep its content.
         return props['children']
     elif type_ == 'example-delete':
@@ -230,7 +230,7 @@ def block_fallback(props):
         # Return None to not render anything, removing the whole block.
         return None
     else:
-        logging.warn(f'Missing config for "{type_}". Using div instead.')
+        logging.warning(f'Missing config for "{type_}". Using div instead.')
         # Provide a fallback.
         return DOM.create_element('div', {}, props['children'])
 ```
