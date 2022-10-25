@@ -26,9 +26,10 @@ pyenv install --skip-existing 3.7.8
 pyenv install --skip-existing 3.8.5
 pyenv install --skip-existing 3.9.1
 pyenv install --skip-existing 3.10.0
-pyenv install --skip-existing 3.11.0a6
+pyenv install --skip-existing 3.11.0
+pyenv install --skip-existing 3.12.0a1
 # Make required Python versions available globally.
-pyenv global system 3.7.8 3.8.5 3.9.1 3.10.0 3.11.0a6
+pyenv global system 3.7.8 3.8.5 3.9.1 3.10.0 3.11.0 3.12.0a1
 ```
 
 ### Commands

@@ -1,6 +1,6 @@
 # Required for running the tests.
 tox==3.24.5
-build==0.7.0
+build==0.8.0
 # Benchmark dependencies.
 markov_draftjs==0.2.0
 memory-profiler==0.60.0
