@@ -1,4 +1,9 @@
 name: CI
+permissions:
+  contents: read
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
 on:
   push:
     branches:
