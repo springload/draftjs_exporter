@@ -67,8 +67,8 @@ jobs:
             toxenv: py310-upper_bound_deps
           - python: "3.11"
             toxenv: py311-upper_bound_deps
-          # - python: "3.12.0-alpha.1"
-          #   toxenv: py312-upper_bound_deps
+          - python: "3.12.0-rc.3"
+            toxenv: py312-upper_bound_deps
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v3
