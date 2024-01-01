@@ -23,13 +23,13 @@ format: ## Format project files.
 	npm run format
 
 test: ## Test the project.
-	python -X dev -W error -m unittest discover
+	PYTHONDEVMODE=1 pytest -W error --capture=no
 
 test-watch: ## Restarts the tests whenever a file changes.
 	PYTHONDEVMODE=1 nodemon -q -e py -w tests -w draftjs_exporter  -x "clear && make test -s || true"
 
 test-coverage: ## Run the tests while generating test coverage data.
-	PYTHONDEVMODE=1 coverage run -m unittest discover && coverage report
+	PYTHONDEVMODE=1 pytest -W error --cov --cov-report=html --capture=no
 
 test-ci: ## Continuous integration test suite.
 	tox
@@ -39,6 +39,8 @@ dev: ## Restarts the example whenever a file changes.
 
 benchmark: ## Runs a one-off performance (speed, memory) benchmark.
 	python benchmark.py
+	python -m memray summary benchmark.bin
+	python -m memray stats benchmark.bin
 
 clean-pyc: ## Remove Python file artifacts.
 	find . -name '*.pyc' -exec rm -f {} +

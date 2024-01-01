@@ -98,7 +98,7 @@ class HTML:
             entity_state = EntityState(self.entity_options, entity_map)
             style_state = StyleState(self.style_options) if has_styles else None
 
-            for (text, commands) in self.build_command_groups(block):
+            for text, commands in self.build_command_groups(block):
                 for command in commands:
                     entity_state.apply(command)
                     if style_state:

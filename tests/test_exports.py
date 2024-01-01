@@ -58,7 +58,7 @@ exporter = HTML(
 )
 
 
-class TestExportsMeta(type):
+class ExportsTestMeta(type):
     """
     Generates test cases dynamically.
     See http://stackoverflow.com/a/20870875/1798491
@@ -87,7 +87,7 @@ class TestExportsMeta(type):
         return type.__new__(mcs, name, bases, tests)
 
 
-class TestExportsHTML5LIB(unittest.TestCase, metaclass=TestExportsMeta):
+class TestExportsHTML5LIB(unittest.TestCase, metaclass=ExportsTestMeta):
     @classmethod
     def setUpClass(cls):
         DOM.use(DOM.HTML5LIB)
@@ -101,7 +101,7 @@ class TestExportsHTML5LIB(unittest.TestCase, metaclass=TestExportsMeta):
         Stats(cls.pr).strip_dirs().sort_stats("cumulative").print_stats(0)
 
 
-class TestExportsLXML(unittest.TestCase, metaclass=TestExportsMeta):
+class TestExportsLXML(unittest.TestCase, metaclass=ExportsTestMeta):
     @classmethod
     def setUpClass(cls):
         DOM.use(DOM.LXML)
@@ -115,7 +115,7 @@ class TestExportsLXML(unittest.TestCase, metaclass=TestExportsMeta):
         Stats(cls.pr).strip_dirs().sort_stats("cumulative").print_stats(0)
 
 
-class TestExportsString(unittest.TestCase, metaclass=TestExportsMeta):
+class TestExportsString(unittest.TestCase, metaclass=ExportsTestMeta):
     @classmethod
     def setUpClass(cls):
         DOM.use(DOM.STRING)
@@ -129,7 +129,7 @@ class TestExportsString(unittest.TestCase, metaclass=TestExportsMeta):
         Stats(cls.pr).strip_dirs().sort_stats("cumulative").print_stats(0)
 
 
-class TestExportsString_Compat(unittest.TestCase, metaclass=TestExportsMeta):
+class TestExportsString_Compat(unittest.TestCase, metaclass=ExportsTestMeta):
     @classmethod
     def setUpClass(cls):
         DOM.use(DOM.STRING_COMPAT)

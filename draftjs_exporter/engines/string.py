@@ -33,7 +33,7 @@ class Elt:
 
     __slots__ = ("type", "attr", "children", "markup")
 
-    def __init__(self, type_: Tag, attr: Optional[Attr], markup: HTML = None):
+    def __init__(self, type_: Tag, attr: Optional[Attr], markup: HTML = ""):
         self.type = type_
         self.attr = attr
         self.children: List["Elt"] = []
@@ -101,7 +101,7 @@ class DOMString(DOMEngine):
             return f"<{type_}{attr}/>"
 
         if type_ == "escaped_html":
-            return elt.markup  # type: ignore
+            return elt.markup
 
         return f"<{type_}{attr}>{children}</{type_}>"
 
@@ -117,6 +117,6 @@ class DOMString(DOMEngine):
             return f"<{type_}{attr}/>"
 
         if type_ == "escaped_html":
-            return elt.markup  # type: ignore
+            return elt.markup
 
         return f"<{type_}{attr}>{children}</{type_}>"

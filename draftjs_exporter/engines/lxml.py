@@ -1,13 +1,10 @@
 import re
 from typing import Optional
 
+from lxml import etree, html
+
 from draftjs_exporter.engines.base import Attr, DOMEngine
 from draftjs_exporter.types import HTML, Tag
-
-try:
-    from lxml import etree, html
-except ImportError:
-    pass
 
 NSMAP = {"xlink": "http://www.w3.org/1999/xlink"}
 

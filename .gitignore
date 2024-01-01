@@ -19,6 +19,7 @@ logs
 npm-debug.log*
 *.sql
 *.sqlite3
+*.bin
 
 # -------------------------------------------------
 # Runtime data and caches

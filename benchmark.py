@@ -4,8 +4,8 @@ import os
 import re
 from pstats import Stats
 
+import memray
 from markov_draftjs import get_content_sample
-from memory_profiler import profile
 
 from draftjs_exporter.constants import BLOCK_TYPES, ENTITY_TYPES
 from draftjs_exporter.defaults import BLOCK_MAP, STYLE_MAP
@@ -90,12 +90,14 @@ p.strip_dirs().sort_stats("cumulative").print_stats(10)
 print("Measuring memory consumption")
 
 
-@profile(precision=6)
 def memory_consumption_run():
-    exporter = HTML(config)
+    with memray.Tracker(
+        destination=memray.FileDestination("benchmark.bin", overwrite=True)
+    ):
+        exporter = HTML(config)
 
-    for content_state in content_states:
-        exporter.render(content_state)
+        for content_state in content_states:
+            exporter.render(content_state)
 
 
 memory_consumption_run()
