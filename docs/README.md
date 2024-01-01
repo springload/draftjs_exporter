@@ -86,7 +86,15 @@ and it's not just contentState but contentState + some config
 
 ### Python support
 
-Python versions as defined in `setup.py` classifiers.
+Python versions as defined in `setup.py` classifiers, matching [supported Python versions](https://devguide.python.org/versions/).
+
+### Benchmarks
+
+Consider [building Python for maximum performance](https://github.com/pyenv/pyenv/blob/master/plugins/python-build/README.md#building-for-maximum-performance):
+
+```sh
+env PYTHON_CONFIGURE_OPTS='--enable-optimizations --with-lto' PYTHON_CFLAGS='-march=native -mtune=native' pyenv install 3.6.0
+```
 
 #### Which version combinations to include in CI test matrix?
 
