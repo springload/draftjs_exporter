@@ -1,23 +1,11 @@
-[tool.black]
-line-length = 80
-target-version = ['py38']
-include = '\.pyi?$'
-exclude = '''
-(
-  /(
-      \.eggs         # exclude a few common directories in the
-    | \.git          # root of the project
-    | \.hg
-    | \.mypy_cache
-    | \.tox
-    | \.venv
-    | _build
-    | buck-out
-    | build
-    | dist
-    | node_modules
-  )/
-  | foo.py           # also separately exclude a file named foo.py in
-                     # the root of the project
-)
-'''
+[tool.ruff]
+target-version = "py38"
+
+# E: pycodestyle errors
+# F: Pyflakes
+# I: isort
+# T20: flake8-print
+# BLE: flake8-blind-except
+# C4: flake8-comprehensions
+select = ["E", "F", "I", "T20", "BLE", "C4"]
+ignore = ["E501"]

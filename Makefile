@@ -12,14 +12,12 @@ init: clean-pyc ## Install dependencies and initialise for development.
 	npm install
 
 lint: ## Lint the project.
-	black --check **/*.py
-	flake8 **/*.py
-	isort --check-only --diff **/*.py
+	ruff check
+	ruff format --diff
 	mypy **/*.py
 
 format: ## Format project files.
-	isort **/*.py
-	black **/*.py
+	ruff format
 	npm run format
 
 test: ## Test the project.

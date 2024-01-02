@@ -51,15 +51,14 @@ fi
 
 if [ -n "$PY_FULLY_STAGED" ];
 then
-  black $PY_FULLY_STAGED
+  ruff format $PY_FULLY_STAGED
   git add $PY_FULLY_STAGED
 fi
 
 if [ -n "$PY_STAGED" ];
 then
-	black --check $PY_STAGED
-  flake8 $PY_STAGED
-	isort --check-only --diff $PY_STAGED
+	ruff check $PY_STAGED
+	ruff format --diff $PY_STAGED
 	mypy $PY_STAGED
   make build
   make test-ci
