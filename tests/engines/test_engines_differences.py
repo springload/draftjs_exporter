@@ -12,14 +12,10 @@ class TestDOMEnginesDifferences(unittest.TestCase):
         )
 
     def test_lxml_self_closing_tags(self):
-        self.assertEqual(
-            DOM_LXML.render_debug(DOM_LXML.create_tag("hr")), "<hr>"
-        )
+        self.assertEqual(DOM_LXML.render_debug(DOM_LXML.create_tag("hr")), "<hr>")
 
     def test_string_self_closing_tags(self):
-        self.assertEqual(
-            DOMString.render_debug(DOMString.create_tag("hr")), "<hr/>"
-        )
+        self.assertEqual(DOMString.render_debug(DOMString.create_tag("hr")), "<hr/>")
 
     def test_html5lib_invalid_attributes(self):
         self.assertEqual(
@@ -31,15 +27,11 @@ class TestDOMEnginesDifferences(unittest.TestCase):
 
     def test_lxml_invalid_attributes(self):
         with self.assertRaises(ValueError):
-            DOM_LXML.render_debug(
-                DOM_LXML.create_tag("div", {"*ngFor": "test"})
-            )
+            DOM_LXML.render_debug(DOM_LXML.create_tag("div", {"*ngFor": "test"}))
 
     def test_string_invalid_attributes(self):
         self.assertEqual(
-            DOMString.render_debug(
-                DOMString.create_tag("div", {"*ngFor": "test"})
-            ),
+            DOMString.render_debug(DOMString.create_tag("div", {"*ngFor": "test"})),
             '<div *ngFor="test"></div>',
         )
 
@@ -83,9 +75,7 @@ class TestDOMEnginesDifferences(unittest.TestCase):
 
     def test_lxml_html_escaping(self):
         self.assertEqual(
-            DOM_LXML.render_debug(
-                DOM_LXML.create_tag("img", {"alt": "< \" ' < > &"})
-            ),
+            DOM_LXML.render_debug(DOM_LXML.create_tag("img", {"alt": "< \" ' < > &"})),
             '<img alt="&lt; &quot; \' &lt; &gt; &amp;">',
         )
 
@@ -99,9 +89,7 @@ class TestDOMEnginesDifferences(unittest.TestCase):
 
     def test_html5lib_html_parsing(self):
         self.assertEqual(
-            DOM_HTML5LIB.render_debug(
-                DOM_HTML5LIB.parse_html('<p>Invalid > " &</p>')
-            ),
+            DOM_HTML5LIB.render_debug(DOM_HTML5LIB.parse_html('<p>Invalid > " &</p>')),
             '<p>Invalid &gt; " &amp;</p>',
         )
 
@@ -113,8 +101,6 @@ class TestDOMEnginesDifferences(unittest.TestCase):
 
     def test_string_html_parsing(self):
         self.assertEqual(
-            DOMString.render_debug(
-                DOMString.parse_html('<p>Invalid > " &</p>')
-            ),
+            DOMString.render_debug(DOMString.parse_html('<p>Invalid > " &</p>')),
             '<p>Invalid > " &</p>',
         )

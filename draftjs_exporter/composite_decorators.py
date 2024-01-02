@@ -87,7 +87,7 @@ def should_render_decorators(
     is_skippable_br = (
         nb_decorators == 1
         and decorators[0]["strategy"] == br_strategy
-        and not (br in text)
+        and br not in text
     )
 
     return not is_skippable_br

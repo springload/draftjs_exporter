@@ -79,9 +79,7 @@ class DOMString(DOMEngine):
     def render_children(children: Sequence[Union[HTML, Elt]]) -> HTML:
         return "".join(
             [
-                DOMString.render(c)
-                if isinstance(c, Elt)
-                else escape(c, quote=False)
+                DOMString.render(c) if isinstance(c, Elt) else escape(c, quote=False)
                 for c in children
             ]
         )
@@ -90,9 +88,7 @@ class DOMString(DOMEngine):
     def render(elt: Elt) -> HTML:
         type_ = elt.type
         attr = DOMString.render_attrs(elt.attr) if elt.attr else ""
-        children = (
-            DOMString.render_children(elt.children) if elt.children else ""
-        )
+        children = DOMString.render_children(elt.children) if elt.children else ""
 
         if type_ == "fragment":
             return children
@@ -109,9 +105,7 @@ class DOMString(DOMEngine):
     def render_debug(elt: Elt) -> HTML:
         type_ = elt.type
         attr = DOMString.render_attrs(elt.attr) if elt.attr else ""
-        children = (
-            DOMString.render_children(elt.children) if elt.children else ""
-        )
+        children = DOMString.render_children(elt.children) if elt.children else ""
 
         if type_ in VOID_ELEMENTS:
             return f"<{type_}{attr}/>"

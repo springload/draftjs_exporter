@@ -42,9 +42,7 @@ class DOM_LXML(DOMEngine):
 
     @staticmethod
     def render(elt: etree.Element) -> HTML:
-        return RENDER_RE.sub(
-            "", etree.tostring(elt, method="html", encoding="unicode")
-        )
+        return RENDER_RE.sub("", etree.tostring(elt, method="html", encoding="unicode"))
 
     @staticmethod
     def render_debug(elt: etree.Element) -> HTML:

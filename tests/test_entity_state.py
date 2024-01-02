@@ -77,9 +77,7 @@ class TestEntityState(unittest.TestCase):
         self.entity_state.render_entities("Test text", {}, [])
         self.entity_state.apply(Command("stop_entity", 9, "0"))
         self.assertEqual(
-            DOM.render_debug(
-                self.entity_state.render_entities("Test text", {}, [])
-            ),
+            DOM.render_debug(self.entity_state.render_entities("Test text", {}, [])),
             '<a href="http://example.com">Test text</a>',
         )
 
@@ -89,17 +87,13 @@ class TestEntityState(unittest.TestCase):
         self.entity_state.apply(Command("stop_entity", 5, "0"))
         self.entity_state.apply(Command("start_entity", 5, "2"))
         self.assertEqual(
-            DOM.render_debug(
-                self.entity_state.render_entities("Test text", {}, [])
-            ),
+            DOM.render_debug(self.entity_state.render_entities("Test text", {}, [])),
             '<a href="http://example.com">Test 1</a>',
         )
         self.entity_state.render_entities("Test 2", {}, [])
         self.entity_state.apply(Command("stop_entity", 10, "2"))
         self.assertEqual(
-            DOM.render_debug(
-                self.entity_state.render_entities("Test text", {}, [])
-            ),
+            DOM.render_debug(self.entity_state.render_entities("Test text", {}, [])),
             '<a href="http://test.com"><fragment>Test textTest 2</fragment></a>',
         )
 

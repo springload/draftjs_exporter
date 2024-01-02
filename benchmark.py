@@ -73,7 +73,7 @@ content_states = get_content_sample()
 
 BENCHMARK_RUNS = int(os.environ.get("BENCHMARK_RUNS", 1))
 
-print(f"Exporting {len(content_states)} ContentStates {BENCHMARK_RUNS} times")
+print(f"Exporting {len(content_states)} ContentStates {BENCHMARK_RUNS} times")  # noqa: T201
 
 pr = cProfile.Profile()
 pr.enable()
@@ -87,7 +87,7 @@ p = Stats(pr)
 
 p.strip_dirs().sort_stats("cumulative").print_stats(10)
 
-print("Measuring memory consumption")
+print("Measuring memory consumption")  # noqa: T201
 
 
 def memory_consumption_run():

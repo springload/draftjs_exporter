@@ -11,15 +11,11 @@ class TestDOM_LXML(unittest.TestCase):
         )
 
     def test_create_tag_empty(self):
-        self.assertEqual(
-            DOM_LXML.render_debug(DOM_LXML.create_tag("p")), "<p></p>"
-        )
+        self.assertEqual(DOM_LXML.render_debug(DOM_LXML.create_tag("p")), "<p></p>")
 
     def test_parse_html(self):
         self.assertEqual(
-            DOM_LXML.render_debug(
-                DOM_LXML.parse_html("<p><span>Test text</span></p>")
-            ),
+            DOM_LXML.render_debug(DOM_LXML.parse_html("<p><span>Test text</span></p>")),
             "<p><span>Test text</span></p>",
         )
 

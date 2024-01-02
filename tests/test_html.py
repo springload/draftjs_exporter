@@ -176,16 +176,12 @@ class TestHTML(unittest.TestCase):
 
     def test_render_block_defaults(self):
         self.assertEqual(
-            self.exporter.render(
-                {"entityMap": {}, "blocks": [{"text": "Paragraph"}]}
-            ),
+            self.exporter.render({"entityMap": {}, "blocks": [{"text": "Paragraph"}]}),
             "<p>Paragraph</p>",
         )
 
     def test_render_empty(self):
-        self.assertEqual(
-            self.exporter.render({"entityMap": {}, "blocks": []}), ""
-        )
+        self.assertEqual(self.exporter.render({"entityMap": {}, "blocks": []}), "")
 
     def test_render_none(self):
         self.assertEqual(self.exporter.render(None), "")

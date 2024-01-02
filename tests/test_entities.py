@@ -81,9 +81,7 @@ class TestImage(unittest.TestCase):
 class TestLink(unittest.TestCase):
     def test_render(self):
         self.assertEqual(
-            DOM.render(
-                DOM.create_element(link, {"url": "http://example.com"}, "wow")
-            ),
+            DOM.render(DOM.create_element(link, {"url": "http://example.com"}, "wow")),
             '<a href="http://example.com">wow</a>',
         )
 

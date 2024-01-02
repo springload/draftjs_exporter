@@ -27,9 +27,7 @@ class EntityState:
         "element_stack",
     )
 
-    def __init__(
-        self, entity_options: OptionsMap, entity_map: EntityMap
-    ) -> None:
+    def __init__(self, entity_options: OptionsMap, entity_map: EntityMap) -> None:
         self.entity_options = entity_options
         self.entity_map = entity_map
 
@@ -44,9 +42,7 @@ class EntityState:
             expected_entity = self.entity_stack[-1]
 
             if command.data != expected_entity:
-                raise EntityException(
-                    f"Expected {expected_entity}, got {command.data}"
-                )
+                raise EntityException(f"Expected {expected_entity}, got {command.data}")
 
             self.completed_entity = self.entity_stack.pop()
 

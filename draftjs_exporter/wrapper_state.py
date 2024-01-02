@@ -86,9 +86,7 @@ class WrapperState:
 
     __slots__ = ("block_options", "blocks", "stack")
 
-    def __init__(
-        self, block_options: OptionsMap, blocks: Sequence[Block]
-    ) -> None:
+    def __init__(self, block_options: OptionsMap, blocks: Sequence[Block]) -> None:
         self.block_options = block_options
         self.blocks = blocks
         self.stack = WrapperStack()

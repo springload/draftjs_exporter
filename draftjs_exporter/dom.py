@@ -84,8 +84,7 @@ class DOM:
             # Convert style object to style string, like the DOM would do.
             if "style" in props and isinstance(props["style"], dict):
                 rules = [
-                    f"{DOM.camel_to_dash(s)}: {v};"
-                    for s, v in props["style"].items()
+                    f"{DOM.camel_to_dash(s)}: {v};" for s, v in props["style"].items()
                 ]
                 props["style"] = "".join(rules)
 

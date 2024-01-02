@@ -46,9 +46,9 @@ class TestWrapperState(unittest.TestCase):
             self.assertEqual(props["blocks"], blocks)
             self.assertEqual(props["block"], blocks[0])
 
-        WrapperState(
-            Options.map_blocks({"unstyled": unstyled}), blocks
-        ).element_for(blocks[0], "test")
+        WrapperState(Options.map_blocks({"unstyled": unstyled}), blocks).element_for(
+            blocks[0], "test"
+        )
 
     def test_element_for_simple_content(self):
         self.assertEqual(

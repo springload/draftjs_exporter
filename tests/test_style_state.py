@@ -6,9 +6,9 @@ from draftjs_exporter.options import Options
 from draftjs_exporter.style_state import StyleState
 from draftjs_exporter.types import Element, Props
 
-Important = lambda props: DOM.create_element(
-    "strong", {"style": {"color": "red"}}, props["children"]
-)
+
+def Important(props):
+    return DOM.create_element("strong", {"style": {"color": "red"}}, props["children"])
 
 
 def Shout(props: Props) -> Element:
@@ -67,9 +67,7 @@ class TestStyleState(unittest.TestCase):
     def test_render_styles_styled(self):
         self.style_state.apply(Command("start_inline_style", 0, "ITALIC"))
         self.assertEqual(
-            DOM.render_debug(
-                self.style_state.render_styles("Test text", {}, [])
-            ),
+            DOM.render_debug(self.style_state.render_styles("Test text", {}, [])),
             "<em>Test text</em>",
         )
         self.style_state.apply(Command("stop_inline_style", 9, "ITALIC"))
@@ -78,18 +76,14 @@ class TestStyleState(unittest.TestCase):
         self.style_state.apply(Command("start_inline_style", 0, "BOLD"))
         self.style_state.apply(Command("start_inline_style", 0, "ITALIC"))
         self.assertEqual(
-            DOM.render_debug(
-                self.style_state.render_styles("Test text", {}, [])
-            ),
+            DOM.render_debug(self.style_state.render_styles("Test text", {}, [])),
             "<strong><em>Test text</em></strong>",
         )
 
     def test_render_styles_attributes(self):
         self.style_state.apply(Command("start_inline_style", 0, "KBD"))
         self.assertEqual(
-            DOM.render_debug(
-                self.style_state.render_styles("Test text", {}, [])
-            ),
+            DOM.render_debug(self.style_state.render_styles("Test text", {}, [])),
             '<kbd class="o-keyboard-shortcut">Test text</kbd>',
         )
         self.style_state.apply(Command("stop_inline_style", 9, "KBD"))
@@ -97,9 +91,7 @@ class TestStyleState(unittest.TestCase):
     def test_render_styles_component(self):
         self.style_state.apply(Command("start_inline_style", 0, "IMPORTANT"))
         self.assertEqual(
-            DOM.render_debug(
-                self.style_state.render_styles("Test text", {}, [])
-            ),
+            DOM.render_debug(self.style_state.render_styles("Test text", {}, [])),
             '<strong style="color: red;">Test text</strong>',
         )
         self.style_state.apply(Command("stop_inline_style", 9, "IMPORTANT"))
@@ -108,9 +100,7 @@ class TestStyleState(unittest.TestCase):
         self.style_state.apply(Command("start_inline_style", 0, "IMPORTANT"))
         self.style_state.apply(Command("start_inline_style", 0, "SHOUT"))
         self.assertEqual(
-            DOM.render_debug(
-                self.style_state.render_styles("Test text", {}, [])
-            ),
+            DOM.render_debug(self.style_state.render_styles("Test text", {}, [])),
             '<strong style="color: red;"><span style="text-transform: uppercase;">Test text</span></strong>',
         )
         self.style_state.apply(Command("stop_inline_style", 9, "IMPORTANT"))
@@ -120,9 +110,7 @@ class TestStyleState(unittest.TestCase):
         self.style_state.apply(Command("start_inline_style", 0, "SHOUT"))
         self.style_state.apply(Command("start_inline_style", 0, "IMPORTANT"))
         self.assertEqual(
-            DOM.render_debug(
-                self.style_state.render_styles("Test text", {}, [])
-            ),
+            DOM.render_debug(self.style_state.render_styles("Test text", {}, [])),
             '<strong style="color: red;"><span style="text-transform: uppercase;">Test text</span></strong>',
         )
         self.style_state.apply(Command("stop_inline_style", 9, "SHOUT"))

@@ -10,9 +10,7 @@ class TestModuleLoading(unittest.TestCase):
     """
 
     def test_import_string_success(self):
-        cls = import_string(
-            "draftjs_exporter.utils.module_loading.import_string"
-        )
+        cls = import_string("draftjs_exporter.utils.module_loading.import_string")
         self.assertEqual(cls, import_string)
 
     def test_import_string_invalid(self):

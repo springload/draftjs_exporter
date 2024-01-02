@@ -58,9 +58,7 @@ class TestOutput(unittest.TestCase):
         self.exporter = HTML(config)
 
     def test_render_empty(self):
-        self.assertEqual(
-            self.exporter.render({"entityMap": {}, "blocks": []}), ""
-        )
+        self.assertEqual(self.exporter.render({"entityMap": {}, "blocks": []}), "")
 
     def test_render_with_different_blocks(self):
         self.assertEqual(
@@ -162,9 +160,7 @@ class TestOutput(unittest.TestCase):
                             "inlineStyleRanges": [
                                 {"offset": 0, "length": 4, "style": "HIGHLIGHT"}
                             ],
-                            "entityRanges": [
-                                {"offset": 5, "length": 9, "key": 0}
-                            ],
+                            "entityRanges": [{"offset": 5, "length": 9, "key": 0}],
                         },
                     ],
                 }
@@ -190,9 +186,7 @@ class TestOutput(unittest.TestCase):
                             "type": "unstyled",
                             "depth": 0,
                             "inlineStyleRanges": [],
-                            "entityRanges": [
-                                {"offset": 5, "length": 9, "key": 0}
-                            ],
+                            "entityRanges": [{"offset": 5, "length": 9, "key": 0}],
                         }
                     ],
                 }
@@ -258,9 +252,7 @@ class TestOutput(unittest.TestCase):
                                 {"offset": 5, "length": 12, "style": "CODE"},
                                 {"offset": 21, "length": 12, "style": "CODE"},
                             ],
-                            "entityRanges": [
-                                {"offset": 5, "length": 28, "key": 0}
-                            ],
+                            "entityRanges": [{"offset": 5, "length": 28, "key": 0}],
                             "data": {},
                         },
                         {
@@ -269,9 +261,7 @@ class TestOutput(unittest.TestCase):
                             "type": "atomic",
                             "depth": 0,
                             "inlineStyleRanges": [],
-                            "entityRanges": [
-                                {"offset": 0, "length": 1, "key": 1}
-                            ],
+                            "entityRanges": [{"offset": 0, "length": 1, "key": 1}],
                             "data": {},
                         },
                     ],
@@ -507,9 +497,7 @@ class TestOutput(unittest.TestCase):
 
     def test_render_with_none_component(self):
         self.assertEqual(
-            HTML(
-                {"block_map": dict(BLOCK_MAP, **{BLOCK_TYPES.UNSTYLED: None})}
-            ).render(
+            HTML({"block_map": dict(BLOCK_MAP, **{BLOCK_TYPES.UNSTYLED: None})}).render(
                 {
                     "entityMap": {},
                     "blocks": [
@@ -603,9 +591,7 @@ class TestOutput(unittest.TestCase):
                             "type": "atomic",
                             "depth": 0,
                             "inlineStyleRanges": [],
-                            "entityRanges": [
-                                {"offset": 0, "length": 1, "key": 2}
-                            ],
+                            "entityRanges": [{"offset": 0, "length": 1, "key": 2}],
                         },
                     ],
                 }
@@ -1088,9 +1074,7 @@ class TestOutput(unittest.TestCase):
                             "type": "unordered-list-item",
                             "depth": 0,
                             "inlineStyleRanges": [],
-                            "entityRanges": [
-                                {"offset": 0, "length": 25, "key": 0}
-                            ],
+                            "entityRanges": [{"offset": 0, "length": 25, "key": 0}],
                         },
                         {
                             "key": "adjdn",
@@ -1114,9 +1098,7 @@ class TestOutput(unittest.TestCase):
                             "type": "unstyled",
                             "depth": 0,
                             "inlineStyleRanges": [],
-                            "entityRanges": [
-                                {"offset": 0, "length": 71, "key": 1}
-                            ],
+                            "entityRanges": [{"offset": 0, "length": 71, "key": 1}],
                         },
                     ],
                 }
@@ -1279,9 +1261,7 @@ class TestOutput(unittest.TestCase):
                             "type": "unstyled",
                             "depth": 0,
                             "inlineStyleRanges": [],
-                            "entityRanges": [
-                                {"offset": 7, "length": 11, "key": 1}
-                            ],
+                            "entityRanges": [{"offset": 7, "length": 11, "key": 1}],
                         },
                         {
                             "key": "34a12",

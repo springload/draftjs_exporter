@@ -41,15 +41,9 @@ class HTML:
 
         self.composite_decorators = config.get("composite_decorators", [])
 
-        self.entity_options = Options.map_entities(
-            config.get("entity_decorators", {})
-        )
-        self.block_options = Options.map_blocks(
-            config.get("block_map", BLOCK_MAP)
-        )
-        self.style_options = Options.map_styles(
-            config.get("style_map", STYLE_MAP)
-        )
+        self.entity_options = Options.map_entities(config.get("entity_decorators", {}))
+        self.block_options = Options.map_blocks(config.get("block_map", BLOCK_MAP))
+        self.style_options = Options.map_styles(config.get("style_map", STYLE_MAP))
 
         DOM.use(config.get("engine", DOM.STRING))
 
@@ -129,10 +123,7 @@ class HTML:
                     DOM.append_child(content, entity_node)
 
                     # Check whether there actually are two different nodes, confirming we are not inserting an upcoming entity.
-                    if (
-                        styled_node != entity_node
-                        and entity_state.has_no_entity()
-                    ):
+                    if styled_node != entity_node and entity_state.has_no_entity():
                         DOM.append_child(content, styled_node)
         # Fast track for blocks which do not contain styles nor entities, which is very common.
         elif has_decorators:
@@ -147,9 +138,7 @@ class HTML:
 
         return wrapper_state.element_for(block, content)
 
-    def build_command_groups(
-        self, block: Block
-    ) -> List[Tuple[str, List[Command]]]:
+    def build_command_groups(self, block: Block) -> List[Tuple[str, List[Command]]]:
         """
         Creates block modification commands, grouped by start index,
         with the text to apply them on.

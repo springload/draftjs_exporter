@@ -39,9 +39,7 @@ class StyleState:
 
             # Nest the tags.
             for style in self.styles:
-                options = Options.get(
-                    self.style_options, style, INLINE_STYLES.FALLBACK
-                )
+                options = Options.get(self.style_options, style, INLINE_STYLES.FALLBACK)
                 props = dict(options.props)
                 props["block"] = block
                 props["blocks"] = blocks

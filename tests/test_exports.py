@@ -67,9 +67,7 @@ class ExportsTestMeta(type):
     pr: cProfile.Profile = None  # type: ignore
 
     def __new__(mcs, name, bases, tests):
-        def gen_test(
-            content: ContentState, html: str
-        ) -> Callable[[None], None]:
+        def gen_test(content: ContentState, html: str) -> Callable[[None], None]:
             def test(self):
                 self.assertEqual(exporter.render(content), html)
 
@@ -93,7 +91,7 @@ class TestExportsHTML5LIB(unittest.TestCase, metaclass=ExportsTestMeta):
         DOM.use(DOM.HTML5LIB)
         cls.pr = cProfile.Profile()
         cls.pr.enable()
-        print("\nhtml5lib")
+        print("\nhtml5lib")  # noqa: T201
 
     @classmethod
     def tearDownClass(cls):
@@ -107,7 +105,7 @@ class TestExportsLXML(unittest.TestCase, metaclass=ExportsTestMeta):
         DOM.use(DOM.LXML)
         cls.pr = cProfile.Profile()
         cls.pr.enable()
-        print("\nlxml")
+        print("\nlxml")  # noqa: T201
 
     @classmethod
     def tearDownClass(cls):
@@ -121,7 +119,7 @@ class TestExportsString(unittest.TestCase, metaclass=ExportsTestMeta):
         DOM.use(DOM.STRING)
         cls.pr = cProfile.Profile()
         cls.pr.enable()
-        print("\nstring")
+        print("\nstring")  # noqa: T201
 
     @classmethod
     def tearDownClass(cls):
@@ -135,7 +133,7 @@ class TestExportsString_Compat(unittest.TestCase, metaclass=ExportsTestMeta):
         DOM.use(DOM.STRING_COMPAT)
         cls.pr = cProfile.Profile()
         cls.pr.enable()
-        print("\nstring_compat")
+        print("\nstring_compat")  # noqa: T201
 
     @classmethod
     def tearDownClass(cls):

@@ -125,9 +125,7 @@ def entity_fallback(props: Props) -> Element:
     type_ = props["entity"]["type"]
     key = props["entity"]["entity_range"]["key"]
     logging.warning(f'Missing config for "{type_}", key "{key}".')
-    return DOM.create_element(
-        "span", {"class": "missing-entity"}, props["children"]
-    )
+    return DOM.create_element("span", {"class": "missing-entity"}, props["children"])
 
 
 def style_fallback(props: Props) -> Element:
@@ -187,9 +185,7 @@ if __name__ == "__main__":
             ENTITY_TYPES.IMAGE: image,
             ENTITY_TYPES.LINK: link,
             # Lambdas work too.
-            ENTITY_TYPES.HORIZONTAL_RULE: lambda props: DOM.create_element(
-                "hr"
-            ),
+            ENTITY_TYPES.HORIZONTAL_RULE: lambda props: DOM.create_element("hr"),
             # Discard those entities.
             ENTITY_TYPES.EMBED: None,
             # Provide a fallback component (advanced).
@@ -305,9 +301,7 @@ if __name__ == "__main__":
                 "text": "The exporter aims to provide sensible defaults from basic block types and inline styles to HTML, that can easily be customised when required. For more advanced scenarios, an API is provided (mimicking React's createElement) to create custom rendering components of arbitrary complexity.",
                 "type": "unstyled",
                 "depth": 0,
-                "inlineStyleRanges": [
-                    {"offset": 209, "length": 13, "style": "CODE"}
-                ],
+                "inlineStyleRanges": [{"offset": 209, "length": 13, "style": "CODE"}],
                 "entityRanges": [{"offset": 209, "length": 13, "key": 1}],
                 "data": {},
             },
@@ -326,9 +320,7 @@ if __name__ == "__main__":
                 "text": "Convert line breaks to <br>\nelements.",
                 "type": "unordered-list-item",
                 "depth": 0,
-                "inlineStyleRanges": [
-                    {"offset": 23, "length": 4, "style": "CODE"}
-                ],
+                "inlineStyleRanges": [{"offset": 23, "length": 4, "style": "CODE"}],
                 "entityRanges": [],
                 "data": {},
             },
@@ -590,7 +582,7 @@ if __name__ == "__main__":
     pretty = prettify(markup)
 
     # Display in console.
-    print(pretty)
+    print(pretty)  # noqa: T201
 
     p.strip_dirs().sort_stats("cumulative").print_stats(0)
 

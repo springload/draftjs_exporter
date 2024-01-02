@@ -1,4 +1,3 @@
 from .etree import Element
 
-
-def fromstring(markup: str) -> Element: ...  # noqa: E704
+def fromstring(markup: str) -> Element: ...

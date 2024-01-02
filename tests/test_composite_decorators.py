@@ -84,9 +84,7 @@ class TestBR(unittest.TestCase):
     def test_render(self):
         self.assertEqual(
             DOM.render(
-                DOM.create_element(
-                    br, {"block": {"type": BLOCK_TYPES.UNSTYLED}}, "\n"
-                )
+                DOM.create_element(br, {"block": {"type": BLOCK_TYPES.UNSTYLED}}, "\n")
             ),
             "<br/>",
         )
