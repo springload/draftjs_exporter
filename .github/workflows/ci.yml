@@ -71,17 +71,17 @@ jobs:
       - run: tox --parallel
         env:
           TOXENV: ${{ matrix.toxenv }}
-  # test_experimental:
-  #   # Ad-hoc job to test experimental support without having to adjust all of our project for compatibility.
-  #   needs: test
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - uses: actions/setup-python@v5
-  #       with:
-  #         # See available versions:
-  #         # https://github.com/actions/python-versions/blob/main/versions-manifest.json
-  #         python-version: "3.13.0-alpha.2"
-  #     - run: pip install build==0.8.0 beautifulsoup4>=4.4.1,<5 html5lib>=0.999,<2
-  #     - run: python -X dev -W error example.py
-  #     - run: make build
+  test_experimental:
+    # Ad-hoc job to test experimental support without having to adjust all of our project for compatibility.
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          # See available versions:
+          # https://github.com/actions/python-versions/blob/main/versions-manifest.json
+          python-version: "3.13.0-alpha.2"
+      - run: pip install build==1.0.3 setuptools==69.0.3 beautifulsoup4<5 html5lib<2
+      - run: python -X dev -W error example.py
+      - run: make build
