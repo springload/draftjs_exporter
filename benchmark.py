@@ -11,10 +11,11 @@ from draftjs_exporter.constants import BLOCK_TYPES, ENTITY_TYPES
 from draftjs_exporter.defaults import BLOCK_MAP, STYLE_MAP
 from draftjs_exporter.dom import DOM
 from draftjs_exporter.html import HTML
+from draftjs_exporter.types import Element, Props
 from example import br, entity_fallback, image, list_item, ordered_list
 
 
-def document(props):
+def document(props: Props) -> Element:
     return DOM.create_element(
         "a",
         {"title": props.get("label"), "href": f"/documents/{props.get('id')}"},
@@ -22,11 +23,11 @@ def document(props):
     )
 
 
-def link(props):
+def link(props: Props) -> Element:
     return DOM.create_element("a", {"href": props["url"]}, props["children"])
 
 
-def block_fallback(props):
+def block_fallback(props: Props) -> Element:
     type_ = props["block"]["type"]
 
     logging.warning(f'Missing config for "{type_}".')
@@ -90,7 +91,7 @@ p.strip_dirs().sort_stats("cumulative").print_stats(10)
 print("Measuring memory consumption")  # noqa: T201
 
 
-def memory_consumption_run():
+def memory_consumption_run() -> None:
     with memray.Tracker(
         destination=memray.FileDestination("benchmark.bin", overwrite=True)
     ):
