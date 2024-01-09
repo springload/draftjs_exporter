@@ -1,6 +1,4 @@
-# Draft.js exporter
-
-[![PyPI](https://img.shields.io/pypi/v/draftjs_exporter.svg)](https://pypi.org/project/draftjs_exporter/) [![PyPI downloads](https://img.shields.io/pypi/dm/draftjs_exporter.svg)](https://pypi.org/project/draftjs_exporter/) [![Build status](https://github.com/springload/draftjs_exporter/workflows/CI/badge.svg)](https://github.com/springload/draftjs_exporter/actions) [![Coveralls](https://coveralls.io/repos/github/springload/draftjs_exporter/badge.svg?branch=main)](https://coveralls.io/github/springload/draftjs_exporter?branch=main)
+# [Draft.js exporter](https://pypi.org/project/draftjs_exporter/)
 
 > Library to convert rich text from Draft.js raw ContentState to HTML.
 
