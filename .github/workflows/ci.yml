@@ -81,7 +81,7 @@ jobs:
         with:
           # See available versions:
           # https://github.com/actions/python-versions/blob/main/versions-manifest.json
-          python-version: "3.13.0-alpha.2"
+          python-version: "3.13.0-alpha.3"
       - run: pip install 'build==1.0.3' 'setuptools==69.0.3' 'beautifulsoup4>=4.4.1,<5' 'html5lib>=0.999,<2'
       - run: python -X dev -W error example.py
       - run: make build
