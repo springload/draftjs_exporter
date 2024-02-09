@@ -18,11 +18,11 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         id: pip-cache
         with:
           path: .venv
-          key: draftjs_exporter-v3-${{ runner.os }}-py312-${{ hashFiles('**/requirements.txt') }}
+          key: draftjs_exporter-v4-${{ runner.os }}-py312-${{ hashFiles('**/requirements.txt') }}
       - if: steps.pip-cache.outputs.cache-hit != 'true'
         run: |
           python -m venv .venv
