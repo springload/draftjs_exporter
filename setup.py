@@ -16,6 +16,11 @@ setup(
     author="Springload",
     author_email="hello@springload.co.nz",
     url="https://github.com/springload/draftjs_exporter",
+    project_urls={
+        "Source": "https://github.com/springload/draftjs_exporter",
+        "Tracker": "https://github.com/springload/draftjs_exporter/issues",
+        "Changelog": "https://github.com/springload/draftjs_exporter/blob/main/CHANGELOG.md",
+    },
     packages=find_packages(exclude=["tests*"]),
     include_package_data=True,
     license="MIT",
