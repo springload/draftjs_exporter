@@ -6,7 +6,7 @@ tox==4.11.4
 build==1.0.3
 setuptools==69.0.3
 # Benchmark dependencies.
-markov_draftjs==0.2.0
+markov_draftjs==2.0.0
 memray==1.11.0
 psutil==5.9.7
 # For linting and formatting.
