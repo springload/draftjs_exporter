@@ -14,6 +14,6 @@ ruff==0.1.9
 mypy==1.8.0
 # HTML builders.
 # Keep this in sync with the dependencies in setup.py, requirements.txt, tox.ini.
-lxml>=4.2.0,<5
+lxml>=4.2.0,<6
 beautifulsoup4>=4.4.1,<5
 html5lib>=0.999,<2
