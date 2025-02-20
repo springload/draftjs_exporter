@@ -48,6 +48,7 @@ jobs:
   test_compat:
     needs: test
     runs-on: ubuntu-latest
+    name: ${{ matrix.python }}
     strategy:
       matrix:
         include:
