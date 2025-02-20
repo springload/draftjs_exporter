@@ -262,6 +262,8 @@ config = {
 }
 ```
 
+To use the `lxml` or `html5lib` engines with arbitrary versions of those dependencies, simply install `draftjs_exporter` without the extras, and separately install the desired versions of the dependencies.
+
 ### Custom backing engines
 
 The exporter supports using custom engines to generate its output via the `DOM` API. This can be useful to implement custom export formats, e.g. [to Markdown (experimental)](https://github.com/thibaudcolas/draftjs_exporter_markdown).
