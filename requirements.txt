@@ -4,7 +4,7 @@ pytest-cov==4.1.0
 pytest-memray==1.5.0
 tox==4.11.4
 build==1.0.3
-setuptools==69.0.3
+setuptools==75.8.0
 # Benchmark dependencies.
 markov_draftjs==2.0.0
 memray==1.11.0
