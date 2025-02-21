@@ -48,14 +48,14 @@ from draftjs_exporter.html import HTML
 # Configuration options are detailed below.
 config = {}
 
-# Initialise the exporter.
+# Initialize the exporter.
 exporter = HTML(config)
 
 # Render a Draft.js `contentState`
 html = exporter.render({
     'entityMap': {},
     'blocks': [{
-        'key': '6mgfh',
+        'key': '6m5fh',
         'text': 'Hello, world!',
         'type': 'unstyled',
         'depth': 0,
@@ -191,7 +191,7 @@ def button(props):
     )
 ```
 
-Apart from `create_element`, a `parse_html` method is also available. Use it to interface with other HTML generators, like template engines.
+Apart from `create_element`, a `parse_html` method is also available. Use it to interface with other HTML generators, like template engines – at your own risk: that method does not sanitize the input.
 
 See `examples.py` in the repository for more details.
 
@@ -243,7 +243,7 @@ By default, the exporter uses a dependency-free engine called `string` to build 
 - `lxml`.
 - `string_compat` (A variant of `string` with no backwards-incompatible changes since its first release).
 
-The `string` engine is the fastest, and does not have any dependencies. Its only drawback is that the `parse_html` method does not escape/sanitise HTML like that of other engines.
+The `string` engine is the fastest, and does not have any dependencies. Its only drawback is that the `parse_html` method does not escape/sanitize HTML like that of other engines.
 
 - For `html5lib`, do `pip install draftjs_exporter[html5lib]`.
 - For `lxml`, do `pip install draftjs_exporter[lxml]`. It also requires `libxml2` and `libxslt` to be available on your system.
@@ -293,7 +293,7 @@ class DOMListTree(DOMEngine):
 
 exporter = HTML({
     # Use the dotted module syntax to point to the DOMEngine implementation.
-    'engine': 'myproject.example.DOMListTree'
+    'engine': 'my_project.example.DOMListTree'
 })
 ```
 
