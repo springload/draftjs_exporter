@@ -5,13 +5,13 @@ from draftjs_exporter.defaults import BLOCK_MAP
 from draftjs_exporter.dom import DOM
 from draftjs_exporter.entity_state import EntityException
 from draftjs_exporter.html import HTML
+from example import blockquote
 from tests.test_composite_decorators import (
     BR_DECORATOR,
     HASHTAG_DECORATOR,
     LINKIFY_DECORATOR,
 )
 from tests.test_entities import hr, image, link
-from tests.test_wrapper_state import blockquote
 
 config = {
     "entity_decorators": {
