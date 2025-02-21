@@ -120,6 +120,40 @@
   },
 
   {
+    "label": "Partially nested inline styles",
+    "output": {
+      "html5lib": "<p><strong>Bold </strong><strong><em>Italic</em></strong></p>",
+      "lxml": "<p><strong>Bold </strong><strong><em>Italic</em></strong></p>",
+      "string": "<p><strong>Bold </strong><strong><em>Italic</em></strong></p>",
+      "string_compat": "<p><strong>Bold </strong><strong><em>Italic</em></strong></p>"
+    },
+    "content_state": {
+      "entityMap": {},
+      "blocks": [
+        {
+          "key": "9nc73",
+          "text": "Bold Italic",
+          "type": "unstyled",
+          "depth": 0,
+          "inlineStyleRanges": [
+            {
+              "offset": 0,
+              "length": 11,
+              "style": "BOLD"
+            },
+            {
+              "offset": 5,
+              "length": 6,
+              "style": "ITALIC"
+            }
+          ],
+          "entityRanges": []
+        }
+      ]
+    }
+  },
+
+  {
     "label": "Adjacent inline styles",
     "output": {
       "html5lib": "<p><em>Bold</em><strong>Italic</strong></p>",
