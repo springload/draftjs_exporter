@@ -2,6 +2,13 @@
 
 > All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [v5.2.0](https://github.com/springload/draftjs_exporter/releases/tag/v5.2.0)
+
+### Added
+
+- Formalize support for Python 3.14, with tentative support for Python 3.15.
+- Add support for lxml v6 with the `draftjs_exporter[lxml]` extra.
+
 ## [v5.1.0](https://github.com/springload/draftjs_exporter/releases/tag/v5.1.0)
 
 ### Added
