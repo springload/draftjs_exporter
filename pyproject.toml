@@ -5,6 +5,7 @@ description = "Library to convert rich text from Draft.js raw ContentState to HT
 readme = "README.md"
 license = "MIT"
 authors = [{ name = "Springload", email = "hello@springload.co.nz" }]
+requires-python = ">=3.9"
 classifiers = [
   "Environment :: Web Environment",
   "Intended Audience :: Developers",
