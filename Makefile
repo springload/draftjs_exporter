@@ -46,7 +46,7 @@ clean-pyc: ## Remove Python file artifacts.
 
 build: ## Builds package for publication.
 	rm -f dist/*
-	python -X dev -W error -m build
+	uv build
 
 publish: build ## Publishes a new version to PyPI.
-	twine upload dist/*
+	uv publish
