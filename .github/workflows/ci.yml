@@ -72,6 +72,6 @@ jobs:
       - uses: astral-sh/setup-uv@v7
       # Dependencies to build lxml from source.
       - run: sudo apt-get install libxml2-dev libxslt-dev
-      - run: uv sync --dev
+      - run: uv sync --all-extras
       - run: uv run python -X dev -W error example.py
       - run: uv run make test

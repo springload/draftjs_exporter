@@ -3,7 +3,7 @@ name = "draftjs_exporter"
 version = "5.2.0"
 description = "Library to convert rich text from Draft.js raw ContentState to HTML"
 readme = "README.md"
-license = { file = "LICENSE" }
+license = "MIT"
 authors = [{ name = "Springload", email = "hello@springload.co.nz" }]
 classifiers = [
   "Environment :: Web Environment",
