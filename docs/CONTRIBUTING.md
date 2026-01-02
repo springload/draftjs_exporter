@@ -59,6 +59,7 @@ make publish         # Publishes a new version to pypi.
 
 - Make a new branch for the release of the new version.
 - Update the [CHANGELOG](https://github.com/springload/draftjs_exporter/CHANGELOG.md).
+- Update the version number in `pyproject.toml`, following semver.
 - Update the version number in `draftjs_exporter/__init__.py`, following semver.
 - Make a PR and squash merge it.
 - Back on main with the PR merged, use `make publish` (confirm, and enter your password).

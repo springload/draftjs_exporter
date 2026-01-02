@@ -12,7 +12,7 @@ Documentation for this project is all on [GitHub](https://github.com/springload/
 - The [README](../README.md)
 - The project’s introductory blog post, [Rethinking rich text pipelines with Draft.js](https://www.draftail.org/blog/2018/03/13/rethinking-rich-text-pipelines-with-draft-js).
 - The [Draft.js docs](https://draftjs.org/)
-- You might also like to read about [How Draft.js represents rich text](https://www.draftail.org/docs/content-storage).
+- You might also like to read about [How Draft.js represents rich text](https://www.draftail.org/docs/reference/content-storage).
 
 ## Questions
 
