@@ -17,34 +17,18 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.13"
-      - uses: actions/cache@v4
-        id: pip-cache
-        with:
-          path: .venv
-          key: draftjs_exporter-v4-${{ runner.os }}-py312-${{ hashFiles('**/requirements.txt') }}
-      - if: steps.pip-cache.outputs.cache-hit != 'true'
-        run: |
-          python -m venv .venv
-          source .venv/bin/activate
-          pip install -r requirements.txt
-      - run: |
-          source .venv/bin/activate
-          make lint
-      - run: |
-          source .venv/bin/activate
-          make benchmark
-      - run: |
-          source .venv/bin/activate
-          make build
+          python-version: "3.14"
+      - uses: astral-sh/setup-uv@v7
+      - run: uv sync --dev
+      - run: uv run make lint
+      - run: uv run make benchmark
+      - run: uv run make build
       - uses: actions/setup-node@v4
         with:
           node-version-file: ".nvmrc"
       - run: npm ci
       - run: npm run lint
-      - run: |
-          source .venv/bin/activate
-          make test-coverage
+      - run: uv run make test-coverage
   test_compat:
     needs: test
     runs-on: ubuntu-latest
@@ -52,8 +36,6 @@ jobs:
     strategy:
       matrix:
         include:
-          - python: "3.9"
-            toxenv: py39-lower_bound_deps
           - python: "3.10"
             toxenv: py310-upper_bound_deps
           - python: "3.11"
@@ -62,14 +44,17 @@ jobs:
             toxenv: py312-upper_bound_deps
           - python: "3.13"
             toxenv: py313-upper_bound_deps
+          - python: "3.14"
+            toxenv: py314-upper_bound_deps
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python }}
-      - run: pip install tox==4.11.4 setuptools==75.8.0
+      - uses: astral-sh/setup-uv@v7
+      - run: uv sync --dev
       - run: sudo apt-get install libxml2-dev libxslt-dev
-      - run: tox --parallel
+      - run: uv run tox --parallel
         env:
           TOXENV: ${{ matrix.toxenv }}
   test_experimental:
@@ -82,7 +67,12 @@ jobs:
         with:
           # See available versions:
           # https://github.com/actions/python-versions/blob/main/versions-manifest.json
-          python-version: "3.14.0-alpha.5"
-      - run: pip install 'build==1.0.3' 'setuptools==75.8.0' 'beautifulsoup4>=4.4.1,<5' 'html5lib>=0.999,<2'
-      - run: python -X dev -W error example.py
-      - run: make build
+          python-version: "3.15.0-alpha.3"
+      - uses: astral-sh/setup-uv@v3
+        with:
+          enable-cache: true
+          cache-dependency-glob: "uv.lock"
+      - run: uv venv
+      - run: uv pip install 'beautifulsoup4>=4.4.1,<5' 'html5lib>=0.999,<2'
+      - run: uv run python -X dev -W error example.py
+      - run: uv run make build

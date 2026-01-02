@@ -10,7 +10,7 @@ Please note that this project is released with a [Contributor Code of Conduct](d
 
 ### Installation
 
-> Requirements: `virtualenv`, [`pyenv`](https://github.com/pyenv/pyenv), [`nvm`](https://github.com/nvm-sh/nvm)
+> Requirements: [`uv`](https://github.com/astral-sh/uv), [`pyenv`](https://github.com/pyenv/pyenv), [`nvm`](https://github.com/nvm-sh/nvm)
 
 ```sh
 git clone git@github.com:springload/draftjs_exporter.git
@@ -18,7 +18,7 @@ cd draftjs_exporter/
 # Install the git hooks.
 ./.githooks/deploy
 # Install the Python environment.
-virtualenv .venv
+uv venv
 source ./.venv/bin/activate
 make init
 # Install required Python versions
@@ -53,7 +53,7 @@ make publish         # Publishes a new version to pypi.
 ### Debugging
 
 - Always run the tests. `npm install -g nodemon`, then `make test-watch`.
-- Use a debugger. `pip install ipdb`, then `import ipdb; ipdb.set_trace()`.
+- Use a debugger. `uv pip install ipdb`, then `import ipdb; ipdb.set_trace()`.
 
 ### Releases
 
