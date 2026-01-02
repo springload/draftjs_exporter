@@ -14,8 +14,8 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.14"
       - uses: astral-sh/setup-uv@v7
@@ -23,7 +23,7 @@ jobs:
       - run: uv run make lint
       - run: uv run make benchmark
       - run: make build
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version-file: ".nvmrc"
       - run: npm ci
@@ -36,24 +36,25 @@ jobs:
     strategy:
       matrix:
         include:
+          # Test oldest supported Python with lower bound dependencies.
           - python: "3.10"
-            toxenv: py310-upper_bound_deps
+            toxenv: py310-lower_bound_deps,py310-upper_bound_deps
           - python: "3.11"
             toxenv: py311-upper_bound_deps
           - python: "3.12"
             toxenv: py312-upper_bound_deps
           - python: "3.13"
             toxenv: py313-upper_bound_deps
-          - python: "3.14"
-            toxenv: py314-upper_bound_deps
+          # Skip newest Python version, already tested in the main "test" job.
+          # - python: "3.14"
+          #   toxenv: py314-upper_bound_deps
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python }}
       - uses: astral-sh/setup-uv@v7
       - run: uv sync --dev
-      - run: sudo apt-get install libxml2-dev libxslt-dev
       - run: uv run tox --parallel
         env:
           TOXENV: ${{ matrix.toxenv }}
@@ -62,17 +63,15 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
         with:
           # See available versions:
-          # https://github.com/actions/python-versions/blob/main/versions-manifest.json
+          # https://github.com/actions/python-versions/tags
           python-version: "3.15.0-alpha.3"
-      - uses: astral-sh/setup-uv@v3
-        with:
-          enable-cache: true
-          cache-dependency-glob: "uv.lock"
-      - run: uv venv
-      - run: uv pip install 'beautifulsoup4>=4.4.1,<5' 'html5lib>=0.999,<2'
+      - uses: astral-sh/setup-uv@v7
+      # Dependencies to build lxml from source.
+      - run: sudo apt-get install libxml2-dev libxslt-dev
+      - run: uv sync --dev
       - run: uv run python -X dev -W error example.py
-      - run: uv run make build
+      - run: uv run make test
