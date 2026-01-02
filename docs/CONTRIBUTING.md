@@ -35,19 +35,19 @@ pyenv global system 3.9.1 3.10.0 3.11.0 3.12.0 3.13.2 3.14.0a5
 ### Commands
 
 ```sh
-make help            # See what commands are available.
-make init            # Install dependencies and initialise for development.
-make lint            # Lint the project.
-make format          # Format project files.
-make test            # Test the project.
-make test-watch      # Restarts the tests whenever a file changes.
-make test-coverage   # Run the tests while generating test coverage data.
-make test-ci         # Continuous integration test suite.
-make dev             # Restarts the example whenever a file changes.
-make benchmark       # Runs a one-off performance (speed, memory) benchmark.
-make clean-pyc       # Remove Python file artifacts.
-make build           # Builds package for publication.
-make publish         # Publishes a new version to pypi.
+make help                 # See what commands are available.
+make init                 # Install dependencies and initialise for development.
+make lint                 # Lint the project.
+make format               # Format project files.
+make test                 # Test the project.
+make test-watch           # Restarts the tests whenever a file changes.
+make test-coverage        # Run the tests while generating test coverage data.
+make test-compatibility   # Compatibility-focused test suite.
+make dev                  # Restarts the example whenever a file changes.
+make benchmark            # Runs a one-off performance (speed, memory) benchmark.
+make clean-pyc            # Remove Python file artifacts.
+make build                # Builds package for publication.
+make publish              # Publishes a new version to pypi.
 ```
 
 ### Debugging

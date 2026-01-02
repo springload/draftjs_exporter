@@ -61,5 +61,5 @@ then
 	ruff format --diff $PY_STAGED
 	mypy $PY_STAGED
   make build
-  make test-ci
+  make test-coverage
 fi

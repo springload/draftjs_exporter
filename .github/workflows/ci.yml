@@ -17,7 +17,7 @@ jobs:
       - uses: actions/checkout@v6
       - uses: actions/setup-python@v6
         with:
-          python-version: "3.14"
+          python-version-file: "pyproject.toml"
       - uses: astral-sh/setup-uv@v7
       - run: uv sync --dev
       - run: uv run make lint
@@ -29,35 +29,39 @@ jobs:
       - run: npm ci
       - run: npm run lint
       - run: uv run make test-coverage
-  test_compat:
+  test_compatibility:
     needs: test
     runs-on: ubuntu-latest
-    name: ${{ matrix.python }}
     strategy:
       matrix:
-        include:
-          # Test oldest supported Python with lower bound dependencies.
-          - python: "3.10"
-            toxenv: py310-lower_bound_deps,py310-upper_bound_deps
-          - python: "3.11"
-            toxenv: py311-upper_bound_deps
-          - python: "3.12"
-            toxenv: py312-upper_bound_deps
-          - python: "3.13"
-            toxenv: py313-upper_bound_deps
-          # Skip newest Python version, already tested in the main "test" job.
-          # - python: "3.14"
-          #   toxenv: py314-upper_bound_deps
+        python-version:
+          # Skip oldest supported version, checked in the "test_lower_bound" job.
+          # - "3.10"
+          - "3.11"
+          - "3.12"
+          - "3.13"
+          # Skip latest version, tested in the main "test" job.
+          # - "3.14"
+          # Skip future version, tested in the "test_experimental" job.
+          # - "3.15"
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-python@v6
         with:
-          python-version: ${{ matrix.python }}
+          python-version: ${{ matrix.python-version }}
       - uses: astral-sh/setup-uv@v7
       - run: uv sync --dev
-      - run: uv run tox --parallel
-        env:
-          TOXENV: ${{ matrix.toxenv }}
+      - run: uv run make test
+  test_lower_bound:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.10"
+      - uses: astral-sh/setup-uv@v7
+      - run: make test-compatibility
   test_experimental:
     # Ad-hoc job to test experimental support without having to adjust all of our project for compatibility.
     needs: test
@@ -68,10 +72,6 @@ jobs:
         with:
           # See available versions:
           # https://github.com/actions/python-versions/tags
-          python-version: "3.15.0-alpha.3"
+          python-version: "3.15-dev"
       - uses: astral-sh/setup-uv@v7
-      # Dependencies to build lxml from source.
-      - run: sudo apt-get install libxml2-dev libxslt-dev
-      - run: uv sync --all-extras
-      - run: uv run python -X dev -W error example.py
-      - run: uv run make test
+      - run: uv run --with 'beautifulsoup4>=4.4.1,<5' python -X dev -W error example.py

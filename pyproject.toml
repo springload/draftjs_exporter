@@ -36,8 +36,14 @@ Tracker = "https://github.com/springload/draftjs_exporter/issues"
 Changelog = "https://github.com/springload/draftjs_exporter/blob/main/CHANGELOG.md"
 
 [project.optional-dependencies]
-# Keep this in sync with tox.ini (lower/upper bound deps).
-lxml = ["lxml>=4.2.0,<7"]
+# Lower version bound for lxml - choose a version with:
+# - lxml>=4.4.0 attribute sorting
+# - Pre-built wheels on the lowest-supported Python version.
+# - The last patch release of a given minor version to benefit from bug fixes.
+# Check pre-built wheels: https://pypi.org/project/lxml/4.6.5/#files
+# Upper version bound for lxml: avoid breaking changes without testing to confirm
+# there are no output changes in the new version.
+lxml = ["lxml>=4.6.5,<7"]
 html5lib = ["beautifulsoup4>=4.4.1,<5", "html5lib>=0.999,<2"]
 
 [dependency-groups]
@@ -47,7 +53,6 @@ dev = [
   "pytest-cov>=4.1.0",
   "pytest-memray>=1.7.0",
   "ruff>=0.1.9",
-  "tox>=4.11.4",
   # Benchmark dependencies.
   "markov_draftjs>=2.0.0",
   "memray>=1.15.0",

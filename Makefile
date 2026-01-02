@@ -1,4 +1,4 @@
-.PHONY: build clean-pyc init help test-ci
+.PHONY: build clean-pyc init help test-compatibility
 .DEFAULT_GOAL := help
 
 help: ## See what commands are available.
@@ -28,8 +28,8 @@ test-watch: ## Restarts the tests whenever a file changes.
 test-coverage: ## Run the tests while generating test coverage data.
 	PYTHONDEVMODE=1 pytest -W error --cov --cov-report=html --capture=no
 
-test-ci: ## Continuous integration test suite.
-	tox
+test-compatibility: ## Compatibility-focused test suite.
+	uv run --isolated --python 3.10 --with 'beautifulsoup4==4.7.1, html5lib==1.1, lxml==4.6.5' pytest
 
 dev: ## Restarts the example whenever a file changes.
 	nodemon -q -e py -w tests -w draftjs_exporter -w example.py  -x "clear && python -X dev -W error example.py || true"
