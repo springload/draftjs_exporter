@@ -12,7 +12,7 @@ The initial use case was to gain more control over the content managed by rich t
 
 ## Features
 
-This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html), and [measures performance](https://thib.me/python-memory-profiling-for-the-draft-js-exporter) and [code coverage](https://coveralls.io/github/springload/draftjs_exporter). Code is checked with [mypy](https://mypy.readthedocs.io/en/latest/index.html).
+This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html), and [measures performance](https://thib.me/python-memory-profiling-for-the-draft-js-exporter) and [code coverage](https://coveralls.io/github/springload/draftjs_exporter). Code is checked with [ty](https://docs.astral.sh/ty/).
 
 - Extensive configuration of the generated HTML.
 - Default, extensible block & inline style maps for common HTML elements.
@@ -299,7 +299,7 @@ exporter = HTML({
 
 ### Type annotations
 
-The exporter’s codebase uses static type annotations, checked with mypy. Reusable types are made available:
+The exporter’s codebase uses static type annotations, checked with ty. Reusable types are made available:
 
 ```python
 from draftjs_exporter.dom import DOM

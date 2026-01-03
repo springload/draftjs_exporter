@@ -48,11 +48,11 @@ html5lib = ["beautifulsoup4>=4.4.1,<5", "html5lib>=0.999,<2"]
 
 [dependency-groups]
 dev = [
-  "mypy==1.8.0",
   "pytest>=7.4.3",
   "pytest-cov>=4.1.0",
   "pytest-memray>=1.7.0",
   "ruff>=0.1.9",
+  "ty==0.0.8",
   # Benchmark dependencies.
   "markov_draftjs>=2.0.0",
   "memray>=1.15.0",
@@ -83,57 +83,3 @@ target-version = "py310"
 # C4: flake8-comprehensions
 select = ["E", "F", "I", "T20", "BLE", "C4"]
 ignore = ["E501"]
-
-[tool.mypy]
-mypy_path = "./stubs"
-python_version = "3.9"
-# https://mypy.readthedocs.io/en/latest/config_file.html
-#### Additional opt-in checks of mypy.
-# Disallows usage of types that come from unfollowed imports (anything imported from an unfollowed import is automatically given a type of Any).
-disallow_any_unimported = true
-# Disallows all expressions in the module that have type Any.
-disallow_any_expr = false
-# Disallows functions that have Any in their signature after decorator transformation.
-disallow_any_decorated = false
-# Disallows explicit Any in type positions such as type annotations and generic type parameters.
-disallow_any_explicit = false
-# Disallows usage of generic types that do not specify explicit type parameters.
-disallow_any_generics = true
-# Disallows subclassing a value of type Any.
-disallow_subclassing_any = true
-
-# Disallows calling functions without type annotations from functions with type annotations.
-disallow_untyped_calls = true
-# Disallows defining functions without type annotations or with incomplete type annotations.
-disallow_untyped_defs = true
-# Disallows defining functions with incomplete type annotations.
-disallow_incomplete_defs = true
-# Type-checks the interior of functions without type annotations.
-check_untyped_defs = true
-# Reports an error whenever a function with type annotations is decorated with a decorator without annotations.
-disallow_untyped_decorators = true
-
-
-# Warns about casting an expression to its inferred type.
-warn_redundant_casts = true
-# Warns about unneeded # type: ignore comments.
-warn_unused_ignores = true
-# Shows errors for missing return statements on some execution paths.
-warn_no_return = true
-# Shows a warning when returning a value with type Any from a function declared with a non- Any return type.
-warn_return_any = true
-# Shows a warning when encountering any code inferred to be unreachable or redundant after performing type analysis.
-warn_unreachable = true
-
-
-# Prohibit equality checks, identity checks, and container checks between non-overlapping types.
-strict_equality = true
-# Prevent automatic re-export of names imported from other modules to avoid accidental API exposure.
-no_implicit_reexport = true
-
-[[tool.mypy.overrides]]
-module = "tests.*"
-# For test cases, we don’t need to annotate functions.
-disallow_untyped_defs = false
-# disallow_incomplete_defs = false
-# warn_no_return = false

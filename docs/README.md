@@ -104,7 +104,7 @@ Each version should be tested with the lower and upper bounds of supported versi
 
 ### Static typing
 
-All exporter code should pass static type checking by [mypy](https://mypy.readthedocs.io/en/latest/index.html), with as strict of a configuration as possible.
+All exporter code should pass static type checking by [ty](https://docs.astral.sh/ty/), with as strict of a configuration as possible.
 
 ## Troubleshooting
 
