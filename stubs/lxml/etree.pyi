@@ -1,13 +1,10 @@
-from typing import (
-    Dict,
-    Optional,
-)
+from typing import Dict
 
-Attrib = Optional[Dict[str, str]]
-NSMap = Optional[Dict[str, str]]
+Attrib = Dict[str, str] | None
+NSMap = Dict[str, str] | None
 
 class Element:
-    text: Optional["Element"] = None
+    text: "Element" | None = None
     def __init__(self, _tag: str, attrib: Attrib = ..., nsmap: NSMap = ...): ...
     def append(self, child: "Element") -> None: ...
 

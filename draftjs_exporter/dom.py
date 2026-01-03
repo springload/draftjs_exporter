@@ -1,5 +1,5 @@
 import re
-from typing import Any, Optional
+from typing import Any
 
 from draftjs_exporter.engines.base import DOMEngine
 from draftjs_exporter.types import HTML, Element, Props, RenderableType
@@ -39,8 +39,8 @@ class DOM:
     def create_element(
         cls,
         type_: RenderableType = None,
-        props: Optional[Props] = None,
-        *elt_children: Optional[Element],
+        props: Props | None = None,
+        *elt_children: Element | None,
     ) -> Element:
         """
         Signature inspired by React.createElement.

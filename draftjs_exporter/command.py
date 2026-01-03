@@ -1,5 +1,3 @@
-from typing import List
-
 from draftjs_exporter.types import Block
 
 
@@ -24,12 +22,12 @@ class Command:
         return str(self)
 
     @staticmethod
-    def from_entity_ranges(block: Block) -> List["Command"]:
+    def from_entity_ranges(block: Block) -> list["Command"]:
         """
         Creates a list of commands from a block’s list of entity ranges.
         Each range is converted to two commands: a start_* and a stop_*.
         """
-        commands: List["Command"] = []
+        commands: list["Command"] = []
         for r in block["entityRanges"]:
             # Entity key is an integer in entity ranges, while a string in the entity map.
             data = str(r["key"])
@@ -41,12 +39,12 @@ class Command:
         return commands
 
     @staticmethod
-    def from_style_ranges(block: Block) -> List["Command"]:
+    def from_style_ranges(block: Block) -> list["Command"]:
         """
         Creates a list of commands from a block’s list of style ranges.
         Each range is converted to two commands: a start_* and a stop_*.
         """
-        commands: List["Command"] = []
+        commands: list["Command"] = []
         for r in block["inlineStyleRanges"]:
             data = r["style"]
             start = r["offset"]

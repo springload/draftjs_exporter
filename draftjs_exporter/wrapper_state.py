@@ -1,4 +1,4 @@
-from typing import List, Optional, Sequence, Union
+from collections.abc import Sequence
 
 from draftjs_exporter.constants import BLOCK_TYPES
 from draftjs_exporter.dom import DOM
@@ -15,7 +15,7 @@ class Wrapper:
 
     __slots__ = ("depth", "last_child", "type", "props", "elt")
 
-    def __init__(self, depth: int, options: Optional[Options] = None) -> None:
+    def __init__(self, depth: int, options: Options | None = None) -> None:
         self.depth = depth
         self.last_child = None
 
@@ -33,7 +33,7 @@ class Wrapper:
             self.elt = DOM.create_element()
 
     def is_different(
-        self, depth: int, type_: RenderableType, props: Optional[Props]
+        self, depth: int, type_: RenderableType, props: Props | None
     ) -> bool:
         return depth > self.depth or type_ != self.type or props != self.props
 
@@ -48,7 +48,7 @@ class WrapperStack:
     __slots__ = "stack"
 
     def __init__(self) -> None:
-        self.stack: List[Wrapper] = []
+        self.stack: list[Wrapper] = []
 
     def __str__(self) -> str:
         return str(self.stack)
@@ -95,7 +95,7 @@ class WrapperState:
         return f"<WrapperState: {self.stack}>"
 
     def element_for(
-        self, block: Block, block_content: Union[Element, Sequence[Element]]
+        self, block: Block, block_content: Element | Sequence[Element]
     ) -> Element:
         type_ = block["type"] if "type" in block else "unstyled"
         depth = block["depth"] if "depth" in block else 0

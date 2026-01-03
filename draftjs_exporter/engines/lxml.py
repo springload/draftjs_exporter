@@ -1,5 +1,4 @@
 import re
-from typing import Optional
 
 from lxml import etree, html
 
@@ -17,7 +16,7 @@ class DOM_LXML(DOMEngine):
     """
 
     @staticmethod
-    def create_tag(type_: Tag, attr: Optional[Attr] = None) -> etree.Element:
+    def create_tag(type_: Tag, attr: Attr | None = None) -> etree.Element:
         nsmap = None
 
         if attr:

@@ -2,8 +2,8 @@ import cProfile
 import json
 import os
 import unittest
+from collections.abc import Callable
 from pstats import Stats
-from typing import Callable
 
 from draftjs_exporter.constants import BLOCK_TYPES, ENTITY_TYPES
 from draftjs_exporter.defaults import BLOCK_MAP, STYLE_MAP

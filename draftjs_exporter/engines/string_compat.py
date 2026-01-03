@@ -1,5 +1,5 @@
+from collections.abc import Sequence
 from html import escape
-from typing import Sequence, Union
 
 from draftjs_exporter.engines.base import Attr
 from draftjs_exporter.engines.string import VOID_ELEMENTS, DOMString, Elt
@@ -19,7 +19,7 @@ class DOMStringCompat(DOMString):
         return "".join(attrs)
 
     @staticmethod
-    def render_children(children: Sequence[Union[HTML, Elt]]) -> HTML:
+    def render_children(children: Sequence[HTML | Elt]) -> HTML:
         return "".join(
             [
                 DOMStringCompat.render(c)

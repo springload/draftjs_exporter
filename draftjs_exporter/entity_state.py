@@ -1,4 +1,4 @@
-from typing import List, Optional, Sequence
+from collections.abc import Sequence
 
 from draftjs_exporter.command import Command
 from draftjs_exporter.constants import ENTITY_TYPES
@@ -31,9 +31,9 @@ class EntityState:
         self.entity_options = entity_options
         self.entity_map = entity_map
 
-        self.entity_stack: List[EntityKey] = []
-        self.completed_entity: Optional[EntityKey] = None
-        self.element_stack: List[Element] = []
+        self.entity_stack: list[EntityKey] = []
+        self.completed_entity: EntityKey | None = None
+        self.element_stack: list[Element] = []
 
     def apply(self, command: Command) -> None:
         if command.name == "start_entity":
@@ -46,7 +46,7 @@ class EntityState:
 
             self.completed_entity = self.entity_stack.pop()
 
-    def has_entity(self) -> List[EntityKey]:
+    def has_entity(self) -> list[EntityKey]:
         return self.entity_stack
 
     def has_no_entity(self) -> bool:

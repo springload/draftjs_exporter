@@ -1,8 +1,8 @@
-from typing import Any, Dict, Optional
+from typing import Any
 
 from draftjs_exporter.types import HTML, Element, Tag
 
-Attr = Dict[str, str]
+Attr = dict[str, str]
 
 
 class DOMEngine:
@@ -11,7 +11,7 @@ class DOMEngine:
     """
 
     @staticmethod
-    def create_tag(type_: Tag, attr: Optional[Attr] = None) -> Any:
+    def create_tag(type_: Tag, attr: Attr | None = None) -> Any:
         """
         Creates and returns a tree node of the given type and attributes.
         """

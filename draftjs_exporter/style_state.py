@@ -1,4 +1,4 @@
-from typing import List, Sequence
+from collections.abc import Sequence
 
 from draftjs_exporter.command import Command
 from draftjs_exporter.constants import INLINE_STYLES
@@ -17,7 +17,7 @@ class StyleState:
     __slots__ = ("styles", "style_options")
 
     def __init__(self, style_options: OptionsMap) -> None:
-        self.styles: List[str] = []
+        self.styles: list[str] = []
         self.style_options = style_options
 
     def apply(self, command: Command) -> None:

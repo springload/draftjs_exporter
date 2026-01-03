@@ -1,6 +1,5 @@
 from itertools import groupby
 from operator import attrgetter
-from typing import List, Optional, Tuple
 
 from draftjs_exporter.command import Command
 from draftjs_exporter.composite_decorators import (
@@ -35,7 +34,7 @@ class HTML:
         "style_options",
     )
 
-    def __init__(self, config: Optional[Config] = None) -> None:
+    def __init__(self, config: Config | None = None) -> None:
         if config is None:
             config = {}
 
@@ -47,7 +46,7 @@ class HTML:
 
         DOM.use(config.get("engine", DOM.STRING))
 
-    def render(self, content_state: Optional[ContentState] = None) -> str:
+    def render(self, content_state: ContentState | None = None) -> str:
         """
         Starts the export process on a given piece of content state.
         """
@@ -138,7 +137,7 @@ class HTML:
 
         return wrapper_state.element_for(block, content)
 
-    def build_command_groups(self, block: Block) -> List[Tuple[str, List[Command]]]:
+    def build_command_groups(self, block: Block) -> list[tuple[str, list[Command]]]:
         """
         Creates block modification commands, grouped by start index,
         with the text to apply them on.
@@ -161,7 +160,7 @@ class HTML:
 
         return sliced
 
-    def build_commands(self, block: Block) -> List[Command]:
+    def build_commands(self, block: Block) -> list[Command]:
         """
         Build all of the manipulation commands for a given block.
         - One pair to set the text.

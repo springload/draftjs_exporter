@@ -1,11 +1,11 @@
-from typing import Any, Dict, Optional
+from typing import Any
 
 from draftjs_exporter.constants import BLOCK_TYPES, ENTITY_TYPES, INLINE_STYLES
 from draftjs_exporter.error import ConfigException
 from draftjs_exporter.types import ConfigMap, Props, RenderableType
 
 # Internal equivalent of a ConfigMap.
-OptionsMap = Dict[str, "Options"]
+OptionsMap = dict[str, "Options"]
 
 
 class Options:
@@ -19,9 +19,9 @@ class Options:
         self,
         type_: str,
         element: RenderableType,
-        props: Optional[Props] = None,
+        props: Props | None = None,
         wrapper: RenderableType = None,
-        wrapper_props: Optional[Props] = None,
+        wrapper_props: Props | None = None,
     ) -> None:
         self.type = type_
         self.element = element

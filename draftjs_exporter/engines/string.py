@@ -1,5 +1,5 @@
+from collections.abc import Sequence
 from html import escape
-from typing import List, Optional, Sequence, Union
 
 from draftjs_exporter.engines.base import Attr, DOMEngine
 from draftjs_exporter.types import HTML, Tag
@@ -33,10 +33,10 @@ class Elt:
 
     __slots__ = ("type", "attr", "children", "markup")
 
-    def __init__(self, type_: Tag, attr: Optional[Attr], markup: HTML = ""):
+    def __init__(self, type_: Tag, attr: Attr | None, markup: HTML = ""):
         self.type = type_
         self.attr = attr
-        self.children: List["Elt"] = []
+        self.children: list["Elt"] = []
         self.markup = markup
 
     @staticmethod
@@ -50,7 +50,7 @@ class DOMString(DOMEngine):
     """
 
     @staticmethod
-    def create_tag(type_: Tag, attr: Optional[Attr] = None) -> Elt:
+    def create_tag(type_: Tag, attr: Attr | None = None) -> Elt:
         return Elt(type_, attr)
 
     @staticmethod
@@ -76,7 +76,7 @@ class DOMString(DOMEngine):
         return "".join(attrs)
 
     @staticmethod
-    def render_children(children: Sequence[Union[HTML, Elt]]) -> HTML:
+    def render_children(children: Sequence[HTML | Elt]) -> HTML:
         return "".join(
             [
                 DOMString.render(c) if isinstance(c, Elt) else escape(c, quote=False)

@@ -1,6 +1,7 @@
 import re
+from collections.abc import Generator, Sequence
 from operator import itemgetter
-from typing import Any, Dict, Generator, List, Sequence, Tuple
+from typing import Any
 
 from draftjs_exporter.dom import DOM
 from draftjs_exporter.types import (
@@ -16,8 +17,8 @@ br_strategy = re.compile(r"\n")
 
 def get_decorations(
     decorators: CompositeDecorators, text: str
-) -> List[Tuple[int, int, Any, Decorator]]:
-    occupied: Dict[int, int] = {}
+) -> list[tuple[int, int, Any, Decorator]]:
+    occupied: dict[int, int] = {}
     decorations = []
 
     for decorator in decorators:
