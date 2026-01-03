@@ -2,6 +2,12 @@
 
 > All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [v6.0.0](https://github.com/springload/draftjs_exporter/releases/tag/v6.0.0)
+
+### Removed
+
+- Remove support for Python 3.7, 3.8, 3.9.
+
 ## [v5.2.0](https://github.com/springload/draftjs_exporter/releases/tag/v5.2.0)
 
 ### Added

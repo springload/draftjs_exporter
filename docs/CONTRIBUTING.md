@@ -22,14 +22,13 @@ uv venv
 source ./.venv/bin/activate
 make init
 # Install required Python versions
-pyenv install --skip-existing 3.9.1
 pyenv install --skip-existing 3.10.0
 pyenv install --skip-existing 3.11.0
 pyenv install --skip-existing 3.12.1
 pyenv install --skip-existing 3.13.2
 pyenv install --skip-existing 3.14.0a5
 # Make required Python versions available globally.
-pyenv global system 3.9.1 3.10.0 3.11.0 3.12.0 3.13.2 3.14.0a5
+pyenv global system 3.10.0 3.11.0 3.12.0 3.13.2 3.14.0a5
 ```
 
 ### Commands
