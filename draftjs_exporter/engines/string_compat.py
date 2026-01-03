@@ -1,4 +1,3 @@
-from collections.abc import Sequence
 from html import escape
 
 from draftjs_exporter.engines.base import Attr
@@ -19,7 +18,7 @@ class DOMStringCompat(DOMString):
         return "".join(attrs)
 
     @staticmethod
-    def render_children(children: Sequence[HTML | Elt]) -> HTML:
+    def render_children(children: list[HTML | Elt]) -> HTML:
         return "".join(
             [
                 DOMStringCompat.render(c)

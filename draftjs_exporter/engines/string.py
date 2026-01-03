@@ -1,4 +1,3 @@
-from collections.abc import Sequence
 from html import escape
 
 from draftjs_exporter.engines.base import Attr, DOMEngine
@@ -76,7 +75,7 @@ class DOMString(DOMEngine):
         return "".join(attrs)
 
     @staticmethod
-    def render_children(children: Sequence[HTML | Elt]) -> HTML:
+    def render_children(children: list[HTML | Elt]) -> HTML:
         return "".join(
             [
                 DOMString.render(c) if isinstance(c, Elt) else escape(c, quote=False)

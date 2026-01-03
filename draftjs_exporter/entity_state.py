@@ -1,5 +1,3 @@
-from collections.abc import Sequence
-
 from draftjs_exporter.command import Command
 from draftjs_exporter.constants import ENTITY_TYPES
 from draftjs_exporter.dom import DOM
@@ -57,7 +55,7 @@ class EntityState:
         return details
 
     def render_entities(
-        self, style_node: Element, block: Block, blocks: Sequence[Block]
+        self, style_node: Element, block: Block, blocks: list[Block]
     ) -> Element:
         # We have a complete (start, stop) entity to render.
         if self.completed_entity is not None:

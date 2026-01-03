@@ -1,15 +1,10 @@
 import re
-from collections.abc import Generator, Sequence
+from collections.abc import Generator
 from operator import itemgetter
 from typing import Any
 
 from draftjs_exporter.dom import DOM
-from draftjs_exporter.types import (
-    Block,
-    CompositeDecorators,
-    Decorator,
-    Element,
-)
+from draftjs_exporter.types import Block, CompositeDecorators, Decorator, Element
 
 br = "\n"
 br_strategy = re.compile(r"\n")
@@ -38,7 +33,7 @@ def apply_decorators(
     decorators: CompositeDecorators,
     text: str,
     block: Block,
-    blocks: Sequence[Block],
+    blocks: list[Block],
 ) -> Generator[str, None, None]:
     decorations = get_decorations(decorators, text)
 
@@ -62,7 +57,7 @@ def render_decorators(
     decorators: CompositeDecorators,
     text: str,
     block: Block,
-    blocks: Sequence[Block],
+    blocks: list[Block],
 ) -> Element:
     decorated_children = list(apply_decorators(decorators, text, block, blocks))
 

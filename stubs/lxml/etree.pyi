@@ -1,7 +1,5 @@
-from typing import Dict
-
-Attrib = Dict[str, str] | None
-NSMap = Dict[str, str] | None
+Attrib = dict[str, str] | None
+NSMap = dict[str, str] | None
 
 class Element:
     text: "Element" | None = None

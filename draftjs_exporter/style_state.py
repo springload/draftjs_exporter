@@ -1,5 +1,3 @@
-from collections.abc import Sequence
-
 from draftjs_exporter.command import Command
 from draftjs_exporter.constants import INLINE_STYLES
 from draftjs_exporter.dom import DOM
@@ -31,7 +29,7 @@ class StyleState:
         return not self.styles
 
     def render_styles(
-        self, decorated_node: Element, block: Block, blocks: Sequence[Block]
+        self, decorated_node: Element, block: Block, blocks: list[Block]
     ) -> Element:
         node = decorated_node
         if not self.is_empty():

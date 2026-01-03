@@ -28,7 +28,7 @@ class Command:
         Each range is converted to two commands: a start_* and a stop_*.
         """
         commands: list["Command"] = []
-        for r in block["entityRanges"]:
+        for r in block.get("entityRanges", []):
             # Entity key is an integer in entity ranges, while a string in the entity map.
             data = str(r["key"])
             start = r["offset"]
@@ -45,7 +45,7 @@ class Command:
         Each range is converted to two commands: a start_* and a stop_*.
         """
         commands: list["Command"] = []
-        for r in block["inlineStyleRanges"]:
+        for r in block.get("inlineStyleRanges", []):
             data = r["style"]
             start = r["offset"]
             stop = start + r["length"]

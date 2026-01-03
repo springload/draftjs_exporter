@@ -1,5 +1,3 @@
-from collections.abc import Sequence
-
 from draftjs_exporter.constants import BLOCK_TYPES
 from draftjs_exporter.dom import DOM
 from draftjs_exporter.options import Options, OptionsMap
@@ -86,7 +84,7 @@ class WrapperState:
 
     __slots__ = ("block_options", "blocks", "stack")
 
-    def __init__(self, block_options: OptionsMap, blocks: Sequence[Block]) -> None:
+    def __init__(self, block_options: OptionsMap, blocks: list[Block]) -> None:
         self.block_options = block_options
         self.blocks = blocks
         self.stack = WrapperStack()
@@ -95,10 +93,10 @@ class WrapperState:
         return f"<WrapperState: {self.stack}>"
 
     def element_for(
-        self, block: Block, block_content: Element | Sequence[Element]
+        self, block: Block, block_content: Element | list[Element]
     ) -> Element:
-        type_ = block["type"] if "type" in block else "unstyled"
-        depth = block["depth"] if "depth" in block else 0
+        type_ = block.get("type", "unstyled")
+        depth = block.get("depth", 0)
         options = Options.get(self.block_options, type_, BLOCK_TYPES.FALLBACK)
         props = dict(options.props)
         props["block"] = block

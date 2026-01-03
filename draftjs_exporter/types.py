@@ -1,10 +1,10 @@
-from collections.abc import Callable, Mapping
-from typing import Any
+import re
+from collections.abc import Callable
+from typing import Any, Literal, TypedDict
 
 # Element represents an instance of a RenderableType. It’s engine-specific so very hard to type.
 Element = Any
 # Props are always a dictionary with string keys and arbitrary values.
-# TODO Other types than string for keys.
 Props = dict[str, Any]
 
 # A DOM tag name.
@@ -16,21 +16,76 @@ RenderableType = Component | Tag | None
 # The output of the exporter.
 HTML = str
 
-# The whole config object.
-Config = dict[str, Any]
+
+# Config for a single renderable, element and optional wrappers / props.
+class RenderableConfig(TypedDict, total=False):
+    element: RenderableType
+    props: Props
+    wrapper: RenderableType
+    wrapper_props: Props
+
+
 # block_map, style_map, entity_decorators.
-# The dict could be limited to a fixed set of keys, but this would require TypedDict.
-ConfigMap = Mapping[str, dict[str, Any] | RenderableType]
+ConfigMap = dict[str, RenderableConfig | RenderableType]
+
+
 # composite_decorators.
-Decorator = dict[str, Any]
+class Decorator(TypedDict):
+    strategy: re.Pattern[str]
+    component: RenderableType
+
+
 CompositeDecorators = list[Decorator]
 
-# The whole content state. blocks and entity_map.
-ContentState = Mapping[str, Any]
-# Blocks have a predetermined set of keys and values, but let’s be permissive without TypedDict.
-Block = Mapping[str, Any]
+
+# The whole config object.
+class Config(TypedDict, total=False):
+    block_map: ConfigMap
+    style_map: ConfigMap
+    entity_decorators: ConfigMap
+    composite_decorators: CompositeDecorators
+    engine: str
+
+
+# Blocks have a predetermined set of keys and values, but let’s be permissive.
+class InlineStyleRange(TypedDict):
+    offset: int
+    length: int
+    style: str
+
+
+class EntityRange(TypedDict):
+    offset: int
+    length: int
+    key: int
+
+
+class Block(TypedDict, total=False):
+    key: str
+    text: str
+    type: str
+    depth: int
+    data: dict[str, Any]
+    inlineStyleRanges: list[InlineStyleRange]
+    entityRanges: list[EntityRange]
+
+
 # Entity key is int in blocks, str in Entity map.
 EntityKey = str
-# Entities have fixed keys.
-EntityDetails = Mapping[str, Any]
-EntityMap = Mapping[EntityKey, EntityDetails]
+
+Mutability = Literal["MUTABLE", "IMMUTABLE", "SEGMENTED"]
+
+
+class EntityDetails(TypedDict, total=False):
+    type: str
+    data: dict[str, Any]
+    mutability: Mutability
+
+
+EntityMap = dict[EntityKey, EntityDetails]
+
+
+# The whole content state. blocks and entity_map.
+class ContentState(TypedDict, total=False):
+    blocks: list[Block]
+    entityMap: EntityMap

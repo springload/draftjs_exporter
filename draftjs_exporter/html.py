@@ -11,13 +11,7 @@ from draftjs_exporter.dom import DOM
 from draftjs_exporter.entity_state import EntityState
 from draftjs_exporter.options import Options
 from draftjs_exporter.style_state import StyleState
-from draftjs_exporter.types import (
-    Block,
-    Config,
-    ContentState,
-    Element,
-    EntityMap,
-)
+from draftjs_exporter.types import Block, Config, ContentState, Element, EntityMap
 from draftjs_exporter.wrapper_state import WrapperState
 
 
@@ -61,7 +55,7 @@ class HTML:
 
         for block in blocks:
             # Assume a depth of 0 if it's not specified, like Draft.js would.
-            depth = block["depth"] if "depth" in block else 0
+            depth = block.get("depth", 0)
             elt = self.render_block(block, entity_map, wrapper_state)
 
             if depth > min_depth:
@@ -80,11 +74,10 @@ class HTML:
     def render_block(
         self, block: Block, entity_map: EntityMap, wrapper_state: WrapperState
     ) -> Element:
-        has_styles = "inlineStyleRanges" in block and block["inlineStyleRanges"]
-        has_entities = "entityRanges" in block and block["entityRanges"]
-        has_decorators = should_render_decorators(
-            self.composite_decorators, block["text"]
-        )
+        text = block.get("text", "")
+        has_styles = bool(block.get("inlineStyleRanges"))
+        has_entities = bool(block.get("entityRanges"))
+        has_decorators = should_render_decorators(self.composite_decorators, text)
 
         if has_styles or has_entities:
             content = DOM.create_element()
@@ -128,12 +121,12 @@ class HTML:
         elif has_decorators:
             content = render_decorators(
                 self.composite_decorators,
-                block["text"],
+                text,
                 block,
                 wrapper_state.blocks,
             )
         else:
-            content = block["text"]
+            content = text
 
         return wrapper_state.element_for(block, content)
 
@@ -142,7 +135,7 @@ class HTML:
         Creates block modification commands, grouped by start index,
         with the text to apply them on.
         """
-        text = block["text"]
+        text = block.get("text", "")
 
         commands = self.build_commands(block)
         grouped = groupby(commands, attrgetter("index"))
@@ -175,5 +168,5 @@ class HTML:
         return (
             [Command("start_text", 0)]
             + styles_and_entities
-            + [Command("stop_text", len(block["text"]))]
+            + [Command("stop_text", len(block.get("text", "")))]
         )
