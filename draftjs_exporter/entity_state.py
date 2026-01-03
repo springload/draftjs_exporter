@@ -5,13 +5,7 @@ from draftjs_exporter.constants import ENTITY_TYPES
 from draftjs_exporter.dom import DOM
 from draftjs_exporter.error import ExporterException
 from draftjs_exporter.options import Options, OptionsMap
-from draftjs_exporter.types import (
-    Block,
-    Element,
-    EntityDetails,
-    EntityKey,
-    EntityMap,
-)
+from draftjs_exporter.types import Block, Element, EntityDetails, EntityKey, EntityMap
 
 
 class EntityException(ExporterException):
@@ -36,15 +30,15 @@ class EntityState:
         self.element_stack: list[Element] = []
 
     def apply(self, command: Command) -> None:
-        if command.name == "start_entity":
-            self.entity_stack.append(command.data)
-        elif command.name == "stop_entity":
-            expected_entity = self.entity_stack[-1]
+        match command.name:
+            case "start_entity":
+                self.entity_stack.append(command.data)
+            case "stop_entity":
+                expected = self.entity_stack[-1]
+                if command.data != expected:
+                    raise EntityException(f"Expected {expected}, got {command.data}")
 
-            if command.data != expected_entity:
-                raise EntityException(f"Expected {expected_entity}, got {command.data}")
-
-            self.completed_entity = self.entity_stack.pop()
+                self.completed_entity = self.entity_stack.pop()
 
     def has_entity(self) -> list[EntityKey]:
         return self.entity_stack

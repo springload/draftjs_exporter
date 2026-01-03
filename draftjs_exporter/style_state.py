@@ -21,10 +21,11 @@ class StyleState:
         self.style_options = style_options
 
     def apply(self, command: Command) -> None:
-        if command.name == "start_inline_style":
-            self.styles.append(command.data)
-        elif command.name == "stop_inline_style":
-            self.styles.remove(command.data)
+        match command.name:
+            case "start_inline_style":
+                self.styles.append(command.data)
+            case "stop_inline_style":
+                self.styles.remove(command.data)
 
     def is_empty(self) -> bool:
         return not self.styles

@@ -90,16 +90,15 @@ class DOMString(DOMEngine):
         attr = DOMString.render_attrs(elt.attr) if elt.attr else ""
         children = DOMString.render_children(elt.children) if elt.children else ""
 
-        if type_ == "fragment":
-            return children
-
-        if type_ in VOID_ELEMENTS:
-            return f"<{type_}{attr}/>"
-
-        if type_ == "escaped_html":
-            return elt.markup
-
-        return f"<{type_}{attr}>{children}</{type_}>"
+        match type_:
+            case "fragment":
+                return children
+            case "escaped_html":
+                return elt.markup
+            case _ if type_ in VOID_ELEMENTS:
+                return f"<{type_}{attr}/>"
+            case _:
+                return f"<{type_}{attr}>{children}</{type_}>"
 
     @staticmethod
     def render_debug(elt: Elt) -> HTML:
@@ -107,10 +106,10 @@ class DOMString(DOMEngine):
         attr = DOMString.render_attrs(elt.attr) if elt.attr else ""
         children = DOMString.render_children(elt.children) if elt.children else ""
 
-        if type_ in VOID_ELEMENTS:
-            return f"<{type_}{attr}/>"
-
-        if type_ == "escaped_html":
-            return elt.markup
-
-        return f"<{type_}{attr}>{children}</{type_}>"
+        match type_:
+            case "escaped_html":
+                return elt.markup
+            case _ if type_ in VOID_ELEMENTS:
+                return f"<{type_}{attr}/>"
+            case _:
+                return f"<{type_}{attr}>{children}</{type_}>"
