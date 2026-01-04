@@ -4,7 +4,7 @@ from draftjs_exporter.command import Command
 from draftjs_exporter.dom import DOM
 from draftjs_exporter.options import Options
 from draftjs_exporter.style_state import StyleState
-from draftjs_exporter.types import Element, Props
+from draftjs_exporter.types import Block, ConfigMap, Element, Props
 
 
 def Important(props):
@@ -17,7 +17,7 @@ def Shout(props: Props) -> Element:
     )
 
 
-style_map = {
+style_map: ConfigMap = {
     "ITALIC": "em",
     "BOLD": "strong",
     "HIGHLIGHT": {
@@ -33,9 +33,7 @@ style_map = {
 class TestStyleState(unittest.TestCase):
     def setUp(self):
         DOM.use(DOM.STRING)
-        self.style_state = StyleState(
-            Options.map_styles(style_map)  # type: ignore
-        )
+        self.style_state = StyleState(Options.map_styles(style_map))
 
     def test_init(self):
         self.assertIsInstance(self.style_state, StyleState)
@@ -117,7 +115,7 @@ class TestStyleState(unittest.TestCase):
         self.style_state.apply(Command("stop_inline_style", 9, "IMPORTANT"))
 
     def test_render_styles_data(self):
-        blocks = [
+        blocks: list[Block] = [
             {
                 "key": "5s7g9",
                 "text": "test",

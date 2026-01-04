@@ -1,6 +1,6 @@
 import re
 
-from lxml import etree, html
+from lxml import etree, html  # type: ignore
 
 from draftjs_exporter.engines.base import Attr, DOMEngine
 from draftjs_exporter.types import HTML, Tag

@@ -1,6 +1,6 @@
 from draftjs_exporter.constants import BLOCK_TYPES, INLINE_STYLES
 from draftjs_exporter.dom import DOM
-from draftjs_exporter.types import Element, Props
+from draftjs_exporter.types import ConfigMap, Element, Props
 
 
 def render_children(props: Props) -> Element:
@@ -18,7 +18,7 @@ def code_block(props: Props) -> Element:
 
 
 # Default block map to extend.
-BLOCK_MAP = {
+BLOCK_MAP: ConfigMap = {
     BLOCK_TYPES.UNSTYLED: "p",
     BLOCK_TYPES.HEADER_ONE: "h1",
     BLOCK_TYPES.HEADER_TWO: "h2",
@@ -38,7 +38,7 @@ BLOCK_MAP = {
 # Tags come from https://developer.mozilla.org/en-US/docs/Web/HTML/Element.
 # and are loosely aligned with https://github.com/jpuri/draftjs-to-html.
 # Only styles that map to HTML elements are allowed as defaults.
-STYLE_MAP = {
+STYLE_MAP: ConfigMap = {
     INLINE_STYLES.BOLD: "strong",
     INLINE_STYLES.CODE: "code",
     INLINE_STYLES.ITALIC: "em",

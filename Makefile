@@ -13,7 +13,8 @@ init: clean-pyc ## Install dependencies and initialise for development.
 lint: ## Lint the project.
 	ruff check
 	ruff format --check
-	mypy **/*.py
+	mypy draftjs_exporter tests
+	ty check
 
 format: ## Format project files.
 	ruff format

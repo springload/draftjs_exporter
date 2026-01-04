@@ -3,7 +3,7 @@ from draftjs_exporter.constants import ENTITY_TYPES
 from draftjs_exporter.dom import DOM
 from draftjs_exporter.error import ExporterException
 from draftjs_exporter.options import Options, OptionsMap
-from draftjs_exporter.types import Block, Element, EntityDetails, EntityKey, EntityMap
+from draftjs_exporter.types import Block, Element, Entity, EntityKey, EntityMap
 
 
 class EntityException(ExporterException):
@@ -44,7 +44,7 @@ class EntityState:
     def has_no_entity(self) -> bool:
         return not self.entity_stack
 
-    def get_entity_details(self, entity_key: EntityKey) -> EntityDetails:
+    def get_entity_details(self, entity_key: EntityKey) -> Entity:
         details = self.entity_map.get(entity_key)
 
         if details is None:

@@ -2,6 +2,7 @@ import unittest
 
 from draftjs_exporter.dom import DOM
 from draftjs_exporter.options import Options
+from draftjs_exporter.types import Block
 from draftjs_exporter.wrapper_state import WrapperState
 from example import blockquote, list_item, ordered_list
 
@@ -31,7 +32,7 @@ class TestWrapperState(unittest.TestCase):
         self.assertIsInstance(self.wrapper_state, WrapperState)
 
     def test_element_for_data(self):
-        blocks = [
+        blocks: list[Block] = [
             {
                 "key": "5s7g9",
                 "text": "test",

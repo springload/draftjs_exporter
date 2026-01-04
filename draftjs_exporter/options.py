@@ -1,11 +1,11 @@
-from typing import Any
+from typing import Any, TypeAlias, cast
 
 from draftjs_exporter.constants import BLOCK_TYPES, ENTITY_TYPES, INLINE_STYLES
 from draftjs_exporter.error import ConfigException
-from draftjs_exporter.types import ConfigMap, Props, RenderableType
+from draftjs_exporter.types import ConfigMap, Props, RenderableConfig, RenderableType
 
 # Internal equivalent of a ConfigMap.
-OptionsMap = dict[str, "Options"]
+OptionsMap: TypeAlias = dict[str, "Options"]
 
 
 class Options:
@@ -62,13 +62,16 @@ class Options:
         else:
             config = kind_map[type_]
 
+        # TODO Refactor to a TypeGuard when support for those improves.
         if isinstance(config, dict):
             if "element" not in config:
                 raise ConfigException(f'"{type_}" does not define an element')
 
-            opts = Options(type_, **config)
+            # TODO Remove cast once ty support improves.
+            opts = Options(type_, **cast(RenderableConfig, config))
         else:
-            opts = Options(type_, config)
+            # TODO Remove cast once ty support improves.
+            opts = Options(type_, cast(RenderableType, config))
 
         return opts
 

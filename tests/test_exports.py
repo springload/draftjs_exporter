@@ -8,7 +8,7 @@ from pstats import Stats
 from draftjs_exporter.constants import BLOCK_TYPES, ENTITY_TYPES
 from draftjs_exporter.defaults import BLOCK_MAP, STYLE_MAP
 from draftjs_exporter.dom import DOM
-from draftjs_exporter.html import HTML
+from draftjs_exporter.html import HTML, ExporterConfig
 from draftjs_exporter.types import ContentState
 from tests.test_composite_decorators import (
     BR_DECORATOR,
@@ -21,41 +21,36 @@ fixtures_path = os.path.join(os.path.dirname(__file__), "test_exports.json")
 with open(fixtures_path) as f:
     fixtures = json.loads(f.read())
 
-exporter = HTML(
-    {
-        "entity_decorators": {
-            ENTITY_TYPES.LINK: link,
-            ENTITY_TYPES.HORIZONTAL_RULE: hr,
-            ENTITY_TYPES.IMAGE: image,
-            ENTITY_TYPES.EMBED: None,
+config: ExporterConfig = {
+    "entity_decorators": {
+        ENTITY_TYPES.LINK: link,
+        ENTITY_TYPES.HORIZONTAL_RULE: hr,
+        ENTITY_TYPES.IMAGE: image,
+        ENTITY_TYPES.EMBED: None,
+    },
+    "composite_decorators": [
+        BR_DECORATOR,
+        LINKIFY_DECORATOR,
+        HASHTAG_DECORATOR,
+    ],
+    "block_map": {
+        **BLOCK_MAP,
+        BLOCK_TYPES.UNORDERED_LIST_ITEM: {
+            "element": "li",
+            "wrapper": "ul",
+            "wrapper_props": {"class": "bullet-list"},
         },
-        "composite_decorators": [
-            BR_DECORATOR,
-            LINKIFY_DECORATOR,
-            HASHTAG_DECORATOR,
-        ],
-        "block_map": dict(
-            BLOCK_MAP,
-            **{
-                BLOCK_TYPES.UNORDERED_LIST_ITEM: {
-                    "element": "li",
-                    "wrapper": "ul",
-                    "wrapper_props": {"class": "bullet-list"},
-                }
-            },
-        ),
-        "style_map": dict(
-            STYLE_MAP,
-            **{
-                "KBD": "kbd",
-                "HIGHLIGHT": {
-                    "element": "strong",
-                    "props": {"style": {"textDecoration": "underline"}},
-                },
-            },
-        ),
-    }
-)
+    },
+    "style_map": {
+        **STYLE_MAP,
+        "KBD": "kbd",
+        "HIGHLIGHT": {
+            "element": "strong",
+            "props": {"style": {"textDecoration": "underline"}},
+        },
+    },
+}
+exporter = HTML(config)
 
 
 class ExportsTestMeta(type):

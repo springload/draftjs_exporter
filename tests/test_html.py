@@ -3,15 +3,15 @@ import unittest
 from draftjs_exporter.command import Command
 from draftjs_exporter.dom import DOM
 from draftjs_exporter.engines.string import DOMString
-from draftjs_exporter.html import HTML
+from draftjs_exporter.html import HTML, ExporterConfig
 
-config = {
+config: ExporterConfig = {
     "entity_decorators": {},
     "block_map": {
         "header-one": {"element": "h1"},
         "unordered-list-item": {
             "element": "li",
-            "wrapper": ["ul", {"class": "public-DraftStyleDefault-ul"}],
+            "wrapper": "ul",
         },
         "unstyled": {"element": "p"},
     },

@@ -1,8 +1,8 @@
-from typing import Any
+from typing import Any, TypeAlias
 
 from draftjs_exporter.types import HTML, Element, Tag
 
-Attr = dict[str, str]
+Attr: TypeAlias = dict[str, str]
 
 
 class DOMEngine:

@@ -82,7 +82,8 @@ from draftjs_exporter.dom import DOM
 config = {
     # `block_map` is a mapping from Draft.js block types to a definition of their HTML representation.
     # Extend BLOCK_MAP to start with sane defaults, or make your own from scratch.
-    'block_map': dict(BLOCK_MAP, **{
+    'block_map': {
+        **BLOCK_MAP,
         # The most basic mapping format, block type to tag name.
         BLOCK_TYPES.HEADER_TWO: 'h2',
         # Use a dict to define props on the block.
@@ -101,17 +102,18 @@ config = {
         },
         # Provide a fallback component (advanced).
         BLOCK_TYPES.FALLBACK: block_fallback
-    }),
+    },
     # `style_map` defines the HTML representation of inline elements.
     # Extend STYLE_MAP to start with sane defaults, or make your own from scratch.
-    'style_map': dict(STYLE_MAP, **{
+    'style_map': {
+        **STYLE_MAP,
         # Use the same mapping format as in the `block_map`.
         'KBD': 'kbd',
         # The `style` prop can be defined as a dict, that will automatically be converted to a string.
         'HIGHLIGHT': {'element': 'strong', 'props': {'style': {'textDecoration': 'underline'}}},
         # Provide a fallback component (advanced).
         INLINE_STYLES.FALLBACK: style_fallback,
-    }),
+    },
     'entity_decorators': {
         # Map entities to components so they can be rendered with their data.
         ENTITY_TYPES.IMAGE: image,
@@ -206,10 +208,11 @@ Add the following to the exporter config,
 
 ```python
 config = {
-    'block_map': dict(BLOCK_MAP, **{
+    'block_map': {
+        **BLOCK_MAP,
         # Provide a fallback for block types.
         BLOCK_TYPES.FALLBACK: block_fallback
-    }),
+    },
 }
 ```
 

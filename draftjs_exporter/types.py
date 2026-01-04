@@ -1,32 +1,38 @@
 import re
 from collections.abc import Callable
-from typing import Any, Literal, TypedDict
+from typing import Any, Literal, TypeAlias, TypedDict
 
 # Element represents an instance of a RenderableType. It’s engine-specific so very hard to type.
-Element = Any
+Element: TypeAlias = Any
 # Props are always a dictionary with string keys and arbitrary values.
-Props = dict[str, Any]
+Props: TypeAlias = dict[str, Any]
 
 # A DOM tag name.
-Tag = str
+Tag: TypeAlias = str
 # A component function, taking props as a parameter and returning an Element by calling DOM.create_element.
-Component = Callable[[Props], Element]
+Component: TypeAlias = Callable[[Props], Element]
 # What can be rendered: None, DOM tag name, Component.
-RenderableType = Component | Tag | None
+RenderableType: TypeAlias = Component | Tag | None
 # The output of the exporter.
 HTML = str
 
 
 # Config for a single renderable, element and optional wrappers / props.
 class RenderableConfig(TypedDict, total=False):
+    # TODO Use typing.Required when dropping Python 3.10 support.
+    # See https://peps.python.org/pep-0655/.
     element: RenderableType
     props: Props
     wrapper: RenderableType
     wrapper_props: Props
 
 
+# TODO Introduce a type guard when support improves.
+# def is_renderable_config(val: dict) -> TypeGuard[RenderableConfig]:
+#     return isinstance(val, dict) and "element" in val
+
 # block_map, style_map, entity_decorators.
-ConfigMap = dict[str, RenderableConfig | RenderableType]
+ConfigMap: TypeAlias = dict[str, RenderableConfig | RenderableType]
 
 
 # composite_decorators.
@@ -35,16 +41,7 @@ class Decorator(TypedDict):
     component: RenderableType
 
 
-CompositeDecorators = list[Decorator]
-
-
-# The whole config object.
-class Config(TypedDict, total=False):
-    block_map: ConfigMap
-    style_map: ConfigMap
-    entity_decorators: ConfigMap
-    composite_decorators: CompositeDecorators
-    engine: str
+CompositeDecorators: TypeAlias = list[Decorator]
 
 
 # Blocks have a predetermined set of keys and values, but let’s be permissive.
@@ -71,18 +68,18 @@ class Block(TypedDict, total=False):
 
 
 # Entity key is int in blocks, str in Entity map.
-EntityKey = str
+EntityKey: TypeAlias = str
 
-Mutability = Literal["MUTABLE", "IMMUTABLE", "SEGMENTED"]
+Mutability: TypeAlias = Literal["MUTABLE", "IMMUTABLE", "SEGMENTED"]
 
 
-class EntityDetails(TypedDict, total=False):
+class Entity(TypedDict, total=False):
     type: str
     data: dict[str, Any]
     mutability: Mutability
 
 
-EntityMap = dict[EntityKey, EntityDetails]
+EntityMap: TypeAlias = dict[EntityKey, Entity]
 
 
 # The whole content state. blocks and entity_map.

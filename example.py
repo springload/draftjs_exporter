@@ -10,8 +10,8 @@ from bs4 import BeautifulSoup
 from draftjs_exporter.constants import BLOCK_TYPES, ENTITY_TYPES, INLINE_STYLES
 from draftjs_exporter.defaults import BLOCK_MAP, STYLE_MAP
 from draftjs_exporter.dom import DOM
-from draftjs_exporter.html import HTML
-from draftjs_exporter.types import Element, Props
+from draftjs_exporter.html import HTML, ExporterConfig
+from draftjs_exporter.types import ContentState, Element, Props
 
 
 def blockquote(props: Props) -> Element:
@@ -135,51 +135,47 @@ def style_fallback(props: Props) -> Element:
 
 
 if __name__ == "__main__":
-    config = {
+    config: ExporterConfig = {
         # `block_map` is a mapping from Draft.js block types to a definition of their HTML representation.
         # Extend BLOCK_MAP to start with sane defaults, or make your own from scratch.
-        "block_map": dict(
-            BLOCK_MAP,
-            **{
-                # The most basic mapping format, block type to tag name.
-                BLOCK_TYPES.HEADER_TWO: "h2",
-                # Use a dict to define props on the block.
-                BLOCK_TYPES.HEADER_THREE: {
-                    "element": "h3",
-                    "props": {"class": "u-text-center"},
-                },
-                # Add a wrapper (and wrapper_props) to wrap adjacent blocks.
-                BLOCK_TYPES.UNORDERED_LIST_ITEM: {
-                    "element": "li",
-                    "wrapper": "ul",
-                    "wrapper_props": {"class": "bullet-list"},
-                },
-                # Use a custom component for more flexibility (reading block data or depth).
-                BLOCK_TYPES.BLOCKQUOTE: blockquote,
-                BLOCK_TYPES.ORDERED_LIST_ITEM: {
-                    "element": list_item,
-                    "wrapper": ordered_list,
-                },
-                # Provide a fallback component (advanced).
-                BLOCK_TYPES.FALLBACK: block_fallback,
+        "block_map": {
+            **BLOCK_MAP,
+            # The most basic mapping format, block type to tag name.
+            BLOCK_TYPES.HEADER_TWO: "h2",
+            # Use a dict to define props on the block.
+            BLOCK_TYPES.HEADER_THREE: {
+                "element": "h3",
+                "props": {"class": "u-text-center"},
             },
-        ),
+            # Add a wrapper (and wrapper_props) to wrap adjacent blocks.
+            BLOCK_TYPES.UNORDERED_LIST_ITEM: {
+                "element": "li",
+                "wrapper": "ul",
+                "wrapper_props": {"class": "bullet-list"},
+            },
+            # Use a custom component for more flexibility (reading block data or depth).
+            BLOCK_TYPES.BLOCKQUOTE: blockquote,
+            BLOCK_TYPES.ORDERED_LIST_ITEM: {
+                "element": list_item,
+                "wrapper": ordered_list,
+            },
+            # Provide a fallback component (advanced).
+            BLOCK_TYPES.FALLBACK: block_fallback,
+        },
         # `style_map` defines the HTML representation of inline elements.
         # Extend STYLE_MAP to start with sane defaults, or make your own from scratch.
-        "style_map": dict(
-            STYLE_MAP,
-            **{
-                # Use the same mapping format as in the `block_map`.
-                "KBD": "kbd",
-                # The `style` prop can be defined as a dict, that will automatically be converted to a string.
-                "HIGHLIGHT": {
-                    "element": "strong",
-                    "props": {"style": {"textDecoration": "underline"}},
-                },
-                # Provide a fallback component (advanced).
-                INLINE_STYLES.FALLBACK: style_fallback,
+        "style_map": {
+            **STYLE_MAP,
+            # Use the same mapping format as in the `block_map`.
+            "KBD": "kbd",
+            # The `style` prop can be defined as a dict, that will automatically be converted to a string.
+            "HIGHLIGHT": {
+                "element": "strong",
+                "props": {"style": {"textDecoration": "underline"}},
             },
-        ),
+            # Provide a fallback component (advanced).
+            INLINE_STYLES.FALLBACK: style_fallback,
+        },
         "entity_decorators": {
             # Map entities to components so they can be rendered with their data.
             ENTITY_TYPES.IMAGE: image,
@@ -203,7 +199,7 @@ if __name__ == "__main__":
 
     exporter = HTML(config)
 
-    content_state = {
+    content_state: ContentState = {
         "entityMap": {
             "0": {
                 "type": "LINK",

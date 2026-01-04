@@ -25,7 +25,7 @@ class DOM_HTML5LIB(DOMEngine):
         if not attr:
             attr = {}
 
-        return soup.new_tag(type_, **attr)
+        return soup.new_tag(type_, attrs=attr)
 
     @staticmethod
     def parse_html(markup: HTML) -> Element:

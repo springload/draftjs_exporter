@@ -4,7 +4,7 @@ from draftjs_exporter.constants import BLOCK_TYPES, ENTITY_TYPES, INLINE_STYLES
 from draftjs_exporter.defaults import BLOCK_MAP
 from draftjs_exporter.dom import DOM
 from draftjs_exporter.entity_state import EntityException
-from draftjs_exporter.html import HTML
+from draftjs_exporter.html import HTML, ExporterConfig
 from example import blockquote
 from tests.test_composite_decorators import (
     BR_DECORATOR,
@@ -13,7 +13,7 @@ from tests.test_composite_decorators import (
 )
 from tests.test_entities import hr, image, link
 
-config = {
+config: ExporterConfig = {
     "entity_decorators": {
         ENTITY_TYPES.LINK: link,
         ENTITY_TYPES.HORIZONTAL_RULE: hr,
@@ -24,17 +24,15 @@ config = {
         HASHTAG_DECORATOR,
         BR_DECORATOR,
     ],
-    "block_map": dict(
-        BLOCK_MAP,
-        **{
-            BLOCK_TYPES.UNORDERED_LIST_ITEM: {
-                "element": "li",
-                "wrapper": "ul",
-                "wrapper_props": {"class": "steps"},
-            },
-            "blockquote": {"element": blockquote, "wrapper": "div"},
+    "block_map": {
+        **BLOCK_MAP,
+        BLOCK_TYPES.UNORDERED_LIST_ITEM: {
+            "element": "li",
+            "wrapper": "ul",
+            "wrapper_props": {"class": "steps"},
         },
-    ),
+        "blockquote": {"element": blockquote, "wrapper": "div"},
+    },
     "style_map": {
         INLINE_STYLES.CODE: "code",
         INLINE_STYLES.ITALIC: "em",
@@ -299,21 +297,18 @@ class TestOutput(unittest.TestCase):
         )
 
     def test_render_with_number_attribute(self):
+        config: ExporterConfig = {
+            "block_map": {
+                **BLOCK_MAP,
+                BLOCK_TYPES.UNORDERED_LIST_ITEM: {
+                    "element": "li",
+                    "wrapper": "ul",
+                    "wrapper_props": {"length": 5},
+                },
+            },
+        }
         self.assertEqual(
-            HTML(
-                {
-                    "block_map": dict(
-                        BLOCK_MAP,
-                        **{
-                            BLOCK_TYPES.UNORDERED_LIST_ITEM: {
-                                "element": "li",
-                                "wrapper": "ul",
-                                "wrapper_props": {"length": 5},
-                            }
-                        },
-                    )
-                }
-            ).render(
+            HTML(config).render(
                 {
                     "entityMap": {},
                     "blocks": [
@@ -332,21 +327,18 @@ class TestOutput(unittest.TestCase):
         )
 
     def test_render_with_boolean_attribute_true(self):
+        config: ExporterConfig = {
+            "block_map": {
+                **BLOCK_MAP,
+                BLOCK_TYPES.UNORDERED_LIST_ITEM: {
+                    "element": "li",
+                    "wrapper": "ul",
+                    "wrapper_props": {"data-test": True},
+                },
+            }
+        }
         self.assertEqual(
-            HTML(
-                {
-                    "block_map": dict(
-                        BLOCK_MAP,
-                        **{
-                            BLOCK_TYPES.UNORDERED_LIST_ITEM: {
-                                "element": "li",
-                                "wrapper": "ul",
-                                "wrapper_props": {"data-test": True},
-                            }
-                        },
-                    )
-                }
-            ).render(
+            HTML(config).render(
                 {
                     "entityMap": {},
                     "blocks": [
@@ -365,21 +357,18 @@ class TestOutput(unittest.TestCase):
         )
 
     def test_render_with_boolean_attribute_false(self):
+        config: ExporterConfig = {
+            "block_map": {
+                **BLOCK_MAP,
+                BLOCK_TYPES.UNORDERED_LIST_ITEM: {
+                    "element": "li",
+                    "wrapper": "ul",
+                    "wrapper_props": {"data-test": False},
+                },
+            },
+        }
         self.assertEqual(
-            HTML(
-                {
-                    "block_map": dict(
-                        BLOCK_MAP,
-                        **{
-                            BLOCK_TYPES.UNORDERED_LIST_ITEM: {
-                                "element": "li",
-                                "wrapper": "ul",
-                                "wrapper_props": {"data-test": False},
-                            }
-                        },
-                    )
-                }
-            ).render(
+            HTML(config).render(
                 {
                     "entityMap": {},
                     "blocks": [
@@ -398,21 +387,18 @@ class TestOutput(unittest.TestCase):
         )
 
     def test_render_with_none_attribute(self):
+        config: ExporterConfig = {
+            "block_map": {
+                **BLOCK_MAP,
+                BLOCK_TYPES.UNORDERED_LIST_ITEM: {
+                    "element": "li",
+                    "wrapper": "ul",
+                    "wrapper_props": {"data-test": None},
+                },
+            },
+        }
         self.assertEqual(
-            HTML(
-                {
-                    "block_map": dict(
-                        BLOCK_MAP,
-                        **{
-                            BLOCK_TYPES.UNORDERED_LIST_ITEM: {
-                                "element": "li",
-                                "wrapper": "ul",
-                                "wrapper_props": {"data-test": None},
-                            }
-                        },
-                    )
-                }
-            ).render(
+            HTML(config).render(
                 {
                     "entityMap": {},
                     "blocks": [
@@ -431,21 +417,18 @@ class TestOutput(unittest.TestCase):
         )
 
     def test_render_with_unknown_attribute(self):
+        config: ExporterConfig = {
+            "block_map": {
+                **BLOCK_MAP,
+                BLOCK_TYPES.UNORDERED_LIST_ITEM: {
+                    "element": "li",
+                    "wrapper": "ul",
+                    "wrapper_props": {"*ngFor": "test"},
+                },
+            },
+        }
         self.assertEqual(
-            HTML(
-                {
-                    "block_map": dict(
-                        BLOCK_MAP,
-                        **{
-                            BLOCK_TYPES.UNORDERED_LIST_ITEM: {
-                                "element": "li",
-                                "wrapper": "ul",
-                                "wrapper_props": {"*ngFor": "test"},
-                            }
-                        },
-                    )
-                }
-            ).render(
+            HTML(config).render(
                 {
                     "entityMap": {},
                     "blocks": [
@@ -464,20 +447,17 @@ class TestOutput(unittest.TestCase):
         )
 
     def test_render_with_element_options(self):
+        config: ExporterConfig = {
+            "block_map": {
+                **BLOCK_MAP,
+                BLOCK_TYPES.HEADER_TWO: {
+                    "element": "h2",
+                    "props": {"class": "c-amazing-heading"},
+                },
+            }
+        }
         self.assertEqual(
-            HTML(
-                {
-                    "block_map": dict(
-                        BLOCK_MAP,
-                        **{
-                            BLOCK_TYPES.HEADER_TWO: {
-                                "element": "h2",
-                                "props": {"class": "c-amazing-heading"},
-                            }
-                        },
-                    )
-                }
-            ).render(
+            HTML(config).render(
                 {
                     "entityMap": {},
                     "blocks": [
@@ -496,8 +476,11 @@ class TestOutput(unittest.TestCase):
         )
 
     def test_render_with_none_component(self):
+        config: ExporterConfig = {
+            "block_map": {**BLOCK_MAP, BLOCK_TYPES.UNSTYLED: None}
+        }
         self.assertEqual(
-            HTML({"block_map": dict(BLOCK_MAP, **{BLOCK_TYPES.UNSTYLED: None})}).render(
+            HTML(config).render(
                 {
                     "entityMap": {},
                     "blocks": [
@@ -524,14 +507,11 @@ class TestOutput(unittest.TestCase):
         )
 
     def test_render_with_none_return_value(self):
+        config: ExporterConfig = {
+            "block_map": {**BLOCK_MAP, BLOCK_TYPES.UNSTYLED: lambda props: None}
+        }
         self.assertEqual(
-            HTML(
-                {
-                    "block_map": dict(
-                        BLOCK_MAP, **{BLOCK_TYPES.UNSTYLED: lambda props: None}
-                    )
-                }
-            ).render(
+            HTML(config).render(
                 {
                     "entityMap": {},
                     "blocks": [
@@ -998,26 +978,25 @@ class TestOutput(unittest.TestCase):
         )
 
     def test_render_with_big_content(self):
+        config: ExporterConfig = {
+            "entity_decorators": {"LINK": link},
+            "block_map": {
+                "header-two": {"element": "h2"},
+                "blockquote": {"element": "blockquote"},
+                "unordered-list-item": {
+                    "element": "li",
+                    "wrapper": "ul",
+                    "wrapper_props": {},
+                },
+                "unstyled": {"element": "p"},
+            },
+            "style_map": {
+                "ITALIC": {"element": "em"},
+                "BOLD": {"element": "strong"},
+            },
+        }
         self.assertEqual(
-            HTML(
-                {
-                    "entity_decorators": {"LINK": link},
-                    "block_map": {
-                        "header-two": {"element": "h2"},
-                        "blockquote": {"element": "blockquote"},
-                        "unordered-list-item": {
-                            "element": "li",
-                            "wrapper": "ul",
-                            "wrapper_props": {},
-                        },
-                        "unstyled": {"element": "p"},
-                    },
-                    "style_map": {
-                        "ITALIC": {"element": "em"},
-                        "BOLD": {"element": "strong"},
-                    },
-                }
-            ).render(
+            HTML(config).render(
                 {
                     "entityMap": {
                         "0": {
@@ -1107,19 +1086,18 @@ class TestOutput(unittest.TestCase):
         )
 
     def test_render_with_default_block_map(self):
+        config: ExporterConfig = {
+            "style_map": {
+                INLINE_STYLES.ITALIC: {"element": "em"},
+                INLINE_STYLES.BOLD: {"element": "strong"},
+                "HIGHLIGHT": {
+                    "element": "strong",
+                    "props": {"style": {"textDecoration": "underline"}},
+                },
+            }
+        }
         self.assertEqual(
-            HTML(
-                {
-                    "style_map": {
-                        INLINE_STYLES.ITALIC: {"element": "em"},
-                        INLINE_STYLES.BOLD: {"element": "strong"},
-                        "HIGHLIGHT": {
-                            "element": "strong",
-                            "props": {"style": {"textDecoration": "underline"}},
-                        },
-                    }
-                }
-            ).render(
+            HTML(config).render(
                 {
                     "entityMap": {},
                     "blocks": [
@@ -1140,21 +1118,18 @@ class TestOutput(unittest.TestCase):
         )
 
     def test_render_with_default_style_map(self):
+        config: ExporterConfig = {
+            "block_map": {
+                **BLOCK_MAP,
+                BLOCK_TYPES.UNORDERED_LIST_ITEM: {
+                    "element": "li",
+                    "wrapper": "ul",
+                    "wrapper_props": {"class": "steps"},
+                },
+            }
+        }
         self.assertEqual(
-            HTML(
-                {
-                    "block_map": dict(
-                        BLOCK_MAP,
-                        **{
-                            BLOCK_TYPES.UNORDERED_LIST_ITEM: {
-                                "element": "li",
-                                "wrapper": "ul",
-                                "wrapper_props": {"class": "steps"},
-                            }
-                        },
-                    )
-                }
-            ).render(
+            HTML(config).render(
                 {
                     "entityMap": {},
                     "blocks": [

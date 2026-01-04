@@ -7,13 +7,14 @@ from draftjs_exporter.composite_decorators import (
 )
 from draftjs_exporter.constants import BLOCK_TYPES
 from draftjs_exporter.dom import DOM
+from draftjs_exporter.types import Block, Decorator
 from example import LINKIFY_RE, br, hashtag, linkify
 
-BR_DECORATOR = {"strategy": re.compile(r"\n"), "component": br}
+BR_DECORATOR: Decorator = {"strategy": re.compile(r"\n"), "component": br}
 
-HASHTAG_DECORATOR = {"strategy": re.compile(r"#\w+"), "component": hashtag}
+HASHTAG_DECORATOR: Decorator = {"strategy": re.compile(r"#\w+"), "component": hashtag}
 
-LINKIFY_DECORATOR = {"strategy": LINKIFY_RE, "component": linkify}
+LINKIFY_DECORATOR: Decorator = {"strategy": LINKIFY_RE, "component": linkify}
 
 
 class TestLinkify(unittest.TestCase):
@@ -159,7 +160,7 @@ class TestCompositeDecorators(unittest.TestCase):
         )
 
     def test_render_decorators_data(self):
-        blocks = [
+        blocks: list[Block] = [
             {
                 "key": "5s7g9",
                 "text": "test",

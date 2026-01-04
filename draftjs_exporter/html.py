@@ -1,5 +1,6 @@
 from itertools import groupby
 from operator import attrgetter
+from typing import TypedDict
 
 from draftjs_exporter.command import Command
 from draftjs_exporter.composite_decorators import (
@@ -11,8 +12,24 @@ from draftjs_exporter.dom import DOM
 from draftjs_exporter.entity_state import EntityState
 from draftjs_exporter.options import Options
 from draftjs_exporter.style_state import StyleState
-from draftjs_exporter.types import Block, Config, ContentState, Element, EntityMap
+from draftjs_exporter.types import (
+    Block,
+    CompositeDecorators,
+    ConfigMap,
+    ContentState,
+    Element,
+    EntityMap,
+)
 from draftjs_exporter.wrapper_state import WrapperState
+
+
+# The whole config object.
+class ExporterConfig(TypedDict, total=False):
+    block_map: ConfigMap
+    style_map: ConfigMap
+    entity_decorators: ConfigMap
+    composite_decorators: CompositeDecorators
+    engine: str
 
 
 class HTML:
@@ -28,7 +45,7 @@ class HTML:
         "style_options",
     )
 
-    def __init__(self, config: Config | None = None) -> None:
+    def __init__(self, config: ExporterConfig | None = None) -> None:
         if config is None:
             config = {}
 

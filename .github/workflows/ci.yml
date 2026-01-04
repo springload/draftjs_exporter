@@ -20,7 +20,10 @@ jobs:
           python-version-file: "pyproject.toml"
       - uses: astral-sh/setup-uv@v7
       - run: uv sync --dev
-      - run: uv run make lint
+      - run: uv run ruff check --output-format=github .
+      - run: uv run ruff format --check
+      - run: uv run mypy draftjs_exporter tests
+      - run: uv run ty check --output-format=github .
       - run: uv run make benchmark
       - run: make build
       - uses: actions/setup-node@v6

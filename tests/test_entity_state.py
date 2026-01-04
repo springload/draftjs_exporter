@@ -4,11 +4,12 @@ from draftjs_exporter.command import Command
 from draftjs_exporter.dom import DOM
 from draftjs_exporter.entity_state import EntityException, EntityState
 from draftjs_exporter.options import Options
+from draftjs_exporter.types import Block, ConfigMap, EntityMap
 from tests.test_entities import link
 
-entity_decorators = {"LINK": link}
+entity_decorators: ConfigMap = {"LINK": link}
 
-entity_map = {
+entity_map: EntityMap = {
     "0": {
         "type": "LINK",
         "mutability": "MUTABLE",
@@ -66,11 +67,15 @@ class TestEntityState(unittest.TestCase):
 
     def test_render_entities_unstyled(self):
         self.assertEqual(
-            self.entity_state.render_entities("Test text", {}, []), "Test text"
+            self.entity_state.render_entities("Test text", {}, []),
+            "Test text",
         )
 
     def test_render_entities_unicode(self):
-        self.assertEqual(self.entity_state.render_entities("🍺", {}, []), "🍺")
+        self.assertEqual(
+            self.entity_state.render_entities("🍺", {}, []),
+            "🍺",
+        )
 
     def test_render_entities_inline(self):
         self.entity_state.apply(Command("start_entity", 0, "0"))
@@ -98,7 +103,7 @@ class TestEntityState(unittest.TestCase):
         )
 
     def test_render_entities_data(self):
-        blocks = [
+        blocks: list[Block] = [
             {
                 "key": "5s7g9",
                 "text": "test",

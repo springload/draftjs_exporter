@@ -35,7 +35,7 @@ class Elt:
     def __init__(self, type_: Tag, attr: Attr | None, markup: HTML = ""):
         self.type = type_
         self.attr = attr
-        self.children: list["Elt"] = []
+        self.children: list[str | "Elt"] = []
         self.markup = markup
 
     @staticmethod
