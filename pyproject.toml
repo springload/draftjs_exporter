@@ -52,6 +52,7 @@ dev = [
   "pytest-cov>=4.1.0",
   "pytest-memray>=1.7.0",
   "ruff>=0.1.9",
+  "ty>=0.0.8",
   # Benchmark dependencies.
   "markov_draftjs>=2.0.0",
   "memray>=1.15.0",
@@ -60,7 +61,6 @@ dev = [
   "lxml>=4.2.0,<7",
   "beautifulsoup4>=4.4.1,<5",
   "html5lib>=0.999,<2",
-  "ty>=0.0.8",
 ]
 
 [build-system]

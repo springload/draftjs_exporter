@@ -2,7 +2,7 @@
 
 Thank you for considering to help this project.
 
-We welcome all support, whether on bug reports, code, design, reviews, tests, documentation, and more.
+We welcome all support, whether on bug reports, code, design, reviews, tests, documentation, and more. Check out the [project roadmap](../ROADMAP.md) for high-level ideas that align with the project’s goals.
 
 Please note that this project is released with a [Contributor Code of Conduct](docs/CODE_OF_CONDUCT.md). By participating in this project you agree to abide by its terms.
 
@@ -10,7 +10,9 @@ Please note that this project is released with a [Contributor Code of Conduct](d
 
 ### Installation
 
-> Requirements: [`uv`](https://github.com/astral-sh/uv), [`pyenv`](https://github.com/pyenv/pyenv), [`nvm`](https://github.com/nvm-sh/nvm)
+> Requirements: [`uv`](https://github.com/astral-sh/uv)
+
+Clone the repository, configure the git hooks, then initialize with `make init`.
 
 ```sh
 git clone git@github.com:springload/draftjs_exporter.git
@@ -18,40 +20,28 @@ cd draftjs_exporter/
 # Install the git hooks.
 ./.githooks/deploy
 # Install the Python environment.
-uv venv
-source ./.venv/bin/activate
 make init
-# Install required Python versions
-pyenv install --skip-existing 3.10.0
-pyenv install --skip-existing 3.11.0
-pyenv install --skip-existing 3.12.1
-pyenv install --skip-existing 3.13.2
-pyenv install --skip-existing 3.14.0a5
-# Make required Python versions available globally.
-pyenv global system 3.10.0 3.11.0 3.12.0 3.13.2 3.14.0a5
 ```
 
 ### Commands
 
-```sh
-make help                 # See what commands are available.
-make init                 # Install dependencies and initialise for development.
-make lint                 # Lint the project.
-make format               # Format project files.
-make test                 # Test the project.
-make test-watch           # Restarts the tests whenever a file changes.
-make test-coverage        # Run the tests while generating test coverage data.
-make test-compatibility   # Compatibility-focused test suite.
-make dev                  # Restarts the example whenever a file changes.
-make benchmark            # Runs a one-off performance (speed, memory) benchmark.
-make clean-pyc            # Remove Python file artifacts.
-make build                # Builds package for publication.
-make publish              # Publishes a new version to pypi.
-```
+- `make help`: See what commands are available.
+- `make init`: Install dependencies and initialise for development.
+- `make lint`: Lint the project.
+- `make format`: Format project files.
+- `make test`: Test the project.
+- `make test-watch`: Restarts the tests whenever a file changes.
+- `make test-coverage`: Run the tests while generating test coverage data.
+- `make test-compatibility`: Compatibility-focused test suite.
+- `make dev`: Restarts the example whenever a file changes.
+- `make benchmark`: Runs a one-off performance (speed, memory) benchmark.
+- `make clean-pyc`: Remove Python file artifacts.
+- `make build`: Builds package for publication.
+- `make publish`: Publishes a new version to PyPI.
 
 ### Debugging
 
-- Always run the tests. `npm install -g nodemon`, then `make test-watch`.
+- Always run the tests. To auto-run with watch, use `npm install -g nodemon`, then `make test-watch`.
 - Use a debugger. `uv pip install ipdb`, then `import ipdb; ipdb.set_trace()`.
 
 ### Releases
@@ -66,6 +56,26 @@ make publish              # Publishes a new version to pypi.
 - Done!
 
 > As a last step, you may want to go update the [Draftail Playground](http://playground.draftail.org/) to this new release to check that all is well in a fully separate project.
+
+## Support guidelines
+
+### Python versions support
+
+- Official support for [supported Python versions](https://devguide.python.org/versions/), communicated via trove classifiers and in the README, tested in CI.
+- Tentative support for upcoming Python versions, tested in CI to some degree.
+- Case-by-case, unofficial undocumented support for end-of-life Python versions.
+
+### Benchmarks
+
+Consider [building Python for maximum performance](https://github.com/pyenv/pyenv/blob/master/plugins/python-build/README.md#building-for-maximum-performance):
+
+```sh
+env PYTHON_CONFIGURE_OPTS='--enable-optimizations --with-lto' PYTHON_CFLAGS='-march=native -mtune=native' pyenv install 3.6.0
+```
+
+### Static typing
+
+All exporter code should pass static type checking by [mypy](https://mypy.readthedocs.io/en/latest/index.html), with as strict of a configuration as possible, and tentatively also pass type checks with the [ty](https://docs.astral.sh/ty/) checker.
 
 ## Documentation
 
