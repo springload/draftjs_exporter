@@ -224,3 +224,21 @@ class TestHTML(unittest.TestCase):
             ),
             "<h1>Header</h1>",
         )
+
+    def test_engine_is_global_for_existing_instances(self):
+        html_string = HTML({"engine": DOM.STRING})
+        HTML({"engine": DOM.STRING_COMPAT})
+
+        self.assertEqual(
+            html_string.render({"entityMap": {}, "blocks": [{"text": 'Quote "here"'}]}),
+            "<p>Quote &quot;here&quot;</p>",
+        )
+
+    def test_engine_switching_affects_previous_instance(self):
+        html_compat = HTML({"engine": DOM.STRING_COMPAT})
+        HTML({"engine": DOM.STRING})
+
+        self.assertEqual(
+            html_compat.render({"entityMap": {}, "blocks": [{"text": 'Quote "here"'}]}),
+            '<p>Quote "here"</p>',
+        )
