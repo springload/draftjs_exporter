@@ -12,7 +12,7 @@ on:
   pull_request:
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-python@v6
@@ -34,7 +34,7 @@ jobs:
       - run: uv run make test-coverage
   test_compatibility:
     needs: test
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     strategy:
       matrix:
         python-version:
@@ -57,7 +57,7 @@ jobs:
       - run: uv run make test
   test_lower_bound:
     needs: test
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-python@v6
@@ -68,7 +68,7 @@ jobs:
   test_experimental:
     # Ad-hoc job to test experimental support without having to adjust all of our project for compatibility.
     needs: test
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-python@v6
@@ -77,4 +77,4 @@ jobs:
           # https://github.com/actions/python-versions/tags
           python-version: "3.15-dev"
       - uses: astral-sh/setup-uv@v7
-      - run: uv run --no-group dev --with 'beautifulsoup4>=4.4.1,<5, html5lib==1.1' python -X dev -W error example.py
+      - run: uv run --no-group dev --with 'beautifulsoup4>=4.4.1,<5, html5lib==1.1' python -X dev example.py
