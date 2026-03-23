@@ -9,11 +9,13 @@ from draftjs_exporter.constants import BLOCK_TYPES, ENTITY_TYPES
 from draftjs_exporter.defaults import BLOCK_MAP, STYLE_MAP
 from draftjs_exporter.dom import DOM
 from draftjs_exporter.html import HTML, ExporterConfig
+from draftjs_exporter.markdown import CONFIG as MARKDOWN_CONFIG
 from draftjs_exporter.types import ContentState
 from tests.test_composite_decorators import (
     BR_DECORATOR,
     HASHTAG_DECORATOR,
     LINKIFY_DECORATOR,
+    LINKIFY_MARKDOWN_DECORATOR,
 )
 from tests.test_entities import hr, image, link
 
@@ -26,10 +28,31 @@ ENGINE_MAP = {
     "lxml": DOM.LXML,
     "string": DOM.STRING,
     "string_compat": DOM.STRING_COMPAT,
+    "markdown": DOM.MARKDOWN,
 }
 
 
 def make_config(engine: str) -> ExporterConfig:
+    if engine == DOM.MARKDOWN:
+        return {
+            **MARKDOWN_CONFIG,
+            "style_map": {
+                **MARKDOWN_CONFIG["style_map"],
+                "KBD": "kbd",
+                "HIGHLIGHT": {
+                    "element": "strong",
+                    "props": {"style": {"textDecoration": "underline"}},
+                },
+            },
+            "entity_decorators": {
+                **MARKDOWN_CONFIG["entity_decorators"],
+                ENTITY_TYPES.EMBED: None,
+            },
+            "composite_decorators": [
+                LINKIFY_MARKDOWN_DECORATOR,
+            ],
+        }
+
     return {
         "entity_decorators": {
             ENTITY_TYPES.LINK: link,
@@ -136,6 +159,20 @@ class TestExportsString_Compat(unittest.TestCase, metaclass=ExportsTestMeta):
         cls.pr = cProfile.Profile()
         cls.pr.enable()
         print("\nstring_compat")  # noqa: T201
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.pr.disable()
+        Stats(cls.pr).strip_dirs().sort_stats("cumulative").print_stats(0)
+
+
+class TestExportsMarkdown(unittest.TestCase, metaclass=ExportsTestMeta):
+    @classmethod
+    def setUpClass(cls):
+        cls.pr = cProfile.Profile()
+        cls.pr.enable()
+        cls.maxDiff = None
+        print("\nmarkdown")  # noqa: T201
 
     @classmethod
     def tearDownClass(cls):

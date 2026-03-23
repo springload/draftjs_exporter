@@ -8,13 +8,18 @@ from draftjs_exporter.composite_decorators import (
 from draftjs_exporter.constants import BLOCK_TYPES
 from draftjs_exporter.dom import DOM
 from draftjs_exporter.types import Block, Decorator
-from example import LINKIFY_RE, br, hashtag, linkify
+from example import LINKIFY_RE, br, hashtag, linkify, linkify_markdown
 
 BR_DECORATOR: Decorator = {"strategy": re.compile(r"\n"), "component": br}
 
 HASHTAG_DECORATOR: Decorator = {"strategy": re.compile(r"#\w+"), "component": hashtag}
 
 LINKIFY_DECORATOR: Decorator = {"strategy": LINKIFY_RE, "component": linkify}
+
+LINKIFY_MARKDOWN_DECORATOR: Decorator = {
+    "strategy": LINKIFY_RE,
+    "component": linkify_markdown,
+}
 
 
 class TestLinkify(unittest.TestCase):

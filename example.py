@@ -20,6 +20,7 @@ from draftjs_exporter import (
     ExporterConfig,
     Props,
 )
+from draftjs_exporter.markdown.entities import link as markdown_link
 
 
 def blockquote(props: Props) -> Element:
@@ -108,6 +109,29 @@ def linkify(props: Props) -> Element:
         link_props["href"] = "http://" + href
 
     return DOM.create_element("a", link_props, href)
+
+
+def linkify_markdown(props: Props) -> Element:
+    """
+    Wrap plain URLs with link tags.
+    """
+    match = props["match"]
+    protocol = match.group(1)
+    url = match.group(2)
+    href = protocol + url
+
+    if props["block"]["type"] == BLOCK_TYPES.CODE:
+        return href
+
+    link_props = {
+        "url": href,
+        "children": href,
+    }
+
+    if href.startswith("www"):
+        link_props["url"] = "http://" + href
+
+    return markdown_link(link_props)
 
 
 def block_fallback(props: Props) -> Element:
@@ -346,7 +370,7 @@ if __name__ == "__main__":
                 "type": "unordered-list-item",
                 "depth": 0,
                 "inlineStyleRanges": [
-                    {"offset": 16, "length": 5, "style": "CODE"},
+                    {"offset": 16, "length": 4, "style": "CODE"},
                     {"offset": 40, "length": 4, "style": "CODE"},
                     {"offset": 48, "length": 4, "style": "CODE"},
                 ],
@@ -612,6 +636,9 @@ if __name__ == "__main__":
                 **MARKDOWN_CONFIG["block_map"],
                 BLOCK_TYPES.FALLBACK: block_fallback,
             },
+            "composite_decorators": [
+                {"strategy": LINKIFY_RE, "component": linkify_markdown},
+            ],
         }
     )
     markdown_output = markdown_exporter.render(content_state)
