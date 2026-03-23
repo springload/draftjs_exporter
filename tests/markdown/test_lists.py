@@ -1,0 +1,248 @@
+import unittest
+
+from draftjs_exporter.dom import DOM
+from draftjs_exporter.markdown.lists import (
+    get_block_index,
+    get_li_suffix,
+    get_numbered_li_prefix,
+    list_item,
+)
+
+
+class TestGetBlockIndex(unittest.TestCase):
+    def test_get_block_index(self):
+        self.assertEqual(
+            get_block_index(
+                [{"key": "a"}, {"key": "b"}, {"key": "c"}],
+                "b",
+            ),
+            1,
+        )
+
+    def test_get_block_index_not_found(self):
+        self.assertEqual(
+            get_block_index(
+                [{"key": "a"}, {"key": "b"}, {"key": "c"}],
+                "h",
+            ),
+            -1,
+        )
+
+
+class TestGetLiSuffix(unittest.TestCase):
+    def test_get_li_suffix(self):
+        b = {
+            "key": "a",
+            "type": "ordered-list-item",
+            "depth": 0,
+        }
+        self.assertEqual(
+            get_li_suffix(
+                {
+                    "block": b,
+                    "blocks": [b, dict(b, **{"key": "b"})],
+                }
+            ),
+            "\n",
+        )
+
+    def test_get_li_suffix_end(self):
+        b = {
+            "key": "a",
+            "type": "ordered-list-item",
+            "depth": 0,
+        }
+        self.assertEqual(
+            get_li_suffix(
+                {
+                    "block": b,
+                    "blocks": [
+                        dict(b, **{"key": "b"}),
+                        b,
+                        dict(b, **{"key": "c", "type": "unstyled"}),
+                    ],
+                }
+            ),
+            "\n\n",
+        )
+
+    def test_get_li_suffix_no_key(self):
+        b = {
+            "type": "ordered-list-item",
+            "depth": 0,
+        }
+        self.assertEqual(
+            get_li_suffix(
+                {
+                    "block": b,
+                    "blocks": [b, dict(b)],
+                }
+            ),
+            "\n",
+        )
+
+
+class TestGetNumberedLiPrefix(unittest.TestCase):
+    def test_first(self):
+        b = {
+            "key": "a",
+            "type": "ordered-list-item",
+            "depth": 0,
+        }
+        self.assertEqual(
+            get_numbered_li_prefix(
+                {
+                    "block": b,
+                    "blocks": [b, dict(b, **{"key": "b"})],
+                }
+            ),
+            "1. ",
+        )
+
+    def test_last(self):
+        b = {
+            "key": "a",
+            "type": "ordered-list-item",
+            "depth": 0,
+        }
+        self.assertEqual(
+            get_numbered_li_prefix(
+                {
+                    "block": b,
+                    "blocks": [dict(b, **{"key": "b"}), b],
+                }
+            ),
+            "2. ",
+        )
+
+    def test_multiple_lists(self):
+        b = {
+            "key": "a",
+            "type": "ordered-list-item",
+            "depth": 0,
+        }
+        self.assertEqual(
+            get_numbered_li_prefix(
+                {
+                    "block": b,
+                    "blocks": [
+                        dict(b, **{"key": "b"}),
+                        dict(b, **{"key": "d"}),
+                        dict(b, **{"key": "c", "type": "unstyled"}),
+                        b,
+                        dict(b, **{"key": "e"}),
+                    ],
+                }
+            ),
+            "1. ",
+        )
+
+    def test_nested_blocks(self):
+        b = {
+            "key": "a",
+            "type": "ordered-list-item",
+            "depth": 0,
+        }
+        self.assertEqual(
+            get_numbered_li_prefix(
+                {
+                    "block": b,
+                    "blocks": [
+                        dict(b, **{"key": "b"}),
+                        dict(b, **{"key": "d"}),
+                        dict(b, **{"key": "c", "type": "unstyled"}),
+                        dict(b, **{"key": "e"}),
+                        dict(b, **{"key": "f", "depth": 1}),
+                        b,
+                        dict(b, **{"key": "g"}),
+                    ],
+                }
+            ),
+            "2. ",
+        )
+
+    def test_nested_blocks_complex(self):
+        b = {
+            "key": "a",
+            "type": "ordered-list-item",
+            "depth": 0,
+        }
+        self.assertEqual(
+            get_numbered_li_prefix(
+                {
+                    "block": dict(b, **{"depth": 2}),
+                    "blocks": [
+                        dict(b, **{"key": "b"}),
+                        dict(b, **{"key": "d"}),
+                        dict(b, **{"key": "c", "type": "unstyled"}),
+                        dict(b, **{"key": "e"}),
+                        dict(b, **{"key": "f", "depth": 1}),
+                        dict(b, **{"depth": 2}),
+                        dict(b, **{"key": "g"}),
+                    ],
+                }
+            ),
+            "1. ",
+        )
+
+    def test_no_key(self):
+        b = {
+            "type": "ordered-list-item",
+            "depth": 0,
+        }
+        self.assertEqual(
+            get_numbered_li_prefix(
+                {
+                    "block": b,
+                    "blocks": [b],
+                }
+            ),
+            " ",
+        )
+
+    def test_wrong_key(self):
+        b = {
+            "key": "a",
+            "type": "ordered-list-item",
+            "depth": 0,
+        }
+        self.assertEqual(
+            get_numbered_li_prefix(
+                {
+                    "block": b,
+                    "blocks": [dict(b, **{"key": "b"})],
+                }
+            ),
+            "2. ",
+        )
+
+
+class TestListItem(unittest.TestCase):
+    def test_list_item(self):
+        self.assertEqual(
+            DOM.render(
+                list_item(
+                    "* ",
+                    {
+                        "block": {"depth": 0},
+                        "blocks": [],
+                        "children": "test",
+                    },
+                )
+            ),
+            "* test\n",
+        )
+
+    def test_list_item_depth(self):
+        self.assertEqual(
+            DOM.render(
+                list_item(
+                    "* ",
+                    {
+                        "block": {"depth": 2},
+                        "children": "test",
+                    },
+                )
+            ),
+            "    * test\n",
+        )
