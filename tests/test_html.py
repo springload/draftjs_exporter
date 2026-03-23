@@ -4,6 +4,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from draftjs_exporter.command import Command
 from draftjs_exporter.dom import DOM
 from draftjs_exporter.html import HTML, ExporterConfig
+from draftjs_exporter.types import ContentState
 
 config: ExporterConfig = {
     "entity_decorators": {},
@@ -249,7 +250,10 @@ class TestHTML(unittest.TestCase):
 
     def test_render_concurrent_different_engines(self):
         """Two exporters with different engines render correctly in parallel."""
-        content_state = {"entityMap": {}, "blocks": [{"text": 'Quote "here"'}]}
+        content_state: ContentState = {
+            "entityMap": {},
+            "blocks": [{"text": 'Quote "here"'}],
+        }
 
         html_string = HTML({"engine": DOM.STRING})
         html_compat = HTML({"engine": DOM.STRING_COMPAT})
@@ -270,9 +274,9 @@ class TestHTML(unittest.TestCase):
     def test_render_concurrent_same_engine(self):
         """Multiple renders of the same exporter work correctly in parallel."""
         exporter = HTML(config)
-        content_states = [
-            {"entityMap": {}, "blocks": [{"text": f"Block {i}"}]} for i in range(10)
-        ]
+        content_states: list[ContentState] = []
+        for i in range(10):
+            content_states.append({"entityMap": {}, "blocks": [{"text": f"Block {i}"}]})
 
         with ThreadPoolExecutor(max_workers=4) as pool:
             futures = [pool.submit(exporter.render, cs) for cs in content_states]

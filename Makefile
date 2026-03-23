@@ -17,6 +17,7 @@ lint: ## Lint the project.
 	ty check
 
 format: ## Format project files.
+	ruff check --fix
 	ruff format
 	npm run format
 
