@@ -52,7 +52,7 @@ dev = [
   "pytest-cov>=4.1.0",
   "pytest-memray>=1.7.0",
   "ruff>=0.1.9",
-  "ty>=0.0.8",
+  "ty>=0.0.24",
   # Benchmark dependencies.
   "markov_draftjs>=2.0.0",
   "memray>=1.15.0",

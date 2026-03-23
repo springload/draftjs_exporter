@@ -107,8 +107,8 @@ class DOM:
         props["children"] = children[0] if len(children) == 1 else children
 
         if callable(type_):
-            # Function component, via def or lambda.
-            elt = type_(props)
+            # Function component, via def or lambda. We presume its signature is correct.
+            elt = type_(props)  # type: ignore
         else:
             # Raw tag, as a string.
             attributes = {}
