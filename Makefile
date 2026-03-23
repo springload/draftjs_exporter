@@ -28,7 +28,7 @@ test-watch: ## Restarts the tests whenever a file changes.
 	PYTHONDEVMODE=1 nodemon -q -e py -w tests -w draftjs_exporter  -x "clear && make test -s || true"
 
 test-coverage: ## Run the tests while generating test coverage data.
-	PYTHONDEVMODE=1 pytest -W error --cov --cov-report=html --capture=no
+	PYTHONDEVMODE=1 pytest -W error --cov --cov-report=term --cov-report=html --capture=no
 
 test-compatibility: ## Compatibility-focused test suite.
 	uv run --isolated --python 3.10 --with 'beautifulsoup4==4.7.1, html5lib==1.1, lxml==4.6.5' pytest
