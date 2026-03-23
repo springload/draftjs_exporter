@@ -1,5 +1,6 @@
 from draftjs_exporter.constants import BLOCK_TYPES
 from draftjs_exporter.dom import DOM
+from draftjs_exporter.engines.base import DOMEngine
 from draftjs_exporter.options import Options, OptionsMap
 from draftjs_exporter.types import Block, Element, Props, RenderableType
 
@@ -82,11 +83,14 @@ class WrapperState:
     It adds a wrapper element around elements, if required.
     """
 
-    __slots__ = ("block_options", "blocks", "stack")
+    __slots__ = ("block_options", "blocks", "dom", "stack")
 
-    def __init__(self, block_options: OptionsMap, blocks: list[Block]) -> None:
+    def __init__(
+        self, block_options: OptionsMap, blocks: list[Block], dom: type[DOMEngine]
+    ) -> None:
         self.block_options = block_options
         self.blocks = blocks
+        self.dom = dom
         self.stack = WrapperStack()
 
     def __str__(self) -> str:
@@ -112,7 +116,7 @@ class WrapperState:
     def parent_for(self, options: Options, depth: int, elt: Element) -> Element:
         if options.wrapper:
             parent = self.get_wrapper_elt(options, depth)
-            DOM.append_child(parent, elt)
+            self.dom.append_child(parent, elt)
             self.stack.stack[-1].last_child = elt
         else:
             # Reset the stack if there is no wrapper.
@@ -154,12 +158,12 @@ class WrapperState:
                     props["blocks"] = self.blocks
 
                     wrapper_parent = DOM.create_element(options.element, props)
-                    DOM.append_child(self.stack.head().elt, wrapper_parent)
+                    self.dom.append_child(self.stack.head().elt, wrapper_parent)
                 else:
                     # Otherwise we can append at the end of the last child.
                     wrapper_parent = self.stack.head().last_child
 
-                DOM.append_child(wrapper_parent, new_wrapper.elt)
+                self.dom.append_child(wrapper_parent, new_wrapper.elt)
 
                 self.stack.append(new_wrapper)
         else:

@@ -4,6 +4,7 @@ from operator import itemgetter
 from typing import Any
 
 from draftjs_exporter.dom import DOM
+from draftjs_exporter.engines.base import DOMEngine
 from draftjs_exporter.types import Block, CompositeDecorators, Decorator, Element
 
 br = "\n"
@@ -58,6 +59,7 @@ def render_decorators(
     text: str,
     block: Block,
     blocks: list[Block],
+    dom: type[DOMEngine],
 ) -> Element:
     decorated_children = list(apply_decorators(decorators, text, block, blocks))
 
@@ -66,7 +68,7 @@ def render_decorators(
     else:
         decorated_node = DOM.create_element()
         for decorated_child in decorated_children:
-            DOM.append_child(decorated_node, decorated_child)
+            dom.append_child(decorated_node, decorated_child)
 
     return decorated_node
 

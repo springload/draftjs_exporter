@@ -1,6 +1,7 @@
 from draftjs_exporter.command import Command
 from draftjs_exporter.constants import ENTITY_TYPES
 from draftjs_exporter.dom import DOM
+from draftjs_exporter.engines.base import DOMEngine
 from draftjs_exporter.error import ExporterException
 from draftjs_exporter.options import Options, OptionsMap
 from draftjs_exporter.types import Block, Element, Entity, EntityKey, EntityMap
@@ -55,7 +56,11 @@ class EntityState:
         return details
 
     def render_entities(
-        self, style_node: Element, block: Block, blocks: list[Block]
+        self,
+        style_node: Element,
+        block: Block,
+        blocks: list[Block],
+        dom: type[DOMEngine],
     ) -> Element:
         # We have a complete (start, stop) entity to render.
         if self.completed_entity is not None:
@@ -82,7 +87,7 @@ class EntityState:
                 children = DOM.create_element()
 
                 for n in self.element_stack:
-                    DOM.append_child(children, n)
+                    dom.append_child(children, n)
 
             self.completed_entity = None
             self.element_stack = []

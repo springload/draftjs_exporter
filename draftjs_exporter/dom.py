@@ -13,6 +13,7 @@ _first_cap_re = re.compile(r"(.)([A-Z][a-z]+)")
 _all_cap_re = re.compile("([a-z0-9])([A-Z])")
 
 _engine_var: ContextVar[type[DOMEngine] | None] = ContextVar("dom_engine", default=None)
+_engine_cache: dict[str, type[DOMEngine]] = {}
 
 
 class DOM:
@@ -45,7 +46,13 @@ class DOM:
         """
         Choose which DOM implementation to use in the current context.
         """
-        return _engine_var.set(cast(type[DOMEngine], import_string(engine)))
+        try:
+            resolved = _engine_cache[engine]
+        except KeyError:
+            resolved = _engine_cache[engine] = cast(
+                type[DOMEngine], import_string(engine)
+            )
+        _engine_var.set(resolved)
 
     @staticmethod
     @contextmanager
@@ -53,7 +60,13 @@ class DOM:
         """
         Context manager to temporarily set the DOM engine for the current context.
         """
-        token = DOM.use(engine)
+        try:
+            resolved = _engine_cache[engine]
+        except KeyError:
+            resolved = _engine_cache[engine] = cast(
+                type[DOMEngine], import_string(engine)
+            )
+        token = _engine_var.set(resolved)
         try:
             yield
         finally:

@@ -96,6 +96,7 @@ class TestBR(unittest.TestCase):
                     "test \n test",
                     {"type": BLOCK_TYPES.UNSTYLED, "depth": 0},
                     [],
+                    DOM._dom(),
                 )
             ),
             "test <br/> test",
@@ -116,6 +117,7 @@ class TestCompositeDecorators(unittest.TestCase):
                 "test https://www.example.com#hash #hashtagtest",
                 {"type": BLOCK_TYPES.UNSTYLED, "depth": 0},
                 [],
+                DOM._dom(),
             ),
             "test https://www.example.com#hash #hashtagtest",
         )
@@ -128,6 +130,7 @@ class TestCompositeDecorators(unittest.TestCase):
                     "test https://www.example.com#hash #hashtagtest",
                     {"type": BLOCK_TYPES.UNSTYLED, "depth": 0},
                     [],
+                    DOM._dom(),
                 )
             ),
             'test <a href="https://www.example.com#hash">https://www.example.com#hash</a> #hashtagtest',
@@ -141,6 +144,7 @@ class TestCompositeDecorators(unittest.TestCase):
                     "test https://www.example.com#hash #hashtagtest",
                     {"type": BLOCK_TYPES.UNSTYLED, "depth": 0},
                     [],
+                    DOM._dom(),
                 )
             ),
             'test <a href="https://www.example.com#hash">https://www.example.com#hash</a> <span class="hashtag">#hashtagtest</span>',
@@ -154,6 +158,7 @@ class TestCompositeDecorators(unittest.TestCase):
                     "test https://www.example.com#hash #hashtagtest",
                     {"type": BLOCK_TYPES.UNSTYLED, "depth": 0},
                     [],
+                    DOM._dom(),
                 )
             ),
             'test https://www.example.com<span class="hashtag">#hash</span> <span class="hashtag">#hashtagtest</span>',
@@ -181,6 +186,7 @@ class TestCompositeDecorators(unittest.TestCase):
             "test https://www.example.com#hash #hashtagtest",
             blocks[0],
             blocks,
+            DOM._dom(),
         )
 
     def test_should_render_decorators_empty(self):

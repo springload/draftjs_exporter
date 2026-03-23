@@ -67,38 +67,44 @@ class TestEntityState(unittest.TestCase):
 
     def test_render_entities_unstyled(self):
         self.assertEqual(
-            self.entity_state.render_entities("Test text", {}, []),
+            self.entity_state.render_entities("Test text", {}, [], DOM._dom()),
             "Test text",
         )
 
     def test_render_entities_unicode(self):
         self.assertEqual(
-            self.entity_state.render_entities("🍺", {}, []),
+            self.entity_state.render_entities("🍺", {}, [], DOM._dom()),
             "🍺",
         )
 
     def test_render_entities_inline(self):
         self.entity_state.apply(Command("start_entity", 0, "0"))
-        self.entity_state.render_entities("Test text", {}, [])
+        self.entity_state.render_entities("Test text", {}, [], DOM._dom())
         self.entity_state.apply(Command("stop_entity", 9, "0"))
         self.assertEqual(
-            DOM.render_debug(self.entity_state.render_entities("Test text", {}, [])),
+            DOM.render_debug(
+                self.entity_state.render_entities("Test text", {}, [], DOM._dom())
+            ),
             '<a href="http://example.com">Test text</a>',
         )
 
     def test_render_entities_inline_multiple(self):
         self.entity_state.apply(Command("start_entity", 0, "0"))
-        self.entity_state.render_entities("Test 1", {}, [])
+        self.entity_state.render_entities("Test 1", {}, [], DOM._dom())
         self.entity_state.apply(Command("stop_entity", 5, "0"))
         self.entity_state.apply(Command("start_entity", 5, "2"))
         self.assertEqual(
-            DOM.render_debug(self.entity_state.render_entities("Test text", {}, [])),
+            DOM.render_debug(
+                self.entity_state.render_entities("Test text", {}, [], DOM._dom())
+            ),
             '<a href="http://example.com">Test 1</a>',
         )
-        self.entity_state.render_entities("Test 2", {}, [])
+        self.entity_state.render_entities("Test 2", {}, [], DOM._dom())
         self.entity_state.apply(Command("stop_entity", 10, "2"))
         self.assertEqual(
-            DOM.render_debug(self.entity_state.render_entities("Test text", {}, [])),
+            DOM.render_debug(
+                self.entity_state.render_entities("Test text", {}, [], DOM._dom())
+            ),
             '<a href="http://test.com"><fragment>Test textTest 2</fragment></a>',
         )
 
@@ -127,9 +133,9 @@ class TestEntityState(unittest.TestCase):
         )
 
         entity_state.apply(Command("start_entity", 0, "0"))
-        entity_state.render_entities("Test text", blocks[0], blocks)
+        entity_state.render_entities("Test text", blocks[0], blocks, DOM._dom())
         entity_state.apply(Command("stop_entity", 9, "0"))
-        entity_state.render_entities("Test text", blocks[0], blocks)
+        entity_state.render_entities("Test text", blocks[0], blocks, DOM._dom())
 
     def test_render_entities_data_no_mutability(self):
         def component(props):
@@ -141,6 +147,6 @@ class TestEntityState(unittest.TestCase):
         )
 
         entity_state.apply(Command("start_entity", 0, "2"))
-        entity_state.render_entities("Test text", {}, [])
+        entity_state.render_entities("Test text", {}, [], DOM._dom())
         entity_state.apply(Command("stop_entity", 9, "2"))
-        entity_state.render_entities("Test text", {}, [])
+        entity_state.render_entities("Test text", {}, [], DOM._dom())

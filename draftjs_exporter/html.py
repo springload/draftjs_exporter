@@ -9,6 +9,7 @@ from draftjs_exporter.composite_decorators import (
 )
 from draftjs_exporter.defaults import BLOCK_MAP, STYLE_MAP
 from draftjs_exporter.dom import DOM
+from draftjs_exporter.engines.base import DOMEngine
 from draftjs_exporter.entity_state import EntityState
 from draftjs_exporter.options import Options
 from draftjs_exporter.style_state import StyleState
@@ -63,11 +64,13 @@ class HTML:
         Starts the export process on a given piece of content state.
         """
         with DOM.engine(self._engine):
+            dom = DOM._dom()
+
             if content_state is None:
                 content_state = {}
 
             blocks = content_state.get("blocks", [])
-            wrapper_state = WrapperState(self.block_options, blocks)
+            wrapper_state = WrapperState(self.block_options, blocks, dom)
             document = DOM.create_element()
             entity_map = content_state.get("entityMap", {})
             min_depth = 0
@@ -75,23 +78,27 @@ class HTML:
             for block in blocks:
                 # Assume a depth of 0 if it's not specified, like Draft.js would.
                 depth = block.get("depth", 0)
-                elt = self.render_block(block, entity_map, wrapper_state)
+                elt = self.render_block(block, entity_map, wrapper_state, dom)
 
                 if depth > min_depth:
                     min_depth = depth
 
                 # At level 0, append the element to the document.
                 if depth == 0:
-                    DOM.append_child(document, elt)
+                    dom.append_child(document, elt)
 
             # If there is no block at depth 0, we need to add the wrapper that contains the whole tree to the document.
             if min_depth > 0 and wrapper_state.stack.length() != 0:
-                DOM.append_child(document, wrapper_state.stack.tail().elt)
+                dom.append_child(document, wrapper_state.stack.tail().elt)
 
-            return DOM.render(document)
+            return dom.render(document)
 
     def render_block(
-        self, block: Block, entity_map: EntityMap, wrapper_state: WrapperState
+        self,
+        block: Block,
+        entity_map: EntityMap,
+        wrapper_state: WrapperState,
+        dom: type[DOMEngine],
     ) -> Element:
         text = block.get("text", "")
         has_styles = bool(block.get("inlineStyleRanges"))
@@ -116,6 +123,7 @@ class HTML:
                         text,
                         block,
                         wrapper_state.blocks,
+                        dom,
                     )
                 else:
                     decorated_node = text
@@ -127,15 +135,15 @@ class HTML:
                 else:
                     styled_node = decorated_node
                 entity_node = entity_state.render_entities(
-                    styled_node, block, wrapper_state.blocks
+                    styled_node, block, wrapper_state.blocks, dom
                 )
 
                 if entity_node is not None:
-                    DOM.append_child(content, entity_node)
+                    dom.append_child(content, entity_node)
 
                     # Check whether there actually are two different nodes, confirming we are not inserting an upcoming entity.
                     if styled_node != entity_node and entity_state.has_no_entity():
-                        DOM.append_child(content, styled_node)
+                        dom.append_child(content, styled_node)
         # Fast track for blocks which do not contain styles nor entities, which is very common.
         elif has_decorators:
             content = render_decorators(
@@ -143,6 +151,7 @@ class HTML:
                 text,
                 block,
                 wrapper_state.blocks,
+                dom,
             )
         else:
             content = text
