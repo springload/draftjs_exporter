@@ -43,6 +43,7 @@ make init
 
 - Always run the tests. To auto-run with watch, use `npm install -g nodemon`, then `make test-watch`.
 - Use a debugger. `uv pip install ipdb`, then `import ipdb; ipdb.set_trace()`.
+- You can use `example.py` as a basic CLI to try out the exporter with arbitrary ContentState JSON: `echo '{"json": "contents"}' | ./example.py -`.
 
 ### Releases
 

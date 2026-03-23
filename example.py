@@ -1,6 +1,11 @@
+#!/usr/bin/env -S uv run
+import argparse
 import cProfile
+import json
 import logging
 import re
+import sys
+import typing
 from pstats import Stats
 
 from bs4 import BeautifulSoup
@@ -167,6 +172,18 @@ def style_fallback(props: Props) -> Element:
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(
+        description="Export Draft.js JSON to HTML and Markdown."
+    )
+    parser.add_argument(
+        "infile",
+        nargs="?",
+        type=argparse.FileType("r"),
+        default=None,
+        help="Draft.js JSON file to convert, or - for STDIN",
+    )
+    args = parser.parse_args()
+
     config: ExporterConfig = {
         # `block_map` is a mapping from Draft.js block types to a definition of their HTML representation.
         # Extend BLOCK_MAP to start with sane defaults, or make your own from scratch.
@@ -591,6 +608,10 @@ if __name__ == "__main__":
             },
         ],
     }
+
+    # Use file/STDIN input if provided, otherwise run the built-in demo.
+    if args.infile is not None:
+        content_state: ContentState = json.load(args.infile)
 
     # --- HTML export ---
 
