@@ -6,12 +6,20 @@ from pstats import Stats
 from bs4 import BeautifulSoup
 
 # draftjs_exporter provides default configurations and predefined constants for reuse.
-from draftjs_exporter.constants import BLOCK_TYPES, ENTITY_TYPES, INLINE_STYLES
-from draftjs_exporter.defaults import BLOCK_MAP, STYLE_MAP
-from draftjs_exporter.dom import DOM
-from draftjs_exporter.html import HTML, ExporterConfig
-from draftjs_exporter.markdown import CONFIG as MARKDOWN_CONFIG
-from draftjs_exporter.types import ContentState, Element, Props
+from draftjs_exporter import (
+    BLOCK_MAP,
+    BLOCK_TYPES,
+    DOM,
+    ENTITY_TYPES,
+    INLINE_STYLES,
+    MARKDOWN_CONFIG,
+    STYLE_MAP,
+    ContentState,
+    Element,
+    Exporter,
+    ExporterConfig,
+    Props,
+)
 
 
 def blockquote(props: Props) -> Element:
@@ -197,7 +205,7 @@ if __name__ == "__main__":
         "engine": DOM.STRING,
     }
 
-    exporter = HTML(config)
+    exporter = Exporter(config)
 
     content_state: ContentState = {
         "entityMap": {
@@ -588,7 +596,7 @@ if __name__ == "__main__":
     # Use the built-in Markdown config for a quick, opinionated conversion.
     # Extend it with fallbacks to handle custom types from the content state above.
 
-    markdown_exporter = HTML(
+    markdown_exporter = Exporter(
         {
             **MARKDOWN_CONFIG,
             "style_map": {
