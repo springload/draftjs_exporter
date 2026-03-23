@@ -2,6 +2,12 @@
 
 > All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Fixed
+
+- Fix concurrency bug where the DOM engine was shared globally across all `HTML` instances. Each exporter now uses its own engine via a context variable.
+
 ## [v6.0.0](https://github.com/springload/draftjs_exporter/releases/tag/v6.0.0)
 
 ### Removed

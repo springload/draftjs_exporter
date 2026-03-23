@@ -43,6 +43,7 @@ class HTML:
         "entity_options",
         "block_options",
         "style_options",
+        "_engine",
     )
 
     def __init__(self, config: ExporterConfig | None = None) -> None:
@@ -55,38 +56,39 @@ class HTML:
         self.block_options = Options.map_blocks(config.get("block_map", BLOCK_MAP))
         self.style_options = Options.map_styles(config.get("style_map", STYLE_MAP))
 
-        DOM.use(config.get("engine", DOM.STRING))
+        self._engine = config.get("engine", DOM.STRING)
 
     def render(self, content_state: ContentState | None = None) -> str:
         """
         Starts the export process on a given piece of content state.
         """
-        if content_state is None:
-            content_state = {}
+        with DOM.engine(self._engine):
+            if content_state is None:
+                content_state = {}
 
-        blocks = content_state.get("blocks", [])
-        wrapper_state = WrapperState(self.block_options, blocks)
-        document = DOM.create_element()
-        entity_map = content_state.get("entityMap", {})
-        min_depth = 0
+            blocks = content_state.get("blocks", [])
+            wrapper_state = WrapperState(self.block_options, blocks)
+            document = DOM.create_element()
+            entity_map = content_state.get("entityMap", {})
+            min_depth = 0
 
-        for block in blocks:
-            # Assume a depth of 0 if it's not specified, like Draft.js would.
-            depth = block.get("depth", 0)
-            elt = self.render_block(block, entity_map, wrapper_state)
+            for block in blocks:
+                # Assume a depth of 0 if it's not specified, like Draft.js would.
+                depth = block.get("depth", 0)
+                elt = self.render_block(block, entity_map, wrapper_state)
 
-            if depth > min_depth:
-                min_depth = depth
+                if depth > min_depth:
+                    min_depth = depth
 
-            # At level 0, append the element to the document.
-            if depth == 0:
-                DOM.append_child(document, elt)
+                # At level 0, append the element to the document.
+                if depth == 0:
+                    DOM.append_child(document, elt)
 
-        # If there is no block at depth 0, we need to add the wrapper that contains the whole tree to the document.
-        if min_depth > 0 and wrapper_state.stack.length() != 0:
-            DOM.append_child(document, wrapper_state.stack.tail().elt)
+            # If there is no block at depth 0, we need to add the wrapper that contains the whole tree to the document.
+            if min_depth > 0 and wrapper_state.stack.length() != 0:
+                DOM.append_child(document, wrapper_state.stack.tail().elt)
 
-        return DOM.render(document)
+            return DOM.render(document)
 
     def render_block(
         self, block: Block, entity_map: EntityMap, wrapper_state: WrapperState

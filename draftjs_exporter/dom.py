@@ -1,5 +1,8 @@
 import re
-from typing import Any
+from collections.abc import Iterator
+from contextlib import contextmanager
+from contextvars import ContextVar
+from typing import Any, cast
 
 from draftjs_exporter.engines.base import DOMEngine
 from draftjs_exporter.types import HTML, Element, Props, RenderableType
@@ -8,6 +11,8 @@ from draftjs_exporter.utils.module_loading import import_string
 # https://gist.github.com/yahyaKacem/8170675
 _first_cap_re = re.compile(r"(.)([A-Z][a-z]+)")
 _all_cap_re = re.compile("([a-z0-9])([A-Z])")
+
+_engine_var: ContextVar[type[DOMEngine] | None] = ContextVar("dom_engine", default=None)
 
 
 class DOM:
@@ -20,8 +25,6 @@ class DOM:
     STRING = "draftjs_exporter.engines.string.DOMString"
     STRING_COMPAT = "draftjs_exporter.engines.string_compat.DOMStringCompat"
 
-    dom: DOMEngine = None  # type: ignore
-
     @staticmethod
     def camel_to_dash(camel_cased_str: str) -> str:
         sub2 = _first_cap_re.sub(r"\1-\2", camel_cased_str)
@@ -29,11 +32,32 @@ class DOM:
         return dashed_case_str.replace("--", "-")
 
     @classmethod
+    def _dom(cls) -> type[DOMEngine]:
+        engine = _engine_var.get()
+        if engine is None:
+            raise RuntimeError(
+                "No DOM engine set. Call DOM.use() or use HTML() to configure an engine."
+            )
+        return engine
+
+    @classmethod
     def use(cls, engine: str) -> None:
         """
-        Choose which DOM implementation to use.
+        Choose which DOM implementation to use in the current context.
         """
-        cls.dom = import_string(engine)
+        return _engine_var.set(cast(type[DOMEngine], import_string(engine)))
+
+    @staticmethod
+    @contextmanager
+    def engine(engine: str) -> Iterator[None]:
+        """
+        Context manager to temporarily set the DOM engine for the current context.
+        """
+        token = DOM.use(engine)
+        try:
+            yield
+        finally:
+            _engine_var.reset(token)
 
     @classmethod
     def create_element(
@@ -51,9 +75,10 @@ class DOM:
         )
         https://facebook.github.io/react/docs/top-level-api.html#react.createelement
         """
+        dom = cls._dom()
         # Create an empty document fragment.
         if not type_:
-            return cls.dom.create_tag("fragment")
+            return dom.create_tag("fragment")
 
         if props is None:
             props = {}
@@ -99,7 +124,7 @@ class DOM:
                 if props[key] is not None:
                     attributes[key] = str(props[key])
 
-            elt = cls.dom.create_tag(type_, attributes)
+            elt = dom.create_tag(type_, attributes)
 
             # Append the children inside the element.
             for child in children:
@@ -108,22 +133,22 @@ class DOM:
 
         # If elt is "empty", create a fragment anyway to add children.
         if elt in (None, ""):
-            elt = cls.dom.create_tag("fragment")
+            elt = dom.create_tag("fragment")
 
         return elt
 
     @classmethod
     def parse_html(cls, markup: HTML) -> Element:
-        return cls.dom.parse_html(markup)
+        return cls._dom().parse_html(markup)
 
     @classmethod
     def append_child(cls, elt: Element, child: Element) -> Any:
-        return cls.dom.append_child(elt, child)
+        return cls._dom().append_child(elt, child)
 
     @classmethod
     def render(cls, elt: Element) -> HTML:
-        return cls.dom.render(elt)
+        return cls._dom().render(elt)
 
     @classmethod
     def render_debug(cls, elt: Element) -> HTML:
-        return cls.dom.render_debug(elt)
+        return cls._dom().render_debug(elt)

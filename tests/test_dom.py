@@ -1,6 +1,6 @@
 import unittest
 
-from draftjs_exporter.dom import DOM
+from draftjs_exporter.dom import DOM, _engine_var
 from draftjs_exporter.engines.html5lib import DOM_HTML5LIB
 from draftjs_exporter.engines.lxml import DOM_LXML
 from draftjs_exporter.engines.string import DOMString
@@ -18,19 +18,43 @@ class TestDOM(unittest.TestCase):
 
     def test_use_custom(self):
         DOM.use("tests.test_dom.DOMTestImpl")
-        self.assertEqual(DOM.dom, DOMTestImpl)
+        self.assertEqual(DOM._dom(), DOMTestImpl)
 
     def test_use_lxml(self):
         DOM.use(DOM.LXML)
-        self.assertEqual(DOM.dom, DOM_LXML)
+        self.assertEqual(DOM._dom(), DOM_LXML)
 
     def test_use_html5lib(self):
         DOM.use(DOM.HTML5LIB)
-        self.assertEqual(DOM.dom, DOM_HTML5LIB)
+        self.assertEqual(DOM._dom(), DOM_HTML5LIB)
 
     def test_use_string(self):
         DOM.use(DOM.STRING)
-        self.assertEqual(DOM.dom, DOMString)
+        self.assertEqual(DOM._dom(), DOMString)
+
+    def test_engine_context_manager(self):
+        DOM.use(DOM.HTML5LIB)
+        self.assertEqual(DOM._dom(), DOM_HTML5LIB)
+        with DOM.engine(DOM.STRING):
+            self.assertEqual(DOM._dom(), DOMString)
+        self.assertEqual(DOM._dom(), DOM_HTML5LIB)
+
+    def test_engine_context_manager_restores_on_exception(self):
+        DOM.use(DOM.HTML5LIB)
+        try:
+            with DOM.engine(DOM.STRING):
+                raise ValueError("test")
+        except ValueError:
+            pass
+        self.assertEqual(DOM._dom(), DOM_HTML5LIB)
+
+    def test_no_engine_raises(self):
+        token = _engine_var.set(None)
+        try:
+            with self.assertRaises(RuntimeError):
+                DOM.create_element("p")
+        finally:
+            _engine_var.reset(token)
 
     def test_use_invalid(self):
         with self.assertRaises(ImportError):

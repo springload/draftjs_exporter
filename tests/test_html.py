@@ -1,8 +1,8 @@
 import unittest
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 from draftjs_exporter.command import Command
 from draftjs_exporter.dom import DOM
-from draftjs_exporter.engines.string import DOMString
 from draftjs_exporter.html import HTML, ExporterConfig
 
 config: ExporterConfig = {
@@ -27,8 +27,8 @@ class TestHTML(unittest.TestCase):
         self.assertIsInstance(self.exporter, HTML)
 
     def test_init_dom_engine_default(self):
-        HTML()
-        self.assertEqual(DOM.dom, DOMString)
+        exporter = HTML()
+        self.assertEqual(exporter._engine, DOM.STRING)
 
     def test_render_block_exists(self):
         self.assertTrue("render_block" in dir(self.exporter))
@@ -225,20 +225,58 @@ class TestHTML(unittest.TestCase):
             "<h1>Header</h1>",
         )
 
-    def test_engine_is_global_for_existing_instances(self):
+    def test_engine_is_per_instance(self):
+        """Each HTML instance uses its own engine, unaffected by other instances."""
         html_string = HTML({"engine": DOM.STRING})
         HTML({"engine": DOM.STRING_COMPAT})
 
+        # html_string still uses STRING even though STRING_COMPAT was created after.
         self.assertEqual(
             html_string.render({"entityMap": {}, "blocks": [{"text": 'Quote "here"'}]}),
-            "<p>Quote &quot;here&quot;</p>",
+            '<p>Quote "here"</p>',
         )
 
-    def test_engine_switching_affects_previous_instance(self):
+    def test_engine_isolation_between_instances(self):
+        """Each HTML instance uses its own engine, unaffected by other instances."""
         html_compat = HTML({"engine": DOM.STRING_COMPAT})
         HTML({"engine": DOM.STRING})
 
+        # html_compat still uses STRING_COMPAT even though STRING was created after.
         self.assertEqual(
             html_compat.render({"entityMap": {}, "blocks": [{"text": 'Quote "here"'}]}),
-            '<p>Quote "here"</p>',
+            "<p>Quote &quot;here&quot;</p>",
         )
+
+    def test_render_concurrent_different_engines(self):
+        """Two exporters with different engines render correctly in parallel."""
+        content_state = {"entityMap": {}, "blocks": [{"text": 'Quote "here"'}]}
+
+        html_string = HTML({"engine": DOM.STRING})
+        html_compat = HTML({"engine": DOM.STRING_COMPAT})
+
+        with ThreadPoolExecutor(max_workers=2) as pool:
+            futures = {
+                pool.submit(html_string.render, content_state): "string",
+                pool.submit(html_compat.render, content_state): "string_compat",
+            }
+
+            results = {}
+            for future in as_completed(futures):
+                results[futures[future]] = future.result()
+
+        self.assertEqual(results["string"], '<p>Quote "here"</p>')
+        self.assertEqual(results["string_compat"], "<p>Quote &quot;here&quot;</p>")
+
+    def test_render_concurrent_same_engine(self):
+        """Multiple renders of the same exporter work correctly in parallel."""
+        exporter = HTML(config)
+        content_states = [
+            {"entityMap": {}, "blocks": [{"text": f"Block {i}"}]} for i in range(10)
+        ]
+
+        with ThreadPoolExecutor(max_workers=4) as pool:
+            futures = [pool.submit(exporter.render, cs) for cs in content_states]
+            results = [f.result() for f in futures]
+
+        for i, result in enumerate(results):
+            self.assertEqual(result, f"<p>Block {i}</p>")
