@@ -6,6 +6,7 @@ from draftjs_exporter.markdown.lists import (
     get_li_suffix,
     get_numbered_li_prefix,
     list_item,
+    make_numbered_li_prefix,
 )
 
 
@@ -217,12 +218,144 @@ class TestGetNumberedLiPrefix(unittest.TestCase):
         )
 
 
+class TestMakeNumberedLiPrefix(unittest.TestCase):
+    def test_paren_delimiter(self):
+        b = {
+            "key": "a",
+            "type": "ordered-list-item",
+            "depth": 0,
+        }
+        get_prefix = make_numbered_li_prefix(")")
+        self.assertEqual(
+            get_prefix(
+                {
+                    "block": b,
+                    "blocks": [b, dict(b, **{"key": "b"})],
+                }
+            ),
+            "1) ",
+        )
+
+    def test_paren_delimiter_second_item(self):
+        b = {
+            "key": "a",
+            "type": "ordered-list-item",
+            "depth": 0,
+        }
+        get_prefix = make_numbered_li_prefix(")")
+        self.assertEqual(
+            get_prefix(
+                {
+                    "block": b,
+                    "blocks": [dict(b, **{"key": "b"}), b],
+                }
+            ),
+            "2) ",
+        )
+
+    def test_paren_delimiter_resets_after_different_type(self):
+        b = {
+            "key": "a",
+            "type": "ordered-list-item",
+            "depth": 0,
+        }
+        get_prefix = make_numbered_li_prefix(")")
+        self.assertEqual(
+            get_prefix(
+                {
+                    "block": b,
+                    "blocks": [
+                        dict(b, **{"key": "b"}),
+                        dict(b, **{"key": "c", "type": "unstyled"}),
+                        b,
+                    ],
+                }
+            ),
+            "1) ",
+        )
+
+    def test_paren_delimiter_resets_after_shallower_depth(self):
+        b = {
+            "key": "a",
+            "type": "ordered-list-item",
+            "depth": 1,
+        }
+        get_prefix = make_numbered_li_prefix(")")
+        self.assertEqual(
+            get_prefix(
+                {
+                    "block": b,
+                    "blocks": [
+                        dict(b, **{"key": "b", "depth": 1}),
+                        dict(b, **{"key": "c", "depth": 0}),
+                        b,
+                    ],
+                }
+            ),
+            "1) ",
+        )
+
+    def test_paren_delimiter_skips_deeper_preceding_block(self):
+        b = {
+            "key": "a",
+            "type": "ordered-list-item",
+            "depth": 0,
+        }
+        get_prefix = make_numbered_li_prefix(")")
+        self.assertEqual(
+            get_prefix(
+                {
+                    "block": b,
+                    "blocks": [
+                        dict(b, **{"key": "b"}),
+                        dict(b, **{"key": "c", "depth": 1}),
+                        b,
+                    ],
+                }
+            ),
+            "2) ",
+        )
+
+    def test_paren_delimiter_key_not_found(self):
+        b = {
+            "key": "a",
+            "type": "ordered-list-item",
+            "depth": 0,
+        }
+        get_prefix = make_numbered_li_prefix(")")
+        self.assertEqual(
+            get_prefix(
+                {
+                    "block": b,
+                    "blocks": [dict(b, **{"key": "b"})],
+                }
+            ),
+            "2) ",
+        )
+
+    def test_paren_delimiter_no_key(self):
+        b = {
+            "type": "ordered-list-item",
+            "depth": 0,
+        }
+        get_prefix = make_numbered_li_prefix(")")
+        self.assertEqual(
+            get_prefix(
+                {
+                    "block": b,
+                    "blocks": [b],
+                }
+            ),
+            " ",
+        )
+
+
 class TestListItem(unittest.TestCase):
     def test_list_item(self):
         self.assertEqual(
             DOM.render(
                 list_item(
-                    "* ",
+                    "- ",
                     {
                         "block": {"depth": 0},
                         "blocks": [],
@@ -230,19 +363,19 @@ class TestListItem(unittest.TestCase):
                     },
                 )
             ),
-            "* test\n",
+            "- test\n",
         )
 
     def test_list_item_depth(self):
         self.assertEqual(
             DOM.render(
                 list_item(
-                    "* ",
+                    "- ",
                     {
                         "block": {"depth": 2},
                         "children": "test",
                     },
                 )
             ),
-            "    * test\n",
+            "    - test\n",
         )

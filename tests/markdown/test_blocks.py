@@ -1,7 +1,14 @@
 import unittest
 
 from draftjs_exporter.dom import DOM
-from draftjs_exporter.markdown.blocks import list_wrapper, ol, prefixed_block, ul
+from draftjs_exporter.markdown.blocks import (
+    list_wrapper,
+    make_ol,
+    make_ul,
+    ol,
+    prefixed_block,
+    ul,
+)
 
 
 class TestBlocks(unittest.TestCase):
@@ -22,7 +29,7 @@ class TestBlocks(unittest.TestCase):
                     }
                 )
             ),
-            "* test\n",
+            "- test\n",
         )
 
     def test_ol(self):
@@ -53,6 +60,73 @@ class TestBlocks(unittest.TestCase):
         self.assertEqual(
             DOM.render(
                 ol(
+                    {
+                        "block": b,
+                        "blocks": [
+                            dict(b, **{"key": "b"}),
+                            b,
+                        ],
+                        "children": "test",
+                    }
+                )
+            ),
+            "2. test\n\n",
+        )
+
+    def test_make_ul_star(self):
+        self.assertEqual(
+            DOM.render(
+                make_ul("*")(
+                    {
+                        "block": {"depth": 0},
+                        "children": "test",
+                    }
+                )
+            ),
+            "* test\n",
+        )
+
+    def test_make_ul_plus(self):
+        self.assertEqual(
+            DOM.render(
+                make_ul("+")(
+                    {
+                        "block": {"depth": 0},
+                        "children": "test",
+                    }
+                )
+            ),
+            "+ test\n",
+        )
+
+    def test_make_ol_paren(self):
+        b = {
+            "key": "a",
+            "type": "ordered-list-item",
+            "depth": 0,
+        }
+        self.assertEqual(
+            DOM.render(
+                make_ol(")")(
+                    {
+                        "block": b,
+                        "blocks": [b],
+                        "children": "test",
+                    }
+                )
+            ),
+            "1) test\n\n",
+        )
+
+    def test_make_ol_dot(self):
+        b = {
+            "key": "a",
+            "type": "ordered-list-item",
+            "depth": 0,
+        }
+        self.assertEqual(
+            DOM.render(
+                make_ol(".")(
                     {
                         "block": b,
                         "blocks": [

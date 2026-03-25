@@ -1,0 +1,152 @@
+# yaml-language-server: $schema=https://promptfoo.dev/config-schema.json
+
+# Testing the Markdown capabilities of various LLMs at different model sizes.
+
+prompts:
+  # Best-case scenario: explicit prompting for Markdown formatting.
+  - "Please write a concise text with Markdown formatting that demonstrates your ability to produce: {{formatting}}. Use the formatting directly in your reply, not wrapped in a code block."
+  # Implicit prompting (but strongly encouraged).
+  # - "Please create a short README for my Draft.js exporter package. Include multiple sections and at least one sub-section. A list of links to important resources, a bullet list of features, maybe a small code example. A table of supported versions. And an image (screenshot of output, use 'placeholder.png' as a link for now)."
+
+providers:
+  - id: openrouter:liquid/lfm-2.5-1.2b-instruct:free
+  - id: openrouter:microsoft/phi-4
+  - id: openai:chat:mistral-small-3.2-24b-instruct-2506
+    config:
+      apiBaseUrl: "https://api.scaleway.ai/{{ env.SCW_DEFAULT_PROJECT_ID }}/v1"
+      apiKey: "{{ env.SCW_SECRET_KEY }}"
+  - id: openai:chat:gemma-3-27b-it
+    config:
+      apiBaseUrl: "https://api.scaleway.ai/{{ env.SCW_DEFAULT_PROJECT_ID }}/v1"
+      apiKey: "{{ env.SCW_SECRET_KEY }}"
+  - id: openai:chat:gpt-oss-120b
+    config:
+      apiBaseUrl: "https://api.scaleway.ai/{{ env.SCW_DEFAULT_PROJECT_ID }}/v1"
+      apiKey: "{{ env.SCW_SECRET_KEY }}"
+      showThinking: false
+  - id: anthropic:messages:claude-opus-4-6
+  - id: openai:chat:gpt-5.4
+  - id: openai:chat:gpt-5.4-nano
+
+defaultTest:
+  options:
+    temperature: 0.7
+  assert:
+    - type: llm-rubric
+      value: The response should be valid Markdown that renders correctly.
+
+tests:
+  - description: Headings
+    vars:
+      formatting: headings (h1, h2, h3, h4, h5, h6)
+    assert:
+      - type: contains-all
+        value:
+          - "# "
+          - "## "
+
+  - description: Inline formatting
+    vars:
+      formatting: bold (**), italic (_), strikethrough (~ or ~~), and inline code (`)
+    assert:
+      - type: contains-all
+        value:
+          - "**"
+          - "`"
+      - type: contains-any
+        value:
+          - "~"
+          - "~~"
+
+  - description: Unordered lists
+    vars:
+      formatting: unordered (bullet) lists using - markers, including nested lists with indentation
+    assert:
+      - type: javascript
+        value: "/^- /m.test(output)"
+
+  - description: Ordered lists
+    vars:
+      formatting: ordered (numbered) lists using 1. style markers, including nested lists with indentation
+    assert:
+      - type: javascript
+        value: "/^\\d+\\. /m.test(output)"
+
+  - description: Blockquotes
+    vars:
+      formatting: blockquotes using > prefix
+    assert:
+      - type: javascript
+        value: "/^> /m.test(output)"
+
+  - description: Code blocks
+    vars:
+      formatting: fenced code blocks using ``` with language identifiers
+    assert:
+      - type: javascript
+        value: "/^```/m.test(output)"
+
+  - description: Links and images
+    vars:
+      formatting: inline links using [text](url) and images using ![alt](src)
+    assert:
+      - type: javascript
+        value: "/\\[.*\\]\\(.*\\)/.test(output)"
+      - type: javascript
+        value: "/\\!\\[.*\\]\\(.*\\)/.test(output)"
+
+  - description: Horizontal rules
+    vars:
+      formatting: horizontal rules / thematic breaks using --- or *** or ___
+    assert:
+      - type: contains-any
+        value:
+          - "---"
+          - "***"
+          - "___"
+
+  - description: Tables
+    vars:
+      formatting: tables with headers, column alignment, and separator rows
+    assert:
+      - type: contains-all
+        value:
+          - "|"
+          - "---"
+      - type: llm-rubric
+        value: The response includes a well-formed Markdown table with a header row and separator row.
+
+  - description: Task lists
+    vars:
+      formatting: task list checkboxes (checked and unchecked) using - [ ] and - [x]
+    assert:
+      - type: contains-all
+        value:
+          - "- [ ]"
+          - "- [x]"
+
+  - description: Footnotes
+    vars:
+      formatting: footnotes with inline references [^1] and corresponding definitions
+    assert:
+      - type: javascript
+        value: "/\\[\\^\\w+\\]/.test(output)"
+      - type: llm-rubric
+        value: The response includes footnote references in the text and matching footnote definitions.
+
+  - description: Admonitions
+    vars:
+      formatting: admonitions / callouts (e.g. > [!NOTE], > [!WARNING])
+    assert:
+      - type: javascript
+        value: "/>\\s*\\[!/.test(output)"
+
+  - description: Collapsed sections
+    vars:
+      formatting: collapsed / expandable sections using <details> and <summary> HTML tags
+    assert:
+      - type: contains-all
+        value:
+          - "<details>"
+          - "<summary>"
+          - "</details>"

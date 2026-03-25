@@ -1,12 +1,50 @@
+from typing import Literal, TypedDict
+
 from draftjs_exporter.constants import BLOCK_TYPES, ENTITY_TYPES, INLINE_STYLES
 from draftjs_exporter.defaults import BLOCK_MAP as HTML_BLOCK_MAP
 from draftjs_exporter.defaults import STYLE_MAP as HTML_STYLE_MAP
 from draftjs_exporter.html import ExporterConfig
-from draftjs_exporter.markdown.blocks import list_wrapper, ol, prefixed_block, ul
-from draftjs_exporter.markdown.code import code_element, code_wrapper
-from draftjs_exporter.markdown.entities import horizontal_rule, image, link
+from draftjs_exporter.markdown.blocks import (
+    list_wrapper,
+    make_ol,
+    make_ul,
+    ol,
+    prefixed_block,
+    ul,
+)
+from draftjs_exporter.markdown.code import (
+    code_element,
+    code_wrapper,
+    make_code_element,
+    make_code_wrapper,
+)
+from draftjs_exporter.markdown.entities import (
+    horizontal_rule,
+    image,
+    link,
+    make_horizontal_rule,
+)
+from draftjs_exporter.markdown.fallbacks import (
+    block_fallback,
+    entity_fallback,
+    style_fallback,
+)
 from draftjs_exporter.markdown.styles import inline_style
-from draftjs_exporter.types import ConfigMap
+from draftjs_exporter.types import Component, ConfigMap
+
+
+class MarkdownOptions(TypedDict, total=False):
+    bold: Literal["**", "__"]
+    italic: Literal["*", "_"]
+    strikethrough: Literal["~", "~~"]
+    unordered_list_marker: Literal["*", "-", "+"]
+    ordered_list_delimiter: Literal[".", ")"]
+    horizontal_rule: Literal["---", "***", "___"]
+    code_fence: Literal["```", "~~~"]
+    block_fallback: Component | None
+    entity_fallback: Component | None
+    style_fallback: Component | None
+
 
 BLOCK_MAP: ConfigMap = {
     **HTML_BLOCK_MAP,
@@ -31,6 +69,7 @@ BLOCK_MAP: ConfigMap = {
             "element": code_element,
             "wrapper": code_wrapper,
         },
+        BLOCK_TYPES.FALLBACK: block_fallback,
     },
 }
 
@@ -41,6 +80,7 @@ STYLE_MAP: ConfigMap = dict(
         INLINE_STYLES.CODE: inline_style("`"),
         INLINE_STYLES.ITALIC: inline_style("_"),
         INLINE_STYLES.STRIKETHROUGH: inline_style("~"),
+        INLINE_STYLES.FALLBACK: style_fallback,
     },
 )
 
@@ -48,6 +88,7 @@ ENTITY_DECORATORS: ConfigMap = {
     ENTITY_TYPES.IMAGE: image,
     ENTITY_TYPES.LINK: link,
     ENTITY_TYPES.HORIZONTAL_RULE: horizontal_rule,
+    ENTITY_TYPES.FALLBACK: entity_fallback,
 }
 
 ENGINE = "draftjs_exporter.engines.markdown.DOMMarkdown"
@@ -58,3 +99,95 @@ CONFIG: ExporterConfig = {
     "entity_decorators": ENTITY_DECORATORS,
     "engine": ENGINE,
 }
+
+
+def build_markdown_config(options: MarkdownOptions | None = None) -> ExporterConfig:
+    """Build a Markdown exporter config with configurable output characters.
+
+    All options fall back to CommonMark-compatible defaults when omitted.
+    Set a fallback to None to disable it.
+    """
+    opts: MarkdownOptions = options or {}
+
+    bold = opts.get("bold", "**")
+    italic = opts.get("italic", "_")
+    strikethrough = opts.get("strikethrough", "~")
+    ul_marker = opts.get("unordered_list_marker", "-")
+    ol_delimiter = opts.get("ordered_list_delimiter", ".")
+    hr = opts.get("horizontal_rule", "---")
+    fence = opts.get("code_fence", "```")
+
+    block_map: ConfigMap = {
+        BLOCK_TYPES.UNSTYLED: prefixed_block(""),
+        BLOCK_TYPES.HEADER_ONE: prefixed_block("# "),
+        BLOCK_TYPES.HEADER_TWO: prefixed_block("## "),
+        BLOCK_TYPES.HEADER_THREE: prefixed_block("### "),
+        BLOCK_TYPES.HEADER_FOUR: prefixed_block("#### "),
+        BLOCK_TYPES.HEADER_FIVE: prefixed_block("##### "),
+        BLOCK_TYPES.HEADER_SIX: prefixed_block("###### "),
+        BLOCK_TYPES.UNORDERED_LIST_ITEM: {
+            "element": make_ul(ul_marker),
+            "wrapper": list_wrapper,
+        },
+        BLOCK_TYPES.ORDERED_LIST_ITEM: {
+            "element": make_ol(ol_delimiter),
+            "wrapper": list_wrapper,
+        },
+        BLOCK_TYPES.BLOCKQUOTE: prefixed_block("> "),
+        BLOCK_TYPES.CODE: {
+            "element": make_code_element(fence),
+            "wrapper": make_code_wrapper(fence),
+        },
+        BLOCK_TYPES.ATOMIC: lambda props: props["children"],
+    }
+
+    style_map: ConfigMap = {
+        **HTML_STYLE_MAP,
+        INLINE_STYLES.BOLD: inline_style(bold),
+        INLINE_STYLES.CODE: inline_style("`"),
+        INLINE_STYLES.ITALIC: inline_style(italic),
+        INLINE_STYLES.STRIKETHROUGH: inline_style(strikethrough),
+    }
+
+    entity_decorators: ConfigMap = {
+        ENTITY_TYPES.IMAGE: image,
+        ENTITY_TYPES.LINK: link,
+        ENTITY_TYPES.HORIZONTAL_RULE: make_horizontal_rule(hr),
+    }
+
+    _apply_fallback(
+        block_map, BLOCK_TYPES.FALLBACK, opts, "block_fallback", block_fallback
+    )
+    _apply_fallback(
+        style_map, INLINE_STYLES.FALLBACK, opts, "style_fallback", style_fallback
+    )
+    _apply_fallback(
+        entity_decorators,
+        ENTITY_TYPES.FALLBACK,
+        opts,
+        "entity_fallback",
+        entity_fallback,
+    )
+
+    return {
+        "block_map": block_map,
+        "style_map": style_map,
+        "entity_decorators": entity_decorators,
+        "engine": ENGINE,
+    }
+
+
+def _apply_fallback(
+    config_map: ConfigMap,
+    key: str,
+    opts: MarkdownOptions,
+    option_name: str,
+    default: Component,
+) -> None:
+    """Add a fallback to config_map unless explicitly set to None."""
+    if option_name in opts:
+        fb = opts[option_name]  # type: ignore[literal-required]
+        if fb is not None:
+            config_map[key] = fb
+    else:
+        config_map[key] = default

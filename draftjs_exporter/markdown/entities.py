@@ -1,5 +1,5 @@
 from draftjs_exporter.markdown.helpers import block, inline
-from draftjs_exporter.types import Element, Props
+from draftjs_exporter.types import Component, Element, Props
 
 
 def image(props: Props) -> Element:
@@ -10,5 +10,8 @@ def link(props: Props) -> Element:
     return inline(["[", props["children"], "](", props["url"], ")"])
 
 
-def horizontal_rule(props: Props) -> Element:
-    return block(["---"])
+def make_horizontal_rule(marker: str) -> Component:
+    return lambda props: block([marker])
+
+
+horizontal_rule: Component = make_horizontal_rule("---")

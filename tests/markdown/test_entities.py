@@ -1,7 +1,12 @@
 import unittest
 
 from draftjs_exporter.dom import DOM
-from draftjs_exporter.markdown.entities import horizontal_rule, image, link
+from draftjs_exporter.markdown.entities import (
+    horizontal_rule,
+    image,
+    link,
+    make_horizontal_rule,
+)
 
 
 class TestEntities(unittest.TestCase):
@@ -25,3 +30,9 @@ class TestEntities(unittest.TestCase):
             DOM.render(link({"url": "http://www.example.com/", "children": "test"})),
             "[test](http://www.example.com/)",
         )
+
+    def test_make_horizontal_rule_stars(self):
+        self.assertEqual(DOM.render(make_horizontal_rule("***")({})), "***\n\n")
+
+    def test_make_horizontal_rule_underscores(self):
+        self.assertEqual(DOM.render(make_horizontal_rule("___")({})), "___\n\n")
