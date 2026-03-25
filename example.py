@@ -4,8 +4,6 @@ import cProfile
 import json
 import logging
 import re
-import sys
-import typing
 from pstats import Stats
 
 from bs4 import BeautifulSoup
