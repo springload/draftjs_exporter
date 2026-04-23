@@ -1,8 +1,8 @@
 __title__ = "draftjs_exporter"
 __version__ = "5.2.0"
-__author__ = "Springload"
+__author__ = "Springload and Contributors"
 __license__ = "MIT"
-__copyright__ = "Copyright 2016-present Springload"
+__copyright__ = "Copyright 2016-present Springload and Contributors"
 
 from draftjs_exporter.constants import BLOCK_TYPES as BLOCK_TYPES
 from draftjs_exporter.constants import ENTITY_TYPES as ENTITY_TYPES

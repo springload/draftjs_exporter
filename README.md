@@ -328,6 +328,6 @@ If you just want to set up the project on your own computer, the contribution gu
 
 ## Credits
 
-This project is made possible by the work of [Springload](https://github.com/springload), a New Zealand digital agency. The _beautiful_ demo site is the work of [@thibaudcolas](https://github.com/thibaudcolas).
+Draftail was created by [Springload](https://github.com/springload/), and is now maintained by Wagtail contributors.
 
 View the full list of [contributors](https://github.com/wagtail/draftjs_exporter/graphs/contributors). [MIT licensed](LICENSE).

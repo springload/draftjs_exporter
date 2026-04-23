@@ -4,7 +4,6 @@ version = "5.2.0"
 description = "Library to convert rich text from Draft.js raw ContentState to HTML"
 readme = "README.md"
 license = "MIT"
-authors = [{ name = "Springload", email = "hello@springload.co.nz" }]
 requires-python = ">=3.10"
 classifiers = [
   "Environment :: Web Environment",
