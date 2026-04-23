@@ -275,9 +275,7 @@ if __name__ == "__main__":
             "4": {
                 "type": "LINK",
                 "mutability": "MUTABLE",
-                "data": {
-                    "url": "https://github.com/springload/draftjs_exporter/pull/17"
-                },
+                "data": {"url": "https://github.com/wagtail/draftjs_exporter/pull/17"},
             },
             "5": {
                 "type": "IMAGE",

@@ -15,7 +15,7 @@ Please note that this project is released with a [Contributor Code of Conduct](d
 Clone the repository, configure the git hooks, then initialize with `make init`.
 
 ```sh
-git clone git@github.com:springload/draftjs_exporter.git
+git clone git@github.com:wagtail/draftjs_exporter.git
 cd draftjs_exporter/
 # Install the git hooks.
 ./.githooks/deploy
@@ -48,7 +48,7 @@ make init
 ### Releases
 
 - Make a new branch for the release of the new version.
-- Update the [CHANGELOG](https://github.com/springload/draftjs_exporter/CHANGELOG.md).
+- Update the [CHANGELOG](https://github.com/wagtail/draftjs_exporter/CHANGELOG.md).
 - Update the version number in `pyproject.toml`, following semver.
 - Update the version number in `draftjs_exporter/__init__.py`, following semver.
 - Make a PR and squash merge it.
@@ -80,4 +80,4 @@ All exporter code should pass static type checking by [mypy](https://mypy.readth
 
 ## Documentation
 
-> See the [docs](https://github.com/springload/draftjs_exporter/tree/main/docs) folder.
+> See the [docs](https://github.com/wagtail/draftjs_exporter/tree/main/docs) folder.

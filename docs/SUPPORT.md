@@ -7,7 +7,7 @@ Hi! 👋 To help us help you, please read through the following guidelines.
 
 ## Documentation
 
-Documentation for this project is all on [GitHub](https://github.com/springload/draftjs_exporter). Please make sure to have a look at:
+Documentation for this project is all on [GitHub](https://github.com/wagtail/draftjs_exporter). Please make sure to have a look at:
 
 - The [README](../README.md)
 - The project’s introductory blog post, [Rethinking rich text pipelines with Draft.js](https://www.draftail.org/blog/2018/03/13/rethinking-rich-text-pipelines-with-draft-js).
@@ -26,7 +26,7 @@ You can join the `#draftail` channel on [Wagtail’s Slack](https://github.com/w
 
 ### GitHub
 
-You can [ask a question](https://github.com/springload/draftjs_exporter/issues/new?assignees=&labels=question&template=question.md&title=) on GitHub. Make sure to use the question template to maximise the chances of getting a quick answer.
+You can [ask a question](https://github.com/wagtail/draftjs_exporter/issues/new?assignees=&labels=question&template=question.md&title=) on GitHub. Make sure to use the question template to maximise the chances of getting a quick answer.
 
 ## Contributions
 

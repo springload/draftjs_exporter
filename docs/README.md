@@ -30,6 +30,6 @@ Solution: see http://stackoverflow.com/a/6504860/1798491
 
 ### Entity props override
 
-Entities receive their `data` as props, except for the key `entity` which is overriden with a dict containing additional data (`type`, `mutability`, etc.). This is a known issue (see [#91](https://github.com/springload/draftjs_exporter/issues/91)). There is no workaround if you need to use a data key called `entity` – it won’t be available.
+Entities receive their `data` as props, except for the key `entity` which is overriden with a dict containing additional data (`type`, `mutability`, etc.). This is a known issue (see [#91](https://github.com/wagtail/draftjs_exporter/issues/91)). There is no workaround if you need to use a data key called `entity` – it won’t be available.
 
 This is also a problem if the entity’s `data` contains a `children` key – this will also get overriden without any workaround possible.

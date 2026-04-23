@@ -1,6 +1,6 @@
 # Roadmap
 
-This file provides an overview of the direction this project is heading. It contains both likely and more aspirational changes. For more granular improvements, see the [project’s issues backlog](https://github.com/springload/draftjs_exporter/issues).
+This file provides an overview of the direction this project is heading. It contains both likely and more aspirational changes. For more granular improvements, see the [project’s issues backlog](https://github.com/wagtail/draftjs_exporter/issues).
 
 ## Planned
 

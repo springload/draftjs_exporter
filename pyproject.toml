@@ -30,9 +30,9 @@ classifiers = [
 ]
 
 [project.urls]
-Source = "https://github.com/springload/draftjs_exporter"
-Tracker = "https://github.com/springload/draftjs_exporter/issues"
-Changelog = "https://github.com/springload/draftjs_exporter/blob/main/CHANGELOG.md"
+Source = "https://github.com/wagtail/draftjs_exporter"
+Tracker = "https://github.com/wagtail/draftjs_exporter/issues"
+Changelog = "https://github.com/wagtail/draftjs_exporter/blob/main/CHANGELOG.md"
 
 [project.optional-dependencies]
 # Lower version bound for lxml - choose a version with:

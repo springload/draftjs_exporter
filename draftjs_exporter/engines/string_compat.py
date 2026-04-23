@@ -13,7 +13,7 @@ class DOMStringCompat(DOMString):
     @staticmethod
     def render_attrs(attr: Attr) -> str:
         attrs = [f' {k}="{escape(v)}"' for k, v in attr.items()]
-        # Compat: reverts "Remove HTML attributes alphabetical sorting of default string engine ([#129](https://github.com/springload/draftjs_exporter/pull/129))"
+        # Compat: reverts "Remove HTML attributes alphabetical sorting of default string engine ([#129](https://github.com/wagtail/draftjs_exporter/pull/129))"
         attrs.sort()
         return "".join(attrs)
 
@@ -23,7 +23,7 @@ class DOMStringCompat(DOMString):
             [
                 DOMStringCompat.render(c)
                 if isinstance(c, Elt)
-                # Compat: reverts "Disable single and double quotes escaping outside of attributes for string engine ([#129](https://github.com/springload/draftjs_exporter/pull/129))"
+                # Compat: reverts "Disable single and double quotes escaping outside of attributes for string engine ([#129](https://github.com/wagtail/draftjs_exporter/pull/129))"
                 else escape(c, quote=True)
                 for c in children
             ]

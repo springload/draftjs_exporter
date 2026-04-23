@@ -8,32 +8,32 @@
 
 - Fix concurrency bug where the DOM engine was shared globally across all `HTML` instances. Each exporter now uses its own engine via a context variable.
 
-## [v6.0.0](https://github.com/springload/draftjs_exporter/releases/tag/v6.0.0)
+## [v6.0.0](https://github.com/wagtail/draftjs_exporter/releases/tag/v6.0.0)
 
 ### Removed
 
 - Remove support for Python 3.7, 3.8, 3.9.
 
-## [v5.2.0](https://github.com/springload/draftjs_exporter/releases/tag/v5.2.0)
+## [v5.2.0](https://github.com/wagtail/draftjs_exporter/releases/tag/v5.2.0)
 
 ### Added
 
 - Formalize support for Python 3.14, with tentative support for Python 3.15.
 - Add support for lxml v6 with the `draftjs_exporter[lxml]` extra.
 
-## [v5.1.0](https://github.com/springload/draftjs_exporter/releases/tag/v5.1.0)
+## [v5.1.0](https://github.com/wagtail/draftjs_exporter/releases/tag/v5.1.0)
 
 ### Added
 
 - Formalize support for Python 3.12 and 3.13, with tentative support for Python 3.14.
 - Add support for lxml v5 with the `draftjs_exporter[lxml]` extra.
 
-## [v5.0.0](https://github.com/springload/draftjs_exporter/releases/tag/v5.0.0)
+## [v5.0.0](https://github.com/wagtail/draftjs_exporter/releases/tag/v5.0.0)
 
 ### Added
 
 - Add tentative support for Python 3.11.
-- Add new "string_compat" engine for maximum output stability, with identical output to its first release. To use it, set the `engine` property to `'engine': DOM.STRING_COMPAT,` ([#138](https://github.com/springload/draftjs_exporter/pull/138)).
+- Add new "string_compat" engine for maximum output stability, with identical output to its first release. To use it, set the `engine` property to `'engine': DOM.STRING_COMPAT,` ([#138](https://github.com/wagtail/draftjs_exporter/pull/138)).
 
 ### Removed
 
@@ -43,44 +43,44 @@
 
 #### Python 3.6 support
 
-Python 3.6 is no longer supported, as it has reached its [end of life](https://www.python.org/dev/peps/pep-0494/). For projects needing Python 3.6, please keep using [v4.1.2](https://github.com/springload/draftjs_exporter/tree/v4.1.2) of the exporter.
+Python 3.6 is no longer supported, as it has reached its [end of life](https://www.python.org/dev/peps/pep-0494/). For projects needing Python 3.6, please keep using [v4.1.2](https://github.com/wagtail/draftjs_exporter/tree/v4.1.2) of the exporter.
 
-## [v4.1.2](https://github.com/springload/draftjs_exporter/releases/tag/v4.1.2)
+## [v4.1.2](https://github.com/wagtail/draftjs_exporter/releases/tag/v4.1.2)
 
 ### Changed
 
 - Add tentative support for Python 3.10.
 - Stop using `extras_require` for development-only dependencies.
 
-## [v4.1.1](https://github.com/springload/draftjs_exporter/releases/tag/v4.1.1)
+## [v4.1.1](https://github.com/wagtail/draftjs_exporter/releases/tag/v4.1.1)
 
 ### Changed
 
-- Add support for Python 3.9 ([#134](https://github.com/springload/draftjs_exporter/pull/134)).
-- Update html5lib upper bound, now defined as `html5lib>=0.999,<2`, to ensure compatibility with Python 3.10 ([#134](https://github.com/springload/draftjs_exporter/pull/134)).
+- Add support for Python 3.9 ([#134](https://github.com/wagtail/draftjs_exporter/pull/134)).
+- Update html5lib upper bound, now defined as `html5lib>=0.999,<2`, to ensure compatibility with Python 3.10 ([#134](https://github.com/wagtail/draftjs_exporter/pull/134)).
 
-## [v4.1.0](https://github.com/springload/draftjs_exporter/releases/tag/v4.1.0)
+## [v4.1.0](https://github.com/wagtail/draftjs_exporter/releases/tag/v4.1.0)
 
 ### Added
 
-- Publish the package as a wheel ([#132](https://github.com/springload/draftjs_exporter/issues/132), [#133](https://github.com/springload/draftjs_exporter/pull/133)). Thanks to [Stormheg](https://github.com/Stormheg).
+- Publish the package as a wheel ([#132](https://github.com/wagtail/draftjs_exporter/issues/132), [#133](https://github.com/wagtail/draftjs_exporter/pull/133)). Thanks to [Stormheg](https://github.com/Stormheg).
 
-## [v4.0.0](https://github.com/springload/draftjs_exporter/releases/tag/v4.0.0)
+## [v4.0.0](https://github.com/wagtail/draftjs_exporter/releases/tag/v4.0.0)
 
 This release contains breaking changes. **Be sure to check out the "how to upgrade" section below.**
 
 ### Removed
 
-- Remove support for Python 3.5 ([#129](https://github.com/springload/draftjs_exporter/pull/129))
-- Remove HTML attributes alphabetical sorting of default string engine ([#129](https://github.com/springload/draftjs_exporter/pull/129))
-- Disable single and double quotes escaping outside of attributes for string engine ([#129](https://github.com/springload/draftjs_exporter/pull/129))
-- Stop sorting inline styles alphabetically ([#129](https://github.com/springload/draftjs_exporter/pull/129))
+- Remove support for Python 3.5 ([#129](https://github.com/wagtail/draftjs_exporter/pull/129))
+- Remove HTML attributes alphabetical sorting of default string engine ([#129](https://github.com/wagtail/draftjs_exporter/pull/129))
+- Disable single and double quotes escaping outside of attributes for string engine ([#129](https://github.com/wagtail/draftjs_exporter/pull/129))
+- Stop sorting inline styles alphabetically ([#129](https://github.com/wagtail/draftjs_exporter/pull/129))
 
 ### How to upgrade
 
 #### Python 3.5 support
 
-Do not upgrade to this version if you are using the exporter in Python 3.5. Please keep using [v3.0.1](https://github.com/springload/draftjs_exporter/tree/v3.0.1) of the exporter.
+Do not upgrade to this version if you are using the exporter in Python 3.5. Please keep using [v3.0.1](https://github.com/wagtail/draftjs_exporter/tree/v3.0.1) of the exporter.
 
 #### HTML attributes sorting
 
@@ -129,7 +129,7 @@ The exporter supports passing the `style` attribute as a dictionary with JS attr
 
 If you relied on this behavior, either reorder the keys as needed, or pass the `style` as a string (with CSS properties syntax).
 
-## [v3.0.1](https://github.com/springload/draftjs_exporter/releases/tag/v3.0.1)
+## [v3.0.1](https://github.com/wagtail/draftjs_exporter/releases/tag/v3.0.1)
 
 ### Added
 
@@ -137,107 +137,107 @@ If you relied on this behavior, either reorder the keys as needed, or pass the `
 
 ### Changed
 
-- Small performance improvements (1.5x faster) for blocks that do not have inline styles, and configurations that only use `\n -> <br/>` composite decorators. ([#127](https://github.com/springload/draftjs_exporter/pull/127))
+- Small performance improvements (1.5x faster) for blocks that do not have inline styles, and configurations that only use `\n -> <br/>` composite decorators. ([#127](https://github.com/wagtail/draftjs_exporter/pull/127))
 
-## [v3.0.0](https://github.com/springload/draftjs_exporter/releases/tag/v3.0.0)
+## [v3.0.0](https://github.com/wagtail/draftjs_exporter/releases/tag/v3.0.0)
 
 This release contains breaking changes. **Be sure to check out the "how to upgrade" section below.**
 
 ### Changed
 
-- Remove support for Python 2.7 and 3.4 ([#111](https://github.com/springload/draftjs_exporter/issues/111), [#120](https://github.com/springload/draftjs_exporter/pull/120)).
+- Remove support for Python 2.7 and 3.4 ([#111](https://github.com/wagtail/draftjs_exporter/issues/111), [#120](https://github.com/wagtail/draftjs_exporter/pull/120)).
 - Add support for Python 3.8.
-- Small performance improvements by using lists’ mutable `.sort()` instead of `sorted()`, which is a bit faster. (±2% faster) ([#120](https://github.com/springload/draftjs_exporter/pull/120)).
+- Small performance improvements by using lists’ mutable `.sort()` instead of `sorted()`, which is a bit faster. (±2% faster) ([#120](https://github.com/wagtail/draftjs_exporter/pull/120)).
 
 ### Added
 
-- Add [PEP-484](https://www.python.org/dev/peps/pep-0484/) type annotations for the project’s public APIs ([#101](https://github.com/springload/draftjs_exporter/issues/101), [#123](https://github.com/springload/draftjs_exporter/pull/123)).
-- Add [PEP-561](https://www.python.org/dev/peps/pep-0561/) metadata so the exporter’s type annotations can be read by type checkers ([#101](https://github.com/springload/draftjs_exporter/issues/101), [#123](https://github.com/springload/draftjs_exporter/pull/123)).
-- Give entity rendering components access to the current `block`, `blocks` list, `mutability`, and key as `entity_range.key` ([#91](https://github.com/springload/draftjs_exporter/issues/91), [#124](https://github.com/springload/draftjs_exporter/pull/124)).
+- Add [PEP-484](https://www.python.org/dev/peps/pep-0484/) type annotations for the project’s public APIs ([#101](https://github.com/wagtail/draftjs_exporter/issues/101), [#123](https://github.com/wagtail/draftjs_exporter/pull/123)).
+- Add [PEP-561](https://www.python.org/dev/peps/pep-0561/) metadata so the exporter’s type annotations can be read by type checkers ([#101](https://github.com/wagtail/draftjs_exporter/issues/101), [#123](https://github.com/wagtail/draftjs_exporter/pull/123)).
+- Give entity rendering components access to the current `block`, `blocks` list, `mutability`, and key as `entity_range.key` ([#91](https://github.com/wagtail/draftjs_exporter/issues/91), [#124](https://github.com/wagtail/draftjs_exporter/pull/124)).
 
 ### How to upgrade
 
 #### Python 2.7 and 3.4 support
 
-Do not upgrade to this version if you are using the exporter in Python 2.7 or 3.4. Please keep using [v2.1.7](https://github.com/springload/draftjs_exporter/tree/v2.1.7) of the exporter.
+Do not upgrade to this version if you are using the exporter in Python 2.7 or 3.4. Please keep using [v2.1.7](https://github.com/wagtail/draftjs_exporter/tree/v2.1.7) of the exporter.
 
 #### PEP-484 type annotations
 
 If you are using the exporter in a codebase using type annotations and a type checker, there is a chance the annotations added in this release will create conflicts with your project’s annotations – if there are discrepancies between the expected input/output of the exporter, or in the configuration. In this case you may need to update your project’s type annotations or stubs to match the expected types of the exporter’s public API.
 
-If you believe there is a problem with how the public API is typed, please [open a new issue](https://github.com/springload/draftjs_exporter/issues/new/choose).
+If you believe there is a problem with how the public API is typed, please [open a new issue](https://github.com/wagtail/draftjs_exporter/issues/new/choose).
 
-## [v2.1.7](https://github.com/springload/draftjs_exporter/releases/tag/v2.1.7)
+## [v2.1.7](https://github.com/wagtail/draftjs_exporter/releases/tag/v2.1.7)
 
 ### Changed
 
 - Minor performance improvements (10% speed-up, 30% lower memory consumption) by adding Python [`__slots__`](https://stackoverflow.com/questions/472000/usage-of-slots) and implementing other optimisations.
 
-## [v2.1.6](https://github.com/springload/draftjs_exporter/releases/tag/v2.1.6)
+## [v2.1.6](https://github.com/wagtail/draftjs_exporter/releases/tag/v2.1.6)
 
 ### Changed
 
-- Assume same block defaults as Draft.js would when attributes are missing: depth = 0, type = unstyled, no entities, no styles ([#110](https://github.com/springload/draftjs_exporter/pull/110), thanks to [@tpict](https://github.com/tpict)).
-- Minor performance improvements for text-only blocks ([#112](https://github.com/springload/draftjs_exporter/pull/112)).
+- Assume same block defaults as Draft.js would when attributes are missing: depth = 0, type = unstyled, no entities, no styles ([#110](https://github.com/wagtail/draftjs_exporter/pull/110), thanks to [@tpict](https://github.com/tpict)).
+- Minor performance improvements for text-only blocks ([#112](https://github.com/wagtail/draftjs_exporter/pull/112)).
 
-## [v2.1.5](https://github.com/springload/draftjs_exporter/releases/tag/v2.1.5)
+## [v2.1.5](https://github.com/wagtail/draftjs_exporter/releases/tag/v2.1.5)
 
 ### Changed
 
-- Minor performance improvements (8% speed-up, 20% lower memory consumption) ([#108](https://github.com/springload/draftjs_exporter/pull/108))
+- Minor performance improvements (8% speed-up, 20% lower memory consumption) ([#108](https://github.com/wagtail/draftjs_exporter/pull/108))
 
 ### Fixed
 
-- Fix export bug with adjacent entities - the exporter moved their contents outside of the entities' markup ([#106](https://github.com/springload/draftjs_exporter/pull/106), [#107](https://github.com/springload/draftjs_exporter/pull/107)). Thanks to [@ericpai](https://github.com/ericpai) for reporting this.
+- Fix export bug with adjacent entities - the exporter moved their contents outside of the entities' markup ([#106](https://github.com/wagtail/draftjs_exporter/pull/106), [#107](https://github.com/wagtail/draftjs_exporter/pull/107)). Thanks to [@ericpai](https://github.com/ericpai) for reporting this.
 
-## [v2.1.4](https://github.com/springload/draftjs_exporter/releases/tag/v2.1.4)
-
-### Changed
-
-- Attempt to fix project description formatting on [PyPI](https://pypi.org/project/draftjs_exporter/), broken in the last release ([#103](https://github.com/springload/draftjs_exporter/issues/103)).
-
-## [v2.1.3](https://github.com/springload/draftjs_exporter/releases/tag/v2.1.3)
+## [v2.1.4](https://github.com/wagtail/draftjs_exporter/releases/tag/v2.1.4)
 
 ### Changed
 
-- Increase lower bound of optional lxml dependency to v4.2.0 to guarantee Python 3.7 support ([#88](https://github.com/springload/draftjs_exporter/pull/88)).
+- Attempt to fix project description formatting on [PyPI](https://pypi.org/project/draftjs_exporter/), broken in the last release ([#103](https://github.com/wagtail/draftjs_exporter/issues/103)).
 
-## [v2.1.2](https://github.com/springload/draftjs_exporter/releases/tag/v2.1.2)
-
-### Changed
-
-- Use io.open with utf-8 encoding in setup.py. Fix [#98](https://github.com/springload/draftjs_exporter/issues/98) ([#99](https://github.com/springload/draftjs_exporter/pull/99))
-
-## [v2.1.1](https://github.com/springload/draftjs_exporter/releases/tag/v2.1.1)
+## [v2.1.3](https://github.com/wagtail/draftjs_exporter/releases/tag/v2.1.3)
 
 ### Changed
 
-- Add upper bound to lxml dependency, now defined as `lxml>=3.6.0,<5` ([#75](https://github.com/springload/draftjs_exporter/issues/75)).
+- Increase lower bound of optional lxml dependency to v4.2.0 to guarantee Python 3.7 support ([#88](https://github.com/wagtail/draftjs_exporter/pull/88)).
+
+## [v2.1.2](https://github.com/wagtail/draftjs_exporter/releases/tag/v2.1.2)
+
+### Changed
+
+- Use io.open with utf-8 encoding in setup.py. Fix [#98](https://github.com/wagtail/draftjs_exporter/issues/98) ([#99](https://github.com/wagtail/draftjs_exporter/pull/99))
+
+## [v2.1.1](https://github.com/wagtail/draftjs_exporter/releases/tag/v2.1.1)
+
+### Changed
+
+- Add upper bound to lxml dependency, now defined as `lxml>=3.6.0,<5` ([#75](https://github.com/wagtail/draftjs_exporter/issues/75)).
 - Update html5lib upper bound, now defined as `html5lib>=0.999,<=1.0.1`.
 
-## [v2.1.0](https://github.com/springload/draftjs_exporter/releases/tag/v2.1.0)
+## [v2.1.0](https://github.com/wagtail/draftjs_exporter/releases/tag/v2.1.0)
 
 ### Added
 
-- Give block rendering components access to the current `block`, when the component is rendered for a block, and the `blocks` list ([#90](https://github.com/springload/draftjs_exporter/pull/90)).
-- Give text decorators renderers access to the current `block` and `blocks` list ([#90](https://github.com/springload/draftjs_exporter/pull/90)).
-- Give style rendering components access to the current `block`, `blocks` list, and current style type as `inline_style_range.style` ([#87](https://github.com/springload/draftjs_exporter/issues/87), [#90](https://github.com/springload/draftjs_exporter/pull/90)).
+- Give block rendering components access to the current `block`, when the component is rendered for a block, and the `blocks` list ([#90](https://github.com/wagtail/draftjs_exporter/pull/90)).
+- Give text decorators renderers access to the current `block` and `blocks` list ([#90](https://github.com/wagtail/draftjs_exporter/pull/90)).
+- Give style rendering components access to the current `block`, `blocks` list, and current style type as `inline_style_range.style` ([#87](https://github.com/wagtail/draftjs_exporter/issues/87), [#90](https://github.com/wagtail/draftjs_exporter/pull/90)).
 
 ### Changed
 
-- Performance improvements for text-only (no inline styles, no entities) blocks ([#89](https://github.com/springload/draftjs_exporter/pull/89)).
+- Performance improvements for text-only (no inline styles, no entities) blocks ([#89](https://github.com/wagtail/draftjs_exporter/pull/89)).
 
-## [v2.0.0](https://github.com/springload/draftjs_exporter/releases/tag/v2.0.0)
+## [v2.0.0](https://github.com/wagtail/draftjs_exporter/releases/tag/v2.0.0)
 
 This release contains breaking changes that will require updating the exporter's configurations. **Be sure to check out the "how to upgrade" section below.**
 
 ### Changed
 
-- Change default DOM engine to `DOMString` ([#79](https://github.com/springload/draftjs_exporter/issues/79), [#85](https://github.com/springload/draftjs_exporter/pull/85)).
-- Add extra install for html5lib ([#79](https://github.com/springload/draftjs_exporter/issues/79), [#85](https://github.com/springload/draftjs_exporter/pull/85)).
-- Remove support for class-based decorators ([#73](https://github.com/springload/draftjs_exporter/issues/73), [#84](https://github.com/springload/draftjs_exporter/pull/84)).
+- Change default DOM engine to `DOMString` ([#79](https://github.com/wagtail/draftjs_exporter/issues/79), [#85](https://github.com/wagtail/draftjs_exporter/pull/85)).
+- Add extra install for html5lib ([#79](https://github.com/wagtail/draftjs_exporter/issues/79), [#85](https://github.com/wagtail/draftjs_exporter/pull/85)).
+- Remove support for class-based decorators ([#73](https://github.com/wagtail/draftjs_exporter/issues/73), [#84](https://github.com/wagtail/draftjs_exporter/pull/84)).
 - Switch composite decorators to dict format like that of Draft.js, with `strategy` and `component` attributes.
-- Use dotted-path loading for custom engines ([#64](https://github.com/springload/draftjs_exporter/issues/64), [#81](https://github.com/springload/draftjs_exporter/pull/81)).
+- Use dotted-path loading for custom engines ([#64](https://github.com/wagtail/draftjs_exporter/issues/64), [#81](https://github.com/wagtail/draftjs_exporter/pull/81)).
 - Use dotted-path loading for built-in engines.
 - Raise `ImportError` when loading an engine fails, not `ConfigException`.
 
@@ -249,13 +249,13 @@ This release contains breaking changes that will require updating the exporter's
 
 ### Fixed
 
-- Stop loading html5lib engine on every use, even if unused ([#80](https://github.com/springload/draftjs_exporter/issues/80)).
+- Stop loading html5lib engine on every use, even if unused ([#80](https://github.com/wagtail/draftjs_exporter/issues/80)).
 
 ### How to upgrade
 
 #### New default engine
 
-The specificities of the new engine are described in the [documentation](https://github.com/springload/draftjs_exporter#alternative-backing-engines). To start using the new default,
+The specificities of the new engine are described in the [documentation](https://github.com/wagtail/draftjs_exporter#alternative-backing-engines). To start using the new default,
 
 1. Remove the `engine` property from the exporter configuration, or do `'engine': DOM.STRING,`.
 2. You can also remove the `html5lib` and `beautifulsoup4` dependencies from your project if they aren't used anywhere else.
@@ -267,7 +267,7 @@ To keep using the previous default, html5lib:
 
 #### Decorator component definitions
 
-Decorator components now require the function syntax (see the relevant [documentation](https://github.com/springload/draftjs_exporter#custom-components)).
+Decorator components now require the function syntax (see the relevant [documentation](https://github.com/wagtail/draftjs_exporter#custom-components)).
 
 ```python
 # Before:
@@ -376,13 +376,13 @@ def br(props):
 + DOM.use('tests.test_dom.DOMTestImpl')
 ```
 
-## [v1.1.1](https://github.com/springload/draftjs_exporter/releases/tag/v1.1.1)
+## [v1.1.1](https://github.com/wagtail/draftjs_exporter/releases/tag/v1.1.1)
 
 ### Fixed
 
-- Fix string engine incorrectly skipping identical elements at the same depth level ([#83](https://github.com/springload/draftjs_exporter/pull/83)).
+- Fix string engine incorrectly skipping identical elements at the same depth level ([#83](https://github.com/wagtail/draftjs_exporter/pull/83)).
 
-## [v1.1.0](https://github.com/springload/draftjs_exporter/releases/tag/v1.1.0)
+## [v1.1.0](https://github.com/wagtail/draftjs_exporter/releases/tag/v1.1.0)
 
 ### Added
 
@@ -403,15 +403,15 @@ exporter = HTML({
 })
 ```
 
-The new engine is faster than both `html5lib` and `lxml`, and outputs a functionally identical HTML (see a list of all known engine differences at [`test_engine_differences.py`](https://github.com/springload/draftjs_exporter/blob/main/tests/engines/test_engines_differences.py)). Its only drawback is that when using the `DOM.parse_html()` no safeguards are provided against malformed or unescaped HTML, whereas lxml or html5lib sanitise the input.
+The new engine is faster than both `html5lib` and `lxml`, and outputs a functionally identical HTML (see a list of all known engine differences at [`test_engine_differences.py`](https://github.com/wagtail/draftjs_exporter/blob/main/tests/engines/test_engines_differences.py)). Its only drawback is that when using the `DOM.parse_html()` no safeguards are provided against malformed or unescaped HTML, whereas lxml or html5lib sanitise the input.
 
-## [v1.0.0](https://github.com/springload/draftjs_exporter/releases/tag/v1.0.0)
+## [v1.0.0](https://github.com/wagtail/draftjs_exporter/releases/tag/v1.0.0)
 
 > This release is functionally identical to the previous one, `v0.9.0`.
 
 The project has reached a high-enough level of stability to be used in production, and breaking changes will now be reflected via major version changes.
 
-## [v0.9.0](https://github.com/springload/draftjs_exporter/releases/tag/v0.9.0)
+## [v0.9.0](https://github.com/wagtail/draftjs_exporter/releases/tag/v0.9.0)
 
 ### Added
 
@@ -460,13 +460,13 @@ The project has reached a high-enough level of stability to be used in productio
 + BLOCK_TYPES.BLOCKQUOTE: ['blockquote', {'class': 'c-pullquote'}]
 ```
 
-## [v0.8.1](https://github.com/springload/draftjs_exporter/releases/tag/v0.8.1)
+## [v0.8.1](https://github.com/wagtail/draftjs_exporter/releases/tag/v0.8.1)
 
 ### Fixed
 
 - Fix KeyError when the content state is empty.
 
-## [v0.8.0](https://github.com/springload/draftjs_exporter/releases/tag/v0.8.0)
+## [v0.8.0](https://github.com/wagtail/draftjs_exporter/releases/tag/v0.8.0)
 
 ### Added
 
@@ -572,7 +572,7 @@ KEYBOARD = 'kbd'
 - DOM.set_text_content(elt, text)
 ```
 
-## [v0.7.0](https://github.com/springload/draftjs_exporter/releases/tag/v0.7.0)
+## [v0.7.0](https://github.com/wagtail/draftjs_exporter/releases/tag/v0.7.0)
 
 ### Added
 
@@ -588,7 +588,7 @@ KEYBOARD = 'kbd'
 
 - Drop Python 3.3 support (likely still runs fine, but tests are not ran on it).
 
-## [v0.6.2](https://github.com/springload/draftjs_exporter/releases/tag/v0.6.2)
+## [v0.6.2](https://github.com/wagtail/draftjs_exporter/releases/tag/v0.6.2)
 
 ### Added
 
@@ -599,13 +599,13 @@ KEYBOARD = 'kbd'
 
 - Stop mutating entity data when rendering entities (#36).
 
-## [v0.6.1](https://github.com/springload/draftjs_exporter/releases/tag/v0.6.1)
+## [v0.6.1](https://github.com/wagtail/draftjs_exporter/releases/tag/v0.6.1)
 
 ### Added
 
 - Automatically convert line breaks to `br` elements.
 
-## [v0.6.0](https://github.com/springload/draftjs_exporter/releases/tag/v0.6.0)
+## [v0.6.0](https://github.com/wagtail/draftjs_exporter/releases/tag/v0.6.0)
 
 This release is likely to be a **breaking change**. It is not released as such because the exporter has not [reached 1.0 yet](http://semver.org/#spec-item-4).
 
@@ -617,19 +617,19 @@ This release is likely to be a **breaking change**. It is not released as such b
 
 - Remove custom block type `pullquote`
 
-## [v0.5.2](https://github.com/springload/draftjs_exporter/releases/tag/v0.5.2)
+## [v0.5.2](https://github.com/wagtail/draftjs_exporter/releases/tag/v0.5.2)
 
 ### Fixed
 
 - Fix state being kept between exports, causing blocks to be duplicated in re-runs.
 
-## [v0.5.1](https://github.com/springload/draftjs_exporter/releases/tag/v0.5.1)
+## [v0.5.1](https://github.com/wagtail/draftjs_exporter/releases/tag/v0.5.1)
 
 ### Fixed
 
 - Fix broken link in README
 
-## [v0.5.0](https://github.com/springload/draftjs_exporter/releases/tag/v0.5.0)
+## [v0.5.0](https://github.com/wagtail/draftjs_exporter/releases/tag/v0.5.0)
 
 This release is likely to be a **breaking change**. It is not released as such because the exporter has not [reached 1.0 yet](http://semver.org/#spec-item-4).
 
@@ -645,7 +645,7 @@ This release is likely to be a **breaking change**. It is not released as such b
 
 - Built-in entities are no longer available as part of the library. They should be defined in userland.
 
-## [v0.4.0](https://github.com/springload/draftjs_exporter/releases/tag/v0.4.0)
+## [v0.4.0](https://github.com/wagtail/draftjs_exporter/releases/tag/v0.4.0)
 
 This release is likely to be a **breaking change**. It is not released as such because the exporter has not [reached 1.0 yet](http://semver.org/#spec-item-4).
 
@@ -663,30 +663,30 @@ This release is likely to be a **breaking change**. It is not released as such b
 
 ### Fixed
 
-- Fix behavior of wrapper stack in nested wrappers ([#15](https://github.com/springload/draftjs_exporter/issues/15))
+- Fix behavior of wrapper stack in nested wrappers ([#15](https://github.com/wagtail/draftjs_exporter/issues/15))
 
-## [v0.3.3](https://github.com/springload/draftjs_exporter/releases/tag/v0.3.3)
+## [v0.3.3](https://github.com/wagtail/draftjs_exporter/releases/tag/v0.3.3)
 
-Last release before switching to BeautifulSoup4 / html5lib. If we ever need to switch back to lxml, it should be as simple as looking at the code at [v0.3.3](https://github.com/springload/draftjs_exporter/tree/v0.3.3).
+Last release before switching to BeautifulSoup4 / html5lib. If we ever need to switch back to lxml, it should be as simple as looking at the code at [v0.3.3](https://github.com/wagtail/draftjs_exporter/tree/v0.3.3).
 
 ### Added
 
 - Add wrapper method to create new elements.
 - Add wrapper method to retrieve an element's list of classes.
 
-## [v0.3.2](https://github.com/springload/draftjs_exporter/releases/tag/v0.3.2)
+## [v0.3.2](https://github.com/wagtail/draftjs_exporter/releases/tag/v0.3.2)
 
 ### Fixed
 
 - Fix exporter crashing on empty blocks (renders empty string instead)
 
-## [v0.3.1](https://github.com/springload/draftjs_exporter/releases/tag/v0.3.1)
+## [v0.3.1](https://github.com/wagtail/draftjs_exporter/releases/tag/v0.3.1)
 
 ### Fixed
 
 - Use HTML parser instead of XML for DOM API
 
-## [v0.3.0](https://github.com/springload/draftjs_exporter/releases/tag/v0.3.0)
+## [v0.3.0](https://github.com/wagtail/draftjs_exporter/releases/tag/v0.3.0)
 
 ### Added
 
@@ -704,26 +704,26 @@ Last release before switching to BeautifulSoup4 / html5lib. If we ever need to s
 
 ### Fixed
 
-- Nested blocks backtracking creating multiple wrappers at the same depths instead of reusing existing ones ([#9](https://github.com/springload/draftjs_exporter/issues/9))
+- Nested blocks backtracking creating multiple wrappers at the same depths instead of reusing existing ones ([#9](https://github.com/wagtail/draftjs_exporter/issues/9))
 
 ### Removed
 
 - Removed Token entity (identical as Null)
 
-## [v0.2.0](https://github.com/springload/draftjs_exporter/releases/tag/v0.2.0)
+## [v0.2.0](https://github.com/wagtail/draftjs_exporter/releases/tag/v0.2.0)
 
 ### Added
 
 - Support for `<hr/>` tag / `TOKEN` entities
 - Support for wrapped item nesting (arbitrary depth)
 
-## [v0.1.0](https://github.com/springload/draftjs_exporter/releases/tag/v0.1.0)
+## [v0.1.0](https://github.com/wagtail/draftjs_exporter/releases/tag/v0.1.0)
 
 First usable release!
 
 ---
 
-## [vx.y.z](https://github.com/springload/draftjs_exporter/releases/tag/x.y.z) (Template: http://keepachangelog.com/)
+## [vx.y.z](https://github.com/wagtail/draftjs_exporter/releases/tag/x.y.z) (Template: http://keepachangelog.com/)
 
 ### Added
 

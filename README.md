@@ -12,7 +12,7 @@ The initial use case was to gain more control over the content managed by rich t
 
 ## Features
 
-This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html), and [measures performance](https://thib.me/python-memory-profiling-for-the-draft-js-exporter) and [code coverage](https://coveralls.io/github/springload/draftjs_exporter). Code is checked with [mypy](https://mypy.readthedocs.io/en/latest/index.html).
+This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html), and [measures performance](https://thib.me/python-memory-profiling-for-the-draft-js-exporter) and [code coverage](https://coveralls.io/github/wagtail/draftjs_exporter). Code is checked with [mypy](https://mypy.readthedocs.io/en/latest/index.html).
 
 - Extensive configuration of the generated HTML.
 - Default, extensible block & inline style maps for common HTML elements.
@@ -37,7 +37,7 @@ This exporter takes the Draft.js ContentState data as input, and outputs HTML ba
 pip install draftjs_exporter
 ```
 
-We support the following Python versions: 3.10, 3.11, 3.12, 3.13, 3.14, 3.15. For legacy Python versions, find compatible releases in the [CHANGELOG](https://github.com/springload/draftjs_exporter/blob/main/CHANGELOG.md).
+We support the following Python versions: 3.10, 3.11, 3.12, 3.13, 3.14, 3.15. For legacy Python versions, find compatible releases in the [CHANGELOG](https://github.com/wagtail/draftjs_exporter/blob/main/CHANGELOG.md).
 
 In your code, create an exporter and use the `render` method to create HTML:
 
@@ -330,4 +330,4 @@ If you just want to set up the project on your own computer, the contribution gu
 
 This project is made possible by the work of [Springload](https://github.com/springload), a New Zealand digital agency. The _beautiful_ demo site is the work of [@thibaudcolas](https://github.com/thibaudcolas).
 
-View the full list of [contributors](https://github.com/springload/draftjs_exporter/graphs/contributors). [MIT licensed](LICENSE).
+View the full list of [contributors](https://github.com/wagtail/draftjs_exporter/graphs/contributors). [MIT licensed](LICENSE).
